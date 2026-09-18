@@ -1,0 +1,36 @@
+# PlatformIO / Arduino
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+*.elf
+*.bin
+*.hex
+*.map
+
+# Xcode / Swift
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+.swiftpm/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Ortam ve gizli dosyalar
+.env
+.env.local
+secrets.json
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Düzenleyici
+.vscode/
+.idea/
+*.swp
