@@ -355,6 +355,7 @@ CLAUDE.md     bu dosya
 README.md     proje tanıtımı
 docs/         kaynak dökümler (§10)
 design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
+mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript (§9.1)
 ```
 
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
@@ -365,8 +366,56 @@ kodlama (3) · iOS kontrol ekranları (8) · iOS kimlik, güvenlik ve ayarlar (8
 güvenlik (4). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
 sayılarını da güncelle.
 
-**Henüz yok, ileride açılacak:** `firmware/` (PlatformIO, ESP32-S3) · `ios/` (SwiftUI).
+**Henüz yok, ileride açılacak:** `firmware/` (PlatformIO, ESP32-S3) ·
+`api/` (Vercel Edge Functions) · `supabase/` (şema + RLS migration'ları).
 Bunları gerçekten kod yazılırken oluştur, şimdiden boş klasör açma.
+
+---
+
+## 9.1 Uygulama yığını — karar değişti
+
+**Eskiden `ios/` (SwiftUI) planlanıyordu. Artık Expo (React Native).** Araç sahibinin kararı.
+
+| Katman | Seçim |
+|---|---|
+| Uygulama | **Expo SDK 57** · React Native 0.86 · **Expo Router** (dosya tabanlı) · TypeScript **strict**, `any` yok |
+| Tasarım dili | **iOS 26 Liquid Glass** (`expo-glass-effect`) + Apple HIG · SF Symbols (`expo-symbols`) |
+| Animasyon | `react-native-reanimated` — fizik tabanlı, web tarzı sert geçiş yok |
+| Veri tabanı / kimlik | **Supabase** — Postgres + Auth + RLS |
+| Oturum saklama | **`expo-secure-store`** (iOS Keychain) · `persistSession: true` |
+| Uzak veri | **TanStack Query** — Supabase ve Vercel uçları |
+| Sunucu | **Vercel** Edge/Serverless (`api/`), Supabase JWT ile korunur |
+| BLE | `react-native-ble-plx` |
+
+### Klasör adı neden `ios/` değil
+
+Expo projesi `npx expo prebuild` ile **kendi `ios/` yerel klasörünü üretir**. Proje kökünü
+`ios/` yapmak `ios/ios/` demek olurdu. Bu yüzden uygulama kökü **`mobile/`**.
+
+### Bu yığının getirdiği sert gerçekler
+
+**1. BLE Expo Go'da çalışmaz.** `react-native-ble-plx` yerel modüldür; **custom dev client**
+(`expo-dev-client` + EAS build) şart. "Expo Go ile test ederiz" denmez.
+
+**2. Uygulama BLE güvenliğini *uygulamaz*, *miras alır*.** iOS CoreBluetooth üçüncü parti
+uygulamalara bonding/pairing kontrolü vermez; eşleşmeyi **periferik (ESP32/NimBLE) talep
+eder**, iOS sistem diyaloğunu kendisi gösterir. §7'deki LE Secure Connections, IRK ve
+directed advertising **firmware tarafının işidir**. Uygulama tarafında yazılacak olan:
+challenge-response, oturum anahtarı ve komut tekrar sayacı (uygulama katmanı protokolü).
+
+**3. Client anahtarı `EXPO_PUBLIC_` ile açığa çıkar.** `EXPO_PUBLIC_*` değişkenleri
+**pakete gömülür ve okunabilir**. Oraya yalnızca Supabase **publishable (anon)** anahtarı ve
+API URL'i konur. Service role anahtarı, SIM808 ön paylaşımlı anahtarı ve device token
+**asla** uygulamaya girmez (sert kural 11). Güvenlik RLS'ten gelir, anahtarın gizliliğinden
+değil.
+
+**4. Liquid Glass koşulludur.** `expo-glass-effect` yalnızca iOS 26+'da gerçek cam verir.
+`isLiquidGlassAvailable()` false ise ve **Reduce Transparency / Increase Contrast** açıksa
+**opak arka plana düşülür** — bu bir yedek değil, erişilebilirlik gereğidir.
+
+**5. Tasarım kanvası içerik spesifikasyonudur, Liquid Glass ise kabuk.** Panolardaki renk
+token'ları, tipografi ve bilgi mimarisi korunur; cam malzeme sekme çubuğu, başlık çubukları
+ve modal sheet'lerde kullanılır. Kanvas ile kod çelişirse **kanvas kazanır**.
 
 ---
 

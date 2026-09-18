@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "PQ35 Ambient",
+    "slug": "pq35-ambient",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "pq35ambient",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.ovurrsl.pq35ambient",
+      "supportsTablet": false,
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Uygulama kilidini açmak ve Keychain'de saklanan oturum anahtarına erişmek için Face ID kullanılır. Face ID kimlik doğrulama değildir; sunucuya karşı kimlik Supabase JWT'dir.",
+        "NSBluetoothAlwaysUsageDescription": "Araçtaki ambiyans denetleyicisine bağlanmak için Bluetooth kullanılır.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.ovurrsl.pq35ambient",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0F14",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-dev-client",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0B0F14",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "faceIDPermission": "Uygulama kilidini açmak için Face ID kullanılır."
+        }
+      ],
+      [
+        "react-native-ble-plx",
+        {
+          "isBackgroundEnabled": false,
+          "neverForLocation": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
