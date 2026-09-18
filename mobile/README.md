@@ -65,12 +65,11 @@ Expo tarafındaki proje: **`@ovur.rsl/pq35`** (hesap `ovur.rsl`, slug `pq35`).
 `app.json`'daki `owner` ve `slug` bu projeye göre hizalanmıştır — eşleşmeseler
 `eas init` ikinci bir proje açardı.
 
-Eksik olan tek alan `extra.eas.projectId`. İki yolundan biri:
+`extra.eas.projectId` **artık yazılı** — `2ea85b1a-b6d7-4b5f-ba3e-535bef47669a`.
 
-```bash
-npx eas login
-npx eas init          # mevcut owner+slug'ı bulur ve projectId'yi app.json'a yazar
-```
+Bulut build'i `eas build:internal` komutunu **non-interactive** çalıştırır; o modda proje
+kendiliğinden bağlanamaz, bu yüzden ID'nin app config'de durması zorunludur. Yoksa build
+"EAS project not configured" diyip düşer.
 
 veya panelden ID'yi kopyalayıp elle gir:
 **https://expo.dev/accounts/ovur.rsl/projects/pq35/settings** → *Project ID*
