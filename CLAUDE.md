@@ -499,6 +499,9 @@ README.md     proje tanıtımı
 docs/         kaynak dökümler (§10)
 design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
 mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript (§9.1)
+supabase/     şema + RLS migration'ları + Edge Function
+firmware/     Listen-Only CAN logger (PlatformIO, ESP32-S3) — araçtaki ilk yazılım
+tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID)
 ```
 
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
@@ -513,9 +516,10 @@ sayılarını da güncelle.
 hidden` içindeki kırpılmayı yakalamaz — pano "sığıyor" der ama metin sekme çubuğunun altında
 kesilir. Her değişen pano ayrıca **render edilip gözle kontrol edilir**.
 
-**Henüz yok, ileride açılacak:** `firmware/` (PlatformIO, ESP32-S3) ·
-`api/` (Vercel Edge Functions) · `supabase/` (şema + RLS migration'ları).
-Bunları gerçekten kod yazılırken oluştur, şimdiden boş klasör açma.
+**Henüz yok:** LED sürüş firmware'i. `firmware/` şu an yalnızca **Listen-Only logger**
+içeriyor ve sert kural 6 gereği öyle kalacak — LED kodu, log alınıp masada çözümlendikten
+sonra yazılır. `api/` hiç açılmadı ve açılmayacak: web panelinden vazgeçildiği için Vercel
+yığından çıktı.
 
 ---
 
