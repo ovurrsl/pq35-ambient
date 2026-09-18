@@ -61,9 +61,11 @@ export default function KonumEkrani() {
         </Text>
       </Card>
 
-      <RuleBox title="SIM808 2G-ONLY">
-        Şebekede 2G kapalıysa veri, SMS ve arama çalışmaz — GPS sabitleme alsa bile veriyi
-        taşıyamaz. Operatörden 2G kapanış takvimi teyit edilmeden modül sipariş edilmez.
+      <RuleBox title="SIM808 2G-ONLY — TARİHLİ ÖMÜR">
+        Şebekede 2G kapalıysa veri, SMS ve arama çalışmaz; GPS sabitleme alsa bile veriyi
+        taşıyamaz. Sözleşmelerdeki kapanış son tarihi 30 Nisan 2029 — engel değil, tarihli
+        bir ömür. Modül tek bir `modem` katmanının ardında durur ve o gün LTE Cat-1 ile
+        değiştirilir. Operatör daha erken kapatabilir, teyit alınır.
       </RuleBox>
     </ScrollView>
   );

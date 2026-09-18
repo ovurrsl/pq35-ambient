@@ -1,11 +1,12 @@
 import { useCallback, type ReactElement } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
+import { NavRow } from '@/components/ui/row';
 import { useTheme } from '@/theme/theme-provider';
 import {
   BUS_COLORS,
@@ -34,19 +35,19 @@ const YOK = '··';
 const DEVIR_TAVANI = 7000;
 const REDLINE_ORANI = 0.87;
 
-type SegmentId = 'canli' | 'konum' | 'iletisim';
+type SegmentId = 'canli' | 'surusler' | 'konum';
 
 interface SegmentTanimi {
   readonly id: SegmentId;
   readonly ad: string;
   /** Bu ekranın kendisi olan segmentte null; diğerleri kendi rotasına gider. */
-  readonly rota: '/arac/konum' | '/arac/iletisim' | null;
+  readonly rota: '/arac/konum' | '/arac/surusler' | null;
 }
 
 const SEGMENTLER: readonly SegmentTanimi[] = [
-  { id: 'canli', ad: 'Canlı veri', rota: null },
+  { id: 'canli', ad: 'Canlı', rota: null },
+  { id: 'surusler', ad: 'Sürüşler', rota: '/arac/surusler' },
   { id: 'konum', ad: 'Konum', rota: '/arac/konum' },
-  { id: 'iletisim', ad: 'İletişim', rota: '/arac/iletisim' },
 ];
 
 interface KesifSatiriTanimi {
@@ -95,11 +96,33 @@ export default function AracEkrani(): ReactElement {
             CANLI VERİ · SCIROCCO
           </Text>
         </View>
-        <View style={[styles.bleCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
-          <View style={[styles.nokta, { backgroundColor: colors.dim }]} />
-          <Text style={[styles.bleMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            BLE bağlı değil
-          </Text>
+        <View style={styles.baslikSag}>
+          <View style={[styles.bleCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
+            <View style={[styles.nokta, { backgroundColor: colors.dim }]} />
+            <Text style={[styles.bleMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
+              BLE bağlı değil
+            </Text>
+          </View>
+          <Link href="/arac/iletisim" asChild>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="İletişim: ara ve mesaj"
+              style={({ pressed }) => [
+                styles.telefonDugmesi,
+                { backgroundColor: colors.surfaceRaised, borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
+              ]}>
+              <SymbolView
+                name="phone"
+                size={18}
+                tintColor={colors.text}
+                fallback={
+                  <Text style={{ color: colors.text }} maxFontSizeMultiplier={1.4}>
+                    ☎
+                  </Text>
+                }
+              />
+            </Pressable>
+          </Link>
         </View>
       </View>
 
@@ -117,6 +140,19 @@ export default function AracEkrani(): ReactElement {
       </View>
 
       <DevirKarti />
+
+      <Card>
+        <NavRow
+          href="/arac/performans"
+          baslik="Performans"
+          altBaslik="0–100, fren, esneklik · canlı g"
+          sag={
+            <Text style={[styles.gostergeNotu, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
+              gösterge hızı
+            </Text>
+          }
+        />
+      </Card>
 
       <View style={styles.ikili}>
         <DegerKarti
@@ -438,6 +474,16 @@ function FazCipi(): ReactElement {
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
 
+  baslikSag: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  telefonDugmesi: {
+    width: HIT_SIZE,
+    height: HIT_SIZE,
+    borderRadius: RADIUS.pill,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  gostergeNotu: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
   baslikSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.md },
   baslikBlok: { flexShrink: 1, gap: 2 },
   baslik: { fontFamily: FONTS.display, fontSize: TYPE_SCALE.title },

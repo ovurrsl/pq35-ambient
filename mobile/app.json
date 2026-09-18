@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "PQ35 Ambient",
-    "slug": "pq35-ambient",
+    "slug": "pq35",
+    "owner": "ovur.rsl",
     "version": "0.1.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",

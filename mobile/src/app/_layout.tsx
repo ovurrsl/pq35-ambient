@@ -48,6 +48,8 @@ function AuthGate() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Screen name="(auth)" />
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="hava" />
+      <Stack.Screen name="egzoz" />
       <Stack.Screen
         name="onay"
         options={{ presentation: 'formSheet', sheetGrabberVisible: true, sheetAllowedDetents: [0.8] }}

@@ -12,6 +12,7 @@ import { SymbolView } from 'expo-symbols';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
+import { NavRow, RowDivider } from '@/components/ui/row';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
 import { useTheme } from '@/theme/theme-provider';
@@ -191,6 +192,27 @@ export default function BolgelerEkrani(): JSX.Element {
             onAc={detayaGit}
           />
         ))}
+      </Card>
+
+      <View style={styles.grupBaslik}>
+        <SectionLabel>ARAÇ SİSTEMLERİ</SectionLabel>
+        <Text style={[styles.grupNot, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
+          Kontrolcü B · Kl.15
+        </Text>
+      </View>
+
+      <Card style={styles.liste}>
+        <NavRow
+          href="/egzoz"
+          baslik="Egzoz"
+          altBaslik="Varex valfi · aç, kapat, otomatik mod"
+        />
+        <RowDivider />
+        <NavRow
+          href="/hava"
+          baslik="Hava süspansiyon"
+          altBaslik="4 köşe bağımsız · hafıza · denge"
+        />
       </Card>
 
       <Card>
