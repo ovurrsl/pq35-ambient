@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 import * as Haptics from 'expo-haptics';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
-import { Pill } from '@/components/ui/pill';
+import { Pill, UnverifiedBadge } from '@/components/ui/pill';
+import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
 import { useAuth } from '@/state/auth-context';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
@@ -21,6 +22,18 @@ export default function KilitEkrani() {
   const { durum, kilidiAc, cikisYap } = useAuth();
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
+  // Cihazda ne varsa onu yazıyoruz: iPad'lerin çoğunda Touch ID, bazılarında Face ID.
+  const [kilit, setKilit] = useState<KilitYetenegi | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    void kilitYetenegi().then((k) => {
+      if (alive) setKilit(k);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const maskeli = durum.ad === 'kilitli' ? durum.maskeliEposta : null;
 
@@ -36,11 +49,11 @@ export default function KilitEkrani() {
     }
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     if (sonuc.kind === 'iptal') {
-      setHata('Face ID doğrulanmadı. Tekrar dene veya şifrenle gir.');
+      setHata(`${kilit?.ad ?? 'Kilit'} doğrulanmadı. Tekrar dene veya şifrenle gir.`);
     } else if (sonuc.kind === 'yeniden-giris') {
       setHata(`Kayıtlı anahtar geçersiz: ${sonuc.sebep} Yeniden giriş gerekiyor.`);
     }
-  }, [kilidiAc]);
+  }, [kilidiAc, kilit]);
 
   /** Face ID'yi atlayıp şifreyle girmek, saklanan anahtardan vazgeçmek demektir. */
   const sifreIleGir = useCallback(async () => {
@@ -85,7 +98,7 @@ export default function KilitEkrani() {
       <View style={styles.eylemler}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Face ID ile aç"
+          accessibilityLabel={`${kilit?.ad ?? 'Kilit'} ile aç`}
           disabled={calisiyor}
           onPress={ac}
           style={({ pressed }) => [
@@ -93,7 +106,7 @@ export default function KilitEkrani() {
             { backgroundColor: colors.accent, opacity: pressed || calisiyor ? 0.7 : 1 },
           ]}>
           <Text style={[styles.birincilMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
-            {calisiyor ? 'Doğrulanıyor…' : 'Face ID ile aç'}
+            {calisiyor ? 'Doğrulanıyor…' : `${kilit?.ad ?? 'Kilit'} ile aç`}
           </Text>
         </Pressable>
 
@@ -117,7 +130,7 @@ export default function KilitEkrani() {
         <SectionLabel>NE OLUYOR</SectionLabel>
         <View style={styles.zincir}>
           {[
-            { ad: 'Face ID', alt: 'cihazda yerel' },
+            { ad: kilit?.ad ?? 'Kilit', alt: 'cihazda yerel' },
             { ad: 'Keychain', alt: 'biometryCurrentSet' },
             { ad: 'refresh token', alt: 'saklanan anahtar' },
             { ad: 'Supabase JWT', alt: 'sunucu kimliği' },
@@ -142,7 +155,19 @@ export default function KilitEkrani() {
         </View>
       </Card>
 
-      <RuleBox title="FACE ID KİMLİK DOĞRULAMA DEĞİLDİR">
+      {kilit && !kilit.saklanabilir ? (
+        <Card>
+          <SectionLabel>BU CİHAZDA OTURUM SAKLANAMAZ</SectionLabel>
+          <Text style={[styles.govde, { color: colors.text }]} maxFontSizeMultiplier={2}>
+            Saklanan anahtar biyometriye bağlanır; bu cihazda kayıtlı biyometri yok. Her
+            açılışta e-posta, şifre ve TOTP ile giriş gerekir. Cihaz parolası uygulamayı
+            korur ama anahtarı bağlayamaz.
+          </Text>
+          <UnverifiedBadge>BİYOMETRİ KURULUNCA DEĞİŞİR</UnverifiedBadge>
+        </Card>
+      ) : null}
+
+      <RuleBox title={`${(kilit?.ad ?? 'KİLİT').toLocaleUpperCase('tr-TR')} KİMLİK DOĞRULAMA DEĞİLDİR`}>
         Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik
         Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve
         e-posta, şifre ve TOTP ile yeniden giriş gerekir.
@@ -189,4 +214,5 @@ const styles = StyleSheet.create({
   zincirAd: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
   zincirAlt: { fontFamily: FONTS.mono, fontSize: 10 },
   ok: { fontSize: 14 },
+  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

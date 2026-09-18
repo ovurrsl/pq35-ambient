@@ -306,6 +306,17 @@ açılmamıştır.
 Face ID (yerel)  →  Keychain'i açar (biometryCurrentSet)  →  refresh token  →  Supabase JWT
 ```
 
+### Cihaz kilidi Face ID'den ibaret değil
+
+Face ID olmayan cihazlarda **Touch ID** kullanılır; iPad'lerin çoğunda Touch ID vardır.
+Arayüz butonu ve metni cihazda ne varsa ona göre adlandırılır
+(`expo-local-authentication` → `supportedAuthenticationTypesAsync`).
+
+**Sert gerçek:** `expo-secure-store`'un `requireAuthentication` seçeneği `.biometryCurrentSet`
+kullanır — bu **yalnızca biyometridir, cihaz parolasına düşmez**. Kayıtlı biyometrisi olmayan
+bir cihazda korumalı girdi hiç oluşturulamaz. O durumda oturum saklanmaz ve her açılışta
+e-posta + şifre + TOTP gerekir; arayüz bunu açıkça söyler, sessizce geçmez.
+
 **"Face ID ile giriş yapılır" ifadesi yasaktır.** Face ID cihazda yereldir ve sunucuya hiçbir
 şey kanıtlamaz; sunucuya karşı kimlik JWT'dir. Kayıtlı yüz seti değişirse Keychain girdisi
 geçersiz olur ve kullanıcı e-posta + şifre + TOTP ile baştan girer — bu bir arıza değil,
