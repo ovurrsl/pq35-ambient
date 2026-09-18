@@ -1,0 +1,167 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-09-18T04:01:03Z"
+ },
+ "title": "PQ35-AMBIENT Tasarım Kanvası",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1600,
+   "h": 1000,
+   "title": "Kapak ve özet"
+  },
+  "AracAglari.dc.html": {
+   "x": 1680,
+   "y": 0,
+   "w": 1600,
+   "h": 1000,
+   "title": "Araç ağları"
+  },
+  "Mimari.dc.html": {
+   "x": 3360,
+   "y": 0,
+   "w": 1600,
+   "h": 1000,
+   "title": "Sistem mimarisi"
+  },
+  "ZonHaritasi.dc.html": {
+   "x": 5040,
+   "y": 0,
+   "w": 1600,
+   "h": 1000,
+   "title": "LED bölge haritası"
+  },
+  "KablolamaPinout.dc.html": {
+   "x": 0,
+   "y": 1400,
+   "w": 1600,
+   "h": 1000,
+   "title": "Kablolama ve pinout"
+  },
+  "GuvenliKurulum.dc.html": {
+   "x": 1680,
+   "y": 1400,
+   "w": 1600,
+   "h": 1000,
+   "title": "Güvenli kurulum"
+  },
+  "DavranisMakinesi.dc.html": {
+   "x": 3360,
+   "y": 1400,
+   "w": 1600,
+   "h": 1000,
+   "title": "Davranış makinesi"
+  },
+  "YolHaritasi.dc.html": {
+   "x": 5040,
+   "y": 1400,
+   "w": 1600,
+   "h": 1000,
+   "title": "5 aşamalı yol haritası"
+  },
+  "MalzemeRisk.dc.html": {
+   "x": 0,
+   "y": 2800,
+   "w": 1600,
+   "h": 1200,
+   "title": "Malzeme ve risk"
+  },
+  "DiyKodlama.dc.html": {
+   "x": 1680,
+   "y": 2800,
+   "w": 1600,
+   "h": 1200,
+   "title": "DIY VAG kodlama"
+  },
+  "AppZonlar.dc.html": {
+   "x": 0,
+   "y": 4400,
+   "w": 390,
+   "h": 844,
+   "title": "iOS — Bölgeler"
+  },
+  "AppZonDetay.dc.html": {
+   "x": 470,
+   "y": 4400,
+   "w": 390,
+   "h": 844,
+   "title": "iOS — Bölge detayı"
+  },
+  "AppOlaylar.dc.html": {
+   "x": 940,
+   "y": 4400,
+   "w": 390,
+   "h": 844,
+   "title": "iOS — CAN olayları"
+  },
+  "AppSahnelerBle.dc.html": {
+   "x": 1410,
+   "y": 4400,
+   "w": 390,
+   "h": 844,
+   "title": "iOS — Sahneler ve bağlantı"
+  },
+  "AppKodlama.dc.html": {
+   "x": 1880,
+   "y": 4400,
+   "w": 390,
+   "h": 844,
+   "title": "iOS — Gizli özellikler"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "AracAglari.dc.html",
+  "Mimari.dc.html",
+  "ZonHaritasi.dc.html",
+  "KablolamaPinout.dc.html",
+  "GuvenliKurulum.dc.html",
+  "DavranisMakinesi.dc.html",
+  "YolHaritasi.dc.html",
+  "MalzemeRisk.dc.html",
+  "DiyKodlama.dc.html",
+  "AppZonlar.dc.html",
+  "AppZonDetay.dc.html",
+  "AppOlaylar.dc.html",
+  "AppSahnelerBle.dc.html",
+  "AppKodlama.dc.html"
+ ],
+ "notes": {
+  "grup1": {
+   "x": 0,
+   "y": -260,
+   "text": "1 · Sistem ve araç",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "grup2": {
+   "x": 0,
+   "y": 1140,
+   "text": "2 · Kurulum ve davranış",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "grup3": {
+   "x": 0,
+   "y": 2540,
+   "text": "3 · Malzeme, risk ve kodlama",
+   "kind": "title1",
+   "maxW": 3280
+  },
+  "grup4": {
+   "x": 0,
+   "y": 4140,
+   "text": "4 · iOS uygulaması",
+   "kind": "title1",
+   "maxW": 2270
+  }
+ },
+ "designSystems": []
+}

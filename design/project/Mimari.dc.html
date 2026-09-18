@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Sistem mimarisi — Sistem nasıl kurulu?</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #4CC2FF; box-shadow: 0 0 24px 2px rgba(76,194,255,0.55);"></div>
+
+  <!-- BAŞLIK BLOĞU -->
+  <div style="height: 76px; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 03 — SİSTEM MİMARİSİ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Sistem nasıl kurulu?</h1>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <!-- BLOK ŞEMA -->
+  <div style="height: 516px; flex-shrink: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 24px; display: flex; flex-direction: column; gap: 4px;">
+    <svg width="1420" height="466" viewBox="0 0 1420 466" role="img" aria-label="Sistem blok şeması: Komfort-CAN geçiş kablosundan SN65HVD230 transceiver'a, oradan ESP32-S3'e, 74AHCT125 seviye kaydırıcıya ve dört LED zonuna; ayrıca BLE ile iOS uygulaması ve iki kollu güç zinciri">
+      <defs>
+        <marker id="arrMimari" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#93A2B3"></path>
+        </marker>
+        <marker id="arrMimariBle" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#B08CFF"></path>
+        </marker>
+        <marker id="arrMimariPwr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#FF6A4D"></path>
+        </marker>
+      </defs>
+
+      <text x="0" y="16" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#93A2B3">SİNYAL YOLU</text>
+
+      <!-- iOS / BLE -->
+      <rect x="580" y="0" width="300" height="58" rx="10" fill="rgba(176,140,255,0.08)" stroke="#B08CFF" stroke-width="1.3"></rect>
+      <text x="598" y="25" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">iOS uygulaması</text>
+      <text x="598" y="44" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">renk · parlaklık · zon davranışı · sahneler</text>
+      <path d="M700 58 L700 82" fill="none" stroke="#B08CFF" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrMimariBle)"></path>
+      <path d="M730 82 L730 58" fill="none" stroke="#B08CFF" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrMimariBle)"></path>
+      <text x="748" y="76" font-family="JetBrains Mono, monospace" font-size="11" fill="#B08CFF">BLE · çift yön</text>
+
+      <!-- NODE 1 -->
+      <rect x="0" y="110" width="230" height="100" rx="10" fill="rgba(244,162,97,0.07)" stroke="#F4A261" stroke-width="1.4"></rect>
+      <text x="16" y="136" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#F4A261">Komfort-CAN 100 kbps</text>
+      <text x="16" y="158" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Gateway J533 geçiş kablosu</text>
+      <text x="16" y="176" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">soket-sokete, kesme yok</text>
+      <text x="16" y="194" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">geri dönüşlü</text>
+
+      <path d="M230 157 L284 157" fill="none" stroke="#F4A261" stroke-width="1.8"></path>
+      <path d="M230 163 L284 163" fill="none" stroke="#F4A261" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <text x="257" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-H</text>
+      <text x="257" y="186" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-L</text>
+
+      <!-- NODE 2 -->
+      <rect x="290" y="110" width="230" height="100" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="306" y="136" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#E8EEF4">SN65HVD230</text>
+      <text x="306" y="156" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">3,3 V CAN transceiver</text>
+      <text x="306" y="176" font-family="JetBrains Mono, monospace" font-size="11" fill="#4CC2FF">LISTEN-ONLY</text>
+      <text x="306" y="194" font-family="JetBrains Mono, monospace" font-size="11" fill="#FF5A5A">TX BAĞLI DEĞİL</text>
+
+      <path d="M520 150 L574 150" fill="none" stroke="#4CC2FF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <text x="547" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">RXD → RX</text>
+      <path d="M520 186 L556 186" fill="none" stroke="#FF5A5A" stroke-width="1.5" stroke-dasharray="4 4"></path>
+      <circle cx="566" cy="186" r="9" fill="#0B0F14" stroke="#FF5A5A" stroke-width="1.4"></circle>
+      <path d="M561.5 181.5 L570.5 190.5 M570.5 181.5 L561.5 190.5" stroke="#FF5A5A" stroke-width="1.4"></path>
+
+      <!-- NODE 3 -->
+      <rect x="580" y="86" width="300" height="160" rx="12" fill="rgba(76,194,255,0.06)" stroke="#4CC2FF" stroke-width="1.5"></rect>
+      <text x="596" y="110" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="700" fill="#E8EEF4">Arduino Nano ESP32 (ESP32-S3)</text>
+      <text x="596" y="128" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">u-blox NORA-W106 · çekirdek 0: BLE · çekirdek 1: CAN + LED</text>
+      <rect x="596" y="138" width="268" height="28" rx="6" fill="#1B2430" stroke="#F4A261" stroke-width="1"></rect>
+      <text x="608" y="157" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">TWAI — CAN alıcı, 100 kbps</text>
+      <rect x="596" y="172" width="268" height="28" rx="6" fill="#1B2430" stroke="#4CC2FF" stroke-width="1"></rect>
+      <text x="608" y="191" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">RMT + FastLED — 4 veri hattı</text>
+      <rect x="596" y="206" width="268" height="28" rx="6" fill="#1B2430" stroke="#B08CFF" stroke-width="1"></rect>
+      <text x="608" y="225" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">NimBLE — bonding · IRK · OTA</text>
+
+      <path d="M880 166 L934 166" fill="none" stroke="#4CC2FF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <text x="907" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">4 × GPIO</text>
+
+      <!-- NODE 4 -->
+      <rect x="940" y="110" width="230" height="100" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="956" y="136" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#E8EEF4">74AHCT125</text>
+      <text x="956" y="156" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">4 kanallı tampon</text>
+      <text x="956" y="176" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">3,3 V → 5 V veri</text>
+      <text x="956" y="194" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">her hatta 330 Ω seri</text>
+
+      <!-- 4 VERİ HATTI -->
+      <path d="M1170 160 L1196 160 L1196 108 L1226 108" fill="none" stroke="#4CC2FF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <path d="M1170 160 L1202 160 L1202 152 L1226 152" fill="none" stroke="#B98BFF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <path d="M1170 160 L1202 160 L1202 196 L1226 196" fill="none" stroke="#46D98A" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <path d="M1170 160 L1196 160 L1196 240 L1226 240" fill="none" stroke="#FF9F45" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+
+      <rect x="1230" y="90" width="190" height="36" rx="8" fill="rgba(76,194,255,0.10)" stroke="#4CC2FF" stroke-width="1.2"></rect>
+      <text x="1244" y="113" font-family="JetBrains Mono, monospace" font-size="12" fill="#E8EEF4">DIN 1 · Z1 Sol kapı</text>
+      <rect x="1230" y="134" width="190" height="36" rx="8" fill="rgba(185,139,255,0.10)" stroke="#B98BFF" stroke-width="1.2"></rect>
+      <text x="1244" y="157" font-family="JetBrains Mono, monospace" font-size="12" fill="#E8EEF4">DIN 2 · Z2 Sağ kapı</text>
+      <rect x="1230" y="178" width="190" height="36" rx="8" fill="rgba(70,217,138,0.10)" stroke="#46D98A" stroke-width="1.2"></rect>
+      <text x="1244" y="201" font-family="JetBrains Mono, monospace" font-size="12" fill="#E8EEF4">DIN 3 · Z3 Ayak altı</text>
+      <rect x="1230" y="222" width="190" height="36" rx="8" fill="rgba(255,159,69,0.10)" stroke="#FF9F45" stroke-width="1.2"></rect>
+      <text x="1244" y="245" font-family="JetBrains Mono, monospace" font-size="12" fill="#E8EEF4">DIN 4 · Z4 Göğüs</text>
+
+      <!-- AYIRICI -->
+      <line x1="0" y1="278" x2="1420" y2="278" stroke="#2A3746" stroke-width="1"></line>
+      <text x="0" y="302" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#93A2B3">GÜÇ ZİNCİRİ</text>
+
+      <!-- GÜÇ KOLU 1: KONTROLCÜ -->
+      <rect x="0" y="316" width="220" height="60" rx="9" fill="#1B2430" stroke="#FF6A4D" stroke-width="1.2"></rect>
+      <text x="14" y="340" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">12 V — v1: Kl.15</text>
+      <text x="14" y="360" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">sigorta musluğu, kontakla gelen slot</text>
+      <path d="M220 346 L256 346" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="262" y="316" width="140" height="60" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="276" y="342" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">TVS</text>
+      <text x="276" y="361" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">12 V girişte şart</text>
+      <path d="M402 346 L438 346" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="444" y="316" width="140" height="60" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="458" y="342" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Buck → 5 V</text>
+      <text x="458" y="361" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">gerilim düşürücü</text>
+      <path d="M584 346 L620 346" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="626" y="316" width="220" height="60" rx="9" fill="rgba(76,194,255,0.06)" stroke="#4CC2FF" stroke-width="1.2"></rect>
+      <text x="640" y="342" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">ESP32 VIN</text>
+      <text x="640" y="361" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">Nano VIN 21 V'a kadar · 3,3 V → transceiver</text>
+
+      <!-- GÜÇ KOLU 2: ŞERİT -->
+      <rect x="0" y="396" width="220" height="60" rx="9" fill="#1B2430" stroke="#FF6A4D" stroke-width="1.2"></rect>
+      <text x="14" y="420" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">12 V — şerit beslemesi</text>
+      <text x="14" y="440" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">ayrı kol, kontrolcüden bağımsız</text>
+      <path d="M220 426 L256 426" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="262" y="396" width="140" height="60" rx="9" fill="#1B2430" stroke="#FFB020" stroke-width="1.3"></rect>
+      <rect x="276" y="410" width="24" height="12" rx="2" fill="none" stroke="#FFB020" stroke-width="1.2"></rect>
+      <path d="M276 422 L300 410" stroke="#FFB020" stroke-width="1.2"></path>
+      <text x="308" y="421" font-family="JetBrains Mono, monospace" font-size="13" fill="#FFB020">7,5 A</text>
+      <text x="276" y="444" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">kendi sigortası</text>
+      <path d="M402 426 L438 426" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="444" y="396" width="140" height="60" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="458" y="422" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">MOSFET</text>
+      <text x="458" y="441" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">şerit 12 V'unu tamamen keser</text>
+      <path d="M584 426 L620 426" fill="none" stroke="#FF6A4D" stroke-width="2" marker-end="url(#arrMimariPwr)"></path>
+      <rect x="626" y="396" width="220" height="60" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="640" y="422" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">LED şeritleri +12 V</text>
+      <text x="640" y="441" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">4 zon · ~1,25 A/m</text>
+
+      <!-- SAĞ NOTLAR -->
+      <rect x="880" y="316" width="540" height="60" rx="9" fill="none" stroke="#6FA0FF" stroke-width="1.2" stroke-dasharray="6 4"></rect>
+      <text x="896" y="340" font-family="JetBrains Mono, monospace" font-size="12" fill="#6FA0FF">v2 — İLERİDE</text>
+      <text x="896" y="360" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA</text>
+      <rect x="880" y="396" width="540" height="60" rx="9" fill="#1B2430" stroke="#A98C6B" stroke-width="1.2"></rect>
+      <text x="896" y="420" font-family="JetBrains Mono, monospace" font-size="12" fill="#A98C6B">GND</text>
+      <text x="896" y="440" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Fabrika şase saplaması — transceiver, ESP32 ve şerit ortak şasede</text>
+    </svg>
+    <div style="font-size: 12px; color: #93A2B3;">Sinyal soldan sağa tek yönlüdür: araçtan LED'e. Geri yönde tek bağlantı BLE'dir; araca hiçbir çerçeve yazılmaz.</div>
+  </div>
+
+  <!-- ALT KARTLAR -->
+  <div style="height: 248px; flex-shrink: 0; display: flex; gap: 20px;">
+
+    <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">NEDEN BU PARÇALAR?</h2>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">SN65HVD230</span> — native 3,3 V. MCP2515 modüllerindeki TJA1050 en az 4,75 V ister.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">74AHCT125</span> — 3,3 V veri, 12 V şerit IC eşiğinin (≈ 0,7 × VDD) sınırındadır; tampon şart.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">RMT</span> — LED zamanlaması donanımdan gelir; BLE kesmeleri WS281x sinyalini bozmaz.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Nano 33 BLE + FastLED sorunu bu kartta yok.</div>
+    </div>
+
+    <div style="flex: 1; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — YAZMA YOK</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Salt-okunurluk iki bağımsız katmanla garanti edilir:</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">1.</span> Yazılım: TWAI donanımsal <span style="font-family: 'JetBrains Mono', monospace;">LISTEN_ONLY</span> modu — ACK bile basılmaz.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">2.</span> Donanım: transceiver'ın TX ucu fiziksel olarak bağlanmaz — mekanik yedek.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Araçta iki uçta zaten sonlandırma var; ek 120 Ω takılmaz, modülde varsa sökülür.</div>
+    </div>
+
+    <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FFB020;">ŞERİT GÜCÜ — KENDİ SİGORTASI</h2>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">12 V adreslenebilir şerit ~<span style="font-family: 'JetBrains Mono', monospace;">1,25 A/m</span> çeker (15 W/m); 3,5 m tam beyazda ≈ <span style="font-family: 'JetBrains Mono', monospace;">4,4 A</span>.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Bu yüzden şerit kolu kendi <span style="font-family: 'JetBrains Mono', monospace;">7,5 A</span> sigortasından beslenir — iç aydınlatma sigortasından asla.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">MOSFET şart: adreslenebilir IC'ler kapalıyken bile IC başına ~1 mA çeker, park hâlinde aküyü bitirir.</div>
+    </div>
+
+    <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #6FA0FF;">v1 → v2 FARKI</h2>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #3FD98A;">v1 (şimdi)</span> — Kl.15 tetikli: kontak açılınca uyanır, akü riski sıfır.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #6FA0FF;">v2 (sonra)</span> — Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA: kilit açılır açılmaz gerçek welcome.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">CAN / LED / BLE mantığı v2'de değişmez; yalnızca güç mimarisi değişir.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

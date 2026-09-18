@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — CAN Olayı ve Bölge Eşlemesi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 18px 16px 10px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0;">
+    <h1 style="font-size: 26px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Olaylar</h1>
+    <div style="font-size: 12px; color: #93A2B3;">Komfort-CAN tetikleyicileri → bölgeler</div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 6px; display: flex; flex-direction: column; gap: 9px;">
+
+    <!-- DİNLEME BİLGİSİ -->
+    <div style="display: flex; align-items: flex-start; gap: 9px; background: #131A22; border: 1px solid #2A3746; border-radius: 12px; padding: 8px 12px; flex-shrink: 0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F4A261" stroke-width="1.9" stroke-linecap="round" style="margin-top: 2px; flex-shrink: 0;" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5.5M12 7.6v0.1"></path></svg>
+      <div style="font-size: 12px; line-height: 1.45; color: #E8EEF4;">Cihaz yalnızca dinler — <span class="mono" style="font-size: 11px; color: #F4A261;">LISTEN-ONLY · 100 kbps</span>. ID'ler araçta log ile bulunacak.</div>
+    </div>
+
+    <!-- ÖNCELİK -->
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">Öncelik sırası</h2>
+      <div style="display: flex; align-items: center; gap: 4px; flex-wrap: nowrap;">
+        <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #E8EEF4; background: #1B2430; border: 1px solid #8296AA; border-radius: 999px; padding: 4px 7px; white-space: nowrap;"><span class="mono" style="color: #8296AA;">1</span>Geri vites</span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">&gt;</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #E8EEF4; background: #1B2430; border: 1px solid #FF5A5A; border-radius: 999px; padding: 4px 7px; white-space: nowrap;"><span class="mono" style="color: #FF5A5A;">2</span>Kapı</span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">&gt;</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #E8EEF4; background: #1B2430; border: 1px solid #FFB300; border-radius: 999px; padding: 4px 7px; white-space: nowrap;"><span class="mono" style="color: #FFB300;">3</span>Sinyal</span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">&gt;</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #E8EEF4; background: #1B2430; border: 1px solid #FF4D7E; border-radius: 999px; padding: 4px 7px; white-space: nowrap;"><span class="mono" style="color: #FF4D7E;">4</span>Redline</span>
+      </div>
+    </div>
+
+    <!-- OLAY LİSTESİ -->
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 0 12px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <!-- KAPI AÇIK -->
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 9px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Kapı açık</span>
+          <span style="font-size: 11px; font-weight: 500; color: #FF5A5A; background: rgba(255,90,90,0.12); border: 1px solid #FF5A5A; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">kırmızı sabit</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · kapı</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-kapi-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kapi-z1" aria-label="Kapı açık olayı Z1 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z1</span>
+            </label>
+            <label for="olaylar-kapi-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kapi-z2" aria-label="Kapı açık olayı Z2 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z2</span>
+            </label>
+            <label for="olaylar-kapi-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kapi-z3" aria-label="Kapı açık olayı Z3 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z3</span>
+            </label>
+            <label for="olaylar-kapi-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kapi-z4" aria-label="Kapı açık olayı Z4 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+
+      <!-- SİNYAL -->
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 9px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Sinyal</span>
+          <span style="font-size: 11px; font-weight: 500; color: #FFB300; background: rgba(255,179,0,0.12); border: 1px solid #FFB300; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">kayan sarı</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · flaşör</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-sinyal-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-sinyal-z1" aria-label="Sinyal olayı Z1 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z1</span>
+            </label>
+            <label for="olaylar-sinyal-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-sinyal-z2" aria-label="Sinyal olayı Z2 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z2</span>
+            </label>
+            <label for="olaylar-sinyal-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-sinyal-z3" aria-label="Sinyal olayı Z3 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z3</span>
+            </label>
+            <label for="olaylar-sinyal-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-sinyal-z4" aria-label="Sinyal olayı Z4 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+
+      <!-- GERİ VİTES -->
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 9px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Geri vites</span>
+          <span style="font-size: 11px; font-weight: 500; color: #8296AA; background: rgba(130,150,170,0.14); border: 1px solid #8296AA; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">karartma</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · vites</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-vites-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-vites-z1" aria-label="Geri vites olayı Z1 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z1</span>
+            </label>
+            <label for="olaylar-vites-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-vites-z2" aria-label="Geri vites olayı Z2 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z2</span>
+            </label>
+            <label for="olaylar-vites-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-vites-z3" aria-label="Geri vites olayı Z3 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #46D98A; color: #0B0F14; font-size: 11px; font-weight: 700;">Z3</span>
+            </label>
+            <label for="olaylar-vites-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-vites-z4" aria-label="Geri vites olayı Z4 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #FF9F45; color: #0B0F14; font-size: 11px; font-weight: 700;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+
+      <!-- FAR / GECE -->
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 9px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Far / gece</span>
+          <span style="font-size: 11px; font-weight: 500; color: #7C8798; background: rgba(124,135,152,0.16); border: 1px solid #7C8798; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">parlaklık düşür</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · ışık</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-isik-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-isik-z1" aria-label="Far ve gece olayı Z1 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z1</span>
+            </label>
+            <label for="olaylar-isik-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-isik-z2" aria-label="Far ve gece olayı Z2 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z2</span>
+            </label>
+            <label for="olaylar-isik-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-isik-z3" aria-label="Far ve gece olayı Z3 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #46D98A; color: #0B0F14; font-size: 11px; font-weight: 700;">Z3</span>
+            </label>
+            <label for="olaylar-isik-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-isik-z4" aria-label="Far ve gece olayı Z4 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #FF9F45; color: #0B0F14; font-size: 11px; font-weight: 700;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+
+      <!-- KİLİT AÇMA · WELCOME -->
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 9px 0;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Kilit açma · welcome</span>
+          <span style="font-size: 11px; font-weight: 500; color: #B98BFF; background: rgba(185,139,255,0.12); border: 1px solid #B98BFF; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">karşılama</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · kilit</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-kilit-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kilit-z1" aria-label="Kilit açma olayı Z1 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z1</span>
+            </label>
+            <label for="olaylar-kilit-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kilit-z2" aria-label="Kilit açma olayı Z2 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-size: 11px; font-weight: 700;">Z2</span>
+            </label>
+            <label for="olaylar-kilit-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kilit-z3" aria-label="Kilit açma olayı Z3 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #46D98A; color: #0B0F14; font-size: 11px; font-weight: 700;">Z3</span>
+            </label>
+            <label for="olaylar-kilit-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-kilit-z4" aria-label="Kilit açma olayı Z4 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #FF9F45; color: #0B0F14; font-size: 11px; font-weight: 700;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+
+      <!-- HIZ / RPM -->
+      <div style="display: flex; flex-direction: column; gap: 5px; padding: 9px 0 10px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Hız / RPM</span>
+          <span style="font-size: 11px; font-weight: 500; color: #FF4D7E; background: rgba(255,77,126,0.12); border: 1px solid #FF4D7E; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">parlaklık · redline</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span class="mono" style="font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">hız 0x351</span>
+          <span class="mono" style="font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">RPM 0x353</span>
+          <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span class="mono" style="font-size: 11px; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">Komfort-CAN · aynalı</span>
+          <span style="display: flex; align-items: center; gap: 4px;">
+            <label for="olaylar-hiz-z1" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-hiz-z1" aria-label="Hız ve RPM olayı Z1 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z1</span>
+            </label>
+            <label for="olaylar-hiz-z2" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-hiz-z2" aria-label="Hız ve RPM olayı Z2 bölgesini sürsün">
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: transparent; border: 1px solid #2A3746; color: #6E7C8C; font-size: 11px; font-weight: 700; box-sizing: border-box;">Z2</span>
+            </label>
+            <label for="olaylar-hiz-z3" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-hiz-z3" aria-label="Hız ve RPM olayı Z3 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #46D98A; color: #0B0F14; font-size: 11px; font-weight: 700;">Z3</span>
+            </label>
+            <label for="olaylar-hiz-z4" style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 36px; cursor: pointer;">
+              <input type="checkbox" class="vh" id="olaylar-hiz-z4" aria-label="Hız ve RPM olayı Z4 bölgesini sürsün" checked>
+              <span class="mono" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #FF9F45; color: #0B0F14; font-size: 11px; font-weight: 700;">Z4</span>
+            </label>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GERİ DÖNÜŞ KURALI -->
+    <div style="background: rgba(255,176,32,0.08); border: 1px solid #FFB020; border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.12em; color: #FFB020; flex-shrink: 0;">KURAL</span>
+      <span style="font-size: 12px; color: #E8EEF4;">Mesaj 2 sn kesilirse taban renge dön</span>
+    </div>
+
+  </div>
+
+  <!-- SEKME ÇUBUĞU -->
+  <div style="height: 72px; flex-shrink: 0; border-top: 1px solid #2A3746; background: #0F1620; display: flex; align-items: stretch; padding: 0 4px;">
+    <a href="#bolgeler" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"></rect></svg>
+      <span style="font-size: 11px;">Bölgeler</span>
+    </a>
+    <a href="#olaylar" aria-current="page" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #4CC2FF; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13.5h5.5L10.5 21 19 10.5h-5.6L13 3z"></path></svg>
+      <span style="font-size: 11px; font-weight: 600;">Olaylar</span>
+    </a>
+    <a href="#sahneler" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 13.5 12 18.5l9-5"></path></svg>
+      <span style="font-size: 11px;">Sahneler</span>
+    </a>
+    <a href="#ayarlar" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.3"></circle><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6"></path></svg>
+      <span style="font-size: 11px;">Ayarlar</span>
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

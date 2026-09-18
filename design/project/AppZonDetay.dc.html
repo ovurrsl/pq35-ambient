@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Bölge Detayı: Sol Kapı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+.rng{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:0;padding:0;position:relative;z-index:2;cursor:pointer;}
+.rng::-webkit-slider-runnable-track{height:10px;background:transparent;border:0;}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:999px;background:#E8EEF4;border:2px solid #0B0F14;margin-top:-8px;}
+.rng::-moz-range-track{height:10px;background:transparent;border:0;}
+.rng::-moz-range-thumb{width:24px;height:24px;border-radius:999px;background:#E8EEF4;border:2px solid #0B0F14;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0;">
+    <a href="#bolgeler" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Bölgeler
+    </a>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">Z1</span>
+      <h1 style="font-size: 24px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Sol kapı</h1>
+    </div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 6px; display: flex; flex-direction: column; gap: 9px;">
+
+    <!-- CANLI DURUM -->
+    <div style="display: flex; align-items: center; gap: 8px; background: rgba(63,217,138,0.08); border: 1px solid #2A3746; border-radius: 10px; padding: 6px 12px; flex-shrink: 0;">
+      <span style="width: 8px; height: 8px; border-radius: 999px; background: #3FD98A; box-shadow: 0 0 8px 1px rgba(63,217,138,0.8); flex-shrink: 0;"></span>
+      <span style="font-size: 13px; color: #E8EEF4;">Şu an: uygulama rengi · araç olayı yok</span>
+    </div>
+
+    <!-- RENK + PARLAKLIK -->
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <svg width="128" height="128" viewBox="0 0 156 156" role="img" aria-label="Renk çarkı — seçili ton buz mavisi" style="flex-shrink: 0;">
+          <defs>
+            <filter id="glowKnobDetay" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" result="bDetay"></feGaussianBlur>
+              <feMerge><feMergeNode in="bDetay"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+            </filter>
+          </defs>
+          <g>
+            <path d="M78 4 A74 74 0 0 1 86.31 4.47 L83.28 31.3 A47 47 0 0 0 78 31 Z" fill="#FF0D00"></path>
+            <path d="M85.74 4.41 A74 74 0 0 1 93.95 5.74 L88.13 32.11 A47 47 0 0 0 82.91 31.26 Z" fill="#FF2600"></path>
+            <path d="M93.39 5.62 A74 74 0 0 1 101.42 7.8 L92.87 33.42 A47 47 0 0 0 87.77 32.03 Z" fill="#FF4000"></path>
+            <path d="M100.87 7.62 A74 74 0 0 1 108.63 10.64 L97.45 35.21 A47 47 0 0 0 92.52 33.3 Z" fill="#FF5900"></path>
+            <path d="M108.1 10.4 A74 74 0 0 1 115.5 14.21 L101.82 37.48 A47 47 0 0 0 97.12 35.06 Z" fill="#FF7300"></path>
+            <path d="M115 13.91 A74 74 0 0 1 121.96 18.48 L105.92 40.19 A47 47 0 0 0 101.5 37.3 Z" fill="#FF8C00"></path>
+            <path d="M121.5 18.13 A74 74 0 0 1 127.95 23.4 L109.72 43.32 A47 47 0 0 0 105.63 39.98 Z" fill="#FFA600"></path>
+            <path d="M127.52 23.01 A74 74 0 0 1 133.38 28.92 L113.17 46.83 A47 47 0 0 0 109.45 43.07 Z" fill="#FFBF00"></path>
+            <path d="M132.99 28.48 A74 74 0 0 1 138.21 34.98 L116.24 50.67 A47 47 0 0 0 112.93 46.55 Z" fill="#FFD900"></path>
+            <path d="M137.87 34.5 A74 74 0 0 1 142.37 41.5 L118.89 54.82 A47 47 0 0 0 116.02 50.37 Z" fill="#FFF200"></path>
+            <path d="M142.09 41 A74 74 0 0 1 145.84 48.43 L121.09 59.22 A47 47 0 0 0 118.7 54.5 Z" fill="#F2FF00"></path>
+            <path d="M145.6 47.9 A74 74 0 0 1 148.56 55.69 L122.81 63.83 A47 47 0 0 0 120.94 58.88 Z" fill="#D9FF00"></path>
+            <path d="M148.38 55.13 A74 74 0 0 1 150.5 63.18 L124.05 68.59 A47 47 0 0 0 122.7 63.48 Z" fill="#BFFF00"></path>
+            <path d="M150.38 62.61 A74 74 0 0 1 151.65 70.84 L124.78 73.45 A47 47 0 0 0 123.97 68.23 Z" fill="#A6FF00"></path>
+            <path d="M151.59 70.26 A74 74 0 0 1 152 78.58 L125 78.37 A47 47 0 0 0 124.74 73.09 Z" fill="#8CFF00"></path>
+            <path d="M152 78 A74 74 0 0 1 151.53 86.31 L124.7 83.28 A47 47 0 0 0 125 78 Z" fill="#73FF00"></path>
+            <path d="M151.59 85.74 A74 74 0 0 1 150.26 93.95 L123.89 88.13 A47 47 0 0 0 124.74 82.91 Z" fill="#59FF00"></path>
+            <path d="M150.38 93.39 A74 74 0 0 1 148.2 101.42 L122.58 92.87 A47 47 0 0 0 123.97 87.77 Z" fill="#40FF00"></path>
+            <path d="M148.38 100.87 A74 74 0 0 1 145.36 108.63 L120.79 97.45 A47 47 0 0 0 122.7 92.52 Z" fill="#26FF00"></path>
+            <path d="M145.6 108.1 A74 74 0 0 1 141.79 115.5 L118.52 101.82 A47 47 0 0 0 120.94 97.12 Z" fill="#0DFF00"></path>
+            <path d="M142.09 115 A74 74 0 0 1 137.52 121.96 L115.81 105.92 A47 47 0 0 0 118.7 101.5 Z" fill="#00FF0D"></path>
+            <path d="M137.87 121.5 A74 74 0 0 1 132.6 127.95 L112.68 109.72 A47 47 0 0 0 116.02 105.63 Z" fill="#00FF26"></path>
+            <path d="M132.99 127.52 A74 74 0 0 1 127.08 133.38 L109.17 113.17 A47 47 0 0 0 112.93 109.45 Z" fill="#00FF40"></path>
+            <path d="M127.52 132.99 A74 74 0 0 1 121.02 138.21 L105.33 116.24 A47 47 0 0 0 109.45 112.93 Z" fill="#00FF59"></path>
+            <path d="M121.5 137.87 A74 74 0 0 1 114.5 142.37 L101.18 118.89 A47 47 0 0 0 105.63 116.02 Z" fill="#00FF73"></path>
+            <path d="M115 142.09 A74 74 0 0 1 107.57 145.84 L96.78 121.09 A47 47 0 0 0 101.5 118.7 Z" fill="#00FF8C"></path>
+            <path d="M108.1 145.6 A74 74 0 0 1 100.31 148.56 L92.17 122.81 A47 47 0 0 0 97.12 120.94 Z" fill="#00FFA6"></path>
+            <path d="M100.87 148.38 A74 74 0 0 1 92.82 150.5 L87.41 124.05 A47 47 0 0 0 92.52 122.7 Z" fill="#00FFBF"></path>
+            <path d="M93.39 150.38 A74 74 0 0 1 85.16 151.65 L82.55 124.78 A47 47 0 0 0 87.77 123.97 Z" fill="#00FFD9"></path>
+            <path d="M85.74 151.59 A74 74 0 0 1 77.42 152 L77.63 125 A47 47 0 0 0 82.91 124.74 Z" fill="#00FFF2"></path>
+            <path d="M78 152 A74 74 0 0 1 69.69 151.53 L72.72 124.7 A47 47 0 0 0 78 125 Z" fill="#00F2FF"></path>
+            <path d="M70.26 151.59 A74 74 0 0 1 62.05 150.26 L67.87 123.89 A47 47 0 0 0 73.09 124.74 Z" fill="#00D9FF"></path>
+            <path d="M62.61 150.38 A74 74 0 0 1 54.58 148.2 L63.13 122.58 A47 47 0 0 0 68.23 123.97 Z" fill="#00BFFF"></path>
+            <path d="M55.13 148.38 A74 74 0 0 1 47.37 145.36 L58.55 120.79 A47 47 0 0 0 63.48 122.7 Z" fill="#00A6FF"></path>
+            <path d="M47.9 145.6 A74 74 0 0 1 40.5 141.79 L54.18 118.52 A47 47 0 0 0 58.88 120.94 Z" fill="#008CFF"></path>
+            <path d="M41 142.09 A74 74 0 0 1 34.04 137.52 L50.08 115.81 A47 47 0 0 0 54.5 118.7 Z" fill="#0073FF"></path>
+            <path d="M34.5 137.87 A74 74 0 0 1 28.05 132.6 L46.28 112.68 A47 47 0 0 0 50.37 116.02 Z" fill="#0059FF"></path>
+            <path d="M28.48 132.99 A74 74 0 0 1 22.62 127.08 L42.83 109.17 A47 47 0 0 0 46.55 112.93 Z" fill="#0040FF"></path>
+            <path d="M23.01 127.52 A74 74 0 0 1 17.79 121.02 L39.76 105.33 A47 47 0 0 0 43.07 109.45 Z" fill="#0026FF"></path>
+            <path d="M18.13 121.5 A74 74 0 0 1 13.63 114.5 L37.11 101.18 A47 47 0 0 0 39.98 105.63 Z" fill="#000DFF"></path>
+            <path d="M13.91 115 A74 74 0 0 1 10.16 107.57 L34.91 96.78 A47 47 0 0 0 37.3 101.5 Z" fill="#0D00FF"></path>
+            <path d="M10.4 108.1 A74 74 0 0 1 7.44 100.31 L33.19 92.17 A47 47 0 0 0 35.06 97.12 Z" fill="#2600FF"></path>
+            <path d="M7.62 100.87 A74 74 0 0 1 5.5 92.82 L31.95 87.41 A47 47 0 0 0 33.3 92.52 Z" fill="#4000FF"></path>
+            <path d="M5.62 93.39 A74 74 0 0 1 4.35 85.16 L31.22 82.55 A47 47 0 0 0 32.03 87.77 Z" fill="#5900FF"></path>
+            <path d="M4.41 85.74 A74 74 0 0 1 4 77.42 L31 77.63 A47 47 0 0 0 31.26 82.91 Z" fill="#7300FF"></path>
+            <path d="M4 78 A74 74 0 0 1 4.47 69.69 L31.3 72.72 A47 47 0 0 0 31 78 Z" fill="#8C00FF"></path>
+            <path d="M4.41 70.26 A74 74 0 0 1 5.74 62.05 L32.11 67.87 A47 47 0 0 0 31.26 73.09 Z" fill="#A600FF"></path>
+            <path d="M5.62 62.61 A74 74 0 0 1 7.8 54.58 L33.42 63.13 A47 47 0 0 0 32.03 68.23 Z" fill="#BF00FF"></path>
+            <path d="M7.62 55.13 A74 74 0 0 1 10.64 47.37 L35.21 58.55 A47 47 0 0 0 33.3 63.48 Z" fill="#D900FF"></path>
+            <path d="M10.4 47.9 A74 74 0 0 1 14.21 40.5 L37.48 54.18 A47 47 0 0 0 35.06 58.88 Z" fill="#F200FF"></path>
+            <path d="M13.91 41 A74 74 0 0 1 18.48 34.04 L40.19 50.08 A47 47 0 0 0 37.3 54.5 Z" fill="#FF00F2"></path>
+            <path d="M18.13 34.5 A74 74 0 0 1 23.4 28.05 L43.32 46.28 A47 47 0 0 0 39.98 50.37 Z" fill="#FF00D9"></path>
+            <path d="M23.01 28.48 A74 74 0 0 1 28.92 22.62 L46.83 42.83 A47 47 0 0 0 43.07 46.55 Z" fill="#FF00BF"></path>
+            <path d="M28.48 23.01 A74 74 0 0 1 34.98 17.79 L50.67 39.76 A47 47 0 0 0 46.55 43.07 Z" fill="#FF00A6"></path>
+            <path d="M34.5 18.13 A74 74 0 0 1 41.5 13.63 L54.82 37.11 A47 47 0 0 0 50.37 39.98 Z" fill="#FF008C"></path>
+            <path d="M41 13.91 A74 74 0 0 1 48.43 10.16 L59.22 34.91 A47 47 0 0 0 54.5 37.3 Z" fill="#FF0073"></path>
+            <path d="M47.9 10.4 A74 74 0 0 1 55.69 7.44 L63.83 33.19 A47 47 0 0 0 58.88 35.06 Z" fill="#FF0059"></path>
+            <path d="M55.13 7.62 A74 74 0 0 1 63.18 5.5 L68.59 31.95 A47 47 0 0 0 63.48 33.3 Z" fill="#FF0040"></path>
+            <path d="M62.61 5.62 A74 74 0 0 1 70.84 4.35 L73.45 31.22 A47 47 0 0 0 68.23 32.03 Z" fill="#FF0026"></path>
+            <path d="M70.26 4.41 A74 74 0 0 1 78.58 4 L78.37 31 A47 47 0 0 0 73.09 31.26 Z" fill="#FF000D"></path>
+          </g>
+          <circle cx="78" cy="78" r="47" fill="#0B0F14"></circle>
+          <circle cx="78" cy="78" r="41" fill="#4FC3F7" filter="url(#glowKnobDetay)"></circle>
+          <circle cx="78" cy="78" r="41" fill="none" stroke="#0B0F14" stroke-width="1.5"></circle>
+          <circle cx="58.7" cy="135.34" r="13" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="3"></circle>
+          <circle cx="58.7" cy="135.34" r="15.5" fill="none" stroke="#0B0F14" stroke-width="2"></circle>
+        </svg>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;">
+          <div class="mono" style="font-size: 10px; letter-spacing: 0.12em; color: #93A2B3;">SEÇİLİ RENK</div>
+          <div class="mono" style="font-size: 22px; font-weight: 700; color: #E8EEF4; letter-spacing: -0.01em;">#4FC3F7</div>
+          <div style="font-size: 13px; color: #93A2B3;">Buz mavisi</div>
+          <div style="margin-top: 2px; font-size: 11px; line-height: 1.45; color: #6E7C8C; border: 1px solid #2A3746; border-radius: 9px; padding: 6px 8px;">Renk uygulamadan seçilir. CAN yalnız tetik.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <label for="zondetay-preset-beyaz" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-beyaz" aria-label="Hazır renk: Beyaz">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #FFFFFF; border: 1px solid #2A3746;"></span>
+        </label>
+        <label for="zondetay-preset-buz" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-buz" aria-label="Hazır renk: Buz mavisi" checked>
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #4FC3F7; box-shadow: 0 0 0 2px #131A22, 0 0 0 4px #E8EEF4;"></span>
+        </label>
+        <label for="zondetay-preset-mavi" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-mavi" aria-label="Hazır renk: Mavi">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #2E7BFF;"></span>
+        </label>
+        <label for="zondetay-preset-mor" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-mor" aria-label="Hazır renk: Mor">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #B98BFF;"></span>
+        </label>
+        <label for="zondetay-preset-kirmizi" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-kirmizi" aria-label="Hazır renk: Kırmızı">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #FF4D4D;"></span>
+        </label>
+        <label for="zondetay-preset-amber" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-amber" aria-label="Hazır renk: Amber">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #FFB300;"></span>
+        </label>
+        <label for="zondetay-preset-yesil" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-yesil" aria-label="Hazır renk: Yeşil">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #46D98A;"></span>
+        </label>
+        <label for="zondetay-preset-turuncu" style="position: relative; width: 36px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <input type="radio" class="vh" name="zondetay-preset" id="zondetay-preset-turuncu" aria-label="Hazır renk: Turuncu">
+          <span style="width: 30px; height: 30px; border-radius: 999px; background: #FF7A2F;"></span>
+        </label>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <label for="zondetay-parlaklik" style="font-size: 15px; color: #E8EEF4; cursor: pointer;">Parlaklık</label>
+        <span class="mono" style="font-size: 15px; font-weight: 700; color: #4CC2FF;">%72</span>
+      </div>
+      <div style="position: relative; height: 44px; display: flex; align-items: center;">
+        <div style="position: absolute; left: 0; right: 0; height: 10px; border-radius: 999px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box;"></div>
+        <div style="position: absolute; left: 0; width: 72%; height: 10px; border-radius: 999px; background: #4FC3F7;"></div>
+        <input type="range" class="rng" id="zondetay-parlaklik" min="0" max="100" value="72">
+      </div>
+
+    </div>
+
+    <!-- DAVRANIŞ MODU + OLAY TEPKİSİ -->
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">Davranış modu</h2>
+        <span style="font-size: 11px; color: #6E7C8C;">Paylaşımlı: ortak taban rengi</span>
+      </div>
+      <div style="display: flex; gap: 3px; background: #0F1620; border: 1px solid #2A3746; border-radius: 11px; padding: 3px; box-sizing: border-box;">
+        <label for="zondetay-mod-bagimsiz" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; cursor: pointer; box-sizing: border-box;">
+          <input type="radio" class="vh" name="zondetay-mod" id="zondetay-mod-bagimsiz">
+          <span style="font-size: 14px; font-weight: 500; color: #93A2B3;">Bağımsız</span>
+        </label>
+        <label for="zondetay-mod-paylasimli" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; background: #1B2430; border: 1px solid #3A4A5C; cursor: pointer; box-sizing: border-box;">
+          <input type="radio" class="vh" name="zondetay-mod" id="zondetay-mod-paylasimli" checked>
+          <span style="font-size: 14px; font-weight: 600; color: #E8EEF4;">Paylaşımlı</span>
+        </label>
+      </div>
+      <div style="height: 1px; background: #2A3746;"></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+        <span style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 15px; color: #E8EEF4;">Araç olaylarına tepki ver</span>
+          <span style="font-size: 11px; color: #6E7C8C;">Kapı · sinyal · geri vites · far</span>
+        </span>
+        <label for="zondetay-olaylar" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
+          <input type="checkbox" class="vh" id="zondetay-olaylar" aria-label="Bu bölge araç olaylarına tepki versin" checked>
+          <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #FFFFFF;"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ALT BÖLGELER -->
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 12px 12px 2px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">Alt bölgeler</h2>
+        <span style="font-size: 11px; color: #6E7C8C;">örnek aralık — montajda ölçülecek</span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 44px;">
+          <span style="display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 15px; color: #E8EEF4;">Kulp</span>
+            <span class="mono" style="font-size: 11px; color: #93A2B3;">piksel 0–40</span>
+          </span>
+          <label for="zondetay-alt-kulp" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
+            <input type="checkbox" class="vh" id="zondetay-alt-kulp" aria-label="Kulp alt bölgesi gücü" checked>
+            <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #FFFFFF;"></span></span>
+          </label>
+        </div>
+        <div style="height: 1px; background: #2A3746;"></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 44px;">
+          <span style="display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 15px; color: #E8EEF4;">Cep</span>
+            <span class="mono" style="font-size: 11px; color: #93A2B3;">piksel 41–80</span>
+          </span>
+          <label for="zondetay-alt-cep" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
+            <input type="checkbox" class="vh" id="zondetay-alt-cep" aria-label="Cep alt bölgesi gücü" checked>
+            <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #FFFFFF;"></span></span>
+          </label>
+        </div>
+        <div style="height: 1px; background: #2A3746;"></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 44px;">
+          <span style="display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 15px; color: #E8EEF4;">Şerit</span>
+            <span class="mono" style="font-size: 11px; color: #93A2B3;">piksel 81–150</span>
+          </span>
+          <label for="zondetay-alt-serit" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
+            <input type="checkbox" class="vh" id="zondetay-alt-serit" aria-label="Şerit alt bölgesi gücü">
+            <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #2A3746; border: 1px solid #3A4A5C; position: relative; flex-shrink: 0; box-sizing: border-box;"><span style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 999px; background: #E8EEF4;"></span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SEKME ÇUBUĞU -->
+  <div style="height: 72px; flex-shrink: 0; border-top: 1px solid #2A3746; background: #0F1620; display: flex; align-items: stretch; padding: 0 4px;">
+    <a href="#bolgeler" aria-current="page" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #4CC2FF; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"></rect></svg>
+      <span style="font-size: 11px; font-weight: 600;">Bölgeler</span>
+    </a>
+    <a href="#olaylar" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13.5h5.5L10.5 21 19 10.5h-5.6L13 3z"></path></svg>
+      <span style="font-size: 11px;">Olaylar</span>
+    </a>
+    <a href="#sahneler" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 13.5 12 18.5l9-5"></path></svg>
+      <span style="font-size: 11px;">Sahneler</span>
+    </a>
+    <a href="#ayarlar" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.3"></circle><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6"></path></svg>
+      <span style="font-size: 11px;">Ayarlar</span>
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

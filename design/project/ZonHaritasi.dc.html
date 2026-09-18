@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>LED bölge haritası — LED'ler nereye gidiyor?</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 400px; height: 4px; background: #4CC2FF; box-shadow: 0 0 24px 2px rgba(76,194,255,0.55);"></div>
+  <div style="position: absolute; top: 0; left: 400px; width: 400px; height: 4px; background: #B98BFF; box-shadow: 0 0 24px 2px rgba(185,139,255,0.55);"></div>
+  <div style="position: absolute; top: 0; left: 800px; width: 400px; height: 4px; background: #46D98A; box-shadow: 0 0 24px 2px rgba(70,217,138,0.55);"></div>
+  <div style="position: absolute; top: 0; left: 1200px; width: 400px; height: 4px; background: #FF9F45; box-shadow: 0 0 24px 2px rgba(255,159,69,0.55);"></div>
+
+  <!-- BAŞLIK BLOĞU -->
+  <div style="height: 76px; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 04 — LED BÖLGE HARİTASI</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">LED'ler nereye gidiyor?</h1>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>4 ZON · 4 VERİ HATTI</div>
+  </div>
+
+  <!-- ANA SIRA -->
+  <div style="height: 500px; flex-shrink: 0; display: flex; gap: 28px;">
+
+    <!-- KABİN ŞEMASI -->
+    <div style="width: 900px; flex-shrink: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px;">
+      <svg width="856" height="442" viewBox="0 0 856 442" role="img" aria-label="Scirocco kabini üstten şematik: sol kapı Z1, sağ kapı Z2, ön ayak altı Z3 ve göğüs konsol Z4 bölgeleri; dört veri hattı sürücü ayak boşluğundaki ESP32 kutusundan çıkar">
+        <defs>
+          <filter id="glowZon" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="5" result="b"></feGaussianBlur>
+            <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+          </filter>
+        </defs>
+
+        <!-- KABİN DIŞ HAT -->
+        <path d="M428 14 C336 14 262 48 244 104 L214 232 C202 318 222 388 274 410 L582 410 C634 388 654 318 642 232 L612 104 C594 48 520 14 428 14 Z" fill="#0F151C" stroke="#2A3746" stroke-width="1.6"></path>
+        <path d="M250 142 C330 116 526 116 606 142" fill="none" stroke="#2A3746" stroke-width="1.4"></path>
+
+        <!-- ARKA KOLTUKLAR (SÖNÜK) -->
+        <rect x="286" y="330" width="100" height="70" rx="12" fill="#1B2430" stroke="#2A3746" stroke-width="1" opacity="0.5"></rect>
+        <rect x="470" y="330" width="100" height="70" rx="12" fill="#1B2430" stroke="#2A3746" stroke-width="1" opacity="0.5"></rect>
+
+        <!-- KAPSAM DIŞI HAYALET ALAN -->
+        <rect x="268" y="320" width="320" height="88" rx="12" fill="rgba(110,124,140,0.07)" stroke="#6E7C8C" stroke-width="1.2" stroke-dasharray="6 5"></rect>
+        <text x="428" y="356" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#93A2B3">Arka ayak altı + arka koltuk</text>
+        <text x="428" y="376" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#6E7C8C">KAPSAM DIŞI — kaldırıldı</text>
+
+        <!-- ÖN KOLTUKLAR -->
+        <rect x="284" y="210" width="76" height="92" rx="14" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+        <rect x="496" y="210" width="76" height="92" rx="14" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+        <!-- ORTA KONSOL -->
+        <rect x="398" y="196" width="60" height="110" rx="8" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+        <!-- DİREKSİYON (SOL) -->
+        <ellipse cx="314" cy="186" rx="23" ry="12" fill="none" stroke="#93A2B3" stroke-width="1.6"></ellipse>
+        <text x="314" y="166" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">DİREKSİYON</text>
+
+        <!-- Z4: TORPİDO + KONSOL -->
+        <path d="M268 168 C340 152 516 152 588 168" fill="none" stroke="#FF9F45" stroke-width="4" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M428 202 L428 300" stroke="#FF9F45" stroke-width="4" stroke-linecap="round" filter="url(#glowZon)"></path>
+
+        <!-- Z3: ÖN AYAK ALTI -->
+        <path d="M274 204 L352 204" stroke="#46D98A" stroke-width="5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M504 204 L582 204" stroke="#46D98A" stroke-width="5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <text x="313" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#46D98A">SÜRÜCÜ</text>
+        <text x="543" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#46D98A">YOLCU</text>
+
+        <!-- Z1: SOL KAPI -->
+        <path d="M225 160 L222 196" stroke="#4CC2FF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M221 206 L217 252" stroke="#4CC2FF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M216 262 L209 332" stroke="#4CC2FF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <text x="238" y="180" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#4CC2FF">kulp</text>
+        <text x="234" y="232" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#4CC2FF">cep</text>
+        <text x="228" y="300" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#4CC2FF">şerit</text>
+
+        <!-- Z2: SAĞ KAPI -->
+        <path d="M631 160 L634 196" stroke="#B98BFF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M635 206 L639 252" stroke="#B98BFF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <path d="M640 262 L647 332" stroke="#B98BFF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <text x="618" y="180" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#B98BFF">kulp</text>
+        <text x="622" y="232" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#B98BFF">cep</text>
+        <text x="628" y="300" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#B98BFF">şerit</text>
+
+        <!-- ESP32 KUTUSU + VERİ HATLARI -->
+        <rect x="8" y="118" width="152" height="62" rx="9" fill="#1B2430" stroke="#4CC2FF" stroke-width="1.3"></rect>
+        <text x="20" y="140" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#E8EEF4">ESP32 kutusu</text>
+        <text x="20" y="157" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">sürücü ayak boşluğu,</text>
+        <text x="20" y="171" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">J533 gateway yakını</text>
+
+        <path d="M160 146 L196 154 L221 163" fill="none" stroke="#4CC2FF" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.85"></path>
+        <path d="M160 134 C300 68 560 68 630 156" fill="none" stroke="#B98BFF" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.85"></path>
+        <path d="M160 162 L226 184 L272 202" fill="none" stroke="#46D98A" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.85"></path>
+        <path d="M160 128 C226 104 250 140 286 166" fill="none" stroke="#FF9F45" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.85"></path>
+
+        <circle cx="223" cy="158" r="5.5" fill="#0B0F14" stroke="#93A2B3" stroke-width="1.3"></circle>
+        <circle cx="633" cy="158" r="5.5" fill="#0B0F14" stroke="#93A2B3" stroke-width="1.3"></circle>
+
+        <!-- ZON ETİKETLERİ: SOL -->
+        <circle cx="186" cy="238" r="13" fill="#4CC2FF"></circle>
+        <text x="186" y="243" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">Z1</text>
+        <text x="166" y="234" text-anchor="end" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Sol kapı</text>
+        <text x="166" y="251" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">DIN 1 · kulp · cep · şerit</text>
+
+        <!-- ZON ETİKETLERİ: SAĞ -->
+        <circle cx="662" cy="238" r="13" fill="#B98BFF"></circle>
+        <text x="662" y="243" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">Z2</text>
+        <text x="682" y="234" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Sağ kapı</text>
+        <text x="682" y="251" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">DIN 2 · kulp · cep · şerit</text>
+
+        <circle cx="654" cy="178" r="13" fill="#46D98A"></circle>
+        <text x="654" y="183" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">Z3</text>
+        <text x="674" y="174" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Ön ayak altı</text>
+        <text x="674" y="191" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">DIN 3 · sürücü + yolcu</text>
+        <path d="M641 186 L590 200" fill="none" stroke="#2A3746" stroke-width="1"></path>
+
+        <circle cx="646" cy="78" r="13" fill="#FF9F45"></circle>
+        <text x="646" y="83" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">Z4</text>
+        <text x="666" y="74" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Göğüs / konsol</text>
+        <text x="666" y="91" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">DIN 4 · torpido + konsol</text>
+        <path d="M640 89 L592 160" fill="none" stroke="#2A3746" stroke-width="1"></path>
+
+        <!-- LEJANT -->
+        <line x1="0" y1="414" x2="856" y2="414" stroke="#2A3746" stroke-width="1"></line>
+        <path d="M2 432 L38 432" stroke="#93A2B3" stroke-width="1.5" stroke-dasharray="5 4"></path>
+        <text x="46" y="436" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">veri hattı (DIN 1-4)</text>
+        <circle cx="216" cy="432" r="5.5" fill="#0B0F14" stroke="#93A2B3" stroke-width="1.3"></circle>
+        <text x="230" y="436" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">kapı körüğü geçişi</text>
+        <path d="M368 432 L404 432" stroke="#4CC2FF" stroke-width="4.5" stroke-linecap="round" filter="url(#glowZon)"></path>
+        <text x="414" y="436" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">LED şerit segmenti</text>
+        <text x="600" y="436" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#6E7C8C">Şematik — gerçek ölçü değil, ön yukarıda, direksiyon solda.</text>
+      </svg>
+    </div>
+
+    <!-- SAĞ SÜTUN -->
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 9px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ŞERİT GERÇEĞİ — ZBL 12 V</h2>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Profil</span> &nbsp;1,8 × 10 mm — oluğa en az 10 mm derinlik gerekir.</div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Güç</span> &nbsp;15 W/m — 12 V'ta ~1,25 A/m.</div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Kesim boyu</span> &nbsp;12 V'ta 20 mm — piksel çözünürlüğü de 20 mm. Yani <span style="color: #FFB020;">600 LED ≠ 600 piksel</span>.</div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Maks. hat</span> &nbsp;5 m tek sürüş.</div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Protokol</span> &nbsp;WS2811 / WS2812 / SK6812 uyumlu.</div>
+        <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">Akım</span> &nbsp;3,5 m tam beyaz ≈ 4,4 A — kendi 7,5 A sigortası, iç aydınlatma sigortasından asla.</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
+          <span style="font-size: 12.5px; color: #93A2B3;">IC tipi ve RGB sırası tedarikçiye sorulacak · MOQ 100 m/SKU, numune şart.</span>
+        </div>
+      </div>
+
+      <div style="background: rgba(76,194,255,0.06); border: 1px solid #4CC2FF; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #4CC2FF;">KİLİT NOKTA — AYRI BÖLGE, AYRI HAT DEMEK DEĞİL</div>
+        <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Adreslenebilir şeritte tek bir veri hattındaki LED'ler piksel piksel bağımsız kontrol edilir. Sol kapının kulp, cep ve şerit bölümleri aynı hatta zincirlenir, yazılımda piksel aralığıyla ayrılır.</div>
+        <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">4 hat, bölge sayısı için değil; kablolama basitliği ve arıza izolasyonu için seçildi. Bölge sayısı arttıkça pin sayısı değil, hattaki piksel haritası büyür.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ALT SIRA -->
+  <div style="height: 264px; flex-shrink: 0; display: flex; gap: 20px;">
+
+    <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">BÖLGE TABLOSU</h2>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746; width: 60px;">Bölge</th>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746; width: 250px;">Konum ve segmentler</th>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746; width: 90px;">Veri hattı</th>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746; width: 216px;">Örnek piksel aralığı</th>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746; width: 180px;">Tahmini uzunluk<br><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 6px; text-transform: none; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></th>
+          <th style="text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 7px 10px; border-bottom: 1px solid #2A3746;">≈ Akım (~1,25 A/m)</th>
+        </tr>
+        <tr>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">Z1</span></td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4;">Sol kapı — kulp · cep · şerit</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4; font-family: 'JetBrains Mono', monospace;">DIN 1</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">0-40 / 41-80 / 81-150 (örnek)</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #FFB020; font-family: 'JetBrains Mono', monospace;">ölçülecek</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">uzunluk × 1,25 A</td>
+        </tr>
+        <tr>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: #B98BFF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">Z2</span></td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4;">Sağ kapı — kulp · cep · şerit</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4; font-family: 'JetBrains Mono', monospace;">DIN 2</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">Z1 ile ayna düzen (örnek)</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #FFB020; font-family: 'JetBrains Mono', monospace;">ölçülecek</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">uzunluk × 1,25 A</td>
+        </tr>
+        <tr>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: #46D98A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">Z3</span></td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4;">Ön ayak altı — sürücü + yolcu</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 14px; color: #E8EEF4; font-family: 'JetBrains Mono', monospace;">DIN 3</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">sürücü / yolcu ped (zincir)</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #FFB020; font-family: 'JetBrains Mono', monospace;">ölçülecek</td>
+          <td style="padding: 7px 10px; border-bottom: 1px solid #2A3746; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">uzunluk × 1,25 A</td>
+        </tr>
+        <tr>
+          <td style="padding: 7px 10px;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 999px; background: #FF9F45; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">Z4</span></td>
+          <td style="padding: 7px 10px; font-size: 14px; color: #E8EEF4;">Göğüs / konsol — torpido + orta konsol</td>
+          <td style="padding: 7px 10px; font-size: 14px; color: #E8EEF4; font-family: 'JetBrains Mono', monospace;">DIN 4</td>
+          <td style="padding: 7px 10px; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">torpido / konsol</td>
+          <td style="padding: 7px 10px; font-size: 13px; color: #FFB020; font-family: 'JetBrains Mono', monospace;">ölçülecek</td>
+          <td style="padding: 7px 10px; font-size: 13px; color: #93A2B3; font-family: 'JetBrains Mono', monospace;">uzunluk × 1,25 A</td>
+        </tr>
+      </table>
+      <div style="font-size: 12.5px; color: #93A2B3;">Piksel aralıkları örnektir; gerçek sayılar montajda 20 mm'lik kesim boyuna göre ölçülür. Her bölgenin davranış modu (paylaşımlı / bağımsız, hangi olaya tepki) iOS uygulamasından seçilir.</div>
+    </div>
+
+    <div style="width: 440px; flex-shrink: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KAPSAM VE KABLO KURALLARI</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Arka ayak altı ve arka koltuk bölgesi araç sahibinin kararıyla kapsamdan çıkarıldı; Scirocco 3 kapılı (2+2) olduğu için o rota kapı körüğünden değil, eşik trimi / koltuk altından gitmek zorundaydı.</div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Kapı körüğünden geçen 800 kHz veri için DATA ile GND bükümlü çift çekilir; gerekirse şerit girişine tek piksel repeater konur.</div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Araç tarafındaki tüm bağlantılar crimp + ısı büzüşmeli olur — lehim yok, titreşimde çatlar.</div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Kablolar cam mekanizmasından uzak tutulur ve tesisat bandıyla sabitlenir.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
