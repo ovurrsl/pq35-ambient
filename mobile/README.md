@@ -19,6 +19,42 @@ cp .env.example .env.local   # ve doldur
 `.env.local` üç değer ister: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`,
 `EXPO_PUBLIC_API_URL`.
 
+### Supabase projesi — kurulu ve çalışıyor
+
+| | |
+|---|---|
+| Proje | `pq35-ambient` · `eu-central-1` |
+| URL | `https://pfyiemswjsmbguallxwy.supabase.co` |
+| Şema | 7 tablo, RLS açık ve **varsayılan reddet** |
+| Edge Function | `cihaz-konum` · `verify_jwt` **kapalı** (cihazda JWT yok, kendi token'ıyla doğrulanır) |
+| RLS yardımcıları | dışa açılmayan `guvenlik` şemasında — PostgREST üzerinden çağrılamaz |
+
+Publishable (anon) anahtarı panelden alınır:
+**Project Settings → API Keys**.
+
+> **Bu depo public.** Publishable anahtar tasarımı gereği istemciye açıktır ve zaten
+> uygulama paketine gömülür — ama public bir depoya yazılırsa otomatik tarayıcılar
+> saatler içinde bulur. Bu yüzden anahtar **depoya commit edilmez**, EAS ortam
+> değişkeni olarak tutulur:
+
+```bash
+npx eas env:create --name EXPO_PUBLIC_SUPABASE_URL \
+  --value https://pfyiemswjsmbguallxwy.supabase.co \
+  --environment development --environment preview --environment production --visibility plaintext
+
+npx eas env:create --name EXPO_PUBLIC_SUPABASE_ANON_KEY \
+  --value <panelden aldığın publishable anahtar> \
+  --environment development --environment preview --environment production --visibility sensitive
+```
+
+Yerel geliştirme için aynı iki değer `.env.local`'a yazılır (o dosya `.gitignore`'da).
+
+> **Yapılmadan bırakılmamalı:** kendi hesabını açtıktan **sonra** Supabase'de
+> *Authentication → Sign In / Providers* altında **açık kayda kapat**. Depo public
+> olduğu için anon anahtarla ulaşılabilen tek yüzey Auth'tur; RLS varsayılan reddet
+> olduğundan veri okunamaz ama açık kayıt bırakılırsa yabancılar hesap açabilir.
+> Misafirleri sen davet edersin, kendileri kaydolmaz.
+
 > **`EXPO_PUBLIC_*` pakete gömülür ve okunabilir.** Oraya yalnızca publishable (anon)
 > anahtar konur. Service role anahtarı, SIM808 ön paylaşımlı anahtarı ve cihaz device
 > token'ı asla uygulamaya girmez. Güvenlik RLS'ten gelir, anahtarın gizliliğinden değil.
