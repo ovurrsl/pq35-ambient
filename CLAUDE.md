@@ -281,6 +281,41 @@ iOS, BLE adresini ~15 dakikada bir değiştirir (RPA) → **sabit MAC beyaz list
 
 ---
 
+## 7.1 iOS uygulamasının ekran seti (16 ekran)
+
+Uygulama iki kümeden oluşur. Kanvasta 4. ve 5. gruplar bunlardır.
+
+| Küme | Ekranlar |
+|---|---|
+| Kontrol (8) | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler |
+| Kimlik, güvenlik ve ayarlar (8) | Uygulama kilidi (Face ID) · Giriş · İki adımlı doğrulama (TOTP) · Araçla eşleştirme · Komut onayı · Ayarlar · Güvenlik ayarları · Cihazlar |
+
+Alt sekme çubuğu **5 sekmedir** ve değişmez: `Bölgeler · Olaylar · Araç · Sahneler · Ayarlar`.
+Konum ve İletişim, `Araç` sekmesinin içindeki segment kontrolünün diğer sekmeleridir.
+Güvenlik, Cihazlar ve Gizli özellikler `Ayarlar` sekmesinin alt ekranlarıdır.
+Kilit, Giriş, Doğrulama ve Eşleştirme ekranlarında **sekme çubuğu yoktur** — uygulama henüz
+açılmamıştır.
+
+### Kimlik zinciri — arayüzde bu şekilde anlatılır
+
+```
+Face ID (yerel)  →  Keychain'i açar (biometryCurrentSet)  →  refresh token  →  Supabase JWT
+```
+
+**"Face ID ile giriş yapılır" ifadesi yasaktır.** Face ID cihazda yereldir ve sunucuya hiçbir
+şey kanıtlamaz; sunucuya karşı kimlik JWT'dir. Kayıtlı yüz seti değişirse Keychain girdisi
+geçersiz olur ve kullanıcı e-posta + şifre + TOTP ile baştan girer — bu bir arıza değil,
+tasarımın kendisi.
+
+**İki ayrı güven sınırı karıştırılmaz:** telefon ↔ araç **BLE bonding**'e dayanır ve araç
+yakındayken internet gerekmez; telefon ↔ bulut **Supabase JWT**'ye dayanır ve konum geçmişi,
+panel senkronu ve uzaktan erişim içindir.
+
+**Kritik komutlar** (kilit, arama, kodlama) misafir yetkisinde kapalıdır; sahip yetkisinde
+bile **Face ID onayı** ister ve oturum anahtarıyla imzalanıp tekrar sayacı taşır.
+
+---
+
 ## 8. DIY VAG kodlama (ayrı alt sistem)
 
 PQ35 gövde modülleri **TP2.0 + KWP2000** konuşur (UDS değil). Kanal kurulumu `0x200`,
@@ -316,6 +351,11 @@ design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
 değiştirirken hem buradaki dosyayı hem yayınlanmış artifact'i güncelle.
 
+Kanvas **31 pano / 6 grup**: sistem ve araç (4) · kurulum ve davranış (4) · malzeme, risk ve
+kodlama (3) · iOS kontrol ekranları (8) · iOS kimlik, güvenlik ve ayarlar (8) · bulut ve
+güvenlik (4). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
+sayılarını da güncelle.
+
 **Henüz yok, ileride açılacak:** `firmware/` (PlatformIO, ESP32-S3) · `ios/` (SwiftUI).
 Bunları gerçekten kod yazılırken oluştur, şimdiden boş klasör açma.
 
@@ -335,9 +375,15 @@ Dördüncü bir sohbet dökümü daha vardı; `docs/00`'ın birebir alt kümesi 
 
 ## 11. "İleride" kovası
 
-MIB2 ekran senkronu (Yol B) · Apple HomeKit · Find My ağı · garaj kapısı RF klonlama ·
-Siri Shortcuts / Watch / Live Activity · tur kaydı · uzaktan kilit/cam kontrolü (mesaj
-enjeksiyonu — yüksek risk).
+Apple HomeKit · Find My ağı · garaj kapısı RF klonlama · Siri Shortcuts / Watch /
+Live Activity · tur kaydı · uzaktan kilit/cam kontrolü (mesaj enjeksiyonu — yüksek risk).
+
+**Yol B artık "ileride" değil, opsiyonel bir deney.** §1'deki eşiği ölçülebilir bir keşif
+protokolüne çeviren bir pano var (yedek al → adaptasyon kanalı var mı → Listen-Only logger →
+menüyü aç → renk değiştirirken logla → tekrarlanabilirlik → `index → RGB` tablosu). Bu bir
+**faz değildir**: Faz 4'ten sonra herhangi bir zamanda denenebilir, başarısız olması Yol A'yı
+etkilemez. Yol B çalışsa bile Arduino'nun okuyacağı şey **RGB değil bir index'tir**; firmware
+bir `index → RGB` tablosu tutmak zorundadır.
 
 **Kapsama alındı (3. faz):** SIM808 GSM/GPS, uzaktan konum takibi, Supabase veritabanı,
 Vercel admin paneli.

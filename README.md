@@ -28,7 +28,7 @@ Bunun yerine **Yol A** benimsendi:
 | GSM/GPS | **SIM808** — uzaktan konum, SMS, arama; 3. fazda eklenir |
 | Bulut | **Supabase** (Postgres + Auth + Edge Functions) · **Vercel** admin paneli |
 | Renk ve parlaklık | iOS uygulamasından |
-| MIB2 senkronu | "Yol B" — ileride, kanıtlanmamış |
+| MIB2 senkronu | **"Yol B"** — opsiyonel deney, kanıtlanmamış (aşağıda) |
 
 ## Bölgeler
 
@@ -94,12 +94,31 @@ ikinci saldırı yüzeyi demektir. Telefonla tüm haberleşme ESP32-S3'ün BLE's
 **Aynı anda birden çok telefon** bağlanabilir: her telefon ayrı bonding kaydı ve ayrı yetki
 seviyesi (sahip / misafir) taşır, tek tek iptal edilebilir.
 
+## Yol B — MIB2'den renk okumak
+
+Araç sahibinin ilk isteği "teypten rengi değiştirince Arduino okusun" idi. Araştırma bunun
+PQ35'te **bugün çalışmadığını** gösteriyor: konfor hattında düz RGB paketi yok, MIB2 yalnızca
+soyut bir BAP index'i gönderiyor, gerçek RGB BCM'nin adaptasyon tablosunda ve ayrı bir LIN
+hattında — üstelik bu mimari yalnızca MQB'de doğrulanmış.
+
+Bu yüzden "olmaz" demek yerine, araçta kesin cevabı verecek bir **keşif protokolü** tanımlandı
+(kanvasta pano 11). Yedek al → adaptasyon kanalı var mı bak → Listen-Only logger kur → menüyü
+aç → renk değiştirirken logla → tekrarlanabilirlik testi → `index → RGB` tablosunu çıkar.
+
+**Eşik:** menü gerçekten görünürse **ve** tekrarlanabilir bir frame yakalanırsa Yol B
+uygulanabilir. İkisi birden yoksa Yol A'da kalınır — bu beklenen sonuçtur ve sistemin
+çalışmasını etkilemez. Deney bir faz değil, opsiyoneldir.
+
 ## Güvenlik
 
 Kimlik doğrulama **Supabase JWT**'dir; **Face ID kimlik doğrulama değildir** — cihazda yerel
 olarak Keychain'deki refresh token'ı açar. Üstüne TOTP MFA. Her tabloda RLS açık ve varsayılan
 reddet. ESP32 **asla** service role anahtarı taşımaz; kendi device token'ı olur ve veri Edge
 Function üzerinden yazılır.
+
+Kritik komutlar (kilit, arama, kodlama) misafir yetkisinde tamamen kapalıdır; sahip
+yetkisinde bile ayrıca Face ID onayı ister, oturum anahtarıyla imzalanır ve komut tekrar
+sayacı taşır.
 
 Araçtaki ilk yazılım **sadece dinler**; log alınır, masada analiz edilir, LED kodu ondan sonra
 yazılır. Splice öncesi kontrol listesi ve diğer sert kurallar `CLAUDE.md` §2 ve §6'da.
@@ -127,8 +146,10 @@ alt kümesi olduğu için eklenmedi.
 
 ## Tasarım kanvası
 
-15 panoluk görsel plan — sistem mimarisi, bölge haritası, kablolama, davranış makinesi,
-5 aşamalı yol haritası, malzeme ve risk listesi, DIY kodlama ve iOS uygulama ekranları:
+**31 panoluk görsel plan** — sistem mimarisi, bölge haritası, kablolama ve pinout, davranış
+makinesi, 7 fazlı yol haritası, malzeme ve risk kaydı, DIY VAG kodlama, Yol B keşif
+protokolü, **16 iOS uygulama ekranı** (8 kontrol + 8 kimlik/güvenlik/ayarlar), Vercel admin
+paneli ve güvenlik mimarisi:
 
 **https://claude.ai/artifact/A9dAecdM4bQbLmXE1Bzchk**
 
