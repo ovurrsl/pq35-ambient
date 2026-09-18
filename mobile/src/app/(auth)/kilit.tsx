@@ -144,7 +144,7 @@ export default function KilitEkrani() {
 
       <RuleBox title="FACE ID KİMLİK DOĞRULAMA DEĞİLDİR">
         Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik
-        Supabase JWT'dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve
+        Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve
         e-posta, şifre ve TOTP ile yeniden giriş gerekir.
       </RuleBox>
     </ScrollView>
