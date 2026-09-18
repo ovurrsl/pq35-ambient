@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
 <style>
 :root{
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
@@ -60,7 +60,8 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">TWAI LISTEN-ONLY</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">v1: Kl.15</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">2 CAN kanalı · 100k + 500k</span>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">12 V şerit · kendi sigortası (metrajla boyutlanır)</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">12 V şerit · kendi sigortası</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: rgba(176,140,255,0.10); border: 1px solid #B08CFF; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">SIM808 · 3. faz</span>
         </div>
       </div>
     </div>
@@ -134,15 +135,18 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
       <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #46D98A;">05–08 · KURULUM VE DAVRANIŞ</h2>
-      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">05</span> Kablolama ve pinout<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">06</span> Güvenli kurulum<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">07</span> Davranış makinesi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">08</span> Yol haritası — 5 aşama + 2. faz</div>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">05</span> Kablolama ve pinout<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">06</span> Güvenli kurulum<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">07</span> Davranış makinesi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">08</span> Yol haritası — 5 aşama + Faz 6-7</div>
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
-      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF9F45;">09–10 · MALZEME, RİSK VE KODLAMA</h2>
-      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">09</span> Malzeme listesi ve risk kaydı<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">10</span> DIY VAG kodlama<br><span style="color: #93A2B3; font-size: 12.5px;">TP2.0 + KWP2000 · ambiyans projesinden bağımsız, isteğe bağlı iş</span></div>
+      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF9F45;">09–12 · MALZEME, KODLAMA VE BULUT</h2>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">09</span> Malzeme listesi ve risk kaydı<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">10</span> DIY VAG kodlama<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">11</span> Web paneli (Vercel)<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">12</span> Güvenlik mimarisi<br><span style="color: #93A2B3; font-size: 12.5px;">11–12 · 3. faz: SIM808 ve bulut</span></div>
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
-      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B98BFF;">iOS · 6 EKRAN</h2>
-      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;">Ana ekran — bölgeler<br>Bölge detayı — renk, parlaklık<br>CAN olayı → bölge eşlemesi<br>Araç — canlı veri<br>Sahneler ve bağlantı<br>Gizli özellikler (kodlama)</div>
+      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B98BFF;">iOS · 8 EKRAN</h2>
+      <div style="display: flex; gap: 14px;">
+        <div style="flex: 1; font-size: 13px; line-height: 1.55; color: #E8EEF4;">Ana ekran — bölgeler<br>Bölge detayı — renk<br>CAN olayı → bölge<br>Araç — canlı veri</div>
+        <div style="flex: 1; font-size: 13px; line-height: 1.55; color: #E8EEF4;">Konum — GPS ve rota<br>İletişim — arama / SMS<br>Sahneler ve bağlantı<br>Gizli özellikler</div>
+      </div>
     </div>
   </div>
 

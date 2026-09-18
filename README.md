@@ -25,6 +25,8 @@ Bunun yerine **Yol A** benimsendi:
 | LED'leri süren | ESP32-S3'ün kendisi |
 | Komfort-CAN'in rolü | **yalnızca tetikleyici** — kapı, kilit, far/gece, sinyal, hız `0x351`, RPM `0x353` |
 | Antriebs-CAN'in rolü | **canlı veri** — devir ve gaz pedalı `0x280`; 2. fazda eklenir |
+| GSM/GPS | **SIM808** — uzaktan konum, SMS, arama; 3. fazda eklenir |
+| Bulut | **Supabase** (Postgres + Auth + Edge Functions) · **Vercel** admin paneli |
 | Renk ve parlaklık | iOS uygulamasından |
 | MIB2 senkronu | "Yol B" — ileride, kanıtlanmamış |
 
@@ -70,7 +72,34 @@ güç kesme MOSFET'i.
 Araca **J533 gateway passthrough ara kablosu** ile girilir — hiçbir kablo kesilmez, ara kablo
 çıkarılınca araç fabrika hâline döner.
 
-## Güvenlik kuralları
+## GSM/GPS ve bulut (3. faz)
+
+SIM808 uzaktan konum takibi, SMS ve arama sağlar. Komfort hattı, LED'ler ve Antriebs kanalı
+çalıştıktan sonra devreye alınır.
+
+Bilinmesi gereken dört şey:
+
+- **SIM808 2G-only.** Satın alma öncesi operatörden 2G kapanış takvimi teyit edilecek.
+- **Kendi güç hattı şart.** İletimde 2 A'e varan anlık akım çeker; kendi 5 V / ≥2 A hattı ve
+  ≥1000 µF bulk kondansatör olmadan modül şebekeye girerken tüm sistem resetlenir.
+- **iPhone bu hattın ahizesi olamaz.** Ses araç içindeki mikrofon ve hoparlörden yürür;
+  uygulama numara seçer, arar, kapatır, gelen aramayı gösterir.
+- **SIM808'in TLS'i güvenilmez.** Bu yüzden payload cihazda AES-GCM ile şifrelenir ve
+  imzalanır, Supabase Edge Function doğrular.
+
+**Tek radyo kuralı:** SIM808'in kendi Bluetooth'u (3.0 klasik, BLE değil) kullanılmaz.
+iOS üçüncü parti uygulamalara MFi olmadan klasik Bluetooth erişimi vermez, ikinci radyo
+ikinci saldırı yüzeyi demektir. Telefonla tüm haberleşme ESP32-S3'ün BLE'si üzerinden yürür.
+
+**Aynı anda birden çok telefon** bağlanabilir: her telefon ayrı bonding kaydı ve ayrı yetki
+seviyesi (sahip / misafir) taşır, tek tek iptal edilebilir.
+
+## Güvenlik
+
+Kimlik doğrulama **Supabase JWT**'dir; **Face ID kimlik doğrulama değildir** — cihazda yerel
+olarak Keychain'deki refresh token'ı açar. Üstüne TOTP MFA. Her tabloda RLS açık ve varsayılan
+reddet. ESP32 **asla** service role anahtarı taşımaz; kendi device token'ı olur ve veri Edge
+Function üzerinden yazılır.
 
 Araçtaki ilk yazılım **sadece dinler**; log alınır, masada analiz edilir, LED kodu ondan sonra
 yazılır. Splice öncesi kontrol listesi ve diğer sert kurallar `CLAUDE.md` §2 ve §6'da.

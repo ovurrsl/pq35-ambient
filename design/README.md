@@ -21,13 +21,14 @@ gibi yeniden yayınlanabilir.
 
 | Grup | Panolar |
 |---|---|
-| 1 · Sistem ve araç | Kapak ve özet · Araç ağları · Sistem mimarisi · LED bölge haritası (7 bölge) |
-| 2 · Kurulum ve davranış | Kablolama ve pinout · Güvenli kurulum · Davranış makinesi · 5 aşamalı yol haritası |
+| 1 · Sistem ve araç | Kapak ve özet · Araç ağları · Sistem mimarisi · LED bölge haritası |
+| 2 · Kurulum ve davranış | Kablolama ve pinout · Güvenli kurulum · Davranış makinesi · Yol haritası |
 | 3 · Malzeme, risk ve kodlama | Malzeme ve risk · DIY VAG kodlama |
-| 4 · iOS uygulaması | Bölgeler · Bölge detayı · CAN olayları · **Araç · canlı veri** · Sahneler ve bağlantı · Gizli özellikler |
+| 4 · iOS uygulaması | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler |
+| 5 · Bulut ve güvenlik | Vercel admin paneli · Güvenlik mimarisi |
 
-Poster panolar 1600×1000; kablolama, malzeme/risk ve DIY kodlama panoları 1600×1200;
-telefon ekranları 390×844. Toplam 16 pano.
+Poster panolar 1600×1000; kablolama, malzeme/risk, DIY kodlama ve güvenlik panoları
+1600×1200; telefon ekranları 390×844. Toplam 20 pano.
 
 ## Düzenleme kuralları
 

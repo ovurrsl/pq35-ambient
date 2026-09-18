@@ -1,7 +1,7 @@
 # PQ35-AMBIENT — Claude Code için proje bağlamı
 
 **Araç:** 2016 VW Scirocco · PQ35 platformu · fabrika çıkışlı MIB2 · 3 kapılı
-**Hedef:** CAN tetiklemeli ambiyans aydınlatma (7 bölge) + canlı araç verisi + iOS BLE uygulaması + DIY VAG kodlama aracı
+**Hedef:** CAN tetiklemeli ambiyans aydınlatma (7 bölge) + canlı araç verisi + GSM/GPS uzaktan takip + iOS BLE uygulaması + Supabase/Vercel admin paneli + DIY VAG kodlama aracı
 **Durum:** Planlama / tasarım. **Araçta henüz hiçbir fiziksel işlem yapılmadı.**
 **Dil:** Bu depoda tüm doküman, yorum ve arayüz metni **Türkçe**. Teknik terimler (CAN, Listen-Only, BLE, PWM, TWAI, UDS) İngilizce kalabilir.
 
@@ -52,6 +52,8 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 | 8 | `pq-flasher` brute-force script'i **canlı araçta asla** çalıştırılmaz. | 3 yanlış security-access denemesi modülü 20 dk kilitler. |
 | 9 | **MIB2 (5F) en sona** bırakılır ve mümkünse hiç dokunulmaz. | UDS tabanlı, gerçek VCDS/ODIS ile bile hata veriyor; bricking riski. |
 | 10 | Şerit gücü **kendi sigortasından**, iç aydınlatma sigortasından değil. Sigorta, toplam metraj ölçüldükten sonra boyutlandırılır. | ~1,25 A/m; 3,5 m tam beyazda ≈4,4 A. 7 bölgeyle toplam metraj arttı: ~6 m'yi aşarsa 7,5 A yetmez, hatlar iki sigortaya bölünür veya sigorta büyütülür. |
+| 11 | ESP32 **asla Supabase service role anahtarı taşımaz**. Cihazın kendi device token'ı olur; veri Edge Function'a gider, fonksiyon doğrulayıp service role ile yazar. | Anahtar sızarsa etki tek cihazla sınırlı kalır ve o cihaz iptal edilebilir. |
+| 12 | SIM808 **kendi 5 V / ≥2 A hattından** beslenir, girişinde ≥1000 µF bulk kondansatör olur, GND ortak yapılır. ESP32'nin regülatöründen beslenmez. | İletimde 2 A'e varan anlık akım çeker; aksi hâlde modül şebekeye girerken tüm sistem resetlenir. |
 
 ---
 
@@ -99,6 +101,82 @@ bırakılır**. Komfort hattı ve LED'ler stabil çalıştıktan sonra devreye a
 Motor sıcaklığı, vites, gaz kelebeği, akü voltajı, yağ sıcaklığı, turbo basıncı — **hiçbirinin
 ID'si bilinmiyor.** Bunlar uygulamada "log ile bulunacak" olarak gösterilir; **tahmini ID
 yazmak yasaktır**.
+
+---
+
+## 3.2 GSM/GPS ve bulut (3. faz)
+
+**Modül:** SIM808 — GSM/GPRS + GPS tek kartta. **Komfort hattı, LED'ler ve Antriebs kanalı
+çalıştıktan sonra** devreye alınır.
+
+### Dört sert gerçek
+
+**1. SIM808 2G-only.** Şebeke yoksa veri/SMS/arama çalışmaz. **Satın alma öncesi operatörden
+2G kapanış takvimi teyit edilecek** — bu engelleyici bir maddedir, teyit gelmeden sipariş yok.
+
+**2. Güç, bu modülün bilinen ölüm sebebi.** Şebeke ararken ve iletimde **2 A'e varan anlık
+akım** çeker → kendi 5 V / ≥2 A hattı, ≥1000 µF bulk kondansatör, ortak GND (sert kural 12).
+
+**3. iPhone bu hattın ahizesi olamaz.** BLE gerçek zamanlı ses taşımaz, ESP32-S3'te LE Audio
+yok, klasik Bluetooth'ta telefon daima audio gateway tarafındadır ve iOS üçüncü parti bir
+cihaz için kulaklık rolüne geçmez. **Ses araç içindeki mikrofon ve hoparlörden yürür**;
+uygulama numara seçer, arar, kapatır, gelen aramayı gösterir. Dokümanda, kodda ve arayüzde
+**"telefondan konuşulur" yazma**.
+
+**4. SIM808'in TLS'i güvenilmez.** Dahili HTTP yığınında HTTPS desteği sürüme göre değişir.
+Bu yüzden **taşımaya güvenilmez, veri uygulama katmanında korunur**: cihaz payload'ı kendi ön
+paylaşımlı anahtarıyla **AES-GCM ile şifreler ve imzalar**, Supabase **Edge Function** çözer
+ve doğrular.
+
+### Bulut mimarisi
+
+```
+Araç (ESP32 + SIM808)  ──GPRS, AES-GCM payload──▶  Supabase Edge Function  ──▶  Postgres (RLS)
+                                                            ▲                        │
+iPhone (Face ID → Keychain → JWT) ──HTTPS──────────────────┘                        │
+Vercel admin paneli (aynı Auth, aynı RLS) ──HTTPS───────────────────────────────────┘
+```
+
+**Face ID kimlik doğrulama DEĞİLDİR.** Face ID cihazda yereldir; sunucuya karşı kimlik
+**Supabase JWT**'dir. Refresh token iOS **Keychain**'de `biometryCurrentSet` korumasıyla
+saklanır, Face ID onu açar.
+
+- Supabase Auth: e-posta + şifre + **TOTP MFA**
+- **Her tabloda RLS açık ve varsayılan reddet**, politikalar `auth.uid()` üzerinden
+- Konum geçmişi hassas veri: saklama süresi sınırlı, panelde maskeleme, dışa aktarım loglanır
+- Vercel paneli aynı Auth'u ve aynı RLS politikalarını kullanır; admin ayrı `role` claim'i
+
+### SIM808'in kendi Bluetooth'u KULLANILMAZ
+
+SIM808 çipinde **Bluetooth 3.0 (klasik)** vardır — **BLE değil**. Üç sebeple kullanılmıyor:
+
+1. **iOS engeli.** Klasik Bluetooth SPP'ye üçüncü parti bir iOS uygulaması erişemez; bunun
+   için cihazın MFi sertifikalı olması gerekir. iPhone uygulaması bu radyoyla konuşamaz.
+2. **Güvenlik yüzeyi.** İkinci bir radyo, ikinci bir saldırı yüzeyi ve ikinci bir eşleşme
+   yönetimi demek. Klasik BT'nin eşleşme modeli BLE Secure Connections'tan zayıf.
+3. **Tek doğruluk kaynağı.** Durum tek yerde (ESP32) tutulur; SIM808 UART üzerinden onun
+   çevre birimidir.
+
+**Kural: tek radyo.** Telefonla tüm haberleşme ESP32-S3'ün BLE'si üzerinden yürür. SIM808'e
+yalnızca ESP32 AT komutlarıyla erişir. Kartın BT anteni bağlanmaz.
+
+> Not: SIM808 breakout kartlarının bir kısmında BT anteni/desteği zaten yönlendirilmemiştir;
+> satın alınan kartın veri sayfasıyla teyit edilecek (zaten kullanmıyoruz).
+
+### Aynı anda birden çok telefon
+
+ESP32-S3 + NimBLE **aynı anda birden çok merkezi cihaza** (telefona) bağlanabilir; bu
+yapılandırmayla belirlenir. Bu **tasarlanmış bir özellik** olarak ele alınır, kazara değil:
+
+- Her telefon **ayrı bonding kaydı** ve **ayrı yetki seviyesi** taşır (sahip / misafir)
+- Misafir profili LED ve sahneleri kullanır; kilit, arama ve kodlama komutlarını kullanamaz
+- Eşleşmiş cihazlar uygulamadan ve panelden listelenir, tek tek **iptal edilebilir**
+- Eşzamanlı bağlantı sayısı firmware'de sınırlanır; sınır aşılırsa yeni bağlantı reddedilir
+
+### BLE eklemeleri
+
+Mevcut tasarım (§7) korunur, üstüne: **bağlantı başına oturum anahtarı**, **komut tekrar
+sayacı**, kritik komutlarda (kilit, arama) **Face ID onayı**.
 
 ---
 
@@ -257,9 +335,12 @@ Dördüncü bir sohbet dökümü daha vardı; `docs/00`'ın birebir alt kümesi 
 
 ## 11. "İleride" kovası
 
-MIB2 ekran senkronu (Yol B) · SIM808 GPS/GSM · Apple HomeKit · Find My ağı · garaj kapısı RF
-klonlama · web dashboard + veritabanı · Siri Shortcuts / Watch / Live Activity · telemetri ve
-tur kaydı · uzaktan kilit/cam kontrolü (mesaj enjeksiyonu — yüksek risk).
+MIB2 ekran senkronu (Yol B) · Apple HomeKit · Find My ağı · garaj kapısı RF klonlama ·
+Siri Shortcuts / Watch / Live Activity · tur kaydı · uzaktan kilit/cam kontrolü (mesaj
+enjeksiyonu — yüksek risk).
+
+**Kapsama alındı (3. faz):** SIM808 GSM/GPS, uzaktan konum takibi, Supabase veritabanı,
+Vercel admin paneli.
 
 **Kapsam içinde:** far / ışık sensörü durumundan otomatik gece kısması (Komfort-CAN'den zaten geliyor).
 
@@ -276,5 +357,8 @@ Aşağıdakiler topluluk kaynaklıdır veya VIN'e bağlıdır; **araçta ölçü
 - Kapı / sinyal / kilit / Kl.15 frame'leri — PQ35 konfor matrisi kamuya açık değil
 - LED şerit uzunlukları, toplam metraj ve akım tahminleri — sigorta boyutu buna bağlı
 - Arka eşik trimi rotasının gerçek uzunluğu ve gerilim düşümü
+- **Operatörün 2G kapanış takvimi** — SIM808'in tüm veri/SMS/arama işlevi buna bağlı
+- SIM808'in gerçek akım profili ve GPS sabitleme süresi — masada ölçülecek
+- GSM/GPS anten yerleşimi: aktif GPS anteni gökyüzü görüşü ister, metal kutuya konmaz
 
 Dokümanda veya arayüzde bu değerler daima "araçta doğrulanacak" işaretiyle sunulur.

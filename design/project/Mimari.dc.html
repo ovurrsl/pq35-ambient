@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
 <style>
 :root{
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
@@ -43,7 +43,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
   <!-- BLOK ŞEMA -->
   <div style="height: 516px; flex-shrink: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 24px; display: flex; flex-direction: column; gap: 4px;">
-    <svg width="1420" height="466" viewBox="0 0 1420 466" role="img" aria-label="Sistem blok şeması: Komfort-CAN geçiş kablosundan SN65HVD230 transceiver'a, oradan ESP32-S3'e, iki adet 74AHCT125 seviye kaydırıcıya ve yedi LED zonuna; zonlar rotaya göre üç gruba ayrılır — Z1 ve Z2 kapı körüğü, Z3 ve Z4 konsol, Z5, Z6 ve Z7 eşik trimi boyunca arkaya. Ayrıca BLE ile iOS uygulaması ve iki kollu güç zinciri. İkinci faz olarak Antriebs-CAN 500 kbps, TJA1042 transceiver ve MCP2515 kontrolcü üzerinden SPI ile aynı ESP32'ye bağlanır">
+    <svg width="1420" height="458" viewBox="0 0 1420 458" role="img" aria-label="Sistem blok şeması: Komfort-CAN geçiş kablosundan SN65HVD230 transceiver'a, oradan ESP32-S3'e, iki adet 74AHCT125 seviye kaydırıcıya ve yedi LED zonuna; zonlar rotaya göre üç gruba ayrılır — Z1 ve Z2 kapı körüğü, Z3 ve Z4 konsol, Z5, Z6 ve Z7 eşik trimi boyunca arkaya. Ayrıca BLE ile iOS uygulaması ve üç kollu güç zinciri. İkinci faz olarak Antriebs-CAN 500 kbps, TJA1042 transceiver ve MCP2515 kontrolcü üzerinden SPI ile aynı ESP32'ye bağlanır. Üçüncü faz olarak SIM808 GSM/GPRS/GPS modülü UART ile ESP32'ye bağlanır ve kendi 5 V / en az 2 A güç kolundan, girişinde en az 1000 mikrofarad bulk kondansatörle beslenir">
       <defs>
         <marker id="arrMimari" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M0 0 L10 5 L0 10 Z" fill="#93A2B3"></path>
@@ -57,9 +57,22 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         <marker id="arrMimariAntriebs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M0 0 L10 5 L0 10 Z" fill="#E5533D"></path>
         </marker>
+        <marker id="arrMimariSim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#B08CFF"></path>
+        </marker>
       </defs>
 
       <text x="0" y="16" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#93A2B3">SİNYAL YOLU</text>
+
+      <!-- 3. FAZ — SIM808 GSM / GPRS / GPS -->
+      <rect x="0" y="22" width="560" height="78" rx="10" fill="rgba(176,140,255,0.06)" stroke="#B08CFF" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+      <text x="14" y="44" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#B08CFF">SIM808 — GSM / GPRS / GPS</text>
+      <rect x="490" y="30" width="56" height="16" rx="4" fill="#B08CFF"></rect>
+      <text x="518" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="#0B0F14">3. FAZ</text>
+      <text x="14" y="62" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#E8EEF4">UART → ESP32-S3 · kumanda iOS uygulamasından · 2G-only</text>
+      <text x="14" y="78" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">GSM anteni · aktif GPS anteni: gökyüzü görüşü şart, metal kutu içine konmaz</text>
+      <text x="14" y="94" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">araç içi mikrofon + hoparlör · beslemesi kendi 5 V kolundan (aşağıya bak)</text>
+      <path d="M560 61 L570 61 L570 100 L576 100" fill="none" stroke="#B08CFF" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrMimariSim)"></path>
 
       <!-- iOS / BLE -->
       <rect x="580" y="0" width="300" height="58" rx="10" fill="rgba(176,140,255,0.08)" stroke="#B08CFF" stroke-width="1.3"></rect>
@@ -214,15 +227,28 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <text x="640" y="422" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">LED şeritleri +12 V</text>
       <text x="640" y="441" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">7 zon · ~1,25 A/m · metraj ölçülmedi</text>
 
-      <!-- SAĞ NOTLAR -->
-      <rect x="880" y="316" width="540" height="60" rx="9" fill="none" stroke="#6FA0FF" stroke-width="1.2" stroke-dasharray="6 4"></rect>
-      <text x="896" y="340" font-family="JetBrains Mono, monospace" font-size="12" fill="#6FA0FF">v2 — İLERİDE</text>
-      <text x="896" y="360" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA</text>
+      <!-- GÜÇ KOLU 3: SIM808 — AYRI KOL -->
+      <rect x="880" y="306" width="540" height="70" rx="9" fill="rgba(176,140,255,0.06)" stroke="#B08CFF" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+      <text x="896" y="324" font-family="JetBrains Mono, monospace" font-size="11" fill="#B08CFF">SIM808 — AYRI GÜÇ KOLU · 3. FAZ</text>
+      <rect x="896" y="330" width="112" height="26" rx="7" fill="#1B2430" stroke="#FF6A4D" stroke-width="1.1"></rect>
+      <text x="952" y="347" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#E8EEF4">12 V · ayrı kol</text>
+      <path d="M1008 343 L1020 343" fill="none" stroke="#B08CFF" stroke-width="1.6" marker-end="url(#arrMimariSim)"></path>
+      <rect x="1024" y="330" width="120" height="26" rx="7" fill="#1B2430" stroke="#B08CFF" stroke-width="1.1"></rect>
+      <text x="1084" y="347" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#E8EEF4">Buck 5 V / ≥2 A</text>
+      <path d="M1144 343 L1156 343" fill="none" stroke="#B08CFF" stroke-width="1.6" marker-end="url(#arrMimariSim)"></path>
+      <rect x="1160" y="330" width="118" height="26" rx="7" fill="#1B2430" stroke="#B08CFF" stroke-width="1.1"></rect>
+      <text x="1219" y="347" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#E8EEF4">≥1000 µF bulk</text>
+      <path d="M1278 343 L1290 343" fill="none" stroke="#B08CFF" stroke-width="1.6" marker-end="url(#arrMimariSim)"></path>
+      <rect x="1294" y="330" width="110" height="26" rx="7" fill="#1B2430" stroke="#B08CFF" stroke-width="1.1"></rect>
+      <text x="1349" y="347" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#E8EEF4">SIM808</text>
+      <text x="896" y="368" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">ESP32 regülatöründen beslenmez — 2 A sıçramasında tüm sistem resetlenir · ortak GND</text>
+
+      <!-- SAĞ NOT -->
       <rect x="880" y="396" width="540" height="60" rx="9" fill="#1B2430" stroke="#A98C6B" stroke-width="1.2"></rect>
       <text x="896" y="420" font-family="JetBrains Mono, monospace" font-size="12" fill="#A98C6B">GND</text>
-      <text x="896" y="440" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Fabrika şase saplaması — transceiver, ESP32 ve şerit ortak şasede</text>
+      <text x="896" y="440" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Fabrika şase saplaması — transceiver, ESP32, şerit ve SIM808 ortak şasede</text>
     </svg>
-    <div style="font-size: 12px; color: #93A2B3;">Sinyal soldan sağa tek yönlüdür: araçtan LED'e. Geri yönde tek bağlantı BLE'dir; araca hiçbir çerçeve yazılmaz. İki CAN kanalı ayrı kontrolcüde: Komfort dahili TWAI'de, Antriebs 2. fazda MCP2515'te — ikisi de Listen-Only, TX'leri bağlı değil. Z1/Z2 körükten, Z3/Z4 konsoldan, Z5/Z6/Z7 eşik trimiyle arkaya.</div>
+    <div style="font-size: 12px; color: #93A2B3;">Sinyal soldan sağa tek yönlüdür: araçtan LED'e. Geri yönde tek bağlantı BLE'dir; araca hiçbir çerçeve yazılmaz. İki CAN kanalı ayrı kontrolcüde: Komfort dahili TWAI'de, Antriebs 2. fazda MCP2515'te — ikisi de Listen-Only. SIM808 3. fazdır ve kendi 5 V / ≥2 A kolundan beslenir. Z1/Z2 körükten, Z3/Z4 konsoldan, Z5/Z6/Z7 eşik trimiyle arkaya.</div>
   </div>
 
   <!-- ALT KARTLAR -->
@@ -260,7 +286,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #3FD98A;">v1 (şimdi)</span> — Kl.15 tetikli: kontak açılınca uyanır, akü riski sıfır.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #6FA0FF;">v2 (sonra)</span> — Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA: kilit açılır açılmaz gerçek welcome.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">CAN / LED / BLE mantığı v2'de değişmez; yalnızca güç mimarisi değişir.</div>
-      <div style="font-size: 12.5px; line-height: 1.4; color: #E5533D;">Antriebs kanalı ayrı faz: komfort hattı ve LED'ler stabil olunca devreye girer.</div>
+      <div style="font-size: 12.5px; line-height: 1.4; color: #B08CFF;">Faz sırası: komfort + LED (v1) → Antriebs kanalı (2. faz) → SIM808 GSM/GPS ve bulut (3. faz).</div>
     </div>
 
   </div>

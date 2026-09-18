@@ -8,7 +8,7 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
 <style>
 :root{
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
@@ -27,6 +27,7 @@ a{color:var(--z1);} a:hover{color:#8FD9FF;}
 h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
 </style>
 </helmet>
 <div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
@@ -40,11 +41,22 @@ button{font-family:inherit;}
       </div>
       <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #B08CFF; box-shadow: 0 0 8px 1px rgba(176,140,255,0.8);"></span>BLE bağlı</span>
     </div>
-    <div style="display: flex; gap: 6px; align-items: center;">
-      <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 10px; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #F4A261;"></span>Komfort 100k</span>
-      <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 10px; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #E5533D;"></span>Antriebs 500k</span>
-      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid #3FD98A; border-radius: 999px; padding: 4px 10px; white-space: nowrap;">LISTEN-ONLY</span>
+    <!-- SEGMENT KONTROLÜ -->
+    <div style="display: flex; gap: 3px; background: #0F1620; border: 1px solid #2A3746; border-radius: 11px; padding: 3px; box-sizing: border-box;">
+      <label for="arac-seg-canli" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; background: #1B2430; border: 1px solid #3A4A5C; cursor: pointer; box-sizing: border-box;">
+        <input type="radio" class="vh" name="arac-seg" id="arac-seg-canli" checked>
+        <span style="font-size: 14px; font-weight: 600; color: #E8EEF4;">Canlı veri</span>
+      </label>
+      <label for="arac-seg-konum" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; cursor: pointer; box-sizing: border-box;">
+        <input type="radio" class="vh" name="arac-seg" id="arac-seg-konum">
+        <span style="font-size: 14px; font-weight: 500; color: #93A2B3;">Konum</span>
+      </label>
+      <label for="arac-seg-iletisim" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; cursor: pointer; box-sizing: border-box;">
+        <input type="radio" class="vh" name="arac-seg" id="arac-seg-iletisim">
+        <span style="font-size: 14px; font-weight: 500; color: #93A2B3;">İletişim</span>
+      </label>
     </div>
+
     <div style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Araca hiçbir şey yazılmıyor — iki hat da yalnızca dinleniyor.</div>
   </div>
 
@@ -54,7 +66,7 @@ button{font-family:inherit;}
     <!-- BİRİNCİL GÖSTERGE — DEVİR -->
     <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
 
-      <svg width="332" height="125" viewBox="0 0 340 128" fill="none" aria-label="Devir göstergesi: 840 devir bölü dakika, 0 ile 7000 arası" style="display: block;">
+      <svg width="318" height="120" viewBox="0 0 340 128" fill="none" aria-label="Devir göstergesi: 840 devir bölü dakika, 0 ile 7000 arası" style="display: block; margin: 0 auto;">
         <defs>
           <filter id="glowDevirArac" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="5" result="b"></feGaussianBlur>
@@ -71,12 +83,11 @@ button{font-family:inherit;}
       </svg>
 
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-        <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">0x280 b3/b4 · Antriebs</span>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
-      </div>
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-        <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">Komfort yansıması: 0x353</span>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 6px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
+        <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">0x280 b3/b4 · Antriebs</span>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">Komfort yansıması: 0x353</span>
+        </span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ARAÇTA DOĞRULANACAK</span>
       </div>
 
     </div>
@@ -113,42 +124,42 @@ button{font-family:inherit;}
 
       <div style="display: flex; flex-direction: column;">
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px; border-bottom: 1px solid #2A3746;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Motor sıcaklığı</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #93A2B3; border: 1px dashed #6E7C8C; border-radius: 4px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0;">LOG İLE BULUNACAK</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px; border-bottom: 1px solid #2A3746;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Vites</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #93A2B3; border: 1px dashed #6E7C8C; border-radius: 4px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0;">LOG İLE BULUNACAK</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px; border-bottom: 1px solid #2A3746;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Gaz kelebeği</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #93A2B3; border: 1px dashed #6E7C8C; border-radius: 4px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0;">LOG İLE BULUNACAK</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px; border-bottom: 1px solid #2A3746;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Akü voltajı</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #93A2B3; border: 1px dashed #6E7C8C; border-radius: 4px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0;">LOG İLE BULUNACAK</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px; border-bottom: 1px solid #2A3746;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Yağ sıcaklığı</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #93A2B3; border: 1px dashed #6E7C8C; border-radius: 4px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0;">LOG İLE BULUNACAK</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 23px;">
+        <div style="display: flex; align-items: center; gap: 8px; height: 21px;">
           <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap;">Turbo basıncı</span>
           <span style="flex: 1;"></span>
           <span class="mono" style="font-size: 12px; color: #6E7C8C; flex-shrink: 0;">—</span>
@@ -164,7 +175,9 @@ button{font-family:inherit;}
     <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 0 12px 10px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
 
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 44px;">
-        <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">HAM BUS İZLEME</h2>
+        <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">HAM BUS</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid #3FD98A; border-radius: 999px; padding: 4px 10px; white-space: nowrap;">LISTEN-ONLY</span>
+        <span style="flex: 1;"></span>
         <button type="button" style="display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; background: #1B2430; color: #E8EEF4; border: 1px solid #2A3746; border-radius: 10px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v10"></path><path d="m8 10.5 4 4 4-4"></path><path d="M5 19h14"></path></svg>
           Logu kaydet
