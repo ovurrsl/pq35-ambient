@@ -5,7 +5,7 @@
    "h": 844,
    "title": "iOS — Animasyon",
    "w": 390,
-   "x": 4230,
+   "x": 5640,
    "y": 4600
   },
   "AppArac.dc.html": {
@@ -61,7 +61,7 @@
    "h": 844,
    "title": "iOS — İletişim",
    "w": 390,
-   "x": 2350,
+   "x": 3760,
    "y": 4600
   },
   "AppKilit.dc.html": {
@@ -75,14 +75,14 @@
    "h": 844,
    "title": "iOS — Gizli özellikler",
    "w": 390,
-   "x": 3290,
+   "x": 4700,
    "y": 4600
   },
   "AppKonum.dc.html": {
    "h": 844,
    "title": "iOS — Konum",
    "w": 390,
-   "x": 1880,
+   "x": 3290,
    "y": 4600
   },
   "AppKurulum.dc.html": {
@@ -106,25 +106,46 @@
    "x": 1880,
    "y": 5844
   },
+  "AppPerformans.dc.html": {
+   "h": 844,
+   "title": "iOS — Performans",
+   "w": 390,
+   "x": 1880,
+   "y": 4600
+  },
   "AppRenkStudyosu.dc.html": {
    "h": 844,
    "title": "iOS — Renk stüdyosu",
    "w": 390,
-   "x": 3760,
+   "x": 5170,
    "y": 4600
   },
   "AppSahnelerBle.dc.html": {
    "h": 844,
    "title": "iOS — Sahneler ve bağlantı",
    "w": 390,
-   "x": 2820,
+   "x": 4230,
    "y": 4600
   },
   "AppSesTepkili.dc.html": {
    "h": 844,
    "title": "iOS — Ses tepkili",
    "w": 390,
-   "x": 4700,
+   "x": 6110,
+   "y": 4600
+  },
+  "AppSurusDetay.dc.html": {
+   "h": 844,
+   "title": "iOS — Sürüş detayı",
+   "w": 390,
+   "x": 2820,
+   "y": 4600
+  },
+  "AppSurusler.dc.html": {
+   "h": 844,
+   "title": "iOS — Sürüşler",
+   "w": 390,
+   "x": 2350,
    "y": 4600
   },
   "AppZonDetay.dc.html": {
@@ -204,12 +225,26 @@
    "x": 3360,
    "y": 0
   },
+  "PerformansOlcumu.dc.html": {
+   "h": 1200,
+   "title": "Performans ölçümü",
+   "w": 1600,
+   "x": 1680,
+   "y": 8688
+  },
   "SesDonanimi.dc.html": {
    "h": 1200,
    "title": "Ses donanımı ve BTL tuzağı",
    "w": 1600,
    "x": 5040,
    "y": 3000
+  },
+  "VeriKaydi.dc.html": {
+   "h": 1300,
+   "title": "Sürüş kaydı — mimari",
+   "w": 1600,
+   "x": 0,
+   "y": 8688
   },
   "WebPanel.dc.html": {
    "h": 1000,
@@ -296,7 +331,7 @@
   },
   "grup4": {
    "kind": "title1",
-   "maxW": 5090,
+   "maxW": 6500,
    "text": "4 · iOS — kontrol ekranları",
    "w": 240,
    "x": 0,
@@ -317,6 +352,14 @@
    "w": 240,
    "x": 0,
    "y": 6828
+  },
+  "grup7": {
+   "kind": "title1",
+   "maxW": 3280,
+   "text": "7 · Sürüş verisi ve performans",
+   "w": 240,
+   "x": 0,
+   "y": 8428
   }
  },
  "order": [
@@ -339,6 +382,9 @@
   "AppSesTepkili.dc.html",
   "AppOlaylar.dc.html",
   "AppArac.dc.html",
+  "AppPerformans.dc.html",
+  "AppSurusler.dc.html",
+  "AppSurusDetay.dc.html",
   "AppKonum.dc.html",
   "AppIletisim.dc.html",
   "AppSahnelerBle.dc.html",
@@ -356,7 +402,9 @@
   "WebPanelKonum.dc.html",
   "WebPanelCihazlar.dc.html",
   "Guvenlik.dc.html",
-  "YiginMimarisi.dc.html"
+  "YiginMimarisi.dc.html",
+  "VeriKaydi.dc.html",
+  "PerformansOlcumu.dc.html"
  ],
  "pages": [],
  "title": "PQ35-AMBIENT Tasarım Kanvası",

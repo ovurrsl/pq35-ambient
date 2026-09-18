@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Sürüş kaydı — mimari</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hiz:#8FD0FF; --ble:#B08CFF; --komfort:#F4A261; --antriebs:#E5533D;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #8FD0FF; box-shadow: 0 0 24px 2px rgba(143,208,255,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">SÜRÜŞ KAYDI</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Nereye gittim, nerede hızlandım, nerede durdum</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1150px;">Kaydın tamamı <strong style="color: #E8EEF4; font-weight: 600;">Kontrolcü B'de</strong> yaşıyor: Antriebs CAN, GPS ve Kl.15 beslemesi zaten orada. Ambiyans kontrolcüsüne hiç dokunulmuyor — LED animasyonu ile sürüş kaydı arasında paylaşılan tek bir kaynak kalmıyor.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <!-- ZİNCİR -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px 14px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+    <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KAYIT VE AKTARIM ZİNCİRİ</h2>
+
+    <svg width="1424" height="212" viewBox="0 0 1424 212" fill="none" aria-label="Kayıt zinciri: IMU, CAN ve GPS Kontrolcü B'ye girer, B SD karta yazar; log BLE ile telefona, özet GPRS ile buluta gider, kart elle çıkarılabilir" style="display: block;">
+      <g font-family="'IBM Plex Sans', sans-serif">
+
+        <rect x="0" y="20" width="118" height="40" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="59" y="45" text-anchor="middle" font-size="14" fill="#E8EEF4">IMU 6 eksen</text>
+        <rect x="0" y="76" width="118" height="40" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="59" y="101" text-anchor="middle" font-size="14" fill="#E8EEF4">Antriebs CAN</text>
+        <rect x="0" y="132" width="118" height="40" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="59" y="157" text-anchor="middle" font-size="14" fill="#E8EEF4">GPS</text>
+
+        <path d="M118 40h34l16 42M118 96h50M118 152h34l16-42" stroke="#2A3746" stroke-width="2" fill="none"></path>
+        <path d="M162 96h14" stroke="#2A3746" stroke-width="2"></path>
+
+        <rect x="180" y="40" width="200" height="112" rx="12" fill="#1B2430" stroke="#8FD0FF" stroke-width="1.6"></rect>
+        <text x="280" y="76" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">KONTROLCÜ B</text>
+        <text x="280" y="98" text-anchor="middle" font-size="13" fill="#93A2B3">GIGA R1 WiFi</text>
+        <text x="280" y="122" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">yalnızca Kl.15</text>
+
+        <path d="M380 96h44" stroke="#8FD0FF" stroke-width="2.4"></path>
+        <path d="m416 90 8 6-8 6" stroke="#8FD0FF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="428" y="66" width="128" height="60" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="492" y="90" text-anchor="middle" font-size="14" fill="#E8EEF4">SD kart</text>
+        <text x="492" y="110" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">append-only</text>
+
+        <path d="M556 96h40M596 96V32h40M596 96h40M596 96v64h40" stroke="#2A3746" stroke-width="2" fill="none"></path>
+
+        <rect x="640" y="10" width="120" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="700" y="30" text-anchor="middle" font-size="13" fill="#E8EEF4">Kontrolcü A</text>
+        <text x="700" y="46" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">UART</text>
+        <path d="M760 32h34" stroke="#B08CFF" stroke-width="2.4"></path>
+        <path d="m786 26 8 6-8 6" stroke="#B08CFF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="798" y="10" width="104" height="44" rx="10" fill="#1B2430" stroke="#B08CFF"></rect>
+        <text x="850" y="37" text-anchor="middle" font-size="13" fill="#E8EEF4">BLE</text>
+        <path d="M902 32h34" stroke="#B08CFF" stroke-width="2.4"></path>
+        <path d="m928 26 8 6-8 6" stroke="#B08CFF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="940" y="10" width="112" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="996" y="37" text-anchor="middle" font-size="13" fill="#E8EEF4">iPhone</text>
+        <rect x="1070" y="14" width="150" height="36" rx="8" fill="rgba(143,208,255,0.10)" stroke="#8FD0FF"></rect>
+        <text x="1145" y="37" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8FD0FF">TAM ÇÖZÜNÜRLÜK</text>
+
+        <rect x="640" y="74" width="120" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="700" y="101" text-anchor="middle" font-size="13" fill="#E8EEF4">SIM808</text>
+        <path d="M760 96h34" stroke="#2A3746" stroke-width="2.4"></path>
+        <path d="m786 90 8 6-8 6" stroke="#2A3746" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="798" y="74" width="104" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="850" y="94" text-anchor="middle" font-size="13" fill="#E8EEF4">GPRS</text>
+        <text x="850" y="110" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">2G</text>
+        <path d="M902 96h34" stroke="#2A3746" stroke-width="2.4"></path>
+        <path d="m928 90 8 6-8 6" stroke="#2A3746" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="940" y="74" width="112" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="996" y="101" text-anchor="middle" font-size="13" fill="#E8EEF4">Supabase</text>
+        <rect x="1070" y="78" width="150" height="36" rx="8" fill="rgba(232,238,244,0.06)" stroke="#2A3746"></rect>
+        <text x="1145" y="101" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#93A2B3">YALNIZCA ÖZET</text>
+
+        <rect x="640" y="138" width="120" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="700" y="165" text-anchor="middle" font-size="13" fill="#E8EEF4">Kartı çıkar</text>
+        <path d="M760 160h34" stroke="#2A3746" stroke-width="2.4"></path>
+        <path d="m786 154 8 6-8 6" stroke="#2A3746" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="798" y="138" width="254" height="44" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="925" y="165" text-anchor="middle" font-size="13" fill="#E8EEF4">Bilgisayar</text>
+        <rect x="1070" y="142" width="150" height="36" rx="8" fill="rgba(232,238,244,0.06)" stroke="#2A3746"></rect>
+        <text x="1145" y="165" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#93A2B3">KAÇIŞ KAPISI</text>
+
+        <text x="1248" y="37" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">yavaş halka: BLE</text>
+        <text x="1248" y="101" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">2G logu taşımaz</text>
+        <text x="1248" y="165" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">her şey</text>
+
+      </g>
+    </svg>
+
+  </div>
+
+  <!-- ÜÇ KART -->
+  <div style="display: flex; gap: 20px; flex-shrink: 0;">
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">İKİ ÖRNEKLEME HIZI</h2>
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">sürekli 10 Hz</span>
+        <span style="font-size: 14px; line-height: 1.45; color: #93A2B3;">normal sürüş kaydı</span>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">patlama 100 Hz</span>
+        <span style="font-size: 14px; line-height: 1.45; color: #93A2B3;">ölçüm koşusu algılanınca</span>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Kayıt başına ~25 bayt · 10 Hz'de ≈ 900 kB/saat. <strong style="font-weight: 600;">Depolama sorun değil</strong> — sorun aktarım.</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ZAMAN KAYNAĞI: GPS</h2>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Hiçbir kartta <strong style="font-weight: 600;">pilli RTC yok</strong>. İlk sabitlemeye kadar zaman damgaları göreli tutulur, sabitleme gelince sürüş yeniden tarihlenir.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Hiç sabitleme gelmezse (kapalı otopark) sürüş göreli zamanla saklanır ve <strong style="color: #E8EEF4; font-weight: 600;">öyle işaretlenir</strong>.</div>
+      <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 11px 13px; font-size: 13px; line-height: 1.45; color: #93A2B3;">Pilli bir RTC bu sorunu tamamen kaldırır ve çok ucuzdur — BOM'a <strong style="color: #E8EEF4; font-weight: 600;">opsiyonel</strong> girdi.</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — KART BOZULMASI</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Bilinen arıza: yazarken gelen ani güç kesintisi dosya sistemini bozar.</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; gap: 9px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #FF5A5A; flex-shrink: 0;">01</span><span style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Ekle-ve-bırak, sabit boyutlu kayıt — yazılan bir daha değişmez</span></div>
+        <div style="display: flex; gap: 9px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #FF5A5A; flex-shrink: 0;">02</span><span style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Her sürüş ayrı dosya</span></div>
+        <div style="display: flex; gap: 9px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #FF5A5A; flex-shrink: 0;">03</span><span style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Kl.15 düşüşü erken yakalanır, tutma kondansatörüyle dosya kapatılır</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ALT İKİLİ -->
+  <div style="display: flex; gap: 20px; flex: 1; min-height: 0;">
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">OLAY TESPİTİ — KARTTA YAPILIR</h2>
+      <table>
+        <thead><tr><th style="width: 34%;">Olay</th><th>Nasıl</th></tr></thead>
+        <tbody>
+          <tr><td>Sert hızlanma</td><td style="color:#93A2B3;">boylamsal g eşiği, minimum süre boyunca</td></tr>
+          <tr><td>Sert frenleme</td><td style="color:#93A2B3;">negatif boylamsal g eşiği</td></tr>
+          <tr><td>Sert viraj</td><td style="color:#93A2B3;">yanal g tepe değeri</td></tr>
+          <tr><td>Duruş</td><td style="color:#93A2B3;">hız 0, geri sekme süresinden uzun — ışık ile park ayrışır</td></tr>
+          <tr><td>Rölanti</td><td style="color:#93A2B3;">motor çalışıyor, hız 0 — ayrı toplanır</td></tr>
+          <tr><td>Ölçüm koşusu</td><td style="color:#93A2B3;">otomatik tetikleme — 0–100, 100–0, 80–120</td></tr>
+        </tbody>
+      </table>
+      <div style="display: flex; gap: 10px; align-items: center; margin-top: auto; padding-top: 4px;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ARAÇTA BELİRLENECEK</span>
+        <span style="font-size: 13px; line-height: 1.4; color: #93A2B3;">Tüm eşikler IMU takıldıktan sonra ölçülür; buraya sayı yazılmaz.</span>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ÖZET METRİKLER</h2>
+        <div style="font-size: 14px; line-height: 1.6; color: #E8EEF4;">mesafe · süre · hareket süresi / rölanti süresi · <strong style="font-weight: 600;">ortalama hız (hareketteki ve toplam ayrı ayrı)</strong> · en yüksek hız · en yüksek devir · en yüksek g · olay sayıları</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">İki ortalamayı ayırmak önemli: şehir içinde ikisi çok farklı çıkar ve tek bir sayı yanıltır.</div>
+        <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 11px 13px; font-size: 13px; line-height: 1.45; color: #93A2B3;">Rota buluta giderken <strong style="color: #E8EEF4; font-weight: 600;">Ramer–Douglas–Peucker</strong> ile seyreltilir: şekli korur, nokta sayısını düşürür. Birkaç yüz nokta birkaç kB'dir, GPRS'ten rahat geçer.</div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 9px; flex-shrink: 0;">
+        <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — GİZLİLİK</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Sürüş geçmişi konum kaydından <strong style="font-weight: 600;">daha hassastır</strong>: sadece nerede olduğunu değil, nasıl sürdüğünü de söyler.</div>
+        <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Tam log <strong style="font-weight: 600;">varsayılan olarak yüklenmez</strong> · misafir yetkisine tamamen kapalı · saklama süresi sınırlı · dışa aktarım denetim kaydına yazılır · uygulamada tek dokunuşla silme ve kaydı tümden kapatma.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
