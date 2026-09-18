@@ -239,6 +239,13 @@
    "x": 5040,
    "y": 3000
   },
+  "UzaktanErisim.dc.html": {
+   "h": 1300,
+   "title": "Uzaktan erişim — GSM",
+   "w": 1600,
+   "x": 8400,
+   "y": 7088
+  },
   "VeriKaydi.dc.html": {
    "h": 1300,
    "title": "Sürüş kaydı — mimari",
@@ -347,7 +354,7 @@
   },
   "grup6": {
    "kind": "title1",
-   "maxW": 8000,
+   "maxW": 10000,
    "text": "6 · Bulut ve güvenlik",
    "w": 240,
    "x": 0,
@@ -403,6 +410,7 @@
   "WebPanelCihazlar.dc.html",
   "Guvenlik.dc.html",
   "YiginMimarisi.dc.html",
+  "UzaktanErisim.dc.html",
   "VeriKaydi.dc.html",
   "PerformansOlcumu.dc.html"
  ],

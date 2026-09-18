@@ -63,15 +63,16 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 |---|---|
 | Arduino Nano ESP32 (ESP32-S3) | Dahili TWAI (donanımsal Listen-Only), RMT (LED zamanlaması), NimBLE |
 | SN65HVD230 CAN transceiver | **Kanal 1 — Komfort 100k.** Native 3,3 V, seviye kaydırıcı gerekmez. TX bağlanmaz. |
-| MCP2515 + **TJA1042** modülü | **Kanal 2 — Antriebs 500k**, SPI üzerinden. **Dikkat:** ucuz modüllerin çoğunda **TJA1050** var; 4,75 V ister, 3,3 V'ta hat sessiz kalır. **3,3 V'luk TJA1040/1042 versiyonu alınacak**, fabrika 120 Ω sonlandırma sökülecek. 2. faz. |
+| Arduino GIGA R1 WiFi | **Kontrolcü B** (§3.3): dahili FDCAN ile **Kanal 2 — Antriebs 500k**, hava süspansiyon çıkışları ve 9 analog giriş, Varex H-köprüsü, IMU + SD kart, SIM808. Yalnızca Kl.15. **MCP2515'i tamamen gereksiz kıldı.** |
+| 6 eksenli MEMS IMU + SD kart | Sürüş kaydı ve g ölçümü (§3.4). Kontrolcü B'ye bağlanır. Opsiyonel pilli RTC zaman sorununu kaldırır. |
 | 74AHCT125 × 2 | Seviye kaydırıcı: 3,3 V data → 12 V şerit IC eşiği (≈0,7 × VDD). Quad buffer, 7 hat için **iki paket** gerekir (8 kanal, 7'si kullanılır) |
 | 12 V adreslenebilir şerit (ZBL) | 1,8 × 10 mm · 15 W/m · 12 V'ta **20 mm kesim boyu** · maks 5 m hat · ~1,25 A/m. Oluğa 10 mm derinlik gerekir. **600 LED ≠ 600 piksel.** |
 | Güç | Kendi sigortası (başlangıç 7,5 A, **metraj ölçülünce yeniden boyutlandırılacak**) · buck konvertör · **TVS zorunlu** · şerit gücünü tamamen kesen MOSFET |
 | v2 eki | Wake-on-bus transceiver: TLE9251V veya NCV7356 |
 
 **Tek kontrolcü iki baud rate'i (500k + 100k) çözemez** — donanımsal kısıt, yazılımla aşılamaz.
-ESP32-S3'te de yalnızca **bir** dahili TWAI vardır. Bu yüzden ikinci hat harici bir
-kontrolcü (MCP2515) gerektirir.
+ESP32-S3'te de yalnızca **bir** dahili TWAI vardır. İkinci hat bu yüzden ikinci bir
+kontrolcüye düşer: **GIGA R1'in dahili FDCAN'i** (§3.3). Harici MCP2515'e gerek kalmadı.
 
 Hız ve RPM gateway tarafından 100k konfor hattına yansıtıldığı için **LED tetikleri tek
 kanalla** karşılanır. İkinci kanal LED için değil, **canlı veri ekranı** için eklenir.
@@ -83,7 +84,7 @@ kanalla** karşılanır. İkinci kanal LED için değil, **canlı veri ekranı**
 | Kanal | Hat | Kontrolcü | Transceiver | Faz |
 |---|---|---|---|---|
 | 1 | Komfort-CAN 100 kbps | ESP32-S3 dahili TWAI | SN65HVD230 | v1 |
-| 2 | Antriebs-CAN 500 kbps | MCP2515 (SPI) | TJA1042 / TJA1040 | 2. faz |
+| 2 | Antriebs-CAN 500 kbps | **GIGA R1 dahili FDCAN** | kart üstü | 2. faz |
 
 **Sıralama kararı:** Antriebs motor kontrolüne en yakın hattır, bu yüzden **en sona
 bırakılır**. Komfort hattı ve LED'ler stabil çalıştıktan sonra devreye alınır.
@@ -111,8 +112,17 @@ yazmak yasaktır**.
 
 ### Dört sert gerçek
 
-**1. SIM808 2G-only.** Şebeke yoksa veri/SMS/arama çalışmaz. **Satın alma öncesi operatörden
-2G kapanış takvimi teyit edilecek** — bu engelleyici bir maddedir, teyit gelmeden sipariş yok.
+**1. SIM808 2G-only — ama takvim artık biliniyor.** BTK ile operatörler arasındaki
+sözleşmelerde 2G/3G kapanışı için son tarih **30 Nisan 2029**; Turkcell ve Vodafone'un GSM
+lisansları bu tarihe uzatıldı, Türk Telekom'unki 2026'da bitiyordu ve o da aynı tarihe
+hizalandı. **Bu madde artık engelleyici değil, tarihli bir ömürdür** — sipariş önündeki engel
+kalktı. Lisans bitişi kesin kapanış günü değildir (operatör erken kapatabilir), o yüzden
+tarih yine "operatörden teyit edilecek" işaretiyle taşınır.
+
+**Sonucu bir tasarım kuralıdır:** SIM808 firmware'de tek bir `modem` **soyutlama katmanının
+ardında** durur; üst katman "konum gönder", "SMS gönder", "ara" der. Modül değişirse yalnızca
+o katman değişir. Yerine geçecek sınıf hazır: **LTE Cat-1** (SIM7600 / A7670 ailesi) —
+GNSS dahili, gerçek TLS, aynı UART.
 
 **2. Güç, bu modülün bilinen ölüm sebebi.** Şebeke ararken ve iletimde **2 A'e varan anlık
 akım** çeker → kendi 5 V / ≥2 A hattı, ≥1000 µF bulk kondansatör, ortak GND (sert kural 12).
@@ -123,10 +133,26 @@ cihaz için kulaklık rolüne geçmez. **Ses araç içindeki mikrofon ve hoparl�
 uygulama numara seçer, arar, kapatır, gelen aramayı gösterir. Dokümanda, kodda ve arayüzde
 **"telefondan konuşulur" yazma**.
 
-**4. SIM808'in TLS'i güvenilmez.** Dahili HTTP yığınında HTTPS desteği sürüme göre değişir.
-Bu yüzden **taşımaya güvenilmez, veri uygulama katmanında korunur**: cihaz payload'ı kendi ön
-paylaşımlı anahtarıyla **AES-GCM ile şifreler ve imzalar**, Supabase **Edge Function** çözer
-ve doğrular.
+**4. SIM808'in TLS'i güvenilmez.** Veri sayfası "HTTPS destekler" yazar; bu veri sayfası
+doğrusudur, saha doğrusu değildir. Dahili SSL yığınında TLS sürümü ve şifre takımı firmware'e
+göre değişir ve eskidir, Supabase modern TLS ister. Bu yüzden **taşımaya güvenilmez, veri
+uygulama katmanında korunur**: cihaz payload'ı kendi ön paylaşımlı anahtarıyla **AES-GCM ile
+şifreler ve imzalar**, Supabase **Edge Function** çözer ve doğrular. TLS kurulabilirse üstüne
+biner (savunmada derinlik); kurulamazsa veri yine okunamaz ve taklit edilemez. **Güvenlik
+TLS'in çalışmasına bağlı bırakılmaz.** Aynı tuzak **dahili MQTT AT komutları** için de
+geçerlidir — ham TCP soketi açılıp MQTT paketleri kendimiz üretilir.
+
+**5. Araca bağlanılamaz, araç bağlanır.** SIM kart operatör NAT'ının (CGNAT) arkasındadır;
+aracın dışarıdan erişilebilir bir adresi **yoktur**. Her oturumu araç başlatır. Bu yüzden
+uzaktan komut için üç yol vardır ve hiçbiri anlık değildir: **SMS** (saniyeler–onlarca
+saniye, en güvenilir, araç uykudayken de ulaşır) · **MQTT** (kalıcı TCP, ~saniye, uygulama
+açıkken) · **HTTP yoklama** (yoklama aralığı kadar). Uzaktan erişim **ön hazırlık içindir**,
+sürüş sırasında canlı kontrol için değil — ve **v2 güç mimarisini** (Kl.30 + wake-on-bus)
+gerektirir, çünkü v1'de araç parkta uykudadır.
+
+**SIM kartı:** APN firmware'e gömülmez, yapılandırmada durur · SIM PIN kapatılır · bireysel
+hat mı M2M/IoT hattı mı operatöre sorulur (yeni BTK M2M düzenlemeleri var) · roaming kapalı ·
+ön ödemeli hatta hareketsizlikten kapanma kuralı sorulur.
 
 ### Bulut mimarisi
 
@@ -183,6 +209,110 @@ uygulama kilidinin kendisi kapıdır. Bunun zorunlu karşılığı: **arka pland
 kilitlenme kapatılamaz** — uygulama arkaya alınınca Keychain anahtarı kapanır.
 
 ---
+
+## 3.3 İki kontrolcü — sistem tek kartı aştı
+
+Varex egzoz, hava süspansiyon, sürüş kaydı ve ses eklenince pin bütçesi **~40 pin, 9'u
+analog**'a çıktı. Nano ESP32 (Nano form faktörü, ~22 GPIO / 8 analog) bunu kaldıramaz.
+Bu bir tercih değil, **sonuç**.
+
+```
+KONTROLCÜ A — AMBİYANS                KONTROLCÜ B — AKTÜATÖR VE VERİ
+Nano ESP32 (S3)                       GIGA R1 WiFi  (76 GPIO, 14 analog)
+  7 × RMT LED                           hava: 9 çıkış + 9 analog
+  Komfort CAN (TWAI, 100k)              Antriebs CAN (FDCAN, 500k)
+  BLE — telefonla tüm haberleşme        Varex H-köprüsü
+  I2S ses + FFT                         sürtme sensörleri (I2C)
+  Kl.30 + wake-on-bus, derin uyku       IMU + SD kart (sürüş kaydı)
+                                        SIM808 (UART)
+                                        yalnızca Kl.15 ile beslenir
+        └──────── UART / özel CAN bağlantısı ────────┘
+```
+
+**Üç gerekçe:**
+
+1. **Güvenlik ayrımı.** LED animasyon kodundaki bir hata süspansiyon kontrolcüsüne
+   ulaşamamalı. Araçlarda ECU'ların ayrı olmasının sebebi de bu; eğlence ile güvenlik kritik
+   aktüatör aynı işlemcide dönmez.
+2. **Her kart güçlü olduğu işi yapıyor.** ESP32'nin RMT'si 7 LED kanalını zahmetsiz sürer ve
+   NimBLE güvenlik modelimizi (bonding, IRK, directed advertising) olduğu gibi taşır. GIGA'nın
+   76 pini ve 14 analog girişi hava süspansiyonunu rahatça kaldırır.
+3. **MCP2515 tamamen çıkıyor.** GIGA'nın kendi FDCAN'i Antriebs hattını alır. Bir kart, bir
+   transceiver ve bir tuzak (TJA1050) eksildi.
+
+**Güç ayrımı buradan geliyor:** ESP32 **Kl.30**'da kalır ve derin uykuya iner (uzaktan erişim
+ve welcome için gerekli). GIGA yalnızca **Kl.15** ile beslenir — süspansiyon, egzoz ve sürüş
+kaydı zaten kontak kapalıyken çalışmamalı, üstelik STM32H7 düşük akımda beklemeye uygun değil.
+
+**UNO Q bu iş için uygun değil:** UNO pinout'u yetersiz, araçta Linux çalıştırmak kontak
+kesilince **eMMC bozulma riski** ve açılış süresi demek.
+
+**Maliyeti dürüstçe:** iki firmware, aralarında bir protokol, daha çok kablo.
+
+**Doğrulanmamış:** GIGA'nın FDCAN'i 100/500 kbps klasik CAN'i **Listen-Only** çalıştırıyor mu
+masada doğrulanacak · iki kart arası bağlantı UART mı özel CAN mı gecikmeye göre seçilecek.
+
+
+## 3.4 Sürüş kaydı ve performans ölçümü (3. faz ile birlikte)
+
+Araç sahibi canlı veri ekranında daha fazla veri, **0–100 gibi performans ölçümleri** ve
+**sürüş kaydı** istiyor: nereye gidildi, ortalama hız, nerede hızlanıldı, nerede yavaşlandı,
+nerede duruldu — konumla birlikte.
+
+### g verisi araçtan gelmiyor — IMU eklenir
+
+Aracın ESP'si yanal ivmeyi hesaplar, ama PQ35'te o mesajın ID'si **bilinmiyor** ve tahmin
+yazmak yasak (§12). **6 eksenli MEMS IMU** eklenir: ±8 g, ≥100 Hz, SPI/I2C, sıcaklık telafili
+tercih edilir. **Asıl zorluk parça değil, montaj ve kalibrasyon:** IMU kendi yönelimini ölçer,
+eğik monteyse fren ivmesi yanala sızar → montaj açısı öğrenilir, yer çekimi çıkarılır,
+titreşim alçak geçiren filtreyle bastırılır, IMU sert monte edilir.
+
+### 0–100 ölçülebilir, ama hangi hızla
+
+İki dürüstlük maddesi, ikisi de arayüzde yazılı olacak:
+
+1. **Bu gösterge hızıdır.** Gösterge gerçek hızın altını okumaz; sonuç **olduğundan iyi
+   çıkar**. Her ölçümün yanında "gösterge hızı" etiketi durur.
+2. **Çözünürlüğü `0x351` frame aralığı belirler.** Interpolasyon sayıyı yumuşatır ama bilgi
+   yaratmaz. Frame aralığı **logdan ölçülecek**.
+
+**Düzeltme yolu GPS:** sabit hızda CAN ↔ GPS karşılaştırılır, düzeltme katsayısı çıkarılır.
+**Tetikleme otomatiktir** — duruyorken ilk hareket saati başlatır, hedef hızda durur;
+**sürüş sırasında ekrana dokunulmaz**. **Rollout yok**, o yüzden sayılar dergi sayılarıyla
+karşılaştırılmaz. Aynı mekanizma 0–200, 100–0 fren, 80–120 esneklik ve 400 m için çalışır.
+
+### Kayıt Kontrolcü B'de yaşar
+
+Antriebs CAN, GPS (SIM808) ve Kl.15 beslemesi zaten B'de (§3.3). IMU ve
+**SD kart** da B'ye takılır; **ambiyans kontrolcüsüne dokunulmaz**.
+
+- **İki örnekleme hızı:** sürekli 10 Hz sürüş kaydı, ölçüm koşusunda patlama 100 Hz
+- **Zaman kaynağı GPS.** Pilli RTC yok; ilk sabitlemeye kadar zaman **göreli** tutulur,
+  sabitleme gelince sürüş yeniden tarihlenir; hiç gelmezse öyle işaretlenir. Pilli bir RTC
+  sorunu tamamen kaldırır — BOM'a opsiyonel girer.
+- **Kart bozulması bilinen arızadır:** ekle-ve-bırak sabit boyutlu kayıt, her sürüş ayrı
+  dosya, Kl.15 düşüşü erken yakalanır ve tutma kondansatörüyle dosya kapatılır.
+- **Aktarım darboğazı BLE değil 2G:** tam log **BLE ile telefona** iner, buluta **yalnızca
+  özet + Ramer–Douglas–Peucker ile seyreltilmiş rota** gider, SD kartı çıkarmak kaçış kapısıdır.
+- **Olaylar kartta tespit edilir** (sert hızlanma/frenleme/viraj, duruş, rölanti, ölçüm
+  koşusu) ve konum + zamanla loga yazılır. **Eşikler araçta belirlenecek, sayı yazılmaz.**
+- **Ortalama hız iki ayrı sayıdır:** hareketteki ve toplam. Tek sayı yanıltır.
+
+### Gizlilik — konum kaydından daha ağır
+
+Sürüş geçmişi sadece nerede olunduğunu değil, **nasıl sürüldüğünü** de söyler.
+
+- **Tam log varsayılan olarak yüklenmez** — kartta ve telefonda kalır, buluta özet gider.
+  Bu hem gizlilik hem bant genişliği cevabıdır; ikisi aynı yere çıkıyor.
+- **Misafir yetkisine tamamen kapalı**, saklama süresi sınırlı, dışa aktarım denetim kaydına
+  yazılır, sürüş satırlarında VIN yok.
+- Uygulamada tek dokunuşla **sürüş silme** ve **kaydı tümden kapatma** bulunur.
+
+### Araç sekmesinin bilgi mimarisi
+
+Segment üçte kalır: `Canlı · Sürüşler · Konum`. **Performans** `Canlı`ın içinden açılan bir
+ekrandır, sekme başlığı değil. **İletişim segmentten çıkar**, başlık çubuğunda telefon
+düğmesi olur — arama araç telemetrisi değil, bir eylemdir.
 
 ## 4. LED bölgeleri
 
@@ -285,17 +415,19 @@ iOS, BLE adresini ~15 dakikada bir değiştirir (RPA) → **sabit MAC beyaz list
 
 ---
 
-## 7.1 iOS uygulamasının ekran seti (16 ekran)
+## 7.1 iOS uygulamasının ekran seti (19 ekran)
 
 Uygulama iki kümeden oluşur. Kanvasta 4. ve 5. gruplar bunlardır.
 
 | Küme | Ekranlar |
 |---|---|
-| Kontrol (8) | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler |
+| Kontrol (11) | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · **Performans** · **Sürüşler** · **Sürüş detayı** · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler |
 | Kimlik, güvenlik ve ayarlar (8) | Uygulama kilidi (Face ID) · Giriş · İki adımlı doğrulama (TOTP) · Araçla eşleştirme · Komut onayı · Ayarlar · Güvenlik ayarları · Cihazlar |
 
 Alt sekme çubuğu **5 sekmedir** ve değişmez: `Bölgeler · Olaylar · Araç · Sahneler · Ayarlar`.
-Konum ve İletişim, `Araç` sekmesinin içindeki segment kontrolünün diğer sekmeleridir.
+`Araç` sekmesinin segment kontrolü üçtür: `Canlı · Sürüşler · Konum`. **Performans**, `Canlı`ın
+içinden açılan bir ekrandır; **Sürüş detayı**, `Sürüşler`den açılır. **İletişim segmentte
+değildir** — başlık çubuğundaki telefon düğmesidir, çünkü arama telemetri değil eylemdir.
 Güvenlik, Cihazlar ve Gizli özellikler `Ayarlar` sekmesinin alt ekranlarıdır.
 Kilit, Giriş, Doğrulama ve Eşleştirme ekranlarında **sekme çubuğu yoktur** — uygulama henüz
 açılmamıştır.
@@ -372,9 +504,9 @@ mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
 değiştirirken hem buradaki dosyayı hem yayınlanmış artifact'i güncelle.
 
-Kanvas **37 pano / 6 grup**: sistem ve araç (4) · kurulum ve davranış (4) · malzeme, risk ve
-kodlama (4) · iOS kontrol ekranları (11) · iOS kimlik, güvenlik ve ayarlar (9) · bulut ve
-güvenlik (5). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
+Kanvas **43 pano / 7 grup**: sistem ve araç (4) · kurulum ve davranış (4) · malzeme, risk ve
+kodlama (4) · iOS kontrol ekranları (14) · iOS kimlik, güvenlik ve ayarlar (9) · bulut ve
+güvenlik (6) · sürüş verisi ve performans (2). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
 sayılarını da güncelle.
 
 **Pano doğrulaması iki adımdır, biri yetmez.** Ölçüm (içerik alt kenarı ≤ çerçeve) `overflow:
@@ -449,7 +581,7 @@ Dördüncü bir sohbet dökümü daha vardı; `docs/00`'ın birebir alt kümesi 
 ## 11. "İleride" kovası
 
 Apple HomeKit · Find My ağı · garaj kapısı RF klonlama · Siri Shortcuts / Watch /
-Live Activity · tur kaydı · uzaktan kilit/cam kontrolü (mesaj enjeksiyonu — yüksek risk).
+Live Activity · uzaktan kilit/cam kontrolü (mesaj enjeksiyonu — yüksek risk).
 
 **Yol B artık "ileride" değil, opsiyonel bir deney.** §1'deki eşiği ölçülebilir bir keşif
 protokolüne çeviren bir pano var (yedek al → adaptasyon kanalı var mı → Listen-Only logger →
@@ -459,7 +591,8 @@ etkilemez. Yol B çalışsa bile Arduino'nun okuyacağı şey **RGB değil bir i
 bir `index → RGB` tablosu tutmak zorundadır.
 
 **Kapsama alındı (3. faz):** SIM808 GSM/GPS, uzaktan konum takibi, Supabase veritabanı,
-Vercel admin paneli.
+**sürüş kaydı ve performans ölçümü** (§3.3). **Tur kaydı da artık burada** — sürüş kaydının
+bir alt kümesi hâline geldi.
 
 **Kapsam içinde:** far / ışık sensörü durumundan otomatik gece kısması (Komfort-CAN'den zaten geliyor).
 
@@ -479,5 +612,12 @@ Aşağıdakiler topluluk kaynaklıdır veya VIN'e bağlıdır; **araçta ölçü
 - **Operatörün 2G kapanış takvimi** — SIM808'in tüm veri/SMS/arama işlevi buna bağlı
 - SIM808'in gerçek akım profili ve GPS sabitleme süresi — masada ölçülecek
 - GSM/GPS anten yerleşimi: aktif GPS anteni gökyüzü görüşü ister, metal kutuya konmaz
+- **`0x351` frame aralığı** — performans ölçümünün çözünürlüğü buna bağlı, logdan ölçülecek
+- **Gösterge hızının gerçek hızdan sapması** — GPS ile ölçülecek, tahmin yazılmaz
+- **IMU g eşikleri, filtre kesimi, örnekleme hızı, montaj açısı** — IMU takıldıktan sonra
+- **Aracın 0–100 süresi** — hiçbir yerde sayı olarak yazılmaz, ekranlarda yer tutucu
+- **Gerçek BLE ve GPRS aktarım hızları**, SD kart kapasitesi — masada ölçülecek
+- **2G kapanışının gerçek günü** — 30 Nisan 2029 lisans son tarihidir, operatör erken kapatabilir
+- **Turkcell APN değeri ve tarife tipi** (bireysel / M2M) — operatörden teyit edilecek
 
 Dokümanda veya arayüzde bu değerler daima "araçta doğrulanacak" işaretiyle sunulur.
