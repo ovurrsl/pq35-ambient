@@ -6,6 +6,20 @@
  * türetilmiştir. Kanvas ile bu dosya çelişirse kanvas kazanır (CLAUDE.md §9.1).
  */
 
+/**
+ * PALET KURALI — renk bilgi taşımıyorsa kullanılmaz.
+ *
+ * Araç sahibinin kararı: arayüz sade ve profesyonel olmalı, renk cümbüşü değil.
+ *
+ *   Bölge renkleri  → yalnızca küçük kimlik noktası / şeridi.
+ *                      Metin rengi, çip zemini veya kenarlık olarak KULLANILMAZ.
+ *   Hat renkleri    → yalnızca teknik diyagramlarda; uygulama arayüzünde değil.
+ *   Etkileşim       → tek accent. İkinci bir vurgu rengi eklenmez.
+ *   Durum           → yalnızca ok / warn / danger.
+ *   Metin           → text / muted / dim üçlüsü. Başlıklar renkle değil,
+ *                      AĞIRLIKLA ayrışır — iOS 26'nın kendi diline de bu yakın.
+ */
+
 /** Bölge kimlikleri — firmware ve uygulamada aynı sırayla kullanılır (CLAUDE.md §4). */
 export const ZONE_IDS = ['z1', 'z2', 'z3', 'z4', 'z5', 'z6', 'z7'] as const;
 export type ZoneId = (typeof ZONE_IDS)[number];
