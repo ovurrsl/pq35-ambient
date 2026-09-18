@@ -28,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 </style>
 </helmet>
-<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+<div style="width: 1600px; height: 1100px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
 
   <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #4CC2FF; box-shadow: 0 0 24px 2px rgba(76,194,255,0.55);"></div>
 
@@ -286,14 +286,14 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #3FD98A;">v1 (şimdi)</span> — Kl.15 tetikli: kontak açılınca uyanır, akü riski sıfır.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #6FA0FF;">v2 (sonra)</span> — Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA: kilit açılır açılmaz gerçek welcome.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">CAN / LED / BLE mantığı v2'de değişmez; yalnızca güç mimarisi değişir.</div>
-      <div style="font-size: 12.5px; line-height: 1.4; color: #B08CFF;">Faz sırası: komfort + LED (v1) → Antriebs kanalı (2. faz) → SIM808 GSM/GPS ve bulut (3. faz).</div>
+      <div style="font-size: 12.5px; line-height: 1.4; color: #B08CFF;">Faz sırası: komfort + LED (v1) → Antriebs (2. faz) → SIM808 ve bulut (3. faz).</div>
     </div>
 
   </div>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1100}}'>
 class Component extends DCLogic {
   renderVals() { return {}; }
 }

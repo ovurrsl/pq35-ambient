@@ -28,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 button{font-family:inherit;}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
-.inp{box-sizing:border-box;width:100%;height:46px;background:#0F1620;border:1px solid #2A3746;border-radius:10px;color:#E8EEF4;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:15px;padding:0 12px;}
+.inp{box-sizing:border-box;width:100%;height:46px;background:#0F1620;border:1px solid #2A3746;border-radius:14px;color:#E8EEF4;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:15px;padding:0 12px;}
 .inp::placeholder{color:#6E7C8C;}
 </style>
 </helmet>
@@ -45,16 +45,16 @@ button{font-family:inherit;}
     </div>
 
     <!-- SEGMENT KONTROLÜ -->
-    <div style="display: flex; gap: 3px; background: #0F1620; border: 1px solid #2A3746; border-radius: 11px; padding: 3px; box-sizing: border-box;">
-      <label for="iletisim-seg-canli" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; cursor: pointer; box-sizing: border-box;">
+    <div style="display: flex; gap: 3px; background: rgba(15,22,32,0.55); border: 1px solid rgba(232,238,244,0.10); border-radius: 999px; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); padding: 3px; box-sizing: border-box;">
+      <label for="iletisim-seg-canli" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 999px; cursor: pointer; box-sizing: border-box;">
         <input type="radio" class="vh" name="iletisim-seg" id="iletisim-seg-canli">
         <span style="font-size: 14px; font-weight: 500; color: #93A2B3;">Canlı veri</span>
       </label>
-      <label for="iletisim-seg-konum" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; cursor: pointer; box-sizing: border-box;">
+      <label for="iletisim-seg-konum" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 999px; cursor: pointer; box-sizing: border-box;">
         <input type="radio" class="vh" name="iletisim-seg" id="iletisim-seg-konum">
         <span style="font-size: 14px; font-weight: 500; color: #93A2B3;">Konum</span>
       </label>
-      <label for="iletisim-seg-iletisim" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 9px; background: #1B2430; border: 1px solid #3A4A5C; cursor: pointer; box-sizing: border-box;">
+      <label for="iletisim-seg-iletisim" style="position: relative; flex: 1; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 999px; background: rgba(232,238,244,0.14); border: 1px solid rgba(232,238,244,0.18); cursor: pointer; box-sizing: border-box;">
         <input type="radio" class="vh" name="iletisim-seg" id="iletisim-seg-iletisim" checked>
         <span style="font-size: 14px; font-weight: 600; color: #E8EEF4;">İletişim</span>
       </label>
@@ -65,7 +65,7 @@ button{font-family:inherit;}
   <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 8px; display: flex; flex-direction: column; gap: 8px;">
 
     <!-- SIM DURUMU -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
 
       <div style="display: flex; flex-direction: column;">
 
@@ -96,7 +96,7 @@ button{font-family:inherit;}
     </div>
 
     <!-- ARAMA -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 8px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 8px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
       <div style="display: flex; align-items: center; gap: 8px;">
         <label for="iletisim-numara" style="flex: 1; font-size: 12px; font-weight: 600; color: #93A2B3; cursor: pointer;">Aranacak numara</label>
         <a href="#rehber" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 4px; text-decoration: none; color: #4CC2FF; font-size: 13px; font-weight: 600;">
@@ -129,7 +129,7 @@ button{font-family:inherit;}
     </div>
 
     <!-- GELEN ARAMA -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 10px 12px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 10px 12px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
       <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
         <div style="display: flex; align-items: center; gap: 6px;">
           <span style="width: 7px; height: 7px; border-radius: 999px; background: #3FD98A; box-shadow: 0 0 8px 1px rgba(63,217,138,0.8); flex-shrink: 0;"></span>
@@ -147,24 +147,12 @@ button{font-family:inherit;}
     </div>
 
     <!-- SMS -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
-      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SMS GELEN KUTUSU</h2>
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SMS</h2>
 
       <div style="display: flex; flex-direction: column;">
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 30px; border-bottom: 1px solid #2A3746;">
-          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">+90 5·· ··· ·· ··</span>
-          <span style="font-size: 12px; color: #E8EEF4; white-space: nowrap; overflow: hidden;">Yer tutucu mesaj metni</span>
-          <span style="flex: 1;"></span>
-          <span class="mono" style="font-size: 11px; color: #6E7C8C; white-space: nowrap; flex-shrink: 0;">··:··</span>
-        </div>
 
-        <div style="display: flex; align-items: center; gap: 8px; height: 30px;">
-          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">+90 5·· ··· ·· ··</span>
-          <span style="font-size: 12px; color: #93A2B3; white-space: nowrap; overflow: hidden;">Yer tutucu mesaj metni</span>
-          <span style="flex: 1;"></span>
-          <span class="mono" style="font-size: 11px; color: #6E7C8C; white-space: nowrap; flex-shrink: 0;">··:··</span>
-        </div>
 
       </div>
 
@@ -178,7 +166,7 @@ button{font-family:inherit;}
   </div>
 
   <!-- SEKME ÇUBUĞU -->
-  <div style="height: 72px; flex-shrink: 0; border-top: 1px solid #2A3746; background: #0F1620; display: flex; align-items: stretch; padding: 0 4px;">
+  <div style="height: 72px; flex-shrink: 0; border-top: 1px solid rgba(232,238,244,0.12); background: rgba(13,19,27,0.68); backdrop-filter: blur(30px) saturate(1.8); -webkit-backdrop-filter: blur(30px) saturate(1.8); display: flex; align-items: stretch; padding: 0 4px;">
     <a href="#bolgeler" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-decoration: none; color: #6E7C8C; padding-bottom: 8px;">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"></rect></svg>
       <span style="font-size: 10px;">Bölgeler</span>

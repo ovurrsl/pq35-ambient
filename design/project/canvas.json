@@ -156,7 +156,7 @@
    "y": 1400
   },
   "DiyKodlama.dc.html": {
-   "h": 1200,
+   "h": 1300,
    "title": "DIY VAG kodlama",
    "w": 1600,
    "x": 1680,
@@ -170,21 +170,21 @@
    "y": 1400
   },
   "Guvenlik.dc.html": {
-   "h": 1200,
+   "h": 1300,
    "title": "Güvenlik mimarisi",
    "w": 1600,
    "x": 5040,
    "y": 7088
   },
   "KablolamaPinout.dc.html": {
-   "h": 1200,
+   "h": 1300,
    "title": "Kablolama ve pinout",
    "w": 1600,
    "x": 0,
    "y": 1400
   },
   "Main.dc.html": {
-   "h": 1000,
+   "h": 1100,
    "title": "Kapak ve özet",
    "w": 1600,
    "x": 0,
@@ -198,7 +198,7 @@
    "y": 3000
   },
   "Mimari.dc.html": {
-   "h": 1000,
+   "h": 1100,
    "title": "Sistem mimarisi",
    "w": 1600,
    "x": 3360,
@@ -247,7 +247,7 @@
    "y": 3000
   },
   "YolHaritasi.dc.html": {
-   "h": 1000,
+   "h": 1100,
    "title": "5 aşamalı yol haritası",
    "w": 1600,
    "x": 5040,
