@@ -28,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 </style>
 </helmet>
-<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
 
   <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FFB300; box-shadow: 0 0 24px 2px rgba(255,179,0,0.55);"></div>
 
@@ -36,7 +36,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     <div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 06 — DAVRANIŞ MAKİNESİ</div>
       <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Sistem nasıl davranıyor?</h1>
-      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Taban → olay katmanları → uygulama override. Renk ve parlaklık uygulamadan gelir; Komfort-CAN yalnızca tetikleyici kaynağıdır.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Taban (mod) → olay katmanları → uygulama override. Mod ve renk uygulamadan seçilir; Komfort-CAN yalnızca tetikleyici kaynağıdır.</div>
     </div>
     <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
   </div>
@@ -99,9 +99,10 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         <text x="86" y="416" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#4CC2FF">KATMAN 0 — TABAN</text>
 
         <rect x="84" y="424" width="124" height="58" rx="8" fill="#1B2430" stroke="#2A3746"></rect>
-        <text x="96" y="446" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#E8EEF4">UYGULAMA RENGİ</text>
-        <text x="96" y="462" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">iOS uygulaması</text>
-        <text x="96" y="476" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">taban rengi</text>
+        <text x="96" y="443" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#E8EEF4">MOD</text>
+        <text x="96" y="458" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">düz renk (bağlı | bölge)</text>
+        <text x="96" y="470" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">animasyon</text>
+        <text x="96" y="482" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">ses tepkili</text>
         <text x="218" y="459" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" fill="#93A2B3">×</text>
 
         <rect x="228" y="424" width="124" height="58" rx="8" fill="#1B2430" stroke="#2A3746"></rect>
@@ -174,6 +175,12 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Taban parlaklık tüm zonlarda ölçeklenir</td>
         </tr>
         <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Hız</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace;">0x351</span> — araç hareket hâlinde mi <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">EŞİK ARAÇTA AYARLANACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><strong style="color: #FFCE6A;">Güvenlik sınırı:</strong> hareket hâlindeyken animasyon ve ses tepkisi yoğunluğu sınırlanır, vuruş / strobo sınıfı efektler kapanır. Kapatılabilir bir tercih değildir.</td>
+        </tr>
+        <tr>
           <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Kilit / <span style="font-family: 'JetBrains Mono', monospace;">Kl.15</span></td>
           <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
           <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">v1: kontak açılışı · v2: kilit açılışı <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
@@ -218,7 +225,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() { return {}; }
 }

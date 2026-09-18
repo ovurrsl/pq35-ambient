@@ -1,6 +1,13 @@
 {
  "attachments": {},
  "boards": {
+  "AppAnimasyon.dc.html": {
+   "h": 844,
+   "title": "iOS — Animasyon",
+   "w": 390,
+   "x": 4230,
+   "y": 4600
+  },
   "AppArac.dc.html": {
    "h": 844,
    "title": "iOS — Araç · canlı veri",
@@ -78,6 +85,13 @@
    "x": 1880,
    "y": 4600
   },
+  "AppKurulum.dc.html": {
+   "h": 844,
+   "title": "iOS — Kurulum",
+   "w": 390,
+   "x": 3760,
+   "y": 5844
+  },
   "AppOlaylar.dc.html": {
    "h": 844,
    "title": "iOS — CAN olayları",
@@ -92,11 +106,25 @@
    "x": 1880,
    "y": 5844
   },
+  "AppRenkStudyosu.dc.html": {
+   "h": 844,
+   "title": "iOS — Renk stüdyosu",
+   "w": 390,
+   "x": 3760,
+   "y": 4600
+  },
   "AppSahnelerBle.dc.html": {
    "h": 844,
    "title": "iOS — Sahneler ve bağlantı",
    "w": 390,
    "x": 2820,
+   "y": 4600
+  },
+  "AppSesTepkili.dc.html": {
+   "h": 844,
+   "title": "iOS — Ses tepkili",
+   "w": 390,
+   "x": 4700,
    "y": 4600
   },
   "AppZonDetay.dc.html": {
@@ -121,7 +149,7 @@
    "y": 0
   },
   "DavranisMakinesi.dc.html": {
-   "h": 1000,
+   "h": 1200,
    "title": "Davranış makinesi",
    "w": 1600,
    "x": 3360,
@@ -176,6 +204,13 @@
    "x": 3360,
    "y": 0
   },
+  "SesDonanimi.dc.html": {
+   "h": 1200,
+   "title": "Ses donanımı ve BTL tuzağı",
+   "w": 1600,
+   "x": 5040,
+   "y": 3000
+  },
   "WebPanel.dc.html": {
    "h": 1000,
    "title": "Vercel admin paneli",
@@ -195,6 +230,13 @@
    "title": "Panel — Konum",
    "w": 1600,
    "x": 1680,
+   "y": 7088
+  },
+  "YiginMimarisi.dc.html": {
+   "h": 1200,
+   "title": "Yığın mimarisi — Expo · Supabase · Vercel",
+   "w": 1600,
+   "x": 6720,
    "y": 7088
   },
   "YolB.dc.html": {
@@ -246,7 +288,7 @@
   },
   "grup3": {
    "kind": "title1",
-   "maxW": 4960,
+   "maxW": 6640,
    "text": "3 · Malzeme, risk ve kodlama",
    "w": 240,
    "x": 0,
@@ -254,7 +296,7 @@
   },
   "grup4": {
    "kind": "title1",
-   "maxW": 3680,
+   "maxW": 5090,
    "text": "4 · iOS — kontrol ekranları",
    "w": 240,
    "x": 0,
@@ -262,7 +304,7 @@
   },
   "grup5": {
    "kind": "title1",
-   "maxW": 3680,
+   "maxW": 4150,
    "text": "5 · iOS — kimlik, güvenlik ve ayarlar",
    "w": 240,
    "x": 0,
@@ -270,7 +312,7 @@
   },
   "grup6": {
    "kind": "title1",
-   "maxW": 6640,
+   "maxW": 8320,
    "text": "6 · Bulut ve güvenlik",
    "w": 240,
    "x": 0,
@@ -289,14 +331,19 @@
   "MalzemeRisk.dc.html",
   "DiyKodlama.dc.html",
   "YolB.dc.html",
+  "SesDonanimi.dc.html",
   "AppZonlar.dc.html",
   "AppZonDetay.dc.html",
+  "AppRenkStudyosu.dc.html",
+  "AppAnimasyon.dc.html",
+  "AppSesTepkili.dc.html",
   "AppOlaylar.dc.html",
   "AppArac.dc.html",
   "AppKonum.dc.html",
   "AppIletisim.dc.html",
   "AppSahnelerBle.dc.html",
   "AppKodlama.dc.html",
+  "AppKurulum.dc.html",
   "AppKilit.dc.html",
   "AppGiris.dc.html",
   "AppDogrulama.dc.html",
@@ -308,7 +355,8 @@
   "WebPanel.dc.html",
   "WebPanelKonum.dc.html",
   "WebPanelCihazlar.dc.html",
-  "Guvenlik.dc.html"
+  "Guvenlik.dc.html",
+  "YiginMimarisi.dc.html"
  ],
  "pages": [],
  "title": "PQ35-AMBIENT Tasarım Kanvası",

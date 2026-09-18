@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Kurulum gerekli</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 20px 20px 22px; display: flex; flex-direction: column; justify-content: center; gap: 14px; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;">
+    <h1 style="font-size: 28px; line-height: 1.12; font-weight: 700; color: #E8EEF4;">Kurulum gerekli</h1>
+    <div class="mono" style="font-size: 11px; letter-spacing: 0.14em; color: #93A2B3;">SUPABASE YAPILANDIRILMADI</div>
+  </div>
+
+  <!-- ÇİPLER -->
+  <div style="display: flex; gap: 8px; flex-shrink: 0;">
+    <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #FFB020;"></span>Expo Go</span>
+    <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #6E7C8C;"></span>BLE yok</span>
+  </div>
+
+  <!-- EKSİK DEĞİŞKENLER -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 13px 14px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0;">
+    <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">EKSİK DEĞİŞKENLER</h2>
+
+    <div style="display: flex; align-items: center; gap: 9px;">
+      <span style="width: 7px; height: 7px; border-radius: 999px; background: #FF5A5A; flex-shrink: 0;"></span>
+      <span class="mono" style="font-size: 13px; color: #E8EEF4;">EXPO_PUBLIC_SUPABASE_URL</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 9px;">
+      <span style="width: 7px; height: 7px; border-radius: 999px; background: #FF5A5A; flex-shrink: 0;"></span>
+      <span class="mono" style="font-size: 13px; color: #E8EEF4;">EXPO_PUBLIC_SUPABASE_ANON_KEY</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 9px;">
+      <span style="width: 7px; height: 7px; border-radius: 999px; background: #FF5A5A; flex-shrink: 0;"></span>
+      <span class="mono" style="font-size: 13px; color: #E8EEF4;">EXPO_PUBLIC_API_URL</span>
+    </div>
+
+    <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Bunlar <span class="mono" style="font-size: 12px; color: #E8EEF4;">mobile/.env.local</span> dosyasına yazılır. Örnek için <span class="mono" style="font-size: 12px; color: #E8EEF4;">.env.example</span> dosyasına bak.</div>
+  </div>
+
+  <!-- SIRAYLA -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 13px 14px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0;">
+    <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SIRAYLA</h2>
+
+    <div style="display: flex; align-items: flex-start; gap: 9px;">
+      <span class="mono" style="font-size: 12px; color: #93A2B3; width: 12px; flex-shrink: 0; line-height: 1.5;">1</span>
+      <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #E8EEF4;">Supabase'de proje aç — ücretsiz planda 2 aktif proje sınırı var.</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 9px;">
+      <span class="mono" style="font-size: 12px; color: #93A2B3; width: 12px; flex-shrink: 0; line-height: 1.5;">2</span>
+      <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span class="mono" style="font-size: 12px; color: #E8EEF4;">supabase/migrations/</span> altındaki iki dosyayı uygula.</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 9px;">
+      <span class="mono" style="font-size: 12px; color: #93A2B3; width: 12px; flex-shrink: 0; line-height: 1.5;">3</span>
+      <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #E8EEF4;">Proje URL'sini ve publishable (anon) anahtarı <span class="mono" style="font-size: 12px; color: #E8EEF4;">.env.local</span> dosyasına yaz.</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 9px;">
+      <span class="mono" style="font-size: 12px; color: #93A2B3; width: 12px; flex-shrink: 0; line-height: 1.5;">4</span>
+      <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #E8EEF4;">Uygulamayı yeniden başlat.</span>
+    </div>
+  </div>
+
+  <!-- KURAL -->
+  <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 14px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+    <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL · ANON ANAHTAR GİZLİ DEĞİLDİR</div>
+    <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span class="mono" style="font-size: 12px; color: #E8EEF4;">EXPO_PUBLIC_</span> ile başlayan her değişken pakete gömülür ve okunabilir. Oraya yalnızca publishable anahtar konur. Güvenlik, her tabloda açık ve varsayılan reddet olan RLS politikalarından gelir — anahtarın gizliliğinden değil.</div>
+  </div>
+
+  <!-- EXPO GO KISITI -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 13px 14px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0;">
+    <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">EXPO GO KISITI</h2>
+    <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Ekranlar burada gezilebilir ama araç bağlantısı çalışmaz: BLE yerel bir modül ve Expo Go onu taşımaz. Araçla konuşmak için development build gerekir.</div>
+    <div class="mono" style="font-size: 12px; line-height: 1.4; color: #93A2B3; background: #0F1620; border: 1px solid #2A3746; border-radius: 9px; padding: 8px 10px; word-break: break-all;">eas build --profile development --platform ios</div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
