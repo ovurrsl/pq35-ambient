@@ -3,14 +3,14 @@
     "name": "PQ35 Ambient",
     "slug": "pq35-ambient",
     "version": "0.1.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "pq35ambient",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "bundleIdentifier": "com.ovurrsl.pq35ambient",
-      "supportsTablet": false,
+      "supportsTablet": true,
       "icon": "./assets/expo.icon",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Uygulama kilidini açmak ve Keychain'de saklanan oturum anahtarına erişmek için Face ID kullanılır. Face ID kimlik doğrulama değildir; sunucuya karşı kimlik Supabase JWT'dir.",

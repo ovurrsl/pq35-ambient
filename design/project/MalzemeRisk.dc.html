@@ -28,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 </style>
 </helmet>
-<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+<div style="width: 1600px; height: 1400px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
 
   <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FFB020; box-shadow: 0 0 24px 2px rgba(255,176,32,0.55);"></div>
 
@@ -48,7 +48,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
   <div style="height: 864px; flex-shrink: 0; display: flex; gap: 32px;">
 
     <!-- SOL: MALZEME LİSTESİ -->
-    <div style="width: 700px; height: 916px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+    <div style="width: 700px; height: 1222px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
       <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">MALZEME LİSTESİ (BOM) — v1 + 2. FAZ + 3. FAZ</h2>
       <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">v1: Komfort dinlenir, LED'i ESP32 sürer · 7 zon / 7 hat. 2. faz: Antriebs. 3. faz: SIM808 ve bulut.</div>
 
@@ -72,9 +72,49 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
             <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Komfort hattı, Listen-Only · TX bağlanmaz · 120 Ω sökülür</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">MCP2515 + TJA1042 modülü + SPI kablo seti <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #E5533D; border-radius: 4px; padding: 1px 6px;">2. faz</span></td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1 + set</td>
-            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Antriebs 500 kbps, SPI · TJA1050'li versiyon alınmaz; modüldeki 120 Ω sökülür</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Arduino GIGA R1 WiFi — Kontrolcü B <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #E5533D; border-radius: 4px; padding: 1px 6px;">2. faz</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1 (elde)</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Dahili FDCAN ile Antriebs 500 kbps · 76 GPIO, 14 analog · hava, Varex, IMU, SD, SIM808 · yalnızca Kl.15</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">6 eksenli MEMS IMU <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #8FD0FF; border-radius: 4px; padding: 1px 6px;">3. faz</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">±8 g · ≥100 Hz · SPI/I2C · sert monte edilir, montaj açısı kalibre edilir</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">microSD yuvası + kart <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #8FD0FF; border-radius: 4px; padding: 1px 6px;">3. faz</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1 + 1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sürüş kaydı · ekle-ve-bırak · Kl.15 düşüşünde dosya kapanır</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Pilli RTC (opsiyonel) <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #8FD0FF; border-radius: 4px; padding: 1px 6px;">3. faz</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">0–1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">GPS sabitlemesi gelmeden zaman damgası sorununu tamamen kaldırır; çok ucuz</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">H-köprüsü — Varex <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #FF6A4D; border-radius: 4px; padding: 1px 6px;">egzoz</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Ters polarite ile aç/kapat · sınıfı motorun akımı ölçülünce seçilir · Kl.15'ten beslenir</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Hava manifoldu + 8 solenoid <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">hava</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1 + 8</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">4 dolum + 4 boşaltma · <strong style="color:#FF5A5A;">her valfte flyback diyot</strong> · MOSFET sürücü</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kompresör + tank + röle <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">hava</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1 + 1 + 1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Röle şart (MOSFET yetmez) · görev süresi ve termal sınır yazılımda</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Basınç + yükseklik sensörleri <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">hava</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">5 + 4</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">4 körük + tank basıncı, 4 köşe yüksekliği · <strong style="color:#FFB020;">5 V sensör → 3,3 V ADC uyarlaması</strong></td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sürtme sensörü <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">hava</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px; border-bottom: 1px solid #2A3746;">1–2</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Yalnızca düşük hızda işe yarar (fizik) · araç altı: çamur, su, taş, ısı</td>
           </tr>
           <tr>
             <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">2. bükümlü çift (Antriebs) <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #E5533D; border-radius: 4px; padding: 1px 6px;">2. faz</span></td>
@@ -184,7 +224,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           <tr>
             <td style="font-size: 12px; color: #E8EEF4; padding: 3px 8px 3px 0; line-height: 1.35;">SIM kart + veri tarifesi <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #B08CFF; border-radius: 4px; padding: 1px 6px;">3. faz</span></td>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 3px 8px;">1</td>
-            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; line-height: 1.35;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FF5A5A; border: 1px dashed #FF5A5A; border-radius: 4px; padding: 1px 6px; white-space: nowrap;">ENGELLEYİCİ</span> 2G kapanış takvimi satın alma öncesi operatörden teyit edilir</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 3px 0 3px 8px; line-height: 1.35;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 6px; white-space: nowrap;">2029'A KADAR</span> Bireysel mi M2M hattı mı, APN ve PIN operatörden teyit edilir</td>
           </tr>
         </tbody>
       </table>
@@ -196,7 +236,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     </div>
 
     <!-- SAĞ: RİSK KAYDI -->
-    <div style="width: 740px; height: 864px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+    <div style="width: 740px; height: 875px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
       <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">RİSK KAYIT DEFTERİ — 17 MADDE</h2>
       <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">8 madde v1'de · 2 madde v2'ye ertelendi · 3 madde Antriebs (2. faz) · 4 madde SIM808 / bulut (3. faz).</div>
 
@@ -230,8 +270,8 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           </tr>
           <tr>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3; padding: 5px 6px 5px 0; border-bottom: 1px solid #2A3746; vertical-align: top;">4</td>
-            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">MCP2515 modülünde fabrikadan takılı 120 Ω sonlandırma</td>
-            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Araç hattı iki uçtan zaten sonlandırılmış; 120 Ω araca takılmadan sökülür</td>
+            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Solenoid ve kompresör endüktif yüktür: flyback diyot yoksa sürücü ölür</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Her valfte flyback diyot, kompresörde röle + görev süresi ve termal sınır</td>
             <td style="padding: 5px 0 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #E5533D; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">2. FAZ</span></td>
           </tr>
           <tr>
@@ -284,15 +324,15 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           </tr>
           <tr>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3; padding: 5px 6px 5px 0; border-bottom: 1px solid #2A3746; vertical-align: top;">13</td>
-            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">TJA1050 tuzağı: ucuz MCP2515 modülleri 3,3 V'ta çalışmaz</td>
-            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">TJA1050 en az 4,75 V ister, hat sessiz kalır; TJA1040 / TJA1042'li versiyon alınır</td>
+            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Gösterge hızı gerçek hızın üstünü okur: 0–100 olduğundan iyi çıkar</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Sonuçlar "gösterge hızı" etiketiyle sunulur; GPS ile düzeltme katsayısı ölçülür</td>
             <td style="padding: 5px 0 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #E5533D; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">2. FAZ</span></td>
           </tr>
           <tr>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3; padding: 5px 6px 5px 0; border-bottom: 1px solid #2A3746; vertical-align: top;">14</td>
-            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">SIM808 2G-only: şebeke kapanırsa modül veri, SMS, arama yapamaz</td>
-            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">2G kapanış takvimi satın alma öncesi operatörden teyit edilir; teyit gelmeden kart alınmaz</td>
-            <td style="padding: 5px 0 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #B08CFF; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">3. FAZ</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FF5A5A; border: 1px dashed #FF5A5A; border-radius: 4px; padding: 2px 6px; white-space: nowrap;">ENGELLEYİCİ</span></div></td>
+            <td style="font-size: 11px; color: #E8EEF4; padding: 5px 8px 5px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">SIM808 2G-only: 2G/3G kapanışı için sözleşmelerdeki son tarih 30 Nisan 2029</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Takvim biliniyor, engel kalktı. Modül tek bir <span style="font-family: 'JetBrains Mono', monospace;">modem</span> katmanının ardında durur; 2029'da LTE Cat-1 ile değiştirilir. Operatör erken kapatabilir — teyit alınır</td>
+            <td style="padding: 5px 0 5px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #B08CFF; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">3. FAZ</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap;">TARİHLİ ÖMÜR</span></div></td>
           </tr>
           <tr>
             <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3; padding: 5px 6px 5px 0; border-bottom: 1px solid #2A3746; vertical-align: top;">15</td>
@@ -372,7 +412,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1400}}'>
 class Component extends DCLogic {
   renderVals() { return {}; }
 }

@@ -166,7 +166,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         <div style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">Aynı ara kablo; yalnızca iki tel daha çıkar.</div>
       </div>
 
-      <svg width="420" height="92" viewBox="0 0 420 92" style="display: block; flex-shrink: 0;" role="img" aria-label="Antriebs CAN-H ve CAN-L pin numaraları belirsiz: iki boş kesikli pin balonu TJA1042 transceiver'a gider">
+      <svg width="420" height="92" viewBox="0 0 420 92" style="display: block; flex-shrink: 0;" role="img" aria-label="Antriebs CAN-H ve CAN-L pin numaraları belirsiz: iki boş kesikli pin balonu GIGA R1'in dahili FDCAN transceiver'ına gider">
         <circle cx="24" cy="26" r="14" fill="none" stroke="#E5533D" stroke-width="1.4" stroke-dasharray="4 3"></circle>
         <text x="24" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#E5533D">?</text>
         <text x="46" y="23" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Antriebs CAN-H</text>
@@ -188,7 +188,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
       <div style="flex: 1; display: flex; flex-direction: column; gap: 7px;">
         <div style="font-size: 12px; line-height: 1.45; color: #E8EEF4;">Antriebs CAN-H / CAN-L pin numaraları kaynaklarda <span style="color: #FF5A5A;">yok</span> — VIN'e özel şemadan (erWin / ELSAWin) belirlenecek, tahminle bağlanmaz. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></div>
-        <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Bekleme voltajı ölçümü (~2,5 V, her iki hat) bu çift için de geçerli; bağlantı sonrası DTC kontrolü tekrarlanır. MCP2515 modülü TJA1042'li alınır (TJA1050'li değil) ve modüldeki fabrika 120 Ω sonlandırma sökülür.</div>
+        <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Bekleme voltajı ölçümü (~2,5 V, her iki hat) bu çift için de geçerli; bağlantı sonrası DTC kontrolü tekrarlanır. Antriebs kanalı artık Kontrolcü B'nin (GIGA R1) dahili FDCAN'indedir; harici modül ve onun 120 Ω sonlandırma tuzağı ortadan kalktı.</div>
       </div>
     </div>
   </div>

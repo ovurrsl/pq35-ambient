@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Hava süspansiyon — kablolama</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF; --pwr:#FF6A4D; --gnd:#A98C6B;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 20px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #6FA0FF; box-shadow: 0 0 24px 2px rgba(111,160,255,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">HAVA SÜSPANSİYON · KABLOLAMA</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">9 çıkış, 9 analog giriş — ve üç elektriksel tuzak</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1150px;">Bu pano <strong style="color: #E8EEF4; font-weight: 600;">Yol 2 (tam DIY)</strong> içindir. Hazır ECU seçilirse bu kablolamanın çoğu ECU'nun içinde kalır ve bize yalnızca CAN'den hız tetiği ile gösterge düşer.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>KONTROLCÜ B</div>
+  </div>
+
+  <!-- ŞEMA -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 22px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+    <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SÜRÜCÜ VE ÖLÇÜM ZİNCİRİ</h2>
+
+    <svg width="1424" height="386" viewBox="0 0 1424 386" fill="none" aria-label="Kablolama: GIGA dokuz dijital çıkışla MOSFET sürücüleri ve kompresör rölesini sürer, dokuz analog girişle basınç ve yükseklik sensörlerini okur" style="display: block;">
+      <g font-family="'IBM Plex Sans', sans-serif">
+
+        <rect x="250" y="0" width="112" height="40" rx="9" fill="#1B2430" stroke="#FF6A4D"></rect>
+        <text x="306" y="25" text-anchor="middle" font-size="14" fill="#E8EEF4">Kl.15</text>
+        <path d="M362 20h22" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="m376 14 8 6-8 6" stroke="#FF6A4D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="390" y="0" width="112" height="40" rx="9" fill="#1B2430" stroke="#FF6A4D"></rect>
+        <text x="446" y="25" text-anchor="middle" font-size="14" fill="#E8EEF4">sigorta</text>
+        <path d="M502 20h286" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="M560 40v46M700 40v46M560 40v160M700 40v160" stroke="#FF6A4D" stroke-width="1.8" stroke-dasharray="5 4"></path>
+        <text x="812" y="25" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">güç, sinyalden ayrı çekilir</text>
+
+        <rect x="0" y="118" width="190" height="168" rx="12" fill="#1B2430" stroke="#6FA0FF" stroke-width="1.6"></rect>
+        <text x="95" y="172" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">KONTROLCÜ B</text>
+        <text x="95" y="194" text-anchor="middle" font-size="13" fill="#93A2B3">GIGA R1 WiFi</text>
+        <text x="95" y="220" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">9 dijital çıkış</text>
+        <text x="95" y="240" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">9 analog giriş</text>
+        <text x="95" y="262" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">3,3 V mantık</text>
+
+        <path d="M190 128h56" stroke="#93A2B3" stroke-width="2.2"></path>
+        <path d="m238 122 8 6-8 6" stroke="#93A2B3" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="218" y="118" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">×8</text>
+
+        <rect x="250" y="86" width="212" height="84" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="356" y="118" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">MOSFET SÜRÜCÜ ×8</text>
+        <text x="356" y="142" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">alçak taraf anahtarlama</text>
+
+        <path d="M462 128h56" stroke="#6FA0FF" stroke-width="2.4"></path>
+        <path d="m510 122 8 6-8 6" stroke="#6FA0FF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <rect x="522" y="86" width="238" height="84" rx="11" fill="#1B2430" stroke="#6FA0FF"></rect>
+        <text x="641" y="114" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">8 SOLENOİD</text>
+        <text x="641" y="136" text-anchor="middle" font-size="13" fill="#93A2B3">4 dolum + 4 boşaltma</text>
+        <text x="641" y="158" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FF5A5A">her birinde flyback diyot</text>
+
+        <path d="M190 220h56" stroke="#93A2B3" stroke-width="2.2"></path>
+        <path d="m238 214 8 6-8 6" stroke="#93A2B3" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="218" y="212" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">×1</text>
+
+        <rect x="250" y="186" width="212" height="70" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="356" y="216" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">RÖLE</text>
+        <text x="356" y="238" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">MOSFET yetmez</text>
+
+        <path d="M462 220h56" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="m510 214 8 6-8 6" stroke="#FF6A4D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <rect x="522" y="186" width="238" height="70" rx="11" fill="#1B2430" stroke="#FF6A4D"></rect>
+        <text x="641" y="214" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">KOMPRESÖR</text>
+        <text x="641" y="238" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FF5A5A">görev süresi + termal sınır</text>
+
+        <path d="M522 322H246" stroke="#3FD98A" stroke-width="2.4"></path>
+        <path d="m260 316-8 6 8 6" stroke="#3FD98A" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M190 322h-2" stroke="#3FD98A" stroke-width="2.4"></path>
+        <path d="M95 286v36h95" stroke="#3FD98A" stroke-width="2.4" fill="none"></path>
+
+        <rect x="522" y="288" width="238" height="70" rx="11" fill="#1B2430" stroke="#3FD98A"></rect>
+        <text x="641" y="316" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">SENSÖRLER</text>
+        <text x="641" y="340" text-anchor="middle" font-size="13" fill="#93A2B3">4 basınç · 4 yükseklik · tank</text>
+
+        <rect x="250" y="288" width="212" height="70" rx="11" fill="#1B2430" stroke="#3FD98A"></rect>
+        <text x="356" y="316" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">SİNYAL UYARLAMA</text>
+        <text x="356" y="340" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFB020">5 V sensör → 3,3 V ADC</text>
+
+        <rect x="820" y="86" width="290" height="84" rx="11" fill="rgba(255,90,90,0.08)" stroke="#FF5A5A"></rect>
+        <text x="840" y="114" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.2" fill="#FF5A5A">TUZAK 1</text>
+        <text x="840" y="138" font-size="13" fill="#E8EEF4">Diyotsuz solenoid kapanırken</text>
+        <text x="840" y="158" font-size="13" fill="#E8EEF4">sürücüsünü öldürür.</text>
+
+        <rect x="820" y="186" width="290" height="70" rx="11" fill="rgba(255,90,90,0.08)" stroke="#FF5A5A"></rect>
+        <text x="840" y="212" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.2" fill="#FF5A5A">TUZAK 2</text>
+        <text x="840" y="238" font-size="13" fill="#E8EEF4">Sürekli çalışan kompresör yanar.</text>
+
+        <rect x="820" y="288" width="290" height="70" rx="11" fill="rgba(255,176,32,0.08)" stroke="#FFB020"></rect>
+        <text x="840" y="314" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.2" fill="#FFB020">TUZAK 3</text>
+        <text x="840" y="340" font-size="13" fill="#E8EEF4">5 V sensör 3,3 V girişi bozar.</text>
+
+        <rect x="1150" y="86" width="274" height="272" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="1170" y="116" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.2" fill="#93A2B3">ARAÇ ALTI GERÇEĞİ</text>
+        <text x="1170" y="148" font-size="13" fill="#E8EEF4">Yükseklik sensörleri ve körük</text>
+        <text x="1170" y="168" font-size="13" fill="#E8EEF4">hatları araç altındadır:</text>
+        <text x="1170" y="200" font-size="13" fill="#93A2B3">· çamur, tuz, su, taş</text>
+        <text x="1170" y="222" font-size="13" fill="#93A2B3">· titreşim ve süspansiyon hareketi</text>
+        <text x="1170" y="244" font-size="13" fill="#93A2B3">· egzoza yakın noktalarda ısı</text>
+        <text x="1170" y="278" font-size="13" fill="#E8EEF4">Kablolar spiral koruma içinde,</text>
+        <text x="1170" y="298" font-size="13" fill="#E8EEF4">hareketli uçlarda bolluk payıyla,</text>
+        <text x="1170" y="318" font-size="13" fill="#E8EEF4">konektörler su geçirmez tipte.</text>
+        <text x="1170" y="344" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">crimp + ısı büzüşmeli — lehim yok</text>
+
+      </g>
+    </svg>
+
+  </div>
+
+  <!-- ALT İKİLİ -->
+  <div style="display: flex; gap: 20px; flex: 1; min-height: 0;">
+
+    <div style="flex: 1.25; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">PİN BÜTÇESİ — GIGA'NIN BUNU NEDEN KALDIRDIĞI</h2>
+      <table>
+        <thead><tr><th style="width: 46%;">İhtiyaç</th><th style="width: 22%;">Pin</th><th>Tip</th></tr></thead>
+        <tbody>
+          <tr><td>4 dolum solenoidi</td><td class="mono">4</td><td style="color:#93A2B3;">dijital çıkış</td></tr>
+          <tr><td>4 boşaltma solenoidi</td><td class="mono">4</td><td style="color:#93A2B3;">dijital çıkış</td></tr>
+          <tr><td>Kompresör rölesi</td><td class="mono">1</td><td style="color:#93A2B3;">dijital çıkış</td></tr>
+          <tr><td>4 körük basıncı</td><td class="mono">4</td><td style="color:#93A2B3;">analog giriş</td></tr>
+          <tr><td>4 köşe yüksekliği</td><td class="mono">4</td><td style="color:#93A2B3;">analog giriş</td></tr>
+          <tr><td>Tank basıncı</td><td class="mono">1</td><td style="color:#93A2B3;">analog giriş</td></tr>
+          <tr><td>Sürtme sensörleri</td><td class="mono">2</td><td style="color:#93A2B3;">I2C</td></tr>
+          <tr><td style="font-weight:600;">Yalnızca hava + sürtme</td><td class="mono" style="font-weight:700;">20</td><td style="color:#93A2B3;"><strong style="color:#E8EEF4;font-weight:600;">9'u analog</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; margin-top: auto; padding-top: 4px;">Nano ESP32'nin toplam 8 analog girişi var — <strong style="color: #E8EEF4; font-weight: 600;">tek başına hava süspansiyonu bile sığmıyor</strong>. GIGA'nın 14 analog girişi bu yüzden belirleyici oldu (§3.3).</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SİNYAL UYARLAMA NEDEN GEREKLİ</h2>
+        <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Otomotiv basınç sensörlerinin çoğu <strong style="font-weight: 600;">5 V oranlı (ratiometric)</strong> çıkış verir: besleme 5 V'ken çıkış 0,5–4,5 V arası gezer. GIGA'nın analog girişi <strong style="font-weight: 600;">3,3 V</strong>'tur.</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Doğrudan bağlamak girişi bozar. Araya <strong style="color: #E8EEF4; font-weight: 600;">gerilim bölücü</strong> veya tampon girer; oranlı sensörde referans da birlikte ölçülmelidir, yoksa besleme sapması doğrudan okumaya biner.</div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">SENSÖR SEÇİLİNCE</span>
+          <span style="font-size: 13px; color: #93A2B3;">bölücü oranı ve ölçek buradan çıkar</span>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 9px; flex-shrink: 0;">
+        <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — SIRA</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Hava sistemi <strong style="font-weight: 600;">masada</strong> kurulur ve test edilir: kompresör, tank, manifold ve sensörler araca girmeden önce sürücü kartıyla birlikte çalışır hâle gelir. Araç altındaki ilk deneme, yazılımın ilk denemesi olamaz.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
