@@ -71,14 +71,6 @@ Bulut build'i `eas build:internal` komutunu **non-interactive** çalıştırır;
 kendiliğinden bağlanamaz, bu yüzden ID'nin app config'de durması zorunludur. Yoksa build
 "EAS project not configured" diyip düşer.
 
-veya panelden ID'yi kopyalayıp elle gir:
-**https://expo.dev/accounts/ovur.rsl/projects/pq35/settings** → *Project ID*
-
-```jsonc
-// app.json → expo
-"extra": { "eas": { "projectId": "<panelden gelen UUID>" } }
-```
-
 ### GitHub ayarı — bu yapılmadan bulut build başlamaz
 
 Uygulama depo kökünde değil, **`mobile/` altında**. Expo panelinde:
