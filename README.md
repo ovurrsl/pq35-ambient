@@ -116,9 +116,10 @@ olarak Keychain'deki refresh token'ı açar. Üstüne TOTP MFA. Her tabloda RLS 
 reddet. ESP32 **asla** service role anahtarı taşımaz; kendi device token'ı olur ve veri Edge
 Function üzerinden yazılır.
 
-Kritik komutlar (kilit, arama, kodlama) misafir yetkisinde tamamen kapalıdır; sahip
-yetkisinde bile ayrıca Face ID onayı ister, oturum anahtarıyla imzalanır ve komut tekrar
-sayacı taşır.
+Face ID **yalnızca uygulamayı açar**, her komutta tekrar sorulmaz. Uygulama kilidi tek kapı
+olduğu için arka planda otomatik kilitlenme kapatılamaz. Kritik komutlar (kilit, arama,
+kodlama) misafir yetkisinde tamamen kapalıdır; sahip yetkisinde oturum anahtarıyla imzalanır
+ve komut tekrar sayacı taşır.
 
 Araçtaki ilk yazılım **sadece dinler**; log alınır, masada analiz edilir, LED kodu ondan sonra
 yazılır. Splice öncesi kontrol listesi ve diğer sert kurallar `CLAUDE.md` §2 ve §6'da.

@@ -175,8 +175,12 @@ yapılandırmayla belirlenir. Bu **tasarlanmış bir özellik** olarak ele alın
 
 ### BLE eklemeleri
 
-Mevcut tasarım (§7) korunur, üstüne: **bağlantı başına oturum anahtarı**, **komut tekrar
-sayacı**, kritik komutlarda (kilit, arama) **Face ID onayı**.
+Mevcut tasarım (§7) korunur, üstüne: **bağlantı başına oturum anahtarı** ve **komut tekrar
+sayacı**.
+
+**Face ID yalnızca uygulamayı açar** (araç sahibinin kararı). Her komutta tekrar sorulmaz;
+uygulama kilidinin kendisi kapıdır. Bunun zorunlu karşılığı: **arka planda otomatik
+kilitlenme kapatılamaz** — uygulama arkaya alınınca Keychain anahtarı kapanır.
 
 ---
 
@@ -311,8 +315,13 @@ tasarımın kendisi.
 yakındayken internet gerekmez; telefon ↔ bulut **Supabase JWT**'ye dayanır ve konum geçmişi,
 panel senkronu ve uzaktan erişim içindir.
 
-**Kritik komutlar** (kilit, arama, kodlama) misafir yetkisinde kapalıdır; sahip yetkisinde
-bile **Face ID onayı** ister ve oturum anahtarıyla imzalanıp tekrar sayacı taşır.
+**Face ID yalnızca uygulama açılışındadır, her komutta değil.** Uygulama kilidi tek kapıdır,
+bu yüzden **arka planda otomatik kilitlenme kapatılamaz** — uygulama arkaya alınınca Keychain
+anahtarı kapanır. Bu ayarı "kullanıcı isterse kapatabilir" diye gösterme.
+
+**Kritik komutlar** (kilit, arama, kodlama) misafir yetkisinde tamamen kapalıdır; sahip
+yetkisinde oturum anahtarıyla imzalanır ve tekrar sayacı taşır. Geri alınamayan komutlar
+göndermeden önce bir **onay ekranı** gösterir — bu onay Face ID değil, düz bir doğrulamadır.
 
 ---
 

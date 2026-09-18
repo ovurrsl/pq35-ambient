@@ -65,13 +65,13 @@ button{font-family:inherit;}
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 56px; opacity: 0.62;">
         <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
           <span style="display: flex; align-items: center; gap: 7px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"></rect><path d="M8.3 10.5V7.9a3.7 3.7 0 0 1 7.4 0v2.6"></path></svg>
-            <span style="font-size: 15px; color: #E8EEF4;">Kritik komutlarda Face ID onayı</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"></rect><path d="M8.3 10.5V7.9a3.7 3.7 0 0 1 7.4 0v2.6"></path><path d="M12 13.6v2.4"></path></svg>
+            <span style="font-size: 15px; color: #E8EEF4;">Arka planda otomatik kilitlenme</span>
           </span>
-          <span style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Kapatılamaz — kilit, arama ve kodlama komutları bağlantı güvenliğinin üstüne ikinci bir kapı ister.</span>
+          <span style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Kapatılamaz — uygulama kilidi tek kapı olduğu için zorunlu.</span>
         </span>
-        <label for="guvenlik-komut-onay" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: default;">
-          <input type="checkbox" class="vh" id="guvenlik-komut-onay" aria-label="Kritik komutlarda Face ID onayı — zorunlu, kapatılamaz" checked disabled>
+        <label for="guvenlik-oto-kilit" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: default;">
+          <input type="checkbox" class="vh" id="guvenlik-oto-kilit" aria-label="Arka planda otomatik kilitlenme — zorunlu, kapatılamaz" checked disabled>
           <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #FFFFFF;"></span></span>
         </label>
       </div>
@@ -79,11 +79,11 @@ button{font-family:inherit;}
 
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 50px;">
         <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
-          <span style="font-size: 15px; color: #E8EEF4;">Arka planda otomatik kilitlenme</span>
-          <span style="font-size: 11px; color: #93A2B3;">Uygulama arkaya alınınca anahtar kapanır</span>
+          <span style="font-size: 15px; color: #E8EEF4;">Geri alınamayan komutlarda onay sor</span>
+          <span style="font-size: 11px; color: #93A2B3;">Kilit ve arama gönderilmeden önce onay ekranı</span>
         </span>
-        <label for="guvenlik-oto-kilit" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
-          <input type="checkbox" class="vh" id="guvenlik-oto-kilit" aria-label="Arka planda otomatik kilitlenme" checked>
+        <label for="guvenlik-komut-onay" style="position: relative; display: flex; align-items: center; height: 44px; padding-left: 8px; cursor: pointer;">
+          <input type="checkbox" class="vh" id="guvenlik-komut-onay" aria-label="Geri alınamayan komutlarda onay sor" checked>
           <span style="display: block; width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #FFFFFF;"></span></span>
         </label>
       </div>
@@ -99,8 +99,8 @@ button{font-family:inherit;}
       </div>
       <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Yalnızca <span style="color: #E8EEF4; font-weight: 600;">buluta</span> girişi korur. Kurtarma kodları bir kez gösterilir, her kod tek kullanımlıktır.</div>
       <div style="display: flex; gap: 8px;">
-        <button type="button" style="flex: 1.7; min-width: 0; height: 44px; background: #1B2430; border: 1px solid #3A4A5C; border-radius: 11px; cursor: pointer; color: #E8EEF4; font-size: 13px; font-weight: 600;">Kurtarma kodlarını yenile</button>
-        <button type="button" style="flex: 1; min-width: 0; height: 44px; background: transparent; border: 1px solid #FF5A5A; border-radius: 11px; cursor: pointer; color: #FF5A5A; font-size: 13px; font-weight: 600;">MFA'yı kapat</button>
+        <button type="button" style="flex: 1.8; min-width: 0; height: 44px; background: #1B2430; border: 1px solid #3A4A5C; border-radius: 11px; cursor: pointer; color: #E8EEF4; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 0 6px;">Kurtarma kodlarını yenile</button>
+        <button type="button" style="flex: 1; min-width: 0; height: 44px; background: transparent; border: 1px solid #FF5A5A; border-radius: 11px; cursor: pointer; color: #FF5A5A; font-size: 13px; font-weight: 600; white-space: nowrap; padding: 0 6px;">MFA'yı kapat</button>
       </div>
     </div>
 
@@ -141,12 +141,12 @@ button{font-family:inherit;}
         <div style="display: flex; align-items: center; gap: 8px; height: 25px; border-bottom: 1px solid #2A3746;">
           <span style="font-size: 13px; color: #E8EEF4; white-space: nowrap;">Oturum anahtarı</span>
           <span style="flex: 1;"></span>
-          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">bağlantı başına · tekrar sayacı ··</span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">bağlantı başına · sayaç ··</span>
         </div>
         <div style="display: flex; align-items: center; gap: 8px; height: 25px;">
           <span style="font-size: 13px; color: #E8EEF4; white-space: nowrap;">Directed advertising</span>
           <span style="flex: 1;"></span>
-          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">yalnız eşleşmiş telefona görünür</span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap;">yalnız eşleşmiş telefona</span>
         </div>
       </div>
     </div>
