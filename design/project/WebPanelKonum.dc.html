@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Vercel admin paneli — Konum</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+.rng{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;margin:0;padding:0;position:relative;z-index:2;cursor:pointer;}
+.rng::-webkit-slider-runnable-track{height:8px;background:transparent;border:0;}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:999px;background:#E8EEF4;border:2px solid #0B0F14;margin-top:-5px;}
+.rng::-moz-range-track{height:8px;background:transparent;border:0;}
+.rng::-moz-range-thumb{width:16px;height:16px;border-radius:999px;background:#E8EEF4;border:2px solid #0B0F14;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #B08CFF; box-shadow: 0 0 24px 2px rgba(176,140,255,0.55); z-index: 5;"></div>
+
+  <!-- ÜST BAR -->
+  <div style="height: 64px; flex-shrink: 0; box-sizing: border-box; background: #131A22; border-bottom: 1px solid #2A3746; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 24px;">
+
+    <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+      <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 9px; background: rgba(176,140,255,0.14); border: 1px solid #B08CFF; flex-shrink: 0;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B08CFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M5 17l1.6-5.4A3 3 0 0 1 9.5 9.4h5a3 3 0 0 1 2.9 2.2L19 17"></path><circle cx="7.6" cy="19.2" r="1.5"></circle><circle cx="16.4" cy="19.2" r="1.5"></circle></svg>
+      </span>
+      <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: #E8EEF4; letter-spacing: -0.01em;">PQ35-AMBIENT · yönetim paneli</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: #93A2B3;">Vercel üzerinde · Supabase arkada · 3. faz</div>
+      </div>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">proje: proje-adi</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+      <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid #3FD98A; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3FD98A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.4"></rect><path d="M8 10.5V7.6a4 4 0 0 1 8 0v2.9"></path></svg>
+        MFA açık · TOTP
+      </span>
+      <span style="width: 1px; height: 26px; background: #2A3746;"></span>
+      <button type="button" style="display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px 0 6px; background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; color: #E8EEF4; cursor: pointer;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 999px; background: #B08CFF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;">S</span>
+        <span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px;">
+          <span style="font-size: 13px; font-weight: 600; color: #E8EEF4; line-height: 1.1;">Sahip</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #93A2B3; line-height: 1.1;">role: admin</span>
+        </span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- YETKİ ŞERİDİ -->
+  <div style="height: 46px; flex-shrink: 0; box-sizing: border-box; background: rgba(176,140,255,0.09); border-bottom: 1px solid #2A3746; display: flex; align-items: center; gap: 12px; padding: 0 24px;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B08CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M12 3.2 20 6.4v5.2c0 4.6-3.2 7.8-8 9.2-4.8-1.4-8-4.6-8-9.2V6.4z"></path></svg>
+    <span style="font-size: 14px; line-height: 1.4; color: #E8EEF4;"><span style="font-weight: 600;">Bu panel iOS uygulamasıyla aynı yetkilere sahiptir</span> — aynı Supabase Auth, aynı RLS politikaları. Panel ayrıcalıklı bir yol açmaz: her sorgu <span style="font-family: 'JetBrains Mono', monospace; color: #B08CFF;">auth.uid()</span> ile sınırlıdır, service role anahtarı tarayıcıya hiç inmez.</span>
+  </div>
+
+  <!-- GÖVDE -->
+  <div style="flex: 1; min-height: 0; display: flex;">
+
+    <!-- SOL GEZİNME -->
+    <nav aria-label="Panel gezinmesi" style="width: 232px; flex-shrink: 0; box-sizing: border-box; background: #0E141B; border-right: 1px solid #2A3746; padding: 18px 14px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #93A2B3; padding: 0 10px 8px;">MENÜ</div>
+
+      <a href="#genel-bakis" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"></rect></svg>
+        Genel bakış
+      </a>
+
+      <a href="#konum" aria-current="page" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; background: rgba(176,140,255,0.14); border: 1px solid #B08CFF; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px; font-weight: 600;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B08CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+        Konum
+      </a>
+
+      <a href="#bolgeler" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"></path><path d="m3 13 9 5 9-5"></path></svg>
+        Bölgeler
+      </a>
+
+      <a href="#canli-veri" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M3 12h4l2.5-6 4 13 2.5-7h5"></path></svg>
+        Canlı veri
+      </a>
+
+      <a href="#cihazlar" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M10 3.5v3M14 3.5v3M10 17.5v3M14 17.5v3M3.5 10h3M3.5 14h3M17.5 10h3M17.5 14h3"></path></svg>
+        Cihazlar
+      </a>
+
+      <a href="#denetim-kaydi" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M4.5 6h15M4.5 12h15M4.5 18h9"></path></svg>
+        Denetim kaydı
+      </a>
+
+      <a href="#ayarlar" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid transparent; box-sizing: border-box; text-decoration: none; color: #E8EEF4; font-size: 14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><circle cx="12" cy="12" r="3.3"></circle><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6"></path></svg>
+        Ayarlar
+      </a>
+
+      <div style="flex: 1;"></div>
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 10px; padding: 10px 11px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">OTURUM</div>
+        <div style="font-size: 12px; line-height: 1.35; color: #E8EEF4;">Supabase JWT · kısa ömürlü</div>
+        <div style="font-size: 12px; line-height: 1.35; color: #93A2B3;">Yenileme tarayıcı oturumunda; panel service role taşımaz.</div>
+      </div>
+    </nav>
+
+    <!-- İÇERİK -->
+    <div style="flex: 1; min-width: 0; box-sizing: border-box; padding: 20px 24px; display: flex; gap: 20px;">
+
+      <!-- SOL KOLON -->
+      <div style="width: 796px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px;">
+
+        <!-- ŞEMATİK HARİTA -->
+        <div style="height: 478px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 36px; flex-shrink: 0;">
+            <div style="display: flex; align-items: baseline; gap: 12px; min-width: 0;">
+              <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KONUM GEÇMİŞİ</h2>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3; white-space: nowrap;">şematik gösterim</span>
+            </div>
+
+            <fieldset style="margin: 0; padding: 0; border: 0; display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+              <legend class="vh">Zaman aralığı</legend>
+
+              <input type="radio" class="vh" name="wpkonum-aralik" id="wpkonum-aralik-bugun" checked>
+              <label for="wpkonum-aralik-bugun" style="display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 9px; background: rgba(176,140,255,0.16); border: 1px solid #B08CFF; box-sizing: border-box; color: #E8EEF4; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">Bugün</label>
+
+              <input type="radio" class="vh" name="wpkonum-aralik" id="wpkonum-aralik-7g">
+              <label for="wpkonum-aralik-7g" style="display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 9px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box; color: #E8EEF4; font-size: 13px; cursor: pointer; white-space: nowrap;">7 gün</label>
+
+              <input type="radio" class="vh" name="wpkonum-aralik" id="wpkonum-aralik-30g">
+              <label for="wpkonum-aralik-30g" style="display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 9px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box; color: #E8EEF4; font-size: 13px; cursor: pointer; white-space: nowrap;">30 gün</label>
+            </fieldset>
+          </div>
+
+          <div style="flex: 1; min-height: 0; border: 1px solid #2A3746; border-radius: 11px; background: #0E141B; overflow: hidden;">
+            <svg width="100%" height="100%" viewBox="0 0 758 390" preserveAspectRatio="none" style="display: block;" role="img" aria-label="Şematik harita yer tutucusu: yol ızgarası, rota izi, başlangıç noktası ve araç işareti ile doğruluk halkası. Gerçek harita karosu ve gerçek koordinat gösterilmez.">
+              <defs>
+                <filter id="wpkonumGlowMarker" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="6" result="bKonum"></feGaussianBlur>
+                  <feMerge><feMergeNode in="bKonum"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+                </filter>
+              </defs>
+
+              <rect x="0" y="0" width="758" height="390" fill="#0E141B"></rect>
+
+              <path d="M0 80 H758 M0 200 H758 M0 320 H758 M200 0 V390 M330 0 V390 M530 0 V390 M680 0 V390" stroke="#1B2430" stroke-width="16" fill="none"></path>
+              <path d="M0 80 H758 M0 200 H758 M0 320 H758 M200 0 V390 M330 0 V390 M530 0 V390 M680 0 V390" stroke="#22303D" stroke-width="1" fill="none" stroke-dasharray="9 9"></path>
+
+              <rect x="26" y="16" width="156" height="48" rx="4" fill="#141C25"></rect>
+              <rect x="222" y="16" width="92" height="48" rx="4" fill="#141C25"></rect>
+              <rect x="352" y="16" width="158" height="48" rx="4" fill="#141C25"></rect>
+              <rect x="552" y="16" width="110" height="48" rx="4" fill="#141C25"></rect>
+              <rect x="26" y="100" width="156" height="84" rx="4" fill="#141C25"></rect>
+              <rect x="222" y="100" width="92" height="84" rx="4" fill="#141C25"></rect>
+              <rect x="352" y="100" width="158" height="84" rx="4" fill="#141C25"></rect>
+              <rect x="552" y="100" width="110" height="84" rx="4" fill="#141C25"></rect>
+              <rect x="698" y="100" width="46" height="84" rx="4" fill="#141C25"></rect>
+              <rect x="26" y="222" width="156" height="80" rx="4" fill="#141C25"></rect>
+              <rect x="222" y="222" width="92" height="80" rx="4" fill="#141C25"></rect>
+              <rect x="352" y="222" width="158" height="80" rx="4" fill="#141C25"></rect>
+              <rect x="698" y="222" width="46" height="80" rx="4" fill="#141C25"></rect>
+              <rect x="26" y="340" width="156" height="36" rx="4" fill="#141C25"></rect>
+              <rect x="352" y="340" width="158" height="36" rx="4" fill="#141C25"></rect>
+              <rect x="552" y="340" width="110" height="36" rx="4" fill="#141C25"></rect>
+
+              <path d="M92 320 H200 V200 H330 V80 H530 V200" stroke="#B08CFF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" opacity="0.85"></path>
+
+              <circle cx="200" cy="320" r="3.6" fill="#B08CFF"></circle>
+              <circle cx="200" cy="200" r="3.6" fill="#B08CFF"></circle>
+              <circle cx="330" cy="200" r="3.6" fill="#B08CFF"></circle>
+              <circle cx="330" cy="80" r="3.6" fill="#B08CFF"></circle>
+              <circle cx="530" cy="80" r="3.6" fill="#B08CFF"></circle>
+
+              <circle cx="92" cy="320" r="6" fill="#0E141B" stroke="#B08CFF" stroke-width="2.2"></circle>
+              <text x="104" y="342" font-family="JetBrains Mono, monospace" font-size="11" fill="#93A2B3">başlangıç</text>
+
+              <circle cx="530" cy="200" r="46" fill="rgba(176,140,255,0.10)" stroke="#B08CFF" stroke-width="1" stroke-dasharray="5 5"></circle>
+              <circle cx="530" cy="200" r="10" fill="#B08CFF" filter="url(#wpkonumGlowMarker)"></circle>
+              <circle cx="530" cy="200" r="3.6" fill="#0B0F14"></circle>
+              <text x="584" y="194" font-family="JetBrains Mono, monospace" font-size="12" fill="#E8EEF4">araç · son paket</text>
+              <text x="584" y="210" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#93A2B3">doğruluk halkası</text>
+
+              <rect x="10" y="356" width="470" height="24" rx="5" fill="#0B0F14" opacity="0.86"></rect>
+              <text x="20" y="372" font-family="JetBrains Mono, monospace" font-size="10.5" letter-spacing="0.09em" fill="#93A2B3">ŞEMATİK — GERÇEK HARİTA KAROSU YOK · KOORDİNAT GÖSTERİLMEZ</text>
+            </svg>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 14px; height: 20px; flex-shrink: 0;">
+            <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: #93A2B3;"><span style="width: 16px; height: 3px; border-radius: 999px; background: #B08CFF;"></span>rota izi</span>
+            <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: #93A2B3;"><span style="width: 10px; height: 10px; border-radius: 999px; background: #B08CFF;"></span>son konum</span>
+            <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: #93A2B3;"><span style="width: 10px; height: 10px; border-radius: 999px; border: 1px dashed #B08CFF; box-sizing: border-box;"></span>doğruluk halkası</span>
+            <span style="font-size: 11.5px; color: #93A2B3;">Karo servisi bağlanmadı; çizim yol ızgarası temsilidir.</span>
+          </div>
+        </div>
+
+        <!-- ROTA GEÇMİŞİ TABLOSU -->
+        <div style="height: 352px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ROTA GEÇMİŞİ</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">seçili aralık: bugün</span>
+          </div>
+
+          <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr>
+                <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 0 10px 8px 0; border-bottom: 1px solid #2A3746; width: 74px;">Zaman</th>
+                <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 0 10px 8px 10px; border-bottom: 1px solid #2A3746;">Konum (maskeli)</th>
+                <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 0 10px 8px 10px; border-bottom: 1px solid #2A3746; width: 88px;">Kaynak</th>
+                <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 0 10px 8px 10px; border-bottom: 1px solid #2A3746; width: 92px;">Doğruluk</th>
+                <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 0 0 8px 10px; border-bottom: 1px solid #2A3746; width: 138px;">Paket</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0; border-bottom: 1px solid #2A3746;">14:32</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">GPRS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px; border-bottom: 1px solid #2A3746;">—</td>
+                <td style="padding: 9px 0 9px 10px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #3FD98A; border: 1px solid #3FD98A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">doğrulandı</span></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0; border-bottom: 1px solid #2A3746;">14:02</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">GPRS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px; border-bottom: 1px solid #2A3746;">—</td>
+                <td style="padding: 9px 0 9px 10px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #3FD98A; border: 1px solid #3FD98A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">doğrulandı</span></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0; border-bottom: 1px solid #2A3746;">13:31</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">SMS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px; border-bottom: 1px solid #2A3746;">—</td>
+                <td style="padding: 9px 0 9px 10px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #3FD98A; border: 1px solid #3FD98A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">doğrulandı</span></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0; border-bottom: 1px solid #2A3746;">13:00</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">GPRS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px; border-bottom: 1px solid #2A3746;">—</td>
+                <td style="padding: 9px 0 9px 10px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #3FD98A; border: 1px solid #3FD98A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">doğrulandı</span></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0; border-bottom: 1px solid #2A3746;">12:28</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #93A2B3; padding: 9px 10px; border-bottom: 1px solid #2A3746;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px; border-bottom: 1px solid #2A3746;">GPRS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px; border-bottom: 1px solid #2A3746;">—</td>
+                <td style="padding: 9px 0 9px 10px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #FF5A5A; border: 1px solid #FF5A5A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">reddedildi</span></td>
+              </tr>
+              <tr>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 9px 10px 9px 0;">11:57</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4; padding: 9px 10px;">··.····· , ··.·····</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 9px 10px;">SMS</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6E7C8C; padding: 9px 10px;">—</td>
+                <td style="padding: 9px 0 9px 10px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #3FD98A; border: 1px solid #3FD98A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">doğrulandı</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ARAÇTA DOĞRULANACAK</span>
+            <span style="font-size: 11.5px; line-height: 1.35; color: #93A2B3;">Doğruluk sütunu boş: GPS doğruluğu ve ilk sabitleme süresi henüz ölçülmedi. Reddedilen paket Postgres'e hiç yazılmaz, yalnızca denetim kaydına düşer.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAĞ KOLON -->
+      <div style="width: 504px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px;">
+
+        <!-- SON KONUM ÖZETİ -->
+        <div style="height: 252px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SON KONUM</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">kaynak: GPRS</span>
+          </div>
+
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+            <div style="font-size: 11.5px; color: #93A2B3;">Enlem / boylam</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #E8EEF4;">··.····· , ··.·····</div>
+            <div style="font-size: 11.5px; color: #93A2B3;">Panelde maskeli gösterilir; açmak ayrı bir yetki ister.</div>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <div style="flex: 1; background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+              <div style="font-size: 11.5px; color: #93A2B3;">Sabitleme</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #E8EEF4;">2 dk önce</div>
+            </div>
+            <div style="flex: 1; background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+              <div style="font-size: 11.5px; color: #93A2B3;">Uydu</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #6E7C8C;">—</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(63,217,138,0.08); border: 1px solid #3FD98A; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #3FD98A;">PAKET DOĞRULANDI · AES-GCM</div>
+            <div style="font-size: 12px; line-height: 1.35; color: #E8EEF4;">Cihaz şifreledi, Edge Function çözüp doğruladı; sonra yazıldı.</div>
+          </div>
+        </div>
+
+        <!-- VERİ SAKLAMA -->
+        <div style="height: 330px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">VERİ SAKLAMA</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">RLS · varsayılan reddet</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 34px; background: #1B2430; border: 1px solid #2A3746; border-radius: 9px; padding: 0 11px; box-sizing: border-box;">
+              <span style="font-size: 12.5px; color: #93A2B3;">Saklama süresi</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4;">· gün</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">YER TUTUCU</span>
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 34px; background: #1B2430; border: 1px solid #2A3746; border-radius: 9px; padding: 0 11px; box-sizing: border-box;">
+              <span style="font-size: 12.5px; color: #93A2B3;">Panelde maskeleme</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 700; color: #3FD98A;">açık</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 34px; background: #1B2430; border: 1px solid #2A3746; border-radius: 9px; padding: 0 11px; box-sizing: border-box;">
+              <span style="font-size: 12.5px; color: #93A2B3;">Dışa aktarım</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #E8EEF4;">denetim kaydına yazılır</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 34px; background: #1B2430; border: 1px solid #2A3746; border-radius: 9px; padding: 0 11px; box-sizing: border-box;">
+              <span style="font-size: 12.5px; color: #93A2B3;">Satır sahipliği</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #B08CFF;">auth.uid()</span>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+            <div style="font-size: 13.5px; line-height: 1.45; color: #E8EEF4;">Konum geçmişi hassas veridir: saklama süresi sınırlı tutulur, panelde maskelenir, dışa aktarımı loglanır.</div>
+          </div>
+
+          <div style="font-size: 11.5px; line-height: 1.35; color: #93A2B3;">Süre dolduğunda satırlar veritabanı tarafında silinir; panel bu işi tetiklemez.</div>
+        </div>
+
+        <!-- DIŞA AKTARIM -->
+        <div style="height: 228px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+          <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">DIŞA AKTARIM</h2>
+
+          <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;">Seçili aralıktaki konum satırları CSV olarak indirilir. Koordinatlar dosyada açık gider — dosya, panelin kendisinden daha hassastır.</div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <button type="button" style="height: 40px; padding: 0 18px; background: #1B2430; border: 1px solid #B08CFF; border-radius: 9px; color: #E8EEF4; font-size: 13.5px; font-weight: 600; cursor: pointer; flex-shrink: 0;">CSV dışa aktar</button>
+            <span style="font-size: 12px; line-height: 1.35; color: #93A2B3;">Dışa aktarım denetim kaydına yazılır: kim, ne zaman, hangi aralık.</span>
+          </div>
+
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 9px 11px; display: flex; align-items: center; gap: 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M12 8.6v5"></path><path d="M12 16.6h.01"></path><circle cx="12" cy="12" r="8.6"></circle></svg>
+            <span style="font-size: 12px; line-height: 1.35; color: #E8EEF4;">Misafir yetkisi dışa aktaramaz; yalnızca sahip rolü bu butonu görür.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
