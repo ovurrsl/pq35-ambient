@@ -23,6 +23,56 @@ cp .env.example .env.local   # ve doldur
 > anahtar konur. Service role anahtarı, SIM808 ön paylaşımlı anahtarı ve cihaz device
 > token'ı asla uygulamaya girmez. Güvenlik RLS'ten gelir, anahtarın gizliliğinden değil.
 
+## EAS / Expo projesine bağlanma
+
+Expo tarafındaki proje: **`@ovur.rsl/pq35`** (hesap `ovur.rsl`, slug `pq35`).
+`app.json`'daki `owner` ve `slug` bu projeye göre hizalanmıştır — eşleşmeseler
+`eas init` ikinci bir proje açardı.
+
+Eksik olan tek alan `extra.eas.projectId`. İki yolundan biri:
+
+```bash
+npx eas login
+npx eas init          # mevcut owner+slug'ı bulur ve projectId'yi app.json'a yazar
+```
+
+veya panelden ID'yi kopyalayıp elle gir:
+**https://expo.dev/accounts/ovur.rsl/projects/pq35/settings** → *Project ID*
+
+```jsonc
+// app.json → expo
+"extra": { "eas": { "projectId": "<panelden gelen UUID>" } }
+```
+
+### GitHub ayarı — bu yapılmadan bulut build başlamaz
+
+Uygulama depo kökünde değil, **`mobile/` altında**. Expo panelinde:
+
+> Project GitHub settings → **Base directory** → `mobile` → Save
+
+Kök dizinde `app.json` olmadığı için bu alan `/` kalırsa build hemen düşer.
+
+### Build profilleri (`eas.json`)
+
+| Profil | Ne için | Apple Developer hesabı |
+|---|---|---|
+| `development-simulator` | Mac'te iOS simülatörü | **gerekmez** |
+| `development` | Kendi iPhone/iPad'inde | gerekir |
+| `preview` | Dahili dağıtım | gerekir |
+| `production` | App Store | gerekir |
+
+Apple hesabı yoksa `development-simulator` ile başlanır: ekranlar görünür, **BLE
+görünmez** — simülatörde Bluetooth donanımı yoktur, o zaten araç takılınca test edilecek.
+
+### Yerel ön kontrol — bulut build'i yakmadan
+
+```bash
+npx expo prebuild --platform ios --no-install --clean
+```
+
+Eklenti ve yapılandırma hatalarını EAS'e gitmeden yakalar. `ios/` ve `android/`
+`.gitignore`'da; üretilen klasörler depoya girmez.
+
 ## Çalıştırma — Expo Go yetmez
 
 `react-native-ble-plx` yerel bir modüldür, **Expo Go'da çalışmaz**. Custom dev client şart:

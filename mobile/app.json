@@ -47,7 +47,7 @@
       [
         "expo-secure-store",
         {
-          "faceIDPermission": "Uygulama kilidini açmak için Face ID kullanılır."
+          "faceIDPermission": "Uygulama kilidini açmak ve Keychain'de saklanan oturum anahtarına erişmek için Face ID kullanılır. Face ID kimlik doğrulama değildir; sunucuya karşı kimlik Supabase JWT'dir."
         }
       ],
       [
