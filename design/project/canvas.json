@@ -36,6 +36,13 @@
    "x": 940,
    "y": 5844
   },
+  "AppEgzoz.dc.html": {
+   "h": 844,
+   "title": "iOS — Egzoz",
+   "w": 390,
+   "x": 6580,
+   "y": 4600
+  },
   "AppEslestirme.dc.html": {
    "h": 844,
    "title": "iOS — Araçla eşleştirme",
@@ -56,6 +63,20 @@
    "w": 390,
    "x": 2820,
    "y": 5844
+  },
+  "AppHava.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava süspansiyon",
+   "w": 390,
+   "x": 7050,
+   "y": 4600
+  },
+  "AppHavaHafiza.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava hafıza ve ayarlar",
+   "w": 390,
+   "x": 7520,
+   "y": 4600
   },
   "AppIletisim.dc.html": {
    "h": 844,
@@ -183,6 +204,13 @@
    "x": 1680,
    "y": 3000
   },
+  "EgzozVarex.dc.html": {
+   "h": 1300,
+   "title": "Varex egzoz valfi",
+   "w": 1600,
+   "x": 0,
+   "y": 10288
+  },
   "GuvenliKurulum.dc.html": {
    "h": 1000,
    "title": "Güvenli kurulum",
@@ -196,6 +224,13 @@
    "w": 1600,
    "x": 5040,
    "y": 7088
+  },
+  "HavaMimarisi.dc.html": {
+   "h": 1300,
+   "title": "Hava süspansiyon — mimari",
+   "w": 1600,
+   "x": 1680,
+   "y": 10288
   },
   "KablolamaPinout.dc.html": {
    "h": 1300,
@@ -238,6 +273,13 @@
    "w": 1600,
    "x": 5040,
    "y": 3000
+  },
+  "SurtmeKorumasi.dc.html": {
+   "h": 1200,
+   "title": "Sürtme koruması",
+   "w": 1600,
+   "x": 3360,
+   "y": 10288
   },
   "UzaktanErisim.dc.html": {
    "h": 1300,
@@ -338,7 +380,7 @@
   },
   "grup4": {
    "kind": "title1",
-   "maxW": 6500,
+   "maxW": 7910,
    "text": "4 · iOS — kontrol ekranları",
    "w": 240,
    "x": 0,
@@ -367,6 +409,14 @@
    "w": 240,
    "x": 0,
    "y": 8428
+  },
+  "grup8": {
+   "kind": "title1",
+   "maxW": 4960,
+   "text": "8 · Egzoz ve hava süspansiyon",
+   "w": 240,
+   "x": 0,
+   "y": 10028
   }
  },
  "order": [
@@ -387,6 +437,9 @@
   "AppRenkStudyosu.dc.html",
   "AppAnimasyon.dc.html",
   "AppSesTepkili.dc.html",
+  "AppEgzoz.dc.html",
+  "AppHava.dc.html",
+  "AppHavaHafiza.dc.html",
   "AppOlaylar.dc.html",
   "AppArac.dc.html",
   "AppPerformans.dc.html",
@@ -412,7 +465,10 @@
   "YiginMimarisi.dc.html",
   "UzaktanErisim.dc.html",
   "VeriKaydi.dc.html",
-  "PerformansOlcumu.dc.html"
+  "PerformansOlcumu.dc.html",
+  "EgzozVarex.dc.html",
+  "HavaMimarisi.dc.html",
+  "SurtmeKorumasi.dc.html"
  ],
  "pages": [],
  "title": "PQ35-AMBIENT Tasarım Kanvası",

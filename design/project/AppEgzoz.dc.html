@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Egzoz</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+    <a href="#bolgeler" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Bölgeler
+    </a>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+        <h1 style="font-size: 25px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Egzoz</h1>
+        <div class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #6E7C8C;">VAREX VALFİ</div>
+      </div>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap; flex-shrink: 0;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #3FD98A;"></span>Kontak açık</span>
+    </div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 8px; display: flex; flex-direction: column; gap: 10px;">
+
+    <!-- VALF DURUMU -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 14px 13px 12px; display: flex; flex-direction: column; gap: 11px; flex-shrink: 0;">
+
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-label="Valf açık" style="display: block; margin: 0 auto;">
+        <circle cx="60" cy="60" r="46" stroke="#2A3746" stroke-width="2" fill="none"></circle>
+        <circle cx="60" cy="60" r="46" stroke="#3FD98A" stroke-width="4" fill="none" stroke-dasharray="204 289" stroke-linecap="round" transform="rotate(-90 60 60)"></circle>
+        <path d="M32 60h56" stroke="#3FD98A" stroke-width="5" stroke-linecap="round"></path>
+        <text x="60" y="96" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="13" font-weight="600" fill="#E8EEF4">AÇIK</text>
+      </svg>
+
+      <div style="display: flex; gap: 8px;">
+        <button type="button" aria-pressed="true" style="flex: 1; min-height: 48px; border-radius: 13px; background: rgba(232,238,244,0.14); border: 1px solid rgba(232,238,244,0.22); color: #E8EEF4; font-size: 15px; font-weight: 600; cursor: pointer;">Aç</button>
+        <button type="button" aria-pressed="false" style="flex: 1; min-height: 48px; border-radius: 13px; background: rgba(232,238,244,0.05); border: 1px solid rgba(232,238,244,0.12); color: #93A2B3; font-size: 15px; font-weight: 500; cursor: pointer;">Kapat</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,176,32,0.07); border: 1px solid rgba(255,176,32,0.30); border-radius: 10px; padding: 8px 11px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.4v.1"></path></svg>
+        <span style="font-size: 12px; line-height: 1.4; color: #93A2B3;">Bu <strong style="color: #E8EEF4; font-weight: 600;">bilinen son komut</strong> — ölçülmüş konum değil. Ünitede konum geri beslemesi var mı henüz bilinmiyor.</span>
+      </div>
+
+    </div>
+
+    <!-- OTOMATİK MOD -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 4px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <label for="egzoz-oto" style="display: flex; align-items: center; gap: 11px; min-height: 52px; padding: 8px 13px; cursor: pointer;">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; font-weight: 500; color: #E8EEF4;">Otomatik mod</span>
+          <span style="font-size: 11px; color: #6E7C8C;">Devir ve hız eşiğine göre aç-kapat</span>
+        </span>
+        <input type="checkbox" id="egzoz-oto" class="vh" checked>
+        <span style="width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #0B0F14;"></span></span>
+      </label>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Devir eşiği</span>
+        <span class="mono" style="font-size: 15px; color: #6E7C8C;">—</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">ARAÇTA</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Hız eşiği</span>
+        <span class="mono" style="font-size: 15px; color: #6E7C8C;">—</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">ARAÇTA</span>
+      </div>
+
+      <div style="padding: 8px 13px 6px; border-top: 1px solid rgba(232,238,244,0.07); font-size: 11px; line-height: 1.4; color: #6E7C8C;">Her eşiğin bir <strong style="color: #93A2B3; font-weight: 600;">geri dönüş payı</strong> vardır; yoksa eşik civarında sürerken valf sürekli açılıp kapanır.</div>
+
+    </div>
+
+    <!-- KAYNAK -->
+    <div style="background: rgba(19,26,34,0.55); border: 1px solid rgba(232,238,244,0.08); border-radius: 12px; padding: 9px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+      <div style="font-size: 12px; font-weight: 600; color: #93A2B3;">Tetik kaynağı</div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="mono" style="font-size: 11px; color: #E8EEF4;">Devir</span>
+        <span style="flex: 1;"></span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">0x280 · 0x353</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="mono" style="font-size: 11px; color: #E8EEF4;">Hız</span>
+        <span style="flex: 1;"></span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">0x351</span>
+      </div>
+    </div>
+
+    <!-- GÜRÜLTÜ -->
+    <div style="background: rgba(255,176,32,0.07); border: 1px solid rgba(255,176,32,0.32); border-radius: 12px; padding: 9px 12px; display: flex; gap: 9px; flex-shrink: 0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px;"><path d="M11 5 6.5 9H3.5v6h3L11 19z"></path><path d="M15.5 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"></path></svg>
+      <div style="font-size: 12px; line-height: 1.42; color: #93A2B3;">Valf açıkken araç yüksek sesli olur. Egzoz gürültüsü muayeneye ve yerel kurallara tabidir — <strong style="color: #E8EEF4; font-weight: 600;">kararı sürücü verir</strong>.</div>
+    </div>
+
+    <!-- YETKİ -->
+    <div style="display: flex; align-items: center; gap: 9px; padding: 0 2px; flex-shrink: 0;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><rect x="5" y="10.5" width="14" height="9.5" rx="2"></rect><path d="M8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7"></path></svg>
+      <span style="font-size: 11px; line-height: 1.4; color: #6E7C8C;">Egzoz kontrolü misafir yetkisinde kapalıdır.</span>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

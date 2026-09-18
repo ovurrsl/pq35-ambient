@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Varex egzoz valfi — kontrol</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--pwr:#FF6A4D; --gnd:#A98C6B; --antriebs:#E5533D;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FF6A4D; box-shadow: 0 0 24px 2px rgba(255,106,77,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">VAREX EGZOZ VALFİ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Servo değil, ters çevrilebilir bir DC motor</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1150px;">Valf iki uçlu (+/−) bir elektrik motorudur; manuel kurulumda <strong style="color: #E8EEF4; font-weight: 600;">DPDT anahtarla polarite ters çevrilerek</strong> açılıp kapanır. Bir servo protokolü veya PWM konumlandırma yoktur — <strong style="color: #E8EEF4; font-weight: 600;">yön, gerilimin yönüdür</strong>. Kontrolcü tarafında gereken şey bu yüzden bir <strong style="color: #E8EEF4; font-weight: 600;">H-köprüsüdür</strong>.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>KONTROLCÜ B</div>
+  </div>
+
+  <!-- ŞEMA -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px 14px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+    <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">BAĞLANTI ŞEMASI</h2>
+
+    <svg width="1424" height="290" viewBox="0 0 1424 290" fill="none" aria-label="Varex bağlantı şeması: GIGA iki kontrol hattıyla H-köprüsünü sürer, köprü Kl.15'ten sigortayla beslenir, çıkışları valf motoruna gider; konum geri beslemesi kesikli çizilmiştir çünkü ünitede var olup olmadığı bilinmiyor" style="display: block;">
+      <g font-family="'IBM Plex Sans', sans-serif">
+
+        <rect x="280" y="0" width="112" height="38" rx="9" fill="#1B2430" stroke="#FF6A4D"></rect>
+        <text x="336" y="24" text-anchor="middle" font-size="14" fill="#E8EEF4">Kl.15</text>
+        <path d="M392 19h24" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="m408 13 8 6-8 6" stroke="#FF6A4D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="420" y="0" width="112" height="38" rx="9" fill="#1B2430" stroke="#FF6A4D"></rect>
+        <text x="476" y="24" text-anchor="middle" font-size="14" fill="#E8EEF4">sigorta</text>
+        <path d="M476 38v42" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="m470 68 6 12 6-12" stroke="#FF6A4D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="548" y="24" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">kontak anahtarlı — akü artısından DEĞİL</text>
+
+        <rect x="0" y="92" width="196" height="104" rx="12" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="98" y="130" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">KONTROLCÜ B</text>
+        <text x="98" y="152" text-anchor="middle" font-size="13" fill="#93A2B3">GIGA R1 WiFi</text>
+        <text x="98" y="174" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">2 dijital çıkış</text>
+
+        <path d="M196 124h68M196 164h68" stroke="#93A2B3" stroke-width="2.2"></path>
+        <path d="m256 118 8 6-8 6M256 158l8 6-8 6" stroke="#93A2B3" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="230" y="114" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">IN1</text>
+        <text x="230" y="186" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">IN2</text>
+
+        <rect x="272" y="80" width="240" height="128" rx="12" fill="#1B2430" stroke="#FF6A4D" stroke-width="1.6"></rect>
+        <text x="392" y="122" text-anchor="middle" font-size="16" font-weight="600" fill="#E8EEF4">H-KÖPRÜSÜ</text>
+        <text x="392" y="146" text-anchor="middle" font-size="13" fill="#93A2B3">polariteyi çevirir</text>
+        <text x="392" y="172" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">akım sınıfı ölçülünce seçilir</text>
+
+        <path d="M512 124h72M512 164h72" stroke="#FF6A4D" stroke-width="2.4"></path>
+        <path d="m576 118 8 6-8 6M576 158l8 6-8 6" stroke="#FF6A4D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="548" y="114" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">OUT1</text>
+        <text x="548" y="186" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">OUT2</text>
+
+        <rect x="592" y="92" width="196" height="104" rx="12" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="690" y="132" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">VALF MOTORU</text>
+        <text x="690" y="156" text-anchor="middle" font-size="13" fill="#93A2B3">iki uçlu DC</text>
+        <text x="690" y="178" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">yön = polarite</text>
+
+        <path d="M788 144h44" stroke="#93A2B3" stroke-width="2.4" stroke-dasharray="1 0"></path>
+        <path d="m824 138 8 6-8 6" stroke="#93A2B3" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="810" y="130" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">mekanik</text>
+
+        <rect x="840" y="80" width="236" height="128" rx="12" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="958" y="112" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">EGZOZ VALFİ</text>
+        <circle cx="900" cy="152" r="22" stroke="#3FD98A" stroke-width="2" fill="none"></circle>
+        <path d="M886 152h28" stroke="#3FD98A" stroke-width="2.6" stroke-linecap="round"></path>
+        <text x="900" y="192" text-anchor="middle" font-size="12" fill="#93A2B3">açık</text>
+        <circle cx="1016" cy="152" r="22" stroke="#6E7C8C" stroke-width="2" fill="none"></circle>
+        <path d="M1016 138v28" stroke="#6E7C8C" stroke-width="2.6" stroke-linecap="round"></path>
+        <text x="1016" y="192" text-anchor="middle" font-size="12" fill="#93A2B3">kapalı</text>
+
+        <path d="M690 196v52H98v-52" stroke="#FFB020" stroke-width="2" stroke-dasharray="6 5" fill="none"></path>
+        <path d="m92 212 6-12 6 12" stroke="#FFB020" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <text x="394" y="270" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFB020">KONUM GERİ BESLEMESİ — BU ÜNİTEDE VAR MI, BİLİNMİYOR</text>
+
+        <rect x="1120" y="80" width="304" height="128" rx="12" fill="rgba(255,176,32,0.07)" stroke="#FFB020"></rect>
+        <text x="1140" y="110" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="1.2" fill="#FFB020">BU ŞEMANIN BAĞLI OLDUĞU ŞEY</text>
+        <text x="1140" y="138" font-size="14" fill="#E8EEF4">Geri besleme varsa (potansiyometre)</text>
+        <text x="1140" y="160" font-size="14" fill="#E8EEF4">yarı açık konum mümkün olur.</text>
+        <text x="1140" y="186" font-size="14" fill="#E8EEF4">Limit anahtarıysa: yalnızca aç / kapat.</text>
+
+      </g>
+    </svg>
+
+  </div>
+
+  <!-- ÜÇ KART -->
+  <div style="display: flex; gap: 20px; flex-shrink: 0;">
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">YAZILIM NE YAPAR</h2>
+      <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">"Aç" ve "kapat", köprünün <strong style="font-weight: 600;">yönü + hareket süresi</strong> demektir. Süre dolunca köprü serbest bırakılır; motor kilitli tutulmaz.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Zaman aşımı hem koruma hem konum varsayımıdır: geri besleme yoksa sistemin valfin nerede olduğunu bilmesinin <strong style="color: #E8EEF4; font-weight: 600;">tek yolu</strong> budur.</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">OTOMATİK MOD — CAN'DEN TETİK</h2>
+      <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Devir ve hız zaten okunuyor: devir <span class="mono">0x280</span> / <span class="mono">0x353</span>, hız <span class="mono">0x351</span>. Eşik geçilince valf açılır, altına inince kapanır.</div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">EŞİKLER ARAÇTA</span>
+        <span style="font-size: 13px; color: #93A2B3;">sayı yazılmaz</span>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;"><strong style="color: #E8EEF4; font-weight: 600;">Histerezis şart:</strong> tek eşik, eşik civarında sürerken valfi sürekli açıp kapatır.</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — BESLEME</div>
+      <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Köprü <strong style="font-weight: 600;">kontak anahtarlı hattan (Kl.15)</strong> beslenir, akü artısından değil. Aksi hâlde valf kontak kapalıyken de beslenir ve park hâlindeki araçta bir kaçak akım yolu açılır.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Kontrolcü B zaten yalnızca Kl.15 ile besleniyor (§3.3) — bu kural mimarinin doğal sonucu.</div>
+    </div>
+
+  </div>
+
+  <!-- ALT İKİLİ -->
+  <div style="display: flex; gap: 20px; flex: 1; min-height: 0;">
+
+    <div style="flex: 1.2; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ELİNDEKİ ÜNİTEDE ÖLÇÜLECEK — ÖNCE BUNLAR</h2>
+      <table>
+        <thead><tr><th style="width: 34%;">Ne</th><th>Neden belirleyici</th></tr></thead>
+        <tbody>
+          <tr><td>Konum geri beslemesi var mı</td><td style="color:#93A2B3;">Potansiyometre mi, limit anahtarı mı? <strong style="color:#E8EEF4;font-weight:600;">Yarı açık konumun mümkün olup olmadığını bu belirler.</strong></td></tr>
+          <tr><td>Motorun çektiği akım</td><td style="color:#93A2B3;">H-köprüsünün sınıfı ve sigorta buna göre seçilir</td></tr>
+          <tr><td>Tam hareket süresi</td><td style="color:#93A2B3;">Zaman aşımı değeri; sıkışma tespiti de buna dayanır</td></tr>
+          <tr><td>Kaç uçlu ve konektör tipi</td><td style="color:#93A2B3;">Ara kablo bu ölçüldükten sonra yapılır</td></tr>
+        </tbody>
+      </table>
+      <div style="display: flex; gap: 11px; align-items: center; margin-top: auto; padding-top: 4px;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜLMEDEN YAZILMAZ</span>
+        <span style="font-size: 13px; line-height: 1.4; color: #93A2B3;">Bu dört değer panoya, koda ve arayüze sayı olarak girmez.</span>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">UYGULAMADAN NE GÖRÜNÜR</h2>
+        <div style="font-size: 14px; line-height: 1.55; color: #E8EEF4;">Aç / kapat · otomatik mod açma-kapama · devir ve hız eşiği ayarı · valfin bilinen son konumu.</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Geri besleme yoksa konum <strong style="color: #E8EEF4; font-weight: 600;">"bilinen son komut"</strong> olarak gösterilir, ölçülmüş konum gibi değil. Arayüz bu farkı gizlemez.</div>
+      </div>
+
+      <div style="background: rgba(255,176,32,0.07); border: 1px solid #FFB020; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 9px; flex-shrink: 0;">
+        <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FFB020;">GÜRÜLTÜ — SÜRÜCÜNÜN SORUMLULUĞU</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Valf açıkken araç yüksek sesli olur. Egzoz gürültüsü muayeneye ve yerel kurallara tabidir; sistem bunu bilemez, <strong style="font-weight: 600;">kararı sürücü verir</strong>.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
