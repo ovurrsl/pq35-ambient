@@ -1,56 +1,93 @@
-# Welcome to your Expo app 👋
+# mobile/ — PQ35 Ambient iOS uygulaması
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Expo (React Native) + Expo Router + TypeScript. Projenin bağlamı ve sert kuralları için
+önce depo kökündeki [`CLAUDE.md`](../CLAUDE.md) okunur — özellikle §7.1 (ekran seti ve
+kimlik zinciri) ve §9.1 (yığın kararı).
 
-## Get started
+## Neden `ios/` değil `mobile/`
 
-1. Install dependencies
+`npx expo prebuild` projenin içinde **kendi `ios/` yerel klasörünü üretir**. Proje kökünü
+`ios/` yapmak `ios/ios/` demek olurdu.
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Kurulum
 
 ```bash
-npm run reset-project
+npm install
+cp .env.example .env.local   # ve doldur
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+`.env.local` üç değer ister: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`,
+`EXPO_PUBLIC_API_URL`.
 
-### Other setup steps
+> **`EXPO_PUBLIC_*` pakete gömülür ve okunabilir.** Oraya yalnızca publishable (anon)
+> anahtar konur. Service role anahtarı, SIM808 ön paylaşımlı anahtarı ve cihaz device
+> token'ı asla uygulamaya girmez. Güvenlik RLS'ten gelir, anahtarın gizliliğinden değil.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Çalıştırma — Expo Go yetmez
 
-## Learn more
+`react-native-ble-plx` yerel bir modüldür, **Expo Go'da çalışmaz**. Custom dev client şart:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npx expo prebuild --platform ios
+npx expo run:ios            # veya EAS build ile cihaza kur
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+BLE'ye dokunmayan ekranlar (kimlik akışı, ayarlar) Expo Go'da açılır, ama araç bağlantısı
+gerektiren hiçbir şey çalışmaz.
 
-## Join the community
+## Mimari
 
-Join our community of developers creating universal apps.
+```
+src/app/            Expo Router — dosya tabanlı rotalar
+  (auth)/           kilit · giris · dogrulama · eslestirme   (sekme çubuğu YOK)
+  (tabs)/           Bölgeler · Olaylar · Araç · Sahneler · Ayarlar
+src/state/          kimlik durum makinesi
+src/lib/            supabase · keychain · oturum kasası · ble
+src/theme/          kanvastan gelen token'lar, tema sağlayıcı
+src/components/ui/  GlassSurface, Card, RuleBox, Pill, UnverifiedBadge
+src/types/          Supabase şema tipleri (geçici — migration sonrası üretilecek)
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Oturum saklama — buradaki tuzağı bilerek oku
+
+`expo-secure-store`, `requireAuthentication: true` verildiğinde girdiyi
+`.biometryCurrentSet` ile korur. İstediğimiz tam olarak bu: kayıtlı yüz seti değişirse
+girdi geçersiz olur.
+
+Ama aynı modül **var olan** bir girdiyi yazarken `SecItemUpdate` + `kSecUseOperationPrompt`
+kullanır — yani her yazma Face ID sorar. Supabase access token'ı arka planda yenilediği
+için bu, kullanıcıya sürekli Face ID sorulması demekti.
+
+Çözüm iki parçalı ([`src/lib/secure-keychain.ts`](src/lib/secure-keychain.ts),
+[`src/lib/session-vault.ts`](src/lib/session-vault.ts)):
+
+1. Supabase'e **bellek içi** depo verilir; diske hiç yazmaz.
+2. Refresh token ayrı bir korumalı girdide durur ve yazarken **önce silinir, sonra
+   eklenir**. Silme ve ekleme kimlik doğrulaması istemez.
+
+Sonuç: **Face ID yalnızca okumada, yani uygulama açılışında sorulur.**
+
+Bunun zorunlu karşılığı: arka plandan dönüşte kilitleme **kapatılamaz**. Face ID tek kapı
+olduğu için açık kalan bir uygulama kapısız demektir.
+
+## Liquid Glass
+
+Sekme çubuğu `expo-router/unstable-native-tabs` ile gerçek bir `UITabBar`'dır; iOS 26'da
+Liquid Glass'ı sistem uygular ve içerik altından kayarken çubuk buna tepki verir. Elle
+blur çizmek hem yanlış görünür hem erişilebilirlik ayarlarını es geçer.
+
+Kart ve yüzeyler için [`GlassSurface`](src/components/ui/glass-surface.tsx): gerçek cam
+yalnızca iOS 26+ **ve** Şeffaflığı Azalt kapalıyken çizilir, aksi hâlde opak zemine düşer.
+Bu bir bozulma değil, HIG gereğidir.
+
+## Kontroller
+
+```bash
+npx tsc --noEmit    # strict, any yok
+npm run lint
+```
+
+## Tasarım kaynağı
+
+Ekranların içerik spesifikasyonu [`design/`](../design) altındaki kanvastır
+(31 pano, 16'sı iOS ekranı). **Kanvas ile kod çelişirse kanvas kazanır.**

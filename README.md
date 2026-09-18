@@ -109,6 +109,26 @@ aç → renk değiştirirken logla → tekrarlanabilirlik testi → `index → R
 uygulanabilir. İkisi birden yoksa Yol A'da kalınır — bu beklenen sonuçtur ve sistemin
 çalışmasını etkilemez. Deney bir faz değil, opsiyoneldir.
 
+## Uygulama (`mobile/`)
+
+Expo SDK 57 · React Native · Expo Router · TypeScript strict. Veri tabanı ve kimlik
+**Supabase**, ağır işler **Vercel** Edge Functions, tasarım dili **iOS 26 Liquid Glass**.
+
+> Klasör neden `ios/` değil: `expo prebuild` projenin içinde kendi `ios/` yerel klasörünü
+> üretir; kökü `ios/` yapmak `ios/ios/` demek olurdu.
+
+Bilinmesi gereken üç şey:
+
+- **BLE Expo Go'da çalışmaz.** `react-native-ble-plx` yerel modüldür; custom dev client
+  (`expo-dev-client` + EAS build) şart.
+- **Uygulama BLE güvenliğini uygulamaz, miras alır.** iOS üçüncü parti uygulamalara
+  bonding/pairing denetimi vermez; eşleşmeyi kart talep eder, iOS diyaloğu kendisi gösterir.
+  LE Secure Connections, IRK ve directed advertising firmware tarafının işidir.
+- **Face ID yalnızca açılışta sorulur.** Supabase token'ı arka planda yenilediği için
+  oturum bellekte tutulur; refresh token ayrı bir biyometrik korumalı Keychain girdisinde
+  durur ve yazarken önce silinip sonra eklenir — böylece yazma Face ID sormaz.
+  Ayrıntı: [`mobile/README.md`](mobile/README.md).
+
 ## Güvenlik
 
 Kimlik doğrulama **Supabase JWT**'dir; **Face ID kimlik doğrulama değildir** — cihazda yerel
@@ -131,8 +151,10 @@ yazılır. Splice öncesi kontrol listesi ve diğer sert kurallar `CLAUDE.md` §
 | `CLAUDE.md` | Proje bağlamı, mimari kararı, sert kurallar — **önce bunu oku** |
 | `docs/` | Kaynak dökümler ve araştırma raporları |
 | `design/` | Design kanvasının artboard kaynakları (`.dc.html` + `canvas.json`) |
+| `mobile/` | iOS uygulaması — Expo (React Native) + Expo Router + TypeScript |
 
-`firmware/` (PlatformIO) ve `ios/` (SwiftUI) klasörleri gerçek kod yazılırken açılacak.
+`firmware/` (PlatformIO), `api/` (Vercel Edge Functions) ve `supabase/` (şema + RLS
+migration'ları) klasörleri gerçek kod yazılırken açılacak.
 
 ## Dokümanlar
 
