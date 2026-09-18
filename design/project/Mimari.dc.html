@@ -43,7 +43,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
   <!-- BLOK ŞEMA -->
   <div style="height: 516px; flex-shrink: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 24px; display: flex; flex-direction: column; gap: 4px;">
-    <svg width="1420" height="466" viewBox="0 0 1420 466" role="img" aria-label="Sistem blok şeması: Komfort-CAN geçiş kablosundan SN65HVD230 transceiver'a, oradan ESP32-S3'e, iki adet 74AHCT125 seviye kaydırıcıya ve yedi LED zonuna; zonlar rotaya göre üç gruba ayrılır — Z1 ve Z2 kapı körüğü, Z3 ve Z4 konsol, Z5, Z6 ve Z7 eşik trimi boyunca arkaya. Ayrıca BLE ile iOS uygulaması ve iki kollu güç zinciri">
+    <svg width="1420" height="466" viewBox="0 0 1420 466" role="img" aria-label="Sistem blok şeması: Komfort-CAN geçiş kablosundan SN65HVD230 transceiver'a, oradan ESP32-S3'e, iki adet 74AHCT125 seviye kaydırıcıya ve yedi LED zonuna; zonlar rotaya göre üç gruba ayrılır — Z1 ve Z2 kapı körüğü, Z3 ve Z4 konsol, Z5, Z6 ve Z7 eşik trimi boyunca arkaya. Ayrıca BLE ile iOS uygulaması ve iki kollu güç zinciri. İkinci faz olarak Antriebs-CAN 500 kbps, TJA1042 transceiver ve MCP2515 kontrolcü üzerinden SPI ile aynı ESP32'ye bağlanır">
       <defs>
         <marker id="arrMimari" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M0 0 L10 5 L0 10 Z" fill="#93A2B3"></path>
@@ -53,6 +53,9 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         </marker>
         <marker id="arrMimariPwr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M0 0 L10 5 L0 10 Z" fill="#FF6A4D"></path>
+        </marker>
+        <marker id="arrMimariAntriebs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#E5533D"></path>
         </marker>
       </defs>
 
@@ -67,40 +70,67 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <text x="748" y="76" font-family="JetBrains Mono, monospace" font-size="11" fill="#B08CFF">BLE · çift yön</text>
 
       <!-- NODE 1 -->
-      <rect x="0" y="110" width="230" height="100" rx="10" fill="rgba(244,162,97,0.07)" stroke="#F4A261" stroke-width="1.4"></rect>
-      <text x="16" y="136" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#F4A261">Komfort-CAN 100 kbps</text>
-      <text x="16" y="158" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Gateway J533 geçiş kablosu</text>
-      <text x="16" y="176" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">soket-sokete, kesme yok</text>
-      <text x="16" y="194" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">geri dönüşlü</text>
+      <rect x="0" y="110" width="230" height="88" rx="10" fill="rgba(244,162,97,0.07)" stroke="#F4A261" stroke-width="1.4"></rect>
+      <text x="16" y="132" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#F4A261">Komfort-CAN 100 kbps</text>
+      <text x="16" y="152" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Gateway J533 geçiş kablosu</text>
+      <text x="16" y="168" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">soket-sokete, kesme yok</text>
+      <text x="16" y="184" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">geri dönüşlü</text>
 
-      <path d="M230 157 L284 157" fill="none" stroke="#F4A261" stroke-width="1.8"></path>
-      <path d="M230 163 L284 163" fill="none" stroke="#F4A261" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
-      <text x="257" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-H</text>
-      <text x="257" y="186" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-L</text>
+      <path d="M230 150 L284 150" fill="none" stroke="#F4A261" stroke-width="1.8"></path>
+      <path d="M230 156 L284 156" fill="none" stroke="#F4A261" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
+      <text x="257" y="138" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-H</text>
+      <text x="257" y="176" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">CAN-L</text>
 
       <!-- NODE 2 -->
-      <rect x="290" y="110" width="230" height="100" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
-      <text x="306" y="136" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#E8EEF4">SN65HVD230</text>
-      <text x="306" y="156" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">3,3 V CAN transceiver</text>
-      <text x="306" y="176" font-family="JetBrains Mono, monospace" font-size="11" fill="#4CC2FF">LISTEN-ONLY</text>
-      <text x="306" y="194" font-family="JetBrains Mono, monospace" font-size="11" fill="#FF5A5A">TX BAĞLI DEĞİL</text>
+      <rect x="290" y="110" width="230" height="88" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1.2"></rect>
+      <text x="306" y="132" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="600" fill="#E8EEF4">SN65HVD230</text>
+      <text x="306" y="150" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">3,3 V CAN transceiver</text>
+      <text x="306" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="#4CC2FF">LISTEN-ONLY</text>
+      <text x="306" y="182" font-family="JetBrains Mono, monospace" font-size="11" fill="#FF5A5A">TX BAĞLI DEĞİL</text>
 
       <path d="M520 150 L574 150" fill="none" stroke="#4CC2FF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
       <text x="547" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">RXD → RX</text>
-      <path d="M520 186 L556 186" fill="none" stroke="#FF5A5A" stroke-width="1.5" stroke-dasharray="4 4"></path>
-      <circle cx="566" cy="186" r="9" fill="#0B0F14" stroke="#FF5A5A" stroke-width="1.4"></circle>
-      <path d="M561.5 181.5 L570.5 190.5 M570.5 181.5 L561.5 190.5" stroke="#FF5A5A" stroke-width="1.4"></path>
+      <path d="M520 182 L556 182" fill="none" stroke="#FF5A5A" stroke-width="1.5" stroke-dasharray="4 4"></path>
+      <circle cx="566" cy="182" r="9" fill="#0B0F14" stroke="#FF5A5A" stroke-width="1.4"></circle>
+      <path d="M561.5 177.5 L570.5 186.5 M570.5 177.5 L561.5 186.5" stroke="#FF5A5A" stroke-width="1.4"></path>
+
+      <!-- 2. FAZ — ANTRIEBS KANALI -->
+      <text x="0" y="211" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.12em" fill="#E5533D">2. FAZ — ANTRIEBS KANALI</text>
+
+      <rect x="0" y="216" width="176" height="56" rx="9" fill="rgba(229,83,61,0.06)" stroke="#E5533D" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+      <text x="14" y="236" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#E5533D">Antriebs-CAN 500 kbps</text>
+      <text x="14" y="252" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">J533 · 2. bükümlü çift</text>
+      <text x="14" y="266" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">pin no: VIN şemasından</text>
+
+      <path d="M176 241 L206 241" fill="none" stroke="#E5533D" stroke-width="1.6"></path>
+      <path d="M176 247 L206 247" fill="none" stroke="#E5533D" stroke-width="1.6"></path>
+
+      <rect x="208" y="216" width="176" height="56" rx="9" fill="#1B2430" stroke="#E5533D" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+      <text x="222" y="236" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#E8EEF4">TJA1042</text>
+      <text x="222" y="252" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">3,3 V uyumlu · TJA1050 DEĞİL</text>
+      <text x="222" y="266" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#FF5A5A">TX BAĞLI DEĞİL</text>
+
+      <path d="M384 244 L410 244" fill="none" stroke="#E5533D" stroke-width="1.6" marker-end="url(#arrMimariAntriebs)"></path>
+
+      <rect x="412" y="216" width="140" height="56" rx="9" fill="#1B2430" stroke="#E5533D" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+      <text x="426" y="236" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#E8EEF4">MCP2515</text>
+      <text x="426" y="252" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">SPI · LISTEN-ONLY</text>
+      <text x="426" y="266" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#FFB020">120 Ω SÖKÜLÜR</text>
+
+      <path d="M552 244 L574 244" fill="none" stroke="#E5533D" stroke-width="1.6" marker-end="url(#arrMimariAntriebs)"></path>
 
       <!-- NODE 3 -->
-      <rect x="580" y="86" width="300" height="160" rx="12" fill="rgba(76,194,255,0.06)" stroke="#4CC2FF" stroke-width="1.5"></rect>
+      <rect x="580" y="86" width="300" height="186" rx="12" fill="rgba(76,194,255,0.06)" stroke="#4CC2FF" stroke-width="1.5"></rect>
       <text x="596" y="110" font-family="Space Grotesk, sans-serif" font-size="15" font-weight="700" fill="#E8EEF4">Arduino Nano ESP32 (ESP32-S3)</text>
       <text x="596" y="128" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">u-blox NORA-W106 · çekirdek 0: BLE · çekirdek 1: CAN + LED</text>
       <rect x="596" y="138" width="268" height="28" rx="6" fill="#1B2430" stroke="#F4A261" stroke-width="1"></rect>
-      <text x="608" y="157" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">TWAI — CAN alıcı, 100 kbps</text>
+      <text x="608" y="157" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">TWAI — Komfort CAN, 100 kbps</text>
       <rect x="596" y="172" width="268" height="28" rx="6" fill="#1B2430" stroke="#4CC2FF" stroke-width="1"></rect>
       <text x="608" y="191" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">RMT + FastLED — 7 veri hattı</text>
       <rect x="596" y="206" width="268" height="28" rx="6" fill="#1B2430" stroke="#B08CFF" stroke-width="1"></rect>
       <text x="608" y="225" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">NimBLE — bonding · IRK · OTA</text>
+      <rect x="596" y="238" width="268" height="28" rx="6" fill="#1B2430" stroke="#E5533D" stroke-width="1" stroke-dasharray="6 4"></rect>
+      <text x="608" y="257" font-family="JetBrains Mono, monospace" font-size="11" fill="#E8EEF4">SPI — MCP2515 · 500 kbps · 2. faz</text>
 
       <path d="M880 166 L934 166" fill="none" stroke="#4CC2FF" stroke-width="1.8" marker-end="url(#arrMimari)"></path>
       <text x="907" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">7 × GPIO</text>
@@ -192,7 +222,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <text x="896" y="420" font-family="JetBrains Mono, monospace" font-size="12" fill="#A98C6B">GND</text>
       <text x="896" y="440" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Fabrika şase saplaması — transceiver, ESP32 ve şerit ortak şasede</text>
     </svg>
-    <div style="font-size: 12px; color: #93A2B3;">Sinyal soldan sağa tek yönlüdür: araçtan LED'e. Geri yönde tek bağlantı BLE'dir; araca hiçbir çerçeve yazılmaz. Z1/Z2 kapı körüğünden, Z3/Z4 konsol içinden, Z5/Z6/Z7 eşik trimi boyunca arkaya — aynı kontrolcü, aynı sigorta.</div>
+    <div style="font-size: 12px; color: #93A2B3;">Sinyal soldan sağa tek yönlüdür: araçtan LED'e. Geri yönde tek bağlantı BLE'dir; araca hiçbir çerçeve yazılmaz. İki CAN kanalı ayrı kontrolcüde: Komfort dahili TWAI'de, Antriebs 2. fazda MCP2515'te — ikisi de Listen-Only, TX'leri bağlı değil. Z1/Z2 körükten, Z3/Z4 konsoldan, Z5/Z6/Z7 eşik trimiyle arkaya.</div>
   </div>
 
   <!-- ALT KARTLAR -->
@@ -200,18 +230,17 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
       <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">NEDEN BU PARÇALAR?</h2>
-      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">SN65HVD230</span> — native 3,3 V. MCP2515 modüllerindeki TJA1050 en az 4,75 V ister.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">SN65HVD230</span> — native 3,3 V, komfort hattı için. 2. fazın MCP2515 modülü <span style="font-family: 'JetBrains Mono', monospace; color: #E5533D;">TJA1042</span>'li alınır; ucuz modüllerdeki TJA1050 en az 4,75 V ister, 3,3 V'ta hat sessiz kalır.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">74AHCT125</span> — 3,3 V veri, 12 V şerit IC eşiğinin (≈ 0,7 × VDD) sınırındadır; tampon şart. Paket başına 4 kanal → 7 hat için 2 paket.</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">RMT</span> — LED zamanlaması donanımdan gelir; BLE kesmeleri WS281x sinyalini bozmaz.</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Nano 33 BLE + FastLED sorunu bu kartta yok.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">RMT</span> — LED zamanlaması donanımdan gelir; BLE kesmeleri WS281x sinyalini bozmaz, Nano 33 BLE + FastLED sorunu bu kartta yok.</div>
     </div>
 
     <div style="flex: 1; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
       <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — YAZMA YOK</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Salt-okunurluk iki bağımsız katmanla garanti edilir:</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">1.</span> Yazılım: TWAI donanımsal <span style="font-family: 'JetBrains Mono', monospace;">LISTEN_ONLY</span> modu — ACK bile basılmaz.</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">2.</span> Donanım: transceiver'ın TX ucu fiziksel olarak bağlanmaz — mekanik yedek.</div>
-      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Araçta iki uçta zaten sonlandırma var; ek 120 Ω takılmaz, modülde varsa sökülür.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Salt-okunurluk her iki kanalda da iki bağımsız katmanla garanti edilir:</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">1.</span> Yazılım: TWAI ve MCP2515 <span style="font-family: 'JetBrains Mono', monospace;">listen-only</span> modunda — ACK bile basılmaz.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace;">2.</span> Donanım: her iki transceiver'ın TX ucu fiziksel olarak bağlanmaz.</div>
+      <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Araçta iki uçta zaten sonlandırma var; ek 120 Ω takılmaz — modülde varsa sökülür (MCP2515 dâhil).</div>
     </div>
 
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px;">
@@ -231,6 +260,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #3FD98A;">v1 (şimdi)</span> — Kl.15 tetikli: kontak açılınca uyanır, akü riski sıfır.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #6FA0FF;">v2 (sonra)</span> — Kl.30 + wake-on-bus transceiver (TLE9251V / NCV7356) + deep sleep &lt; 10 µA: kilit açılır açılmaz gerçek welcome.</div>
       <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">CAN / LED / BLE mantığı v2'de değişmez; yalnızca güç mimarisi değişir.</div>
+      <div style="font-size: 12.5px; line-height: 1.4; color: #E5533D;">Antriebs kanalı ayrı faz: komfort hattı ve LED'ler stabil olunca devreye girer.</div>
     </div>
 
   </div>

@@ -59,6 +59,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">ESP32-S3 · Arduino Nano ESP32</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">TWAI LISTEN-ONLY</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">v1: Kl.15</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">2 CAN kanalı · 100k + 500k</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">12 V şerit · kendi sigortası (metrajla boyutlanır)</span>
         </div>
       </div>
@@ -115,7 +116,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
       <div style="background: rgba(76,194,255,0.10); border: 1px solid #4CC2FF; border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px;">
         <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #4CC2FF;">BENİMSENEN — YOL A</div>
-        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Şeritleri ESP32 kendisi sürer. Renk ve parlaklık iOS uygulamasından gelir. Komfort-CAN yalnızca tetik kaynağıdır: kapı aç/kapa · kilit aç/kapa · far / gece · sinyal · hız 0x351 · devir 0x353. Hız ve devir gateway tarafından 100 kbps hatta yansıtıldığı için tek transceiver yeter.</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Şeritleri ESP32 kendisi sürer. Renk ve parlaklık iOS uygulamasından gelir. Komfort-CAN yalnızca tetik kaynağıdır: kapı aç/kapa · kilit aç/kapa · far / gece · sinyal · hız 0x351 · devir 0x353. Hız ve devir 100 kbps hatta yansıtıldığı için tetikler tek transceiver ile çözülür; Antriebs 500 kbps kanalı 2. fazda MCP2515 ile eklenir.</div>
       </div>
 
       <div style="display: flex; align-items: baseline; gap: 10px;">
@@ -129,19 +130,19 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
   <div style="height: 180px; flex-shrink: 0; display: flex; gap: 20px;">
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
       <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #4CC2FF;">01–04 · SİSTEM VE ARAÇ</h2>
-      <div style="font-size: 13.5px; line-height: 1.7; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">01</span> Kapak ve özet<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">02</span> Araç ağları<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">03</span> Sistem mimarisi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">04</span> LED bölge haritası</div>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">01</span> Kapak ve özet<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">02</span> Araç ağları<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">03</span> Sistem mimarisi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">04</span> LED bölge haritası</div>
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
       <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #46D98A;">05–08 · KURULUM VE DAVRANIŞ</h2>
-      <div style="font-size: 13.5px; line-height: 1.7; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">05</span> Kablolama ve pinout<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">06</span> Güvenli kurulum<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">07</span> Davranış makinesi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">08</span> 5 aşamalı yol haritası</div>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">05</span> Kablolama ve pinout<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">06</span> Güvenli kurulum<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">07</span> Davranış makinesi<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">08</span> Yol haritası — 5 aşama + 2. faz</div>
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
       <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF9F45;">09–10 · MALZEME, RİSK VE KODLAMA</h2>
-      <div style="font-size: 13.5px; line-height: 1.7; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">09</span> Malzeme listesi ve risk kaydı<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">10</span> DIY VAG kodlama<br><span style="color: #93A2B3; font-size: 12.5px;">TP2.0 + KWP2000 · ambiyans projesinden bağımsız, isteğe bağlı iş</span></div>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">09</span> Malzeme listesi ve risk kaydı<br><span style="font-family: 'JetBrains Mono', monospace; color: #93A2B3;">10</span> DIY VAG kodlama<br><span style="color: #93A2B3; font-size: 12.5px;">TP2.0 + KWP2000 · ambiyans projesinden bağımsız, isteğe bağlı iş</span></div>
     </div>
     <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
-      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B98BFF;">iOS · 5 EKRAN</h2>
-      <div style="font-size: 13.5px; line-height: 1.7; color: #E8EEF4;">Ana ekran — bölgeler<br>Bölge detayı — renk, parlaklık<br>CAN olayı → bölge eşlemesi<br>Sahneler ve bağlantı<br>Gizli özellikler (kodlama)</div>
+      <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B98BFF;">iOS · 6 EKRAN</h2>
+      <div style="font-size: 13.5px; line-height: 1.55; color: #E8EEF4;">Ana ekran — bölgeler<br>Bölge detayı — renk, parlaklık<br>CAN olayı → bölge eşlemesi<br>Araç — canlı veri<br>Sahneler ve bağlantı<br>Gizli özellikler (kodlama)</div>
     </div>
   </div>
 

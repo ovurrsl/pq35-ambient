@@ -1,7 +1,7 @@
 # PQ35-AMBIENT — Claude Code için proje bağlamı
 
 **Araç:** 2016 VW Scirocco · PQ35 platformu · fabrika çıkışlı MIB2 · 3 kapılı
-**Hedef:** CAN tetiklemeli ambiyans aydınlatma (7 bölge) + iOS BLE uygulaması + DIY VAG kodlama aracı
+**Hedef:** CAN tetiklemeli ambiyans aydınlatma (7 bölge) + canlı araç verisi + iOS BLE uygulaması + DIY VAG kodlama aracı
 **Durum:** Planlama / tasarım. **Araçta henüz hiçbir fiziksel işlem yapılmadı.**
 **Dil:** Bu depoda tüm doküman, yorum ve arayüz metni **Türkçe**. Teknik terimler (CAN, Listen-Only, BLE, PWM, TWAI, UDS) İngilizce kalabilir.
 
@@ -25,6 +25,9 @@ Projenin ilk varsayımı şuydu: *MIB2 ekranından seçilen rengi Komfort-CAN'de
 > hız (`0x351`), RPM (`0x353`).
 > **Renk ve parlaklık iOS uygulamasından seçilir.**
 
+Antriebs-CAN (500 kbps) 2. fazda **ikinci bir kanalla** dinlenir; amacı LED tetiklemek değil,
+uygulamadaki **canlı araç verisi ekranını** beslemektir (bkz. §3.1).
+
 **Yol B** (MIB2 menü emülasyonu) "ileride" kovasındadır: çok haftalık, sonucu garanti olmayan
 bir tersine mühendislik işi. Kod, doküman veya arayüzde MIB2 senkronu **asla mevcut plan gibi
 sunulmaz**; yalnızca "Yol B / ileride" etiketiyle geçer.
@@ -39,7 +42,7 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 
 | # | Kural | Neden |
 |---|---|---|
-| 1 | CAN erişimi **Listen-Only**. `TWAI_MODE_LISTEN_ONLY` yazılımda, **TX pini fiziksel olarak bağlanmaz**. | Normal modda kontrolcü ACK basmaya çalışır, okuyamayınca hata sayaçları şişer ve bus bozulur. |
+| 1 | CAN erişimi **Listen-Only** — **her iki kanalda da**. Dahili TWAI'de `TWAI_MODE_LISTEN_ONLY`, MCP2515'te listen-only modu; **iki hattın da TX'i fiziksel olarak bağlanmaz**. | Normal modda kontrolcü ACK basmaya çalışır, okuyamayınca hata sayaçları şişer ve bus bozulur. |
 | 2 | Araç kablosu **kesilmez**. J533 gateway'e **passthrough (soket-sokete) ara kablo** ile girilir. | Ara kablo çıkarılınca araç fabrika hâline döner, iz kalmaz. |
 | 3 | CAN modülündeki **120 Ω sonlandırma sökülür**. | Araç hattı zaten iki uçtan sonlandırılmış; üçüncü direnç bus'ı bozar. |
 | 4 | Araç tarafı bağlantılarda **crimp + ısı büzüşmeli**, lehim yok. | Titreşimde lehim çatlar. |
@@ -57,14 +60,45 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 | Parça | Not |
 |---|---|
 | Arduino Nano ESP32 (ESP32-S3) | Dahili TWAI (donanımsal Listen-Only), RMT (LED zamanlaması), NimBLE |
-| SN65HVD230 CAN transceiver | Native 3,3 V, seviye kaydırıcı gerekmez. TX bağlanmaz. |
+| SN65HVD230 CAN transceiver | **Kanal 1 — Komfort 100k.** Native 3,3 V, seviye kaydırıcı gerekmez. TX bağlanmaz. |
+| MCP2515 + **TJA1042** modülü | **Kanal 2 — Antriebs 500k**, SPI üzerinden. **Dikkat:** ucuz modüllerin çoğunda **TJA1050** var; 4,75 V ister, 3,3 V'ta hat sessiz kalır. **3,3 V'luk TJA1040/1042 versiyonu alınacak**, fabrika 120 Ω sonlandırma sökülecek. 2. faz. |
 | 74AHCT125 × 2 | Seviye kaydırıcı: 3,3 V data → 12 V şerit IC eşiği (≈0,7 × VDD). Quad buffer, 7 hat için **iki paket** gerekir (8 kanal, 7'si kullanılır) |
 | 12 V adreslenebilir şerit (ZBL) | 1,8 × 10 mm · 15 W/m · 12 V'ta **20 mm kesim boyu** · maks 5 m hat · ~1,25 A/m. Oluğa 10 mm derinlik gerekir. **600 LED ≠ 600 piksel.** |
 | Güç | Kendi sigortası (başlangıç 7,5 A, **metraj ölçülünce yeniden boyutlandırılacak**) · buck konvertör · **TVS zorunlu** · şerit gücünü tamamen kesen MOSFET |
 | v2 eki | Wake-on-bus transceiver: TLE9251V veya NCV7356 |
 
 **Tek kontrolcü iki baud rate'i (500k + 100k) çözemez** — donanımsal kısıt, yazılımla aşılamaz.
-Hız ve RPM gateway tarafından 100k konfor hattına yansıtıldığı için **tek transceiver yeterli**.
+ESP32-S3'te de yalnızca **bir** dahili TWAI vardır. Bu yüzden ikinci hat harici bir
+kontrolcü (MCP2515) gerektirir.
+
+Hız ve RPM gateway tarafından 100k konfor hattına yansıtıldığı için **LED tetikleri tek
+kanalla** karşılanır. İkinci kanal LED için değil, **canlı veri ekranı** için eklenir.
+
+---
+
+## 3.1 İki CAN kanalı
+
+| Kanal | Hat | Kontrolcü | Transceiver | Faz |
+|---|---|---|---|---|
+| 1 | Komfort-CAN 100 kbps | ESP32-S3 dahili TWAI | SN65HVD230 | v1 |
+| 2 | Antriebs-CAN 500 kbps | MCP2515 (SPI) | TJA1042 / TJA1040 | 2. faz |
+
+**Sıralama kararı:** Antriebs motor kontrolüne en yakın hattır, bu yüzden **en sona
+bırakılır**. Komfort hattı ve LED'ler stabil çalıştıktan sonra devreye alınır.
+
+### Bilinen ID'ler — bunların dışında ID yazma
+
+| Hat | ID | İçerik | Kaynak |
+|---|---|---|---|
+| Antriebs 500k | `0x280` | byte 3/4 → devir · byte 6 → gaz pedalı % | İki bağımsız topluluk kaynağı |
+| Komfort 100k | `0x351` | hız | topluluk |
+| Komfort 100k | `0x353` | devir, `rpm = 0,25 × (256 × Byte2 + Byte1)` | topluluk |
+
+`0x320` ve `0x1A0` powertrain hattındadır ama **içerikleri çözümlenmemiştir**.
+
+Motor sıcaklığı, vites, gaz kelebeği, akü voltajı, yağ sıcaklığı, turbo basıncı — **hiçbirinin
+ID'si bilinmiyor.** Bunlar uygulamada "log ile bulunacak" olarak gösterilir; **tahmini ID
+yazmak yasaktır**.
 
 ---
 
@@ -135,8 +169,15 @@ VW'de "ACC" yoktur; **Kl.15 / Kl.S** vardır.
 
 ## 6. Araca bağlanma
 
-**Tap noktası:** Gateway **J533**, sürücü ayak boşluğu, orta konsol yanı.
-**Komfort CAN-H → pin 5 (or/gn)**, **CAN-L → pin 15 (or/br)** — *VIN'e özel şemayla teyit edilecek.*
+**Tap noktası:** Gateway **J533**, sürücü ayak boşluğu, orta konsol yanı. Aynı passthrough
+ara kablodan **iki bükümlü çift** alınır:
+
+| Faz | Hat | Pinler |
+|---|---|---|
+| v1 | Komfort CAN-H / CAN-L | **pin 5 (or/gn)** / **pin 15 (or/br)** — *VIN'e özel şemayla teyit edilecek* |
+| 2. faz | Antriebs CAN-H / CAN-L | **kaynaklarda yok — VIN'e özel şemadan belirlenecek** |
+
+Antriebs pin numaralarını tahmin etme; şema olmadan o çifte dokunulmaz.
 OBD portu yeterli **değildir**: gateway konfor yayınlarını filtreler ve PQ35 UDS konuşmaz
 (TP2.0 + KWP2000 kullanır).
 
@@ -228,8 +269,10 @@ tur kaydı · uzaktan kilit/cam kontrolü (mesaj enjeksiyonu — yüksek risk).
 
 Aşağıdakiler topluluk kaynaklıdır veya VIN'e bağlıdır; **araçta ölçülmeden kod yazma**:
 
-- Hız `0x351`, RPM `0x353` — byte offset ve ölçekleme model yılına göre kayabilir
+- Hız `0x351`, RPM `0x353`, Antriebs `0x280` — byte offset ve ölçekleme model yılına göre kayabilir
 - J533 Komfort CAN-H/L pin numaraları (5 / 15)
+- J533 Antriebs CAN-H/L pin numaraları — **hiç bilinmiyor**, şemadan belirlenecek
+- Motor sıcaklığı, vites, gaz kelebeği, akü voltajı, yağ sıcaklığı, turbo basıncı ID'leri — logdan bulunacak
 - Kapı / sinyal / kilit / Kl.15 frame'leri — PQ35 konfor matrisi kamuya açık değil
 - LED şerit uzunlukları, toplam metraj ve akım tahminleri — sigorta boyutu buna bağlı
 - Arka eşik trimi rotasının gerçek uzunluğu ve gerilim düşümü

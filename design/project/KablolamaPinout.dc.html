@@ -28,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 </style>
 </helmet>
-<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 44px 64px 32px; display: flex; flex-direction: column; gap: 12px; background: #0B0F14; position: relative; overflow: hidden;">
 
   <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #F4A261; box-shadow: 0 0 24px 2px rgba(244,162,97,0.55);"></div>
 
@@ -43,7 +43,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
   <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 22px 10px; display: flex; flex-direction: column; gap: 8px;">
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px;">
-      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">J533 GATEWAY GEÇİŞ KABLOSU — PASSTHROUGH</h2>
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">J533 GATEWAY GEÇİŞ KABLOSU — PASSTHROUGH · 2 ÇİFT</h2>
       <span style="font-size: 12px; line-height: 1.4; color: #9FE8C2; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.45); border-radius: 999px; padding: 5px 13px;">Kazanım: hiçbir kablo kesilmez — ara kabloyu çıkar, araç fabrika hâlinde, iz yok</span>
     </div>
 
@@ -156,7 +156,40 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
     <div style="border-top: 1px solid #2A3746; padding-top: 10px; display: flex; align-items: flex-start; gap: 16px;">
       <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #F4A261; flex-shrink: 0; padding-top: 2px;">KABLO ROTASI</div>
-      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">Z1 / Z2</span> kapı körüğünden · <span style="font-family: 'JetBrains Mono', monospace; color: #46D98A;">Z3 / Z4</span> konsol içinden · <span style="font-family: 'JetBrains Mono', monospace; color: #5B8DEF;">Z5 / Z6 / Z7</span> koltuk altı ve eşik (marşpiyel) trimi boyunca — hepsi ön konsoldaki aynı ESP32'den: tek kontrolcü, tek besleme noktası. Scirocco 3 kapılı bir coupé; arkada kapı yok — Z5 / Z6 arka yan döşeme panellerine gider, bu yüzden arka hat körükten geçmez. Uzun rotada kalın kesit besleme + GND ile bükümlü çift veri.</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">Z1 / Z2</span> kapı körüğünden · <span style="font-family: 'JetBrains Mono', monospace; color: #46D98A;">Z3 / Z4</span> konsol içinden · <span style="font-family: 'JetBrains Mono', monospace; color: #5B8DEF;">Z5 / Z6 / Z7</span> koltuk altı ve eşik (marşpiyel) trimi boyunca — hepsi ön konsoldaki aynı ESP32'den. Scirocco 3 kapılı coupé; arkada kapı yok, Z5 / Z6 arka yan döşeme panellerine gider. Uzun rotada kalın kesit besleme + GND ile bükümlü çift veri.</div>
+    </div>
+
+    <div style="border-top: 1px solid #2A3746; padding-top: 10px; display: flex; align-items: flex-start; gap: 18px;">
+      <div style="width: 176px; flex-shrink: 0; display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #E5533D;">ANTRIEBS ÇİFTİ</div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #E5533D; border: 1px solid #E5533D; border-radius: 4px; padding: 2px 8px; align-self: flex-start;">2. FAZ</span>
+        <div style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">Aynı ara kablo; yalnızca iki tel daha çıkar.</div>
+      </div>
+
+      <svg width="420" height="92" viewBox="0 0 420 92" style="display: block; flex-shrink: 0;" role="img" aria-label="Antriebs CAN-H ve CAN-L pin numaraları belirsiz: iki boş kesikli pin balonu TJA1042 transceiver'a gider">
+        <circle cx="24" cy="26" r="14" fill="none" stroke="#E5533D" stroke-width="1.4" stroke-dasharray="4 3"></circle>
+        <text x="24" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#E5533D">?</text>
+        <text x="46" y="23" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Antriebs CAN-H</text>
+        <text x="46" y="37" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">pin no belirsiz</text>
+
+        <circle cx="24" cy="68" r="14" fill="none" stroke="#E5533D" stroke-width="1.4" stroke-dasharray="4 3"></circle>
+        <text x="24" y="73" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#E5533D">?</text>
+        <text x="46" y="65" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Antriebs CAN-L</text>
+        <text x="46" y="79" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">pin no belirsiz</text>
+
+        <path d="M152 26 L234 26" fill="none" stroke="#E5533D" stroke-width="1.5" stroke-dasharray="5 4"></path>
+        <path d="M152 68 L234 68" fill="none" stroke="#E5533D" stroke-width="1.5" stroke-dasharray="5 4"></path>
+
+        <rect x="238" y="14" width="182" height="66" rx="9" fill="#1B2430" stroke="#E5533D" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+        <text x="252" y="38" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">TJA1042</text>
+        <text x="252" y="56" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">500 kbps · LISTEN-ONLY</text>
+        <text x="252" y="72" font-family="JetBrains Mono, monospace" font-size="10" fill="#FF5A5A">TX BAĞLANMAZ</text>
+      </svg>
+
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-size: 12px; line-height: 1.45; color: #E8EEF4;">Antriebs CAN-H / CAN-L pin numaraları kaynaklarda <span style="color: #FF5A5A;">yok</span> — VIN'e özel şemadan (erWin / ELSAWin) belirlenecek, tahminle bağlanmaz. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></div>
+        <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Bekleme voltajı ölçümü (~2,5 V, her iki hat) bu çift için de geçerli; bağlantı sonrası DTC kontrolü tekrarlanır. MCP2515 modülü TJA1042'li alınır (TJA1050'li değil) ve modüldeki fabrika 120 Ω sonlandırma sökülür.</div>
+      </div>
     </div>
   </div>
 
@@ -200,7 +233,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         </tr>
         <tr>
           <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">CAN-H / CAN-L</td>
-          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Gateway geçiş kablosundan paralel çıkış — hat kesilmez</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Gateway geçiş kablosundan paralel çıkış — hat kesilmez (her iki çift)</td>
           <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">bekleme ~2,5 V<br>ikisi arası ~0 V</td>
         </tr>
       </table>

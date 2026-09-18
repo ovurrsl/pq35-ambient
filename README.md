@@ -2,9 +2,10 @@
 
 **2016 VW Scirocco (PQ35 / MIB2) için CAN tetiklemeli ambiyans aydınlatma sistemi.**
 
-ESP32-S3 aracın Komfort-CAN hattını **sadece dinler**; kapı, sinyal, far, kilit ve hız/RPM
-olaylarını yakalayıp dört bölgedeki adreslenebilir LED şeritlerini sürer. Renk ve parlaklık
-iOS uygulamasından seçilir, araç olayları geçici olarak bunun üzerine yazar.
+ESP32-S3 aracın CAN hatlarını **sadece dinler**; kapı, sinyal, far, kilit ve hız/RPM
+olaylarını yakalayıp yedi bölgedeki adreslenebilir LED şeritlerini sürer. Renk ve parlaklık
+iOS uygulamasından seçilir, araç olayları geçici olarak bunun üzerine yazar. İkinci bir CAN
+kanalı aracın anlık değerlerini uygulamadaki canlı veri ekranına taşır.
 
 > **Durum:** planlama / tasarım. Araçta henüz hiçbir fiziksel işlem yapılmadı.
 
@@ -23,6 +24,7 @@ Bunun yerine **Yol A** benimsendi:
 |---|---|
 | LED'leri süren | ESP32-S3'ün kendisi |
 | Komfort-CAN'in rolü | **yalnızca tetikleyici** — kapı, kilit, far/gece, sinyal, hız `0x351`, RPM `0x353` |
+| Antriebs-CAN'in rolü | **canlı veri** — devir ve gaz pedalı `0x280`; 2. fazda eklenir |
 | Renk ve parlaklık | iOS uygulamasından |
 | MIB2 senkronu | "Yol B" — ileride, kanıtlanmamış |
 
@@ -43,9 +45,24 @@ altı / eşik trimi boyunca çekilir.
 
 Her bölgenin davranışı firmware'de sabit değil, uygulamadan ayarlanır.
 
+## CAN kanalları
+
+Tek CAN kontrolcüsü iki baud rate'i çözemez, ESP32-S3'te de tek dahili TWAI var. Bu yüzden
+iki kanal:
+
+| Kanal | Hat | Kontrolcü | Faz |
+|---|---|---|---|
+| 1 | Komfort-CAN 100 kbps | ESP32-S3 dahili TWAI + SN65HVD230 | v1 |
+| 2 | Antriebs-CAN 500 kbps | MCP2515 (SPI) + TJA1042 | 2. faz |
+
+Antriebs motor kontrolüne en yakın hat olduğu için en sona bırakılır; komfort hattı ve
+LED'ler stabil çalıştıktan sonra devreye alınır. Her iki kanal da Listen-Only, iki hattın da
+TX'i bağlanmaz.
+
 ## Donanım
 
 Arduino Nano ESP32 (ESP32-S3) · SN65HVD230 CAN transceiver (Listen-Only, TX bağlanmaz) ·
+MCP2515 + **TJA1042** modülü (3,3 V versiyonu — TJA1050'li olan alınmaz) ·
 2 × 74AHCT125 seviye kaydırıcı (7 veri hattı için 8 kanal) · 12 V adreslenebilir şerit
 (~1,25 A/m, kendi sigortası — metraj ölçülünce boyutlandırılır) · buck + TVS ·
 güç kesme MOSFET'i.
