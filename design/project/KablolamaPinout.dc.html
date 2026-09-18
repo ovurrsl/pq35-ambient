@@ -14,6 +14,7 @@
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
 --text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
 --z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
 --ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
 --komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
 --pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
@@ -27,7 +28,7 @@ h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacin
 code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 </style>
 </helmet>
-<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
 
   <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #F4A261; box-shadow: 0 0 24px 2px rgba(244,162,97,0.55);"></div>
 
@@ -40,13 +41,13 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
   </div>
 
-  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 22px 14px; display: flex; flex-direction: column; gap: 8px;">
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 22px 10px; display: flex; flex-direction: column; gap: 8px;">
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px;">
       <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">J533 GATEWAY GEÇİŞ KABLOSU — PASSTHROUGH</h2>
       <span style="font-size: 12px; line-height: 1.4; color: #9FE8C2; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.45); border-radius: 999px; padding: 5px 13px;">Kazanım: hiçbir kablo kesilmez — ara kabloyu çıkar, araç fabrika hâlinde, iz yok</span>
     </div>
 
-    <svg width="1420" height="334" viewBox="0 0 1420 334" role="img" aria-label="J533 gateway gecis kablosu semasi">
+    <svg width="1420" height="306" viewBox="0 0 1420 334" role="img" aria-label="J533 gateway gecis kablosu semasi">
       <defs>
         <marker id="arrKpH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#F4A261"></path></marker>
         <marker id="arrKpL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#C9895C"></path></marker>
@@ -152,6 +153,11 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <text x="920" y="300" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#E8EEF4">VCC ← 3,3 V (asla 5 V) · GND ← ortak şase</text>
       <text x="920" y="319" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Modüldeki 120 Ω sonlandırma sökülür — araç hattı zaten sonlandırılmış.</text>
     </svg>
+
+    <div style="border-top: 1px solid #2A3746; padding-top: 10px; display: flex; align-items: flex-start; gap: 16px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #F4A261; flex-shrink: 0; padding-top: 2px;">KABLO ROTASI</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">Z1 / Z2</span> kapı körüğünden · <span style="font-family: 'JetBrains Mono', monospace; color: #46D98A;">Z3 / Z4</span> konsol içinden · <span style="font-family: 'JetBrains Mono', monospace; color: #5B8DEF;">Z5 / Z6 / Z7</span> koltuk altı ve eşik (marşpiyel) trimi boyunca — hepsi ön konsoldaki aynı ESP32'den: tek kontrolcü, tek besleme noktası. Scirocco 3 kapılı bir coupé; arkada kapı yok — Z5 / Z6 arka yan döşeme panellerine gider, bu yüzden arka hat körükten geçmez. Uzun rotada kalın kesit besleme + GND ile bükümlü çift veri.</div>
+    </div>
   </div>
 
   <div style="display: flex; gap: 24px; align-items: stretch;">
@@ -180,11 +186,11 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         <tr>
           <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746; width: 96px;">ESP32 12 V</td>
           <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Sürücü tarafı alt sigorta kutusu — <span style="font-family: 'JetBrains Mono', monospace;">Kl.15</span> slotunda sigorta musluğu (add-a-circuit)</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746; width: 118px;">kontak kapalı 0 V<br>kontak açık 12–14,4 V</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746; width: 118px;">kapalı 0 V<br>açık 12–14,4 V</td>
         </tr>
         <tr>
           <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Şerit 12 V</td>
-          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Kendi <span style="font-family: 'JetBrains Mono', monospace;">7,5 A</span> sigortası üzerinden; MOSFET ile tamamen kesilir — iç aydınlatma sigortasından alınmaz</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Kendi sigortası üzerinden (başlangıç <span style="font-family: 'JetBrains Mono', monospace;">7,5 A</span> — ölçüm sonrası boyutlandırılacak); MOSFET ile tamamen kesilir — iç aydınlatma sigortasından alınmaz</td>
           <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">~1,25 A/m @ 12 V<br>3,5 m tam beyaz ≈ 4,4 A</td>
         </tr>
         <tr>
@@ -263,7 +269,7 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
 class Component extends DCLogic {
   renderVals() { return {}; }
 }

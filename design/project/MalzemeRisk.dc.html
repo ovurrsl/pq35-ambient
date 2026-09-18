@@ -14,6 +14,7 @@
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
 --text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
 --z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
 --ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
 --komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
 --pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
@@ -38,18 +39,18 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
       <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Malzeme listesi ve risk kaydı</h1>
     </div>
     <div style="display: flex; align-items: flex-end; gap: 16px;">
-      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; text-align: right; max-width: 430px;">Yol A · v1 kapsamı. 10 riskin 8'i zaten v1 kurulumunun içinde; yalnızca akü / Kl.30 kümesi v2'ye ertelendi.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; text-align: right; max-width: 430px;">Yol A · v1 kapsamı. 11 riskin 9'u zaten v1 kurulumunun içinde; yalnızca akü / Kl.30 kümesi v2'ye ertelendi.</div>
       <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
     </div>
   </div>
 
   <!-- ANA SATIR -->
-  <div style="height: 856px; flex-shrink: 0; display: flex; gap: 32px;">
+  <div style="height: 832px; flex-shrink: 0; display: flex; gap: 32px;">
 
     <!-- SOL: MALZEME LİSTESİ -->
-    <div style="width: 700px; height: 856px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+    <div style="width: 700px; height: 832px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
       <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">MALZEME LİSTESİ (BOM) — YOL A · v1 · TEK NODE</h2>
-      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">Tek Komfort-CAN kanalı dinlenir; LED'i ESP32 sürer, renk telefondan gelir.</div>
+      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">Tek Komfort-CAN kanalı dinlenir; LED'i ESP32 sürer, renk telefondan gelir · 7 zon / 7 veri hattı.</div>
 
       <table style="border-collapse: collapse; width: 100%; margin-top: 12px;">
         <thead>
@@ -61,94 +62,109 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
         </thead>
         <tbody>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Arduino Nano ESP32 (ESP32-S3)</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Elde var. Yerleşik TWAI + RMT + NimBLE</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Arduino Nano ESP32 (ESP32-S3)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Elde var. Yerleşik TWAI + RMT + NimBLE</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">SN65HVD230 CAN transceiver (3,3 V)</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Komfort hattı, Listen-Only. TX bağlanmaz; 120 Ω sonlandırma sökülür</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">SN65HVD230 CAN transceiver (3,3 V)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Komfort hattı, Listen-Only. TX bağlanmaz; 120 Ω sonlandırma sökülür</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">74AHCT125 seviye kaydırıcı</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">3,3 V → LED data; 4 kanal = 4 hat</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">74AHCT125 seviye kaydırıcı</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">2</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">3,3 V → LED data · 2 adet, 8 kanal (7 kullanılır)</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">330 Ω direnç</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">4</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Her DIN hattına seri</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">330 Ω direnç</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">7</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Her DIN hattına seri — 7 veri hattı</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">12 V adreslenebilir LED şerit (ZBL)</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">zon metrajı</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">1,8×10 mm · 15 W/m · 12 V'ta 20 mm kesim boyu · maks 5 m hat · ~1,25 A/m. IC tipi ve RGB sırası sorulacak</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">12 V adreslenebilir LED şerit (ZBL)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">7 zon metrajı</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">1,8×10 mm · 15 W/m · 12 V'ta 20 mm kesim boyu · maks 5 m hat · ~1,25 A/m. IC tipi ve RGB sırası sorulacak · toplam metraj montajda ölçülecek</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sigorta 7,5 A + yuva</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Şerit hattının kendi sigortası</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sigorta + yuva (başlangıç 7,5 A)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Şerit hattının kendi sigortası; toplam metraj ölçülünce yeniden boyutlanır</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sigorta musluğu (add-a-circuit)</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kl.15 slotundan besleme</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Sigorta musluğu (add-a-circuit)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kl.15 slotundan besleme</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Buck 12→5 V + TVS diyot</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1 + 1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kart beslemesi; TVS'siz 12 V asla</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Buck 12→5 V + TVS diyot</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1 + 1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kart beslemesi; TVS'siz 12 V asla</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">N-kanal MOSFET (güç kesme)</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Şerit 12 V'unu tamamen keser; IC başına ~1 mA sızıntıyı önler</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">N-kanal MOSFET (güç kesme)</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Şerit 12 V'unu tamamen keser; IC başına ~1 mA sızıntıyı önler</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">J533 uyumlu konnektör kabuğu + pin</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1 set</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Passthrough (geçiş) harness; varyant fişin fotoğrafıyla seçilir</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">J533 uyumlu konnektör kabuğu + pin</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1 set</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Passthrough (geçiş) harness; varyant fişin fotoğrafıyla seçilir</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Bükümlü çift kablo</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">~2 m+</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">CAN-H/L ve DIN + GND (kapı körüğü geçişi)</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Bükümlü çift kablo</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">~2 m+</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">CAN-H/L ve DIN + GND; kapı körüğü ve eşik trimi geçişleri — metraj montajda ölçülecek</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Krimp uçları + ısı büzüşmeli set</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">set</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Araç tarafında lehim yok — titreşimde çatlar</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kalın kesit besleme kablosu</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">arka hat</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Z5–Z7 eşik rotasında gerilim düşümünü azaltır</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Multimetre</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #FFB020; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">ZORUNLU — bağlantı öncesi bekleme voltajı ölçümü</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Tek piksel repeater</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">gerekirse</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Uzun veri hattında sinyal tazeleme — şerit girişinde</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Laptop + USB kablo</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">—</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Loglama ve derleme</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Kablo kanalı / klips</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">set</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Eşik (marşpiyel) trimi boyunca sabitleme</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #93A2B3; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">USB mantık analizörü <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px solid #2A3746; border-radius: 4px; padding: 1px 5px;">ops.</span></td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">SPI / CAN / WS281x zamanlamasını gözle görmek</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Krimp uçları + ısı büzüşmeli set</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">set</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Araç tarafında lehim yok — titreşimde çatlar</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #93A2B3; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">2. Nano ESP32 + 2. SN65HVD230 <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px solid #2A3746; border-radius: 4px; padding: 1px 5px;">ops.</span></td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1 + 1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Masaüstü bench: "sahte BCM" + DUT</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Multimetre</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #FFB020; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">ZORUNLU — bağlantı öncesi bekleme voltajı ölçümü</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">TLE9251V veya NCV7356 <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">v2</span></td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">1</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Wake-on-bus: CAN aktivitesiyle STANDBY'den uyanma pini</td>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">Laptop + USB kablo</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">—</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Loglama ve derleme</td>
           </tr>
           <tr>
-            <td style="font-size: 12px; color: #E8EEF4; padding: 7px 8px 7px 0; line-height: 1.35;">OBDeleven / VCDS-Lite</td>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 7px 8px;">elde var</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 7px 0 7px 8px; line-height: 1.35;">Sigorta: DTC kontrolü, kodlama trace'i, kötü yazmadan kurtarma</td>
+            <td style="font-size: 12px; color: #93A2B3; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">USB mantık analizörü <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px solid #2A3746; border-radius: 4px; padding: 1px 5px;">ops.</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">SPI / CAN / WS281x zamanlamasını gözle görmek</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #93A2B3; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">2. Nano ESP32 + 2. SN65HVD230 <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px solid #2A3746; border-radius: 4px; padding: 1px 5px;">ops.</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1 + 1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Masaüstü bench: "sahte BCM" + DUT</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; border-bottom: 1px solid #2A3746; line-height: 1.35;">TLE9251V veya NCV7356 <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 4px; padding: 1px 6px;">v2</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px; border-bottom: 1px solid #2A3746;">1</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; border-bottom: 1px solid #2A3746; line-height: 1.35;">Wake-on-bus: CAN aktivitesiyle STANDBY'den uyanma pini</td>
+          </tr>
+          <tr>
+            <td style="font-size: 12px; color: #E8EEF4; padding: 4px 8px 4px 0; line-height: 1.35;">OBDeleven / VCDS-Lite</td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 4px 8px;">elde var</td>
+            <td style="font-size: 11px; color: #93A2B3; padding: 4px 0 4px 8px; line-height: 1.35;">Sigorta: DTC kontrolü, kodlama trace'i, kötü yazmadan kurtarma</td>
           </tr>
         </tbody>
       </table>
@@ -160,9 +176,9 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     </div>
 
     <!-- SAĞ: RİSK KAYDI -->
-    <div style="width: 740px; height: 856px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
-      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">RİSK KAYIT DEFTERİ — 10 MADDE</h2>
-      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">8 madde v1 kurulumunun içinde · 2 madde (Kl.30 / parazitik akım) v2'ye ertelendi.</div>
+    <div style="width: 740px; height: 832px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">RİSK KAYIT DEFTERİ — 11 MADDE</h2>
+      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">9 madde v1 kurulumunun içinde · 2 madde (Kl.30 / parazitik akım) v2'ye ertelendi.</div>
 
       <table style="border-collapse: collapse; width: 100%; margin-top: 12px;">
         <thead>
@@ -229,56 +245,67 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
             <td style="padding: 8px 0 8px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #FFB020; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">v1 DOĞRULANACAK</span></td>
           </tr>
           <tr>
-            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 8px 6px 8px 0; vertical-align: top;">10</td>
-            <td style="font-size: 11.5px; color: #E8EEF4; padding: 8px 8px 8px 6px; vertical-align: top; line-height: 1.35;">Kablo lehim / krimp dayanıklılığı, titreşim</td>
-            <td style="font-size: 11.5px; color: #93A2B3; padding: 8px; vertical-align: top; line-height: 1.35;">Araç tarafı bağlantılar krimp + ısı büzüşmeli; lehim yok</td>
-            <td style="padding: 8px 0 8px 8px; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #3FD98A; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">v1 ZORUNLU</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 8px 6px 8px 0; border-bottom: 1px solid #2A3746; vertical-align: top;">10</td>
+            <td style="font-size: 11.5px; color: #E8EEF4; padding: 8px 8px 8px 6px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Kablo lehim / krimp dayanıklılığı, titreşim</td>
+            <td style="font-size: 11.5px; color: #93A2B3; padding: 8px; border-bottom: 1px solid #2A3746; vertical-align: top; line-height: 1.35;">Araç tarafı bağlantılar krimp + ısı büzüşmeli; lehim yok</td>
+            <td style="padding: 8px 0 8px 8px; border-bottom: 1px solid #2A3746; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #3FD98A; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">v1 ZORUNLU</span></td>
+          </tr>
+          <tr>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #93A2B3; padding: 8px 6px 8px 0; vertical-align: top;">11</td>
+            <td style="font-size: 11.5px; color: #E8EEF4; padding: 8px 8px 8px 6px; vertical-align: top; line-height: 1.35;">Uzun arka hat (Z5–Z7): gerilim düşümü ve veri bütünlüğü</td>
+            <td style="font-size: 11.5px; color: #93A2B3; padding: 8px; vertical-align: top; line-height: 1.35;">Kalın kesit besleme, GND ile bükümlü çift veri hattı, gerekirse şerit girişinde tek piksel repeater; v1 kurulumunda ölçülerek doğrulanır</td>
+            <td style="padding: 8px 0 8px 8px; vertical-align: top;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #0B0F14; background: #FFB020; border-radius: 999px; padding: 3px 9px; white-space: nowrap;">v1 DOĞRULANACAK</span></td>
           </tr>
         </tbody>
       </table>
 
-      <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #2A3746; font-size: 11.5px; line-height: 1.45; color: #93A2B3;">v2'ye ertelenen tek gerçek risk kümesi Kl.30 / parazitik akım (1–2). Kalan 8 madde v1 kurulumunun parçası: LED / CAN / BLE mantığı v2'de değişmiyor, yalnızca güç mimarisi değişiyor.</div>
+      <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #2A3746; font-size: 11.5px; line-height: 1.45; color: #93A2B3;">v2'ye ertelenen tek gerçek risk kümesi Kl.30 / parazitik akım (1–2). Kalan 9 madde v1 kurulumunun parçası: LED / CAN / BLE mantığı v2'de değişmiyor, yalnızca güç mimarisi değişiyor.</div>
     </div>
 
   </div>
 
   <!-- ALT ŞERİT -->
-  <div style="height: 128px; flex-shrink: 0; display: flex; gap: 32px;">
+  <div style="height: 152px; flex-shrink: 0; display: flex; gap: 32px;">
 
     <div style="width: 700px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 20px; display: flex; flex-direction: column; gap: 8px;">
-      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ŞERİT GÜÇ ARİTMETİĞİ — ~1,25 A/m</h2>
-      <svg width="660" height="62" viewBox="0 0 660 62" style="display: block;">
-        <defs>
-          <filter id="glowBarMalzeme" x="-40%" y="-80%" width="180%" height="260%">
-            <feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
-            <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-          </filter>
-        </defs>
-        <rect x="20" y="20" width="620" height="16" rx="8" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
-        <rect x="20" y="20" width="341" height="16" rx="8" fill="#FFB020" filter="url(#glowBarMalzeme)"></rect>
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ŞERİT GÜÇ ARİTMETİĞİ — ~1,25 A/m · SİGORTA ÖLÇÜMLE BOYUTLANIR</h2>
 
-        <line x1="117" y1="16" x2="117" y2="40" stroke="#2A3746" stroke-width="1"></line>
-        <line x1="214" y1="16" x2="214" y2="40" stroke="#2A3746" stroke-width="1"></line>
-        <line x1="311" y1="16" x2="311" y2="40" stroke="#2A3746" stroke-width="1"></line>
-        <line x1="408" y1="16" x2="408" y2="40" stroke="#2A3746" stroke-width="1"></line>
-        <line x1="505" y1="16" x2="505" y2="40" stroke="#2A3746" stroke-width="1"></line>
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <svg width="380" height="58" viewBox="0 0 380 58" style="display: block; flex-shrink: 0;">
+          <defs>
+            <filter id="glowBarMalzeme" x="-40%" y="-80%" width="180%" height="260%">
+              <feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
+              <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+            </filter>
+          </defs>
 
-        <text x="117" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">1 m</text>
-        <text x="214" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">2 m</text>
-        <text x="311" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">3 m</text>
-        <text x="408" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">4 m</text>
-        <text x="505" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">5 m</text>
+          <rect x="16" y="22" width="348" height="14" rx="7" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+          <rect x="16" y="22" width="191" height="14" rx="7" fill="#FFB020" filter="url(#glowBarMalzeme)"></rect>
+          <rect x="207" y="22" width="157" height="14" rx="7" fill="rgba(255,176,32,0.10)" stroke="#FFB020" stroke-width="1" stroke-dasharray="4 4"></rect>
 
-        <line x1="361" y1="12" x2="361" y2="44" stroke="#FFB020" stroke-width="2"></line>
-        <text x="361" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#FFB020">3,5 m tam beyaz ≈ 4,4 A</text>
+          <line x1="70" y1="19" x2="70" y2="39" stroke="#2A3746" stroke-width="1"></line>
+          <line x1="125" y1="19" x2="125" y2="39" stroke="#2A3746" stroke-width="1"></line>
+          <line x1="179" y1="19" x2="179" y2="39" stroke="#2A3746" stroke-width="1"></line>
+          <line x1="233" y1="19" x2="233" y2="39" stroke="#2A3746" stroke-width="1"></line>
+          <line x1="288" y1="19" x2="288" y2="39" stroke="#2A3746" stroke-width="1"></line>
+          <line x1="342" y1="16" x2="342" y2="42" stroke="#FF5A5A" stroke-width="2"></line>
 
-        <line x1="601" y1="12" x2="601" y2="44" stroke="#FF5A5A" stroke-width="2"></line>
-        <text x="601" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#FF5A5A">sigorta 7,5 A</text>
+          <text x="203" y="12" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#FFB020">3,5 m tam beyaz ≈ 4,4 A</text>
+          <text x="212" y="12" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">toplam metraj ölçülmedi</text>
 
-        <text x="20" y="52" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">0 A</text>
-        <text x="640" y="52" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#93A2B3">8 A</text>
-      </svg>
-      <div style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">Bu yüzden şerit iç aydınlatma sigortasından beslenmez: kendi 7,5 A sigortası ve kendi hattı olur.</div>
+          <text x="16" y="50" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">0 A</text>
+          <text x="70" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">1 m</text>
+          <text x="125" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">2 m</text>
+          <text x="179" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">3 m</text>
+          <text x="233" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">4 m</text>
+          <text x="288" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">5 m</text>
+          <text x="342" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#FF5A5A">6 m ≈ 7,5 A</text>
+        </svg>
+
+        <div style="font-size: 11.5px; line-height: 1.4; color: #E8EEF4;">Toplam metraj ölçüldükten sonra sigorta yeniden boyutlanır; ~6 m'yi aşarsa 7,5 A yetmez — hatlar iki sigortaya bölünür veya sigorta büyütülür. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></div>
+      </div>
+
+      <div style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">Bu yüzden şerit iç aydınlatma sigortasından beslenmez: kendi hattı ve kendi sigortası olur.</div>
     </div>
 
     <div style="width: 740px; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 14px 20px; display: flex; flex-direction: column; gap: 8px;">

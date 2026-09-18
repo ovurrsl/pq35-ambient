@@ -14,6 +14,7 @@
 --bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
 --text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
 --z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
 --ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
 --komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
 --pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
@@ -47,18 +48,18 @@ code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
     <div style="width: 560px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px;">
       <div style="flex: 1; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px;">
         <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">YÖNETİCİ ÖZETİ</h2>
-        <div style="font-size: 15px; line-height: 1.6; color: #E8EEF4;">2016 VW Scirocco'ya (PQ35, fabrika MIB2, 3 kapı / 2+2) dört bölgeli adreslenebilir 12 V LED ambiyans sistemi kuruyoruz. Işığı ESP32-S3 sürer; araç yalnızca dinlenir. Renk, parlaklık ve bölge davranışı iOS uygulamasından BLE ile ayarlanır.</div>
+        <div style="font-size: 15px; line-height: 1.6; color: #E8EEF4;">2016 VW Scirocco'ya (PQ35, fabrika MIB2, 3 kapı / 2+2) yedi bölgeli adreslenebilir 12 V LED ambiyans sistemi kuruyoruz. Işığı ESP32-S3 sürer; araç yalnızca dinlenir. Renk, parlaklık ve bölge davranışı iOS uygulamasından BLE ile ayarlanır.</div>
         <div style="font-size: 15px; line-height: 1.6; color: #E8EEF4;">Komfort-CAN (100 kbps) yalnızca tetik verir: kapı, kilit, far / gece, sinyal, hız 0x351, devir 0x353. Araca hiçbir şey yazılmaz — TWAI donanımsal Listen-Only, TX ucu bağlanmaz. Orijinal kablo da kesilmez: J533'e soket-sokete geçiş kablosu takılır, sökülünce araç fabrika hâline döner.</div>
       </div>
       <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px;">
         <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ANAHTAR GERÇEKLER</h2>
         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">4 zon · 4 veri hattı</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">7 zon · 7 veri hattı</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">Komfort-CAN 100 kbps</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">ESP32-S3 · Arduino Nano ESP32</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">TWAI LISTEN-ONLY</span>
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">v1: Kl.15</span>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">12 V şerit · kendi 7,5 A sigortası</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 5px 11px; white-space: nowrap;">12 V şerit · kendi sigortası (metrajla boyutlanır)</span>
         </div>
       </div>
     </div>

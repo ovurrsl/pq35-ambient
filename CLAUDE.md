@@ -1,7 +1,7 @@
 # PQ35-AMBIENT — Claude Code için proje bağlamı
 
 **Araç:** 2016 VW Scirocco · PQ35 platformu · fabrika çıkışlı MIB2 · 3 kapılı
-**Hedef:** CAN tetiklemeli ambiyans aydınlatma (4 bölge) + iOS BLE uygulaması + DIY VAG kodlama aracı
+**Hedef:** CAN tetiklemeli ambiyans aydınlatma (7 bölge) + iOS BLE uygulaması + DIY VAG kodlama aracı
 **Durum:** Planlama / tasarım. **Araçta henüz hiçbir fiziksel işlem yapılmadı.**
 **Dil:** Bu depoda tüm doküman, yorum ve arayüz metni **Türkçe**. Teknik terimler (CAN, Listen-Only, BLE, PWM, TWAI, UDS) İngilizce kalabilir.
 
@@ -48,7 +48,7 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 | 7 | **EPS / direksiyon modülüne asla** kodlama denemesi yapılmaz. | Yanlış değer direksiyon gücünü kaybettirebilir. |
 | 8 | `pq-flasher` brute-force script'i **canlı araçta asla** çalıştırılmaz. | 3 yanlış security-access denemesi modülü 20 dk kilitler. |
 | 9 | **MIB2 (5F) en sona** bırakılır ve mümkünse hiç dokunulmaz. | UDS tabanlı, gerçek VCDS/ODIS ile bile hata veriyor; bricking riski. |
-| 10 | Şerit gücü **kendi 7,5 A sigortasından**, iç aydınlatma sigortasından değil. | ~1,25 A/m; 3,5 m tam beyazda ≈4,4 A. |
+| 10 | Şerit gücü **kendi sigortasından**, iç aydınlatma sigortasından değil. Sigorta, toplam metraj ölçüldükten sonra boyutlandırılır. | ~1,25 A/m; 3,5 m tam beyazda ≈4,4 A. 7 bölgeyle toplam metraj arttı: ~6 m'yi aşarsa 7,5 A yetmez, hatlar iki sigortaya bölünür veya sigorta büyütülür. |
 
 ---
 
@@ -58,9 +58,9 @@ frame'i yakalanırsa. İkisi birden yoksa Yol A'da kal.
 |---|---|
 | Arduino Nano ESP32 (ESP32-S3) | Dahili TWAI (donanımsal Listen-Only), RMT (LED zamanlaması), NimBLE |
 | SN65HVD230 CAN transceiver | Native 3,3 V, seviye kaydırıcı gerekmez. TX bağlanmaz. |
-| 74AHCT125 | Seviye kaydırıcı: 3,3 V data → 12 V şerit IC eşiği (≈0,7 × VDD) |
+| 74AHCT125 × 2 | Seviye kaydırıcı: 3,3 V data → 12 V şerit IC eşiği (≈0,7 × VDD). Quad buffer, 7 hat için **iki paket** gerekir (8 kanal, 7'si kullanılır) |
 | 12 V adreslenebilir şerit (ZBL) | 1,8 × 10 mm · 15 W/m · 12 V'ta **20 mm kesim boyu** · maks 5 m hat · ~1,25 A/m. Oluğa 10 mm derinlik gerekir. **600 LED ≠ 600 piksel.** |
-| Güç | Kendi 7,5 A sigortası · buck konvertör · **TVS zorunlu** · şerit gücünü tamamen kesen MOSFET |
+| Güç | Kendi sigortası (başlangıç 7,5 A, **metraj ölçülünce yeniden boyutlandırılacak**) · buck konvertör · **TVS zorunlu** · şerit gücünü tamamen kesen MOSFET |
 | v2 eki | Wake-on-bus transceiver: TLE9251V veya NCV7356 |
 
 **Tek kontrolcü iki baud rate'i (500k + 100k) çözemez** — donanımsal kısıt, yazılımla aşılamaz.
@@ -70,17 +70,41 @@ Hız ve RPM gateway tarafından 100k konfor hattına yansıtıldığı için **t
 
 ## 4. LED bölgeleri
 
-4 veri hattı, 4 bölge:
+**7 veri hattı, 7 bölge:**
 
-1. **Z1 — Sol kapı** (kulp + cep + şerit, tek hatta zincirlenir, yazılımda piksel aralığıyla bölünür)
-2. **Z2 — Sağ kapı** (aynı mantık)
-3. **Z3 — Ön ayak altı**
-4. **Z4 — Göğüs / konsol**
+| # | Bölge | İçerik | Renk | Kablo rotası |
+|---|---|---|---|---|
+| Z1 | Sol kapı | kulp + cep + şerit | `#4CC2FF` buz mavisi | kapı körüğü |
+| Z2 | Sağ kapı | kulp + cep + şerit | `#B98BFF` lavanta | kapı körüğü |
+| Z3 | Ön ayak altı | sürücü + yolcu | `#46D98A` nane | konsol altı |
+| Z4 | Göğüs / konsol | göğüs çıtası | `#FF9F45` amber | konsol içi |
+| Z5 | Arka sol yan panel | şerit + cep | `#5B8DEF` indigo | eşik trimi |
+| Z6 | Arka sağ yan panel | şerit + cep | `#FF7BB0` pembe | eşik trimi |
+| Z7 | Arka ayak altı | sol + sağ | `#3FD9C7` turkuaz | eşik trimi |
 
-Arka koltuk ve arka ayak altı kapsamdan **çıkarıldı**. Ayrı bölge ayrı veri hattı gerektirmez —
-adreslenebilir şeritte tek hattaki her piksel bağımsızdır; 4 hat kablolama basitliği ve arıza
-izolasyonu için seçildi. Her bölgenin davranışı (bağımsız / paylaşımlı, hangi olaya tepki
-vereceği) **firmware'de sabit değil, uygulamadan ayarlanır**.
+Bir hattaki LED'ler tek tek adreslenebilir; kulp/cep/şerit gibi alt bölümler **yazılımda
+piksel aralığıyla** ayrılır. Ayrı hat kullanmanın sebebi kablolama basitliği ve arıza
+izolasyonudur, kontrol değil. Her bölgenin davranışı (bağımsız / paylaşımlı, hangi olaya
+tepki vereceği) **firmware'de sabit değil, uygulamadan ayarlanır**.
+
+### Araç gerçeği — yanlış yazma
+
+**Scirocco 3 kapılıdır, arka kapı yoktur** (2+2 coupé). Arkada, arka koltukların yanında
+**yan döşeme panelleri** vardır; Z5 ve Z6 bunlara gider. Dokümanda, kodda ve arayüzde
+**"arka kapı" terimini kullanma** — doğrusu "arka sol / sağ yan panel".
+
+### Arka hatların rotası
+
+Z5, Z6 ve Z7 **ön konsoldaki aynı ESP32'den** çıkar ve **koltuk altı / eşik (marşpiyel)
+trimi** boyunca arkaya çekilir; kapı körüğünden geçmez. Tek kontrolcü, tek besleme noktası.
+Hat uzadığı için: besleme kablosunda **daha kalın kesit**, veri hattında **GND ile bükümlü
+çift**, gerekirse şerit girişinde **tek piksel repeater**.
+
+### Renk aileleri
+
+Bölge renkleri bilerek eşleşir: sol taraf mavi (Z1/Z5), sağ taraf mor-pembe (Z2/Z6),
+ayak altları yeşil-turkuaz (Z3/Z7), göğüs tek başına amber. Bu eşleşme haritada ve
+uygulamada okunabilirliği artırır.
 
 ---
 
@@ -207,6 +231,7 @@ Aşağıdakiler topluluk kaynaklıdır veya VIN'e bağlıdır; **araçta ölçü
 - Hız `0x351`, RPM `0x353` — byte offset ve ölçekleme model yılına göre kayabilir
 - J533 Komfort CAN-H/L pin numaraları (5 / 15)
 - Kapı / sinyal / kilit / Kl.15 frame'leri — PQ35 konfor matrisi kamuya açık değil
-- LED şerit uzunlukları ve akım tahminleri
+- LED şerit uzunlukları, toplam metraj ve akım tahminleri — sigorta boyutu buna bağlı
+- Arka eşik trimi rotasının gerçek uzunluğu ve gerilim düşümü
 
 Dokümanda veya arayüzde bu değerler daima "araçta doğrulanacak" işaretiyle sunulur.

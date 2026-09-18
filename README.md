@@ -28,15 +28,27 @@ Bunun yerine **Yol A** benimsendi:
 
 ## Bölgeler
 
-`Z1` Sol kapı (kulp + cep + şerit) · `Z2` Sağ kapı · `Z3` Ön ayak altı · `Z4` Göğüs / konsol
+7 veri hattı, 7 bölge:
 
-Dört veri hattı. Her bölgenin davranışı firmware'de sabit değil, uygulamadan ayarlanır.
+| | Ön | | Arka |
+|---|---|---|---|
+| `Z1` | Sol kapı (kulp + cep + şerit) | `Z5` | Arka sol yan panel (şerit + cep) |
+| `Z2` | Sağ kapı (kulp + cep + şerit) | `Z6` | Arka sağ yan panel (şerit + cep) |
+| `Z3` | Ön ayak altı | `Z7` | Arka ayak altı |
+| `Z4` | Göğüs / konsol | | |
+
+Scirocco 3 kapılı olduğu için **arka kapı yoktur**; Z5 ve Z6 arka koltukların yanındaki
+yan döşeme panellerine gider. Arka hatlar ön konsoldaki aynı kontrolcüden çıkıp koltuk
+altı / eşik trimi boyunca çekilir.
+
+Her bölgenin davranışı firmware'de sabit değil, uygulamadan ayarlanır.
 
 ## Donanım
 
 Arduino Nano ESP32 (ESP32-S3) · SN65HVD230 CAN transceiver (Listen-Only, TX bağlanmaz) ·
-74AHCT125 seviye kaydırıcı · 12 V adreslenebilir şerit (~1,25 A/m, kendi 7,5 A sigortası) ·
-buck + TVS · güç kesme MOSFET'i.
+2 × 74AHCT125 seviye kaydırıcı (7 veri hattı için 8 kanal) · 12 V adreslenebilir şerit
+(~1,25 A/m, kendi sigortası — metraj ölçülünce boyutlandırılır) · buck + TVS ·
+güç kesme MOSFET'i.
 
 Araca **J533 gateway passthrough ara kablosu** ile girilir — hiçbir kablo kesilmez, ara kablo
 çıkarılınca araç fabrika hâline döner.

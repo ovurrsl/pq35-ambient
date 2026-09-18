@@ -1,119 +1,153 @@
 {
  "v": 3,
- "createdOnFiles": {
-  "v": 1,
-  "at": "2026-09-18T04:01:03Z"
+ "attachments": {},
+ "boards": {
+  "AppKodlama.dc.html": {
+   "h": 844,
+   "title": "iOS — Gizli özellikler",
+   "w": 390,
+   "x": 1880,
+   "y": 4600
+  },
+  "AppOlaylar.dc.html": {
+   "h": 844,
+   "title": "iOS — CAN olayları",
+   "w": 390,
+   "x": 940,
+   "y": 4600
+  },
+  "AppSahnelerBle.dc.html": {
+   "h": 844,
+   "title": "iOS — Sahneler ve bağlantı",
+   "w": 390,
+   "x": 1410,
+   "y": 4600
+  },
+  "AppZonDetay.dc.html": {
+   "h": 844,
+   "title": "iOS — Bölge detayı",
+   "w": 390,
+   "x": 470,
+   "y": 4600
+  },
+  "AppZonlar.dc.html": {
+   "h": 844,
+   "title": "iOS — Bölgeler",
+   "w": 390,
+   "x": 0,
+   "y": 4600
+  },
+  "AracAglari.dc.html": {
+   "h": 1000,
+   "title": "Araç ağları",
+   "w": 1600,
+   "x": 1680,
+   "y": 0
+  },
+  "DavranisMakinesi.dc.html": {
+   "h": 1000,
+   "title": "Davranış makinesi",
+   "w": 1600,
+   "x": 3360,
+   "y": 1400
+  },
+  "DiyKodlama.dc.html": {
+   "h": 1200,
+   "title": "DIY VAG kodlama",
+   "w": 1600,
+   "x": 1680,
+   "y": 3000
+  },
+  "GuvenliKurulum.dc.html": {
+   "h": 1000,
+   "title": "Güvenli kurulum",
+   "w": 1600,
+   "x": 1680,
+   "y": 1400
+  },
+  "KablolamaPinout.dc.html": {
+   "h": 1200,
+   "title": "Kablolama ve pinout",
+   "w": 1600,
+   "x": 0,
+   "y": 1400
+  },
+  "Main.dc.html": {
+   "h": 1000,
+   "title": "Kapak ve özet",
+   "w": 1600,
+   "x": 0,
+   "y": 0
+  },
+  "MalzemeRisk.dc.html": {
+   "h": 1200,
+   "title": "Malzeme ve risk",
+   "w": 1600,
+   "x": 0,
+   "y": 3000
+  },
+  "Mimari.dc.html": {
+   "h": 1000,
+   "title": "Sistem mimarisi",
+   "w": 1600,
+   "x": 3360,
+   "y": 0
+  },
+  "YolHaritasi.dc.html": {
+   "h": 1000,
+   "title": "5 aşamalı yol haritası",
+   "w": 1600,
+   "x": 5040,
+   "y": 1400
+  },
+  "ZonHaritasi.dc.html": {
+   "h": 1000,
+   "title": "LED bölge haritası",
+   "w": 1600,
+   "x": 5040,
+   "y": 0
+  }
  },
- "title": "PQ35-AMBIENT Tasarım Kanvası",
+ "createdOnFiles": {
+  "at": "2026-09-18T04:01:03Z",
+  "v": 1
+ },
+ "designSystems": [],
  "launch": {
   "view": "canvas"
  },
- "pages": [],
- "boards": {
-  "Main.dc.html": {
+ "notes": {
+  "grup1": {
+   "kind": "title1",
+   "maxW": 6640,
+   "text": "1 · Sistem ve araç",
+   "w": 240,
    "x": 0,
-   "y": 0,
-   "w": 1600,
-   "h": 1000,
-   "title": "Kapak ve özet"
+   "y": -260
   },
-  "AracAglari.dc.html": {
-   "x": 1680,
-   "y": 0,
-   "w": 1600,
-   "h": 1000,
-   "title": "Araç ağları"
-  },
-  "Mimari.dc.html": {
-   "x": 3360,
-   "y": 0,
-   "w": 1600,
-   "h": 1000,
-   "title": "Sistem mimarisi"
-  },
-  "ZonHaritasi.dc.html": {
-   "x": 5040,
-   "y": 0,
-   "w": 1600,
-   "h": 1000,
-   "title": "LED bölge haritası"
-  },
-  "KablolamaPinout.dc.html": {
+  "grup2": {
+   "kind": "title1",
+   "maxW": 6640,
+   "text": "2 · Kurulum ve davranış",
+   "w": 240,
    "x": 0,
-   "y": 1400,
-   "w": 1600,
-   "h": 1000,
-   "title": "Kablolama ve pinout"
+   "y": 1140
   },
-  "GuvenliKurulum.dc.html": {
-   "x": 1680,
-   "y": 1400,
-   "w": 1600,
-   "h": 1000,
-   "title": "Güvenli kurulum"
-  },
-  "DavranisMakinesi.dc.html": {
-   "x": 3360,
-   "y": 1400,
-   "w": 1600,
-   "h": 1000,
-   "title": "Davranış makinesi"
-  },
-  "YolHaritasi.dc.html": {
-   "x": 5040,
-   "y": 1400,
-   "w": 1600,
-   "h": 1000,
-   "title": "5 aşamalı yol haritası"
-  },
-  "MalzemeRisk.dc.html": {
+  "grup3": {
+   "kind": "title1",
+   "maxW": 3280,
+   "text": "3 · Malzeme, risk ve kodlama",
+   "w": 240,
    "x": 0,
-   "y": 2800,
-   "w": 1600,
-   "h": 1200,
-   "title": "Malzeme ve risk"
+   "y": 2740
   },
-  "DiyKodlama.dc.html": {
-   "x": 1680,
-   "y": 2800,
-   "w": 1600,
-   "h": 1200,
-   "title": "DIY VAG kodlama"
-  },
-  "AppZonlar.dc.html": {
+  "grup4": {
+   "kind": "title1",
+   "maxW": 2270,
+   "text": "4 · iOS uygulaması",
+   "w": 240,
    "x": 0,
-   "y": 4400,
-   "w": 390,
-   "h": 844,
-   "title": "iOS — Bölgeler"
-  },
-  "AppZonDetay.dc.html": {
-   "x": 470,
-   "y": 4400,
-   "w": 390,
-   "h": 844,
-   "title": "iOS — Bölge detayı"
-  },
-  "AppOlaylar.dc.html": {
-   "x": 940,
-   "y": 4400,
-   "w": 390,
-   "h": 844,
-   "title": "iOS — CAN olayları"
-  },
-  "AppSahnelerBle.dc.html": {
-   "x": 1410,
-   "y": 4400,
-   "w": 390,
-   "h": 844,
-   "title": "iOS — Sahneler ve bağlantı"
-  },
-  "AppKodlama.dc.html": {
-   "x": 1880,
-   "y": 4400,
-   "w": 390,
-   "h": 844,
-   "title": "iOS — Gizli özellikler"
+   "y": 4340
   }
  },
  "order": [
@@ -133,35 +167,6 @@
   "AppSahnelerBle.dc.html",
   "AppKodlama.dc.html"
  ],
- "notes": {
-  "grup1": {
-   "x": 0,
-   "y": -260,
-   "text": "1 · Sistem ve araç",
-   "kind": "title1",
-   "maxW": 6640
-  },
-  "grup2": {
-   "x": 0,
-   "y": 1140,
-   "text": "2 · Kurulum ve davranış",
-   "kind": "title1",
-   "maxW": 6640
-  },
-  "grup3": {
-   "x": 0,
-   "y": 2540,
-   "text": "3 · Malzeme, risk ve kodlama",
-   "kind": "title1",
-   "maxW": 3280
-  },
-  "grup4": {
-   "x": 0,
-   "y": 4140,
-   "text": "4 · iOS uygulaması",
-   "kind": "title1",
-   "maxW": 2270
-  }
- },
- "designSystems": []
+ "pages": [],
+ "title": "PQ35-AMBIENT Tasarım Kanvası"
 }
