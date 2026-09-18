@@ -71,6 +71,13 @@
    "x": 7050,
    "y": 4700
   },
+  "AppHavaDenge.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava denge ve kurulum",
+   "w": 390,
+   "x": 7990,
+   "y": 4700
+  },
   "AppHavaHafiza.dc.html": {
    "h": 844,
    "title": "iOS — Hava hafıza ve ayarlar",
@@ -211,6 +218,13 @@
    "x": 0,
    "y": 10388
   },
+  "Ekipman.dc.html": {
+   "h": 1400,
+   "title": "Kullanılacak ekipmanlar",
+   "w": 1600,
+   "x": 6720,
+   "y": 3000
+  },
   "GuvenliKurulum.dc.html": {
    "h": 1000,
    "title": "Güvenli kurulum",
@@ -224,6 +238,13 @@
    "w": 1600,
    "x": 0,
    "y": 7188
+  },
+  "HavaDenge.dc.html": {
+   "h": 1300,
+   "title": "Hava — dengeleme ve yol tutuş",
+   "w": 1600,
+   "x": 6720,
+   "y": 10388
   },
   "HavaKablolama.dc.html": {
    "h": 1300,
@@ -379,15 +400,15 @@
   },
   "grup3": {
    "kind": "title1",
-   "maxW": 6640,
-   "text": "3 · Malzeme, risk ve kodlama",
+   "maxW": 8320,
+   "text": "3 · Malzeme, ekipman, risk ve kodlama",
    "w": 240,
    "x": 0,
    "y": 2740
   },
   "grup4": {
    "kind": "title1",
-   "maxW": 7910,
+   "maxW": 8380,
    "text": "4 · iOS — kontrol ekranları",
    "w": 240,
    "x": 0,
@@ -419,7 +440,7 @@
   },
   "grup8": {
    "kind": "title1",
-   "maxW": 6640,
+   "maxW": 8320,
    "text": "8 · Egzoz ve hava süspansiyon",
    "w": 240,
    "x": 0,
@@ -444,6 +465,7 @@
   "DavranisMakinesi.dc.html",
   "YolHaritasi.dc.html",
   "MalzemeRisk.dc.html",
+  "Ekipman.dc.html",
   "DiyKodlama.dc.html",
   "YolB.dc.html",
   "SesDonanimi.dc.html",
@@ -455,6 +477,7 @@
   "AppEgzoz.dc.html",
   "AppHava.dc.html",
   "AppHavaHafiza.dc.html",
+  "AppHavaDenge.dc.html",
   "AppOlaylar.dc.html",
   "AppArac.dc.html",
   "AppPerformans.dc.html",
@@ -482,6 +505,7 @@
   "HavaMimarisi.dc.html",
   "HavaKablolama.dc.html",
   "SurtmeKorumasi.dc.html",
+  "HavaDenge.dc.html",
   "PadGenel.dc.html",
   "PadKonum.dc.html",
   "PadCihazlar.dc.html"

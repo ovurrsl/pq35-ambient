@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kullanılacak ekipmanlar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1400px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 20px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #46D98A; box-shadow: 0 0 24px 2px rgba(70,217,138,0.45);"></div>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">KULLANILACAK EKİPMANLAR</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Ne alınacak, ne zaman, ne için</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1180px;">Faza göre sıralı. <strong style="color: #E8EEF4; font-weight: 600;">Sırayla alınır</strong> — her faz bir öncekinin çalıştığı doğrulanınca başlar. Marka ve model yazılmaz: seçim, ölçülecek değerlere bağlı olanlarda <span class="mono" style="color: #FFB020;">ÖLÇÜNCE</span> rozetiyle bekler.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 7px;">
+      <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>SATIN ALMA LİSTESİ</div>
+      <div style="display: flex; gap: 6px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.32); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ELDE</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span></div>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; display: flex; gap: 18px;">
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">v1 — AMBİYANS · KONTROLCÜ A</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">ÖNCE BU</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Arduino Nano ESP32 (ESP32-S3)<span style="color: #6E7C8C;"> — TWAI, RMT, NimBLE</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.32); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ELDE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">SN65HVD230 CAN transceiver<span style="color: #6E7C8C;"> — Komfort 100k · TX bağlanmaz</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">74AHCT125 quad buffer<span style="color: #6E7C8C;"> — 3,3 V → 12 V eşiği · 7 hat, 8 kanal</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">2</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">12 V adreslenebilir şerit (ZBL)<span style="color: #6E7C8C;"> — 20 mm kesim boyu · maks 5 m/hat</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">7 hat</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Buck konvertör 12 V → 5 V<span style="color: #6E7C8C;"> — ESP32 ve mantık</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">TVS diyot<span style="color: #6E7C8C;"> — Araç hattı geçici gerilimleri</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Güç kesme MOSFET'i<span style="color: #6E7C8C;"> — Şerit gücünü tamamen keser</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Sigorta + yuva<span style="color: #6E7C8C;"> — Kendi sigortası · metraj ölçülünce boyutlanır</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1–2</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">J533 passthrough ara kablo<span style="color: #6E7C8C;"> — Araç kablosu kesilmez</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Bükümlü çift kablo<span style="color: #6E7C8C;"> — CAN-H/L · veri hatlarında GND ile bükülü</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">—</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Crimp + ısı büzüşmeli seti<span style="color: #6E7C8C;"> — Araç tarafında lehim yok</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+      </div>
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ALET VE TEST</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">SATIN ALMADAN ÖNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Multimetre<span style="color: #6E7C8C;"> — Bekleme voltajı ~2,5 V kontrolü</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">VCDS / OBD arayüzü<span style="color: #6E7C8C;"> — Bağlantı sonrası DTC kontrolü</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Crimp pensesi + ısı tabancası<span style="color: #6E7C8C;"> — Araç tarafı bağlantılar</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Ayarlı masa güç kaynağı<span style="color: #6E7C8C;"> — Her şey masada test edilir</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Mantık analizörü (opsiyonel)<span style="color: #6E7C8C;"> — SPI/UART ve LED zamanlaması</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">0–1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+      </div>
+    </div>
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">2. FAZ — ANTRIEBS VE SES</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">KOMFORT STABİL OLUNCA</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Arduino GIGA R1 WiFi — Kontrolcü B<span style="color: #6E7C8C;"> — Dahili FDCAN · 76 GPIO · 14 analog</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.32); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ELDE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">I2S mikrofon veya hat seviyesi ADC<span style="color: #6E7C8C;"> — Ses tepkili mod · çekirdek 1'de FFT</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">İzolasyon trafosu / diferansiyel giriş<span style="color: #6E7C8C;"> — BTL tuzağı: hoparlör ucu şaseye bağlanmaz</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+      </div>
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">3. FAZ — GSM/GPS VE SÜRÜŞ KAYDI</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">LED VE CAN ÇALIŞINCA</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">SIM808 kartı<span style="color: #6E7C8C;"> — 2G-only · 30.04.2029'a kadar · modem katmanı ardında</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">GSM anteni<span style="color: #6E7C8C;"> — Kart tipine uygun konektör</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Aktif GPS anteni<span style="color: #6E7C8C;"> — Gökyüzü görüşü şart · metal kutuya konmaz</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Buck 5 V / ≥3 A — yalnız SIM808<span style="color: #6E7C8C;"> — ESP32'nin regülatöründen beslenmez</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Bulk kondansatör ≥1000 µF<span style="color: #6E7C8C;"> — İletimde 2 A'e varan sıçrama</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">SIM kart + veri tarifesi<span style="color: #6E7C8C;"> — Bireysel mi M2M mi · APN · PIN kapalı</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Elektret mikrofon + küçük hoparlör<span style="color: #6E7C8C;"> — Ses araç içinden yürür</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1+1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">6 eksenli MEMS IMU<span style="color: #6E7C8C;"> — ±8 g · ≥100 Hz · sert monte</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">microSD yuvası + kart<span style="color: #6E7C8C;"> — Sürüş kaydı · ekle-ve-bırak</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1+1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Pilli RTC (opsiyonel)<span style="color: #6E7C8C;"> — GPS sabitlenmeden zaman sorununu kaldırır</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">0–1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Tutma kondansatörü<span style="color: #6E7C8C;"> — Kl.15 düşünce dosya kapansın</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+      </div>
+    </div>
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">EGZOZ — VAREX</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">KONTROLCÜ B · Kl.15</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">H-köprüsü sürücü<span style="color: #6E7C8C;"> — Ters polarite · sınıfı motorun akımına göre</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Ara kablo + su geçirmez konektör<span style="color: #6E7C8C;"> — Valf ucu araç altında</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Sigorta + yuva<span style="color: #6E7C8C;"> — Kontak anahtarlı hattan</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+      </div>
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 6px;">
+          <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">HAVA SÜSPANSİYON</h2>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">YOL 2 SEÇİLİRSE TAMAMI</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Kompresör + kurutucu<span style="color: #6E7C8C;"> — Röle ile · görev süresi ve termal sınır</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Hava tankı<span style="color: #6E7C8C;"> — Rezerv çizgisi altına inilmez</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Manifold + 8 solenoid<span style="color: #6E7C8C;"> — 4 dolum + 4 boşaltma</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Flyback diyot<span style="color: #6E7C8C;"> — Her valfte — yoksa sürücü ölür</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">8</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">MOSFET sürücü<span style="color: #6E7C8C;"> — Alçak taraf anahtarlama</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">8</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Kompresör rölesi<span style="color: #6E7C8C;"> — MOSFET yetmez</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Basınç sensörü<span style="color: #6E7C8C;"> — 4 körük + tank</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">5</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Yükseklik sensörü<span style="color: #6E7C8C;"> — Sıfır noktası araçta kalibre edilir</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">4</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Sinyal uyarlama (bölücü/tampon)<span style="color: #6E7C8C;"> — 5 V sensör → 3,3 V ADC</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">9</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Körükler + hava hattı + rakor<span style="color: #6E7C8C;"> — Araç ve uygulamaya özel</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">4 + set</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0; border-bottom: 1px solid #2A3746;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Sürtme sensörü<span style="color: #6E7C8C;"> — Yalnızca düşük hızda işe yarar</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">1–2</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #FFB020; background: transparent; border: 1px dashed #FFB020; border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ÖLÇÜNCE</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 9px; padding: 6px 0;">
+          <span style="flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #E8EEF4;">Spiral koruma + su geçirmez konektör<span style="color: #6E7C8C;"> — Araç altı: çamur, tuz, su, taş, ısı</span></span>
+          <span class="mono" style="font-size: 11px; color: #93A2B3; white-space: nowrap; flex-shrink: 0;">set</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">ALINACAK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 12px; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 18px; flex-shrink: 0;">
+    <span class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A; flex-shrink: 0;">KURAL</span>
+    <span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Hiçbir faz, bir öncekinin araçta çalıştığı doğrulanmadan sipariş edilmez. <strong style="font-weight: 600;">Her seferinde tek yeni değişken</strong> — arıza ararken neye bakacağını bilmenin tek yolu bu. Miktarlar ve sınıflar burada; marka, model ve fiyat bilerek yazılmadı.</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1400}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

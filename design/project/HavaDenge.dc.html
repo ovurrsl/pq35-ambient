@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Hava süspansiyon — dengeleme ve yol tutuş</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 20px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #6FA0FF; box-shadow: 0 0 24px 2px rgba(111,160,255,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">DENGELEME VE YOL TUTUŞ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Hava kurulumu değiştirir, yatışı anlık düzeltmez</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1180px;">İstek iki ayrı şeyi kapsıyor: <strong style="color: #E8EEF4; font-weight: 600;">yüke göre dengeleme</strong> ve <strong style="color: #E8EEF4; font-weight: 600;">g/yatış açısına göre otomatik ayar</strong>. Birincisi hava süspansiyonunun tam olarak yaptığı iş. İkincisinin bir kısmı olur, bir kısmı olmaz — ve ayrım zamanlamada.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>KONTROLCÜ B</div>
+  </div>
+
+  <!-- ZAMANLAMA -->
+  <div style="display: flex; gap: 20px; flex-shrink: 0;">
+
+    <div style="flex: 1.5; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px 14px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">OLAY NE KADAR SÜREDE GELİŞİYOR — HAVA NE KADAR SÜREDE YETİŞİYOR</h2>
+      <table>
+        <thead><tr><th style="width: 34%;">Olay</th><th style="width: 24%;">Gelişme süresi</th><th>Hava ile müdahale</th></tr></thead>
+        <tbody>
+          <tr><td>Yolcu, bagaj, yük değişimi</td><td class="mono" style="color:#93A2B3;">dakikalar</td><td><span style="color:#3FD98A; font-weight:600;">Rahat yetişir</span> — bu zaten hava süspansiyonunun işi</td></tr>
+          <tr><td>Eğimli zemin, rampa, park</td><td class="mono" style="color:#93A2B3;">statik</td><td><span style="color:#3FD98A; font-weight:600;">Yetişir</span> — durum değişmiyor, acele yok</td></tr>
+          <tr><td>Kalkışta çökme, frende dalma</td><td class="mono" style="color:#93A2B3;">saniyenin onda birleri</td><td><span style="color:#FF5A5A; font-weight:600;">Geç kalır</span> — olay bitmiş olur</td></tr>
+          <tr style="background: rgba(255,90,90,0.06);"><td>Virajda gövde yatışı</td><td class="mono" style="color:#93A2B3;">saniyenin onda birleri</td><td><span style="color:#FF5A5A; font-weight:600;">Geç kalır — üstelik zararlı olabilir</span>, kuvvet araç geri dönerken gelir</td></tr>
+        </tbody>
+      </table>
+      <div style="display: flex; gap: 11px; align-items: center; padding-top: 2px;">
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">MERTEBE KARŞILAŞTIRMASI</span>
+        <span style="font-size: 13px; line-height: 1.4; color: #93A2B3;">Kesin sayılar araca ve donanıma göre değişir; buradaki nokta <strong style="color: #E8EEF4; font-weight: 600;">büyüklük farkı</strong>: yatış saniyenin onda birlerinde gelişir, hava aktüasyonu saniyeler mertebesindedir.</span>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 11px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">NEDEN — HAVA SIKIŞTIRILABİLİR</div>
+      <div style="font-size: 15px; line-height: 1.55; color: #E8EEF4;">Havanın sıkıştırılabilir olması onu <strong style="font-weight: 600;">iyi bir yay</strong> yapan şeydir. Aynı özellik onu <strong style="font-weight: 600;">kötü bir aktüatör</strong> yapar: valfi açtığında kuvvet anında değil, hacim dolarken gelir.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Gerçek aktif yatış önleme sistemleri bu yüzden havayla değil, <strong style="color: #E8EEF4; font-weight: 600;">yüksek basınçlı hidrolikle</strong> ya da <strong style="color: #E8EEF4; font-weight: 600;">viraj demirine bağlı elektrik motorlarıyla</strong> çalışır. Bant genişlikleri bir mertebe yüksektir.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4; border-top: 1px solid rgba(255,90,90,0.25); padding-top: 10px;">Öngörülü çalışmak da kurtarmaz: direksiyon açısını okuyup virajı önceden bilsen bile <strong style="font-weight: 600;">sınır sensör değil, aktüatör</strong>. Üstelik PQ35'te direksiyon açısı mesajının ID'si bilinmiyor.</div>
+    </div>
+
+  </div>
+
+  <!-- NE OLUR -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 13px; flex-shrink: 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 20px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">HAVANIN YOL TUTUŞA KATKISI — KÜÇÜK DEĞİL, AMA KURULUM TARAFINDA</h2>
+      <span style="font-size: 14px; color: #93A2B3;">Hepsi <strong style="color: #E8EEF4; font-weight: 600;">araç dururken</strong> yapılır, sürüş sırasında değil.</span>
+    </div>
+
+    <div style="display: flex; gap: 18px;">
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 15px 17px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span class="mono" style="font-size: 11px; font-weight: 700; color: #3FD98A;">01</span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Köşe ağırlığı dengeleme</span>
+        </div>
+        <div style="font-size: 13px; line-height: 1.5; color: #E8EEF4;">Her köşenin basıncı, <strong style="font-weight: 600;">çapraz ağırlıklar eşitlenecek</strong> şekilde ayarlanır. Yarış arabalarında yapılan işin aynısı.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Düz zeminde, sürücü koltuktayken. 4 köşe bağımsız basınç kontrolünün asıl sebebi bu.</div>
+      </div>
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 15px 17px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span class="mono" style="font-size: 11px; font-weight: 700; color: #3FD98A;">02</span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Ön / arka basınç dağılımı</span>
+        </div>
+        <div style="font-size: 13px; line-height: 1.5; color: #E8EEF4;">Yay sertliğinin önle arka arasındaki dağılımı, aracın <strong style="font-weight: 600;">denge karakterini</strong> kaydırır.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Bir <strong style="color: #E8EEF4; font-weight: 600;">kurulum tercihi</strong>dir, anlık bir düzeltme değil. Yönü ve miktarı araçta denenerek bulunur.</div>
+      </div>
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 15px 17px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span class="mono" style="font-size: 11px; font-weight: 700; color: #3FD98A;">03</span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Otomatik yük dengeleme</span>
+        </div>
+        <div style="font-size: 13px; line-height: 1.5; color: #E8EEF4;">Yolcu bindiğinde, bagaj dolduğunda araç <strong style="font-weight: 600;">seviyede kalır</strong>. Yavaş, küçük, sürekli bir düzeltme.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Far hizası, yaylanma payı ve yol tutuş hep birlikte korunur — bu, hava süspansiyonunun en gerçek faydası.</div>
+      </div>
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 15px 17px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <span class="mono" style="font-size: 11px; font-weight: 700; color: #3FD98A;">04</span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Sürüş modu ön ayarı</span>
+        </div>
+        <div style="font-size: 13px; line-height: 1.5; color: #E8EEF4;">Konfor / Sürüş / Spor — her biri bir yükseklik ve basınç takımı. Hafızadan çağrılır.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Mod değişimi araç dururken uygulanır; hareket hâlinde basınç dağılımını değiştirmek tutuşu değiştirmektir.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- YENİ KİLİTLER + GERİ BESLEME -->
+  <div style="display: flex; gap: 20px; flex: 1; min-height: 0;">
+
+    <div style="flex: 1.3; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">DÖRT YENİ KİLİT — DENGELEMEYE ÖZEL (6 KİLİDE EKLENİR)</div>
+      <div style="display: flex; gap: 18px; flex: 1; min-height: 0;">
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px;">
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">07</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Dengeleme, g eşiğinin üstünde donar.</strong> Yoksa döngü virajdaki geçici yük transferini kalıcı sanır, dış köşeyi şişirir ve <strong style="font-weight: 600;">virajdan çıkınca araç eğri kalır</strong>. Fabrika sistemleri de bunu böyle yapar.</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">08</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Kurulum değişikliği yalnızca araç dururken.</strong> Hareket hâlinde basınç dağılımını değiştirmek, virajın ortasında tutuş dağılımını değiştirmektir.</span></div>
+        </div>
+        <span style="width: 1px; background: rgba(255,90,90,0.25); flex-shrink: 0;"></span>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px;">
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">09</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Ölü bant ve histerezis şart.</strong> Sıfır toleranslı bir dengeleme döngüsü kompresörü sürekli çalıştırır, tankı boşaltır ve valfleri yorar.</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">10</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Kriko ve lift algılanır, dengeleme durur.</strong> Bir teker havadayken sistem o köşeyi sonuna kadar şişirmeye çalışır.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 11px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">GERİ BESLEME ZATEN ELİMİZDE</h2>
+      <div style="font-size: 15px; line-height: 1.55; color: #E8EEF4;">Sürüş kaydı için eklenen <strong style="font-weight: 600;">IMU</strong> (§3.4), kurulum değişikliğinin işe yarayıp yaramadığını <strong style="font-weight: 600;">ölçen</strong> şeydir.</div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">01</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Kurulumu değiştir (araç dururken)</span></div>
+        <div style="display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">02</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Aynı yolu sür, sürüş kaydı tutulsun</span></div>
+        <div style="display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">03</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">g–g diyagramını ve yatış tepe değerlerini karşılaştır</span></div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; margin-top: auto; padding-top: 6px; border-top: 1px solid #2A3746;">Yatış açısı <strong style="color: #E8EEF4; font-weight: 600;">ölçülür ve kaydedilir</strong> — anlık olarak düzeltilmeye çalışılmaz. Ölçmek dürüst, düzeltmeye çalışmak yanıltıcı olurdu.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
