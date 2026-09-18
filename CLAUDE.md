@@ -361,10 +361,14 @@ mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
 değiştirirken hem buradaki dosyayı hem yayınlanmış artifact'i güncelle.
 
-Kanvas **31 pano / 6 grup**: sistem ve araç (4) · kurulum ve davranış (4) · malzeme, risk ve
-kodlama (3) · iOS kontrol ekranları (8) · iOS kimlik, güvenlik ve ayarlar (8) · bulut ve
-güvenlik (4). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
+Kanvas **37 pano / 6 grup**: sistem ve araç (4) · kurulum ve davranış (4) · malzeme, risk ve
+kodlama (4) · iOS kontrol ekranları (11) · iOS kimlik, güvenlik ve ayarlar (9) · bulut ve
+güvenlik (5). Pano ekler/çıkarırsan `design/project/canvas.json` ve `design/README.md`
 sayılarını da güncelle.
+
+**Pano doğrulaması iki adımdır, biri yetmez.** Ölçüm (içerik alt kenarı ≤ çerçeve) `overflow:
+hidden` içindeki kırpılmayı yakalamaz — pano "sığıyor" der ama metin sekme çubuğunun altında
+kesilir. Her değişen pano ayrıca **render edilip gözle kontrol edilir**.
 
 **Henüz yok, ileride açılacak:** `firmware/` (PlatformIO, ESP32-S3) ·
 `api/` (Vercel Edge Functions) · `supabase/` (şema + RLS migration'ları).

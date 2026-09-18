@@ -23,13 +23,14 @@ gibi yeniden yayınlanabilir.
 |---|---|
 | 1 · Sistem ve araç | Kapak ve özet · Araç ağları · Sistem mimarisi · LED bölge haritası |
 | 2 · Kurulum ve davranış | Kablolama ve pinout · Güvenli kurulum · Davranış makinesi · Yol haritası |
-| 3 · Malzeme, risk ve kodlama | Malzeme ve risk · DIY VAG kodlama · Yol B — MIB2 renk keşfi |
-| 4 · iOS — kontrol ekranları | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler |
-| 5 · iOS — kimlik, güvenlik ve ayarlar | Uygulama kilidi (Face ID) · Giriş · İki adımlı doğrulama (TOTP) · Araçla eşleştirme · Komut onayı · Ayarlar · Güvenlik ayarları · Cihazlar |
-| 6 · Bulut ve güvenlik | Vercel admin paneli · Panel — konum · Panel — cihazlar · Güvenlik mimarisi |
+| 3 · Malzeme, risk ve kodlama | Malzeme ve risk · DIY VAG kodlama · Yol B — MIB2 renk keşfi · **Ses donanımı — BTL tuzağı** |
+| 4 · iOS — kontrol ekranları | Bölgeler · Bölge detayı · CAN olayları · Araç (canlı veri) · Konum · İletişim · Sahneler ve bağlantı · Gizli özellikler · **Renk stüdyosu · Animasyon · Ses tepkili** |
+| 5 · iOS — kimlik, güvenlik ve ayarlar | **Kurulum** · Uygulama kilidi (Face ID) · Giriş · İki adımlı doğrulama (TOTP) · Araçla eşleştirme · Komut onayı · Ayarlar · Güvenlik ayarları · Cihazlar |
+| 6 · Bulut ve güvenlik | Vercel admin paneli · Panel — konum · Panel — cihazlar · Güvenlik mimarisi · **Yığın mimarisi (Expo · Supabase · Vercel)** |
 
-Poster panolar 1600×1000; kablolama, malzeme/risk, DIY kodlama, Yol B ve güvenlik panoları
-1600×1200; telefon ekranları 390×844. Toplam **31 pano**, bunların **16'sı iOS ekranı**.
+Poster panolar 1600×1000; kablolama, malzeme/risk, DIY kodlama, Yol B, davranış makinesi, ses
+donanımı, güvenlik ve yığın mimarisi panoları 1600×1200; telefon ekranları 390×844.
+Toplam **37 pano**, bunların **20'si iOS ekranı** (11 kontrol + 9 kimlik/ayarlar).
 
 ## Düzenleme kuralları
 

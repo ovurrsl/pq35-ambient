@@ -38,19 +38,19 @@ button{font-family:inherit;}
 <div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
 
   <!-- BAŞLIK -->
-  <div style="padding: 10px 16px 5px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0;">
-    <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
-      <h1 style="font-size: 23px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Ses tepkili</h1>
-      <div class="mono" style="font-size: 10px; letter-spacing: 0.12em; color: #93A2B3;">TABAN KATMANI · MOD 3/3 · BLE 50–150 ms, senkron 20 ms ister</div>
+  <div style="padding: 9px 16px 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+      <h1 style="font-size: 22px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Ses tepkili</h1>
+      <div class="mono" style="font-size: 10px; letter-spacing: 0.12em; color: #93A2B3;">TABAN KATMANI · MOD 3/3</div>
     </div>
     <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0;"><span style="width: 7px; height: 7px; border-radius: 999px; background: #3FD98A;"></span>Kartta çalışır</span>
   </div>
 
   <!-- İÇERİK -->
-  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 6px; display: flex; flex-direction: column; gap: 5px;">
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 5px; display: flex; flex-direction: column; gap: 4px;">
 
     <!-- KAYNAK SEÇİMİ -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 7px 12px 8px; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;">
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 5px 12px 5px; display: flex; flex-direction: column; gap: 1px; flex-shrink: 0;">
 
       <div style="display: flex; align-items: baseline; gap: 8px;">
         <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KAYNAK</h2>
@@ -58,7 +58,7 @@ button{font-family:inherit;}
         <span class="mono" style="font-size: 10px; letter-spacing: 0.06em; color: #93A2B3; white-space: nowrap;">AYRINTI: SES DONANIMI PANOSU</span>
       </div>
 
-      <label for="ses-kaynak-line" style="display: flex; align-items: center; gap: 10px; min-height: 46px; cursor: pointer;">
+      <label for="ses-kaynak-line" style="display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer;">
         <input type="radio" class="vh" name="ses-kaynak" id="ses-kaynak-line" checked>
         <span style="width: 20px; height: 20px; border-radius: 999px; border: 2px solid #4CC2FF; box-sizing: border-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><span style="width: 10px; height: 10px; border-radius: 999px; background: #4CC2FF;"></span></span>
         <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
@@ -69,30 +69,30 @@ button{font-family:inherit;}
         <span class="mono" style="font-size: 10px; letter-spacing: 0.06em; color: #3FD98A; background: rgba(63,217,138,0.10); border: 1px solid #3FD98A; border-radius: 999px; padding: 2px 8px; white-space: nowrap; flex-shrink: 0;">ÖNERİLEN</span>
       </label>
 
-      <label for="ses-kaynak-tap" style="display: flex; align-items: center; gap: 10px; min-height: 46px; border-top: 1px solid #2A3746; cursor: pointer;">
+      <label for="ses-kaynak-tap" style="display: flex; align-items: center; gap: 10px; min-height: 44px; border-top: 1px solid #2A3746; cursor: pointer;">
         <input type="radio" class="vh" name="ses-kaynak" id="ses-kaynak-tap">
         <span style="width: 20px; height: 20px; border-radius: 999px; border: 2px solid #6E7C8C; box-sizing: border-box; flex-shrink: 0;"></span>
         <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
           <span style="font-size: 13px; font-weight: 600; color: #E8EEF4;">Hoparlör tap + izolasyon trafosu</span>
-          <span style="font-size: 11px; line-height: 1.3; color: #93A2B3;">Her araçta var; trafo olmadan bağlanmaz</span>
+          <span style="font-size: 11px; line-height: 1.3; color: #93A2B3;">Her araçta var; trafosuz bağlanmaz</span>
         </span>
       </label>
 
-      <label for="ses-kaynak-mikrofon" style="display: flex; align-items: center; gap: 10px; min-height: 46px; border-top: 1px solid #2A3746; cursor: pointer;">
+      <label for="ses-kaynak-mikrofon" style="display: flex; align-items: center; gap: 10px; min-height: 44px; border-top: 1px solid #2A3746; cursor: pointer;">
         <input type="radio" class="vh" name="ses-kaynak" id="ses-kaynak-mikrofon">
         <span style="width: 20px; height: 20px; border-radius: 999px; border: 2px solid #6E7C8C; box-sizing: border-box; flex-shrink: 0;"></span>
         <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
           <span style="font-size: 13px; font-weight: 600; color: #E8EEF4;">Mikrofon</span>
-          <span style="font-size: 11px; line-height: 1.3; color: #93A2B3;">SIM808 için zaten var; yol, rüzgâr ve konuşmayı da duyar</span>
+          <span style="font-size: 11px; line-height: 1.3; color: #93A2B3;">SIM808 için var; yol, rüzgâr ve konuşmayı da duyar</span>
         </span>
       </label>
 
-      <div style="font-size: 11px; line-height: 1.35; color: #93A2B3; border-top: 1px solid #2A3746; padding-top: 6px;">Amfi BTL çalışır: hoparlörün iki ucu da salınır, hiçbiri toprak değildir. Doğrudan bağlanmaz, izolasyon trafosu şart.</div>
+      <div style="font-size: 11px; line-height: 1.3; color: #93A2B3; border-top: 1px solid #2A3746; padding-top: 5px;">Hoparlör tap'i doğrudan yapılamaz: amfi BTL çalışır, iki uç da salınır. İzolasyon trafosu şart.</div>
 
     </div>
 
     <!-- MOD SEÇİCİ + CANLI BANT -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 8px 12px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0;">
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 6px 12px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0;">
 
       <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">MOD</h2>
 
@@ -112,18 +112,18 @@ button{font-family:inherit;}
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 2px;">
-        <div style="font-size: 11px; line-height: 1.35; color: #E8EEF4;">Seviye — parlaklık RMS'i takip eder</div>
-        <div style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Spektrum — bölgeler bantlara eşlenir: bas önde, tiz arkada</div>
-        <div style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Vuruş — yalnızca tespit edilen vuruşta darbe</div>
+        <div style="font-size: 11px; line-height: 1.3; color: #E8EEF4;">Seviye — parlaklık toplam RMS'i takip eder</div>
+        <div style="font-size: 11px; line-height: 1.3; color: #93A2B3;">Spektrum — bölgeler frekans bantlarına eşlenir: bas önde, tiz arkada</div>
+        <div style="font-size: 11px; line-height: 1.3; color: #93A2B3;">Vuruş — yalnızca tespit edilen vuruşta darbe</div>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 9px; height: 32px; border-top: 1px solid #2A3746;">
-        <span style="display: flex; align-items: flex-end; gap: 5px; height: 26px; flex-shrink: 0;">
-          <span style="width: 11px; height: 26px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
-          <span style="width: 11px; height: 26px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
-          <span style="width: 11px; height: 26px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
-          <span style="width: 11px; height: 26px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
-          <span style="width: 11px; height: 26px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
+      <div style="display: flex; align-items: center; gap: 9px; height: 30px; border-top: 1px solid #2A3746;">
+        <span style="display: flex; align-items: flex-end; gap: 5px; height: 24px; flex-shrink: 0;">
+          <span style="width: 11px; height: 24px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
+          <span style="width: 11px; height: 24px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
+          <span style="width: 11px; height: 24px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
+          <span style="width: 11px; height: 24px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
+          <span style="width: 11px; height: 24px; border-radius: 3px; background: #0F1620; border: 1px solid #2A3746; box-sizing: border-box;"></span>
         </span>
         <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #93A2B3; white-space: nowrap;">5 BANT · BAS → TİZ</span>
         <span style="flex: 1;"></span>
@@ -133,7 +133,7 @@ button{font-family:inherit;}
     </div>
 
     <!-- AYARLAR -->
-    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 7px 12px 6px; display: flex; flex-direction: column; gap: 1px; flex-shrink: 0;">
+    <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 4px 12px 4px; display: flex; flex-direction: column; gap: 0; flex-shrink: 0;">
 
       <div style="display: flex; align-items: center; gap: 8px;">
         <h2 style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">AYARLAR</h2>
@@ -142,39 +142,44 @@ button{font-family:inherit;}
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; height: 44px;">
-        <label for="ses-hassasiyet" style="width: 108px; flex-shrink: 0; font-size: 13px; color: #E8EEF4; cursor: pointer;">Hassasiyet</label>
+        <label for="ses-hassasiyet" style="width: 116px; flex-shrink: 0; font-size: 12.5px; line-height: 1.2; color: #E8EEF4; cursor: pointer;">Hassasiyet</label>
         <span style="position: relative; flex: 1; min-width: 0; height: 44px; display: flex; align-items: center;">
           <span style="position: absolute; left: 0; right: 0; height: 8px; border-radius: 999px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box;"></span>
           <input type="range" class="rng" id="ses-hassasiyet" min="0" max="100" value="50">
         </span>
-        <span class="mono" style="width: 20px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
+        <span class="mono" style="width: 18px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; height: 44px;">
-        <label for="ses-zemin" style="width: 108px; flex-shrink: 0; font-size: 13px; color: #E8EEF4; cursor: pointer;">Gürültü eşiği</label>
+        <label for="ses-zemin" style="width: 116px; flex-shrink: 0; font-size: 12.5px; line-height: 1.2; color: #E8EEF4; cursor: pointer;">Zemin gürültüsü eşiği</label>
         <span style="position: relative; flex: 1; min-width: 0; height: 44px; display: flex; align-items: center;">
           <span style="position: absolute; left: 0; right: 0; height: 8px; border-radius: 999px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box;"></span>
           <input type="range" class="rng" id="ses-zemin" min="0" max="100" value="50">
         </span>
-        <span class="mono" style="width: 20px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
+        <span class="mono" style="width: 18px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; height: 44px;">
-        <label for="ses-sonum" style="width: 108px; flex-shrink: 0; font-size: 13px; color: #E8EEF4; cursor: pointer;">Sönüm süresi</label>
+        <label for="ses-sonum" style="width: 116px; flex-shrink: 0; font-size: 12.5px; line-height: 1.2; color: #E8EEF4; cursor: pointer;">Tepki / sönüm süresi</label>
         <span style="position: relative; flex: 1; min-width: 0; height: 44px; display: flex; align-items: center;">
           <span style="position: absolute; left: 0; right: 0; height: 8px; border-radius: 999px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box;"></span>
           <input type="range" class="rng" id="ses-sonum" min="0" max="100" value="50">
         </span>
-        <span class="mono" style="width: 20px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
+        <span class="mono" style="width: 18px; flex-shrink: 0; text-align: right; font-size: 13px; color: #93A2B3;">··</span>
       </div>
 
     </div>
 
+    <!-- KURAL — İŞLEME KARTTA -->
+    <div style="background: rgba(176,140,255,0.08); border: 1px solid #B08CFF; border-radius: 12px; padding: 5px 12px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #B08CFF;">KURAL</div>
+      <div style="font-size: 12px; line-height: 1.35; color: #E8EEF4;">Ses işleme kartta çalışır. BLE bağlantı aralığı 15–50 ms, gidiş-dönüş 50–150 ms; müzik senkronu 20 ms'nin altını ister. Telefondan sürmek imkânsız.</div>
+    </div>
 
     <!-- KURAL — HIZDA KISITLAMA -->
-    <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 7px 13px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0;">
+    <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 5px 12px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
       <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL · KAPATILAMAZ</div>
-      <div style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4;">Araç hareket hâlindeyken yoğunluk sınırlanır, strobo kapanır. Hız <span class="mono" style="font-size: 12px; color: #E8EEF4;">0x351</span>'den geliyor.</div>
+      <div style="font-size: 12px; line-height: 1.35; color: #E8EEF4;">Araç hareket hâlindeyken yoğunluk sınırlanır; vuruş ve strobo sınıfı efektler kapanır. Hız <span class="mono" style="font-size: 11.5px; color: #E8EEF4;">0x351</span>'den geliyor. Bu, kapatılabilir bir tercih değildir.</div>
     </div>
 
   </div>
