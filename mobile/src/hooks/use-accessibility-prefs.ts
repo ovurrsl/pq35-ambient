@@ -21,6 +21,19 @@ export interface AccessibilityPrefs {
  * kullanmak HIG ihlalidir ve okunabilirliği bozar. Bu yüzden `glassEnabled` her iki
  * koşulu birden kontrol eder.
  */
+/**
+ * Cam modülü bu yapıda var mı ve gerçek cam çizebiliyor mu?
+ * try/catch var çünkü modül her yapıda bulunmayabilir (ör. Expo Go); yokluğu bir
+ * hata değil, opak zemine düşme sebebidir.
+ */
+function camVarMi(): boolean {
+  try {
+    return isLiquidGlassAvailable();
+  } catch {
+    return false;
+  }
+}
+
 export function useAccessibilityPrefs(): AccessibilityPrefs {
   const [reduceTransparency, setReduceTransparency] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -48,6 +61,6 @@ export function useAccessibilityPrefs(): AccessibilityPrefs {
   return {
     reduceTransparency,
     reduceMotion,
-    glassEnabled: isLiquidGlassAvailable() && !reduceTransparency,
+    glassEnabled: camVarMi() && !reduceTransparency,
   };
 }

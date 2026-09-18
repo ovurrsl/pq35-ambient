@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { State } from 'react-native-ble-plx';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
-import { BleBaglanti, type BulunanCihaz } from '@/lib/ble/connection';
+import { BleBaglanti, type BluetoothDurumu, type BulunanCihaz } from '@/lib/ble/connection';
 import { KRITIK_KOMUTLAR, type Yetki } from '@/lib/ble/protocol';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
@@ -26,7 +25,7 @@ export default function EslestirmeEkrani() {
 
   const baglantiRef = useRef<BleBaglanti | null>(null);
   const [adim, setAdim] = useState<Adim>('bul');
-  const [btDurum, setBtDurum] = useState<State>(State.Unknown);
+  const [btDurum, setBtDurum] = useState<BluetoothDurumu>('Unknown');
   const [cihazlar, setCihazlar] = useState<readonly BulunanCihaz[]>([]);
   const [secili, setSecili] = useState<string | null>(null);
   const [yetki, setYetki] = useState<Yetki>('sahip');
@@ -60,7 +59,7 @@ export default function EslestirmeEkrani() {
   }, []);
 
   useEffect(() => {
-    if (btDurum === State.PoweredOn) tara();
+    if (btDurum === 'PoweredOn') tara();
     return () => baglantiRef.current?.taramayiDurdur();
   }, [btDurum, tara]);
 
@@ -79,7 +78,26 @@ export default function EslestirmeEkrani() {
     }
   }, [secili]);
 
-  if (btDurum !== State.PoweredOn && btDurum !== State.Unknown) {
+  // BLE'nin hiç olmaması ile Bluetooth'un kapalı olması farklı sorunlardır;
+  // ikisine aynı mesajı vermek kullanıcıyı yanlış yere bakmaya gönderir.
+  if (btDurum === 'Yok') {
+    return (
+      <View style={[styles.page, styles.merkez, { backgroundColor: colors.bg }]}>
+        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
+          Bu yapıda BLE yok
+        </Text>
+        <Text style={[styles.govde, { color: colors.muted }]} maxFontSizeMultiplier={2}>
+          Araç bağlantısı yerel bir modül gerektiriyor; Expo Go bunu taşımaz. Diğer
+          ekranlar çalışır, ama araçla konuşmak için development build almalısın.
+        </Text>
+        <Text style={[styles.kucukNot, { color: colors.dim }]} maxFontSizeMultiplier={2}>
+          eas build --profile development --platform ios
+        </Text>
+      </View>
+    );
+  }
+
+  if (btDurum !== 'PoweredOn' && btDurum !== 'Unknown') {
     return (
       <View style={[styles.page, styles.merkez, { backgroundColor: colors.bg }]}>
         <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>

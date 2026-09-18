@@ -27,12 +27,15 @@ function AuthGate() {
     if (durum.ad === 'baslatiliyor') return;
 
     // Kimlik akışı ekranları: kilit, giris, dogrulama, eslestirme.
-    const kimlikAkisinda = pathname.startsWith('/kilit')
+    const kimlikAkisinda = pathname.startsWith('/kurulum')
+      || pathname.startsWith('/kilit')
       || pathname.startsWith('/giris')
       || pathname.startsWith('/dogrulama')
       || pathname.startsWith('/eslestirme');
 
-    if (durum.ad === 'acik') {
+    if (durum.ad === 'yapilandirma-gerekli') {
+      if (!pathname.startsWith('/kurulum')) router.replace('/(auth)/kurulum');
+    } else if (durum.ad === 'acik') {
       if (kimlikAkisinda) router.replace('/(tabs)');
     } else if (durum.ad === 'kilitli') {
       if (!pathname.startsWith('/kilit')) router.replace('/(auth)/kilit');

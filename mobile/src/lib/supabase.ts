@@ -41,7 +41,19 @@ class MemoryStorage implements SupportedStorage {
 
 export const sessionMemory = new MemoryStorage();
 
-export const supabase = createClient<Database>(env.supabaseUrl, env.supabaseAnonKey, {
+/**
+ * Yapılandırma eksikken de bir istemci üretilir.
+ *
+ * Alternatif `null` döndürmekti; o zaman her çağrı yerinde `if (!supabase)` kontrolü
+ * gerekirdi. Bunun yerine geçersiz adresli bir istemci kuruluyor: ağ çağrıları hata
+ * veriyor ama uygulama açılıyor ve `yapilandirildi` bayrağı arayüzde durumu söylüyor.
+ * Bu adrese gerçek bir istek gitmez — kimlik akışı `yapilandirildi` false iken kurulum
+ * ekranını gösterir.
+ */
+const url = env.supabaseUrl ?? 'http://yapilandirilmadi.invalid';
+const anonKey = env.supabaseAnonKey ?? 'yapilandirilmadi';
+
+export const supabase = createClient<Database>(url, anonKey, {
   auth: {
     storage: sessionMemory,
     persistSession: true,

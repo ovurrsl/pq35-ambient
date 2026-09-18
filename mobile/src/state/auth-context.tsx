@@ -11,6 +11,7 @@ import {
 import { AppState, type AppStateStatus } from 'react-native';
 import type { Session } from '@supabase/supabase-js';
 
+import { yapilandirildi } from '@/lib/env';
 import {
   forget,
   hasStoredSession,
@@ -31,6 +32,8 @@ import { supabase } from '@/lib/supabase';
  */
 export type AuthDurum =
   | { ad: 'baslatiliyor' }
+  /** Supabase yapılandırılmamış — giriş denemenin anlamı yok, kurulum anlatılır. */
+  | { ad: 'yapilandirma-gerekli' }
   | { ad: 'kilitli'; maskeliEposta: string | null }
   | { ad: 'cikis' }
   | { ad: 'acik'; session: Session };
@@ -68,6 +71,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let alive = true;
     void (async () => {
+      // Yapılandırma yoksa Keychain'e hiç dokunulmaz: kullanıcıya boşuna Face ID
+      // sorup arkasından "sunucuya ulaşılamadı" demek kötü bir sıralama olurdu.
+      if (!yapilandirildi) {
+        if (alive) setDurum({ ad: 'yapilandirma-gerekli' });
+        return;
+      }
       const varMi = await hasStoredSession();
       if (!alive) return;
       if (varMi) {

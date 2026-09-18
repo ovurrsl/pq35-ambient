@@ -16,6 +16,7 @@ export default function AuthLayout() {
         // Geri gidip kilidi atlamak mümkün olmasın.
         gestureEnabled: false,
       }}>
+      <Stack.Screen name="kurulum" />
       <Stack.Screen name="kilit" />
       <Stack.Screen name="giris" />
       <Stack.Screen name="dogrulama" />
