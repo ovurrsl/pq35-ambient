@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   nokta: { width: 8, height: 8, borderRadius: RADIUS.pill },
   zincirMetin: { flex: 1 },
   zincirAd: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
-  zincirAlt: { ...FONTS.mono, fontSize: 10 },
+  zincirAlt: { ...FONTS.mono, fontSize: 11 },
   ok: { fontSize: 14 },
   govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

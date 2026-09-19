@@ -15,18 +15,7 @@ import { NavRow, RowDivider } from '@/components/ui/row';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
 import { useTheme } from '@/theme/theme-provider';
-import {
-  BUS_COLORS,
-  FONTS,
-  HIT_SIZE,
-  RADIUS,
-  SPACING,
-  TYPE_SCALE,
-  ZONE_COLORS,
-  ZONE_IDS,
-  ZONE_LABELS,
-  type ZoneId,
-} from '@/theme/tokens';
+import { BUS_COLORS, FONTS, HIT_SIZE, MARKA_ETIKET, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, ZONE_IDS, ZONE_LABELS, type ZoneId } from '@/theme/tokens';
 
 /**
  * Bölgeler — ana ekran.
@@ -261,7 +250,7 @@ function BolgeSatiri({
     <View>
       <View style={styles.satir}>
         <View style={[styles.rozet, { backgroundColor: bolgeRengi }]}>
-          <Text style={[styles.rozetMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
+          <Text style={[styles.rozetMetin, { color: MARKA_ETIKET }]} maxFontSizeMultiplier={1.4}>
             {id.toUpperCase()}
           </Text>
         </View>

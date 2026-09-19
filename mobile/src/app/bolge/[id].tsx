@@ -15,18 +15,7 @@ import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
 import { useTheme } from '@/theme/theme-provider';
-import {
-  EVENT_COLORS,
-  FONTS,
-  HIT_SIZE,
-  RADIUS,
-  SPACING,
-  TYPE_SCALE,
-  ZONE_COLORS,
-  ZONE_IDS,
-  ZONE_LABELS,
-  type ZoneId,
-} from '@/theme/tokens';
+import { EVENT_COLORS, FONTS, HIT_SIZE, MARKA_ETIKET, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, ZONE_IDS, ZONE_LABELS, type ZoneId } from '@/theme/tokens';
 
 /**
  * Bölge detayı.
@@ -165,7 +154,7 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
 
       <View style={styles.basliklar}>
         <View style={[styles.rozet, { backgroundColor: bolgeRengi }]}>
-          <Text style={[styles.rozetMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
+          <Text style={[styles.rozetMetin, { color: MARKA_ETIKET }]} maxFontSizeMultiplier={1.4}>
             {id.toUpperCase()}
           </Text>
         </View>
@@ -529,7 +518,7 @@ const styles = StyleSheet.create({
   satirAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
   altNokta: { width: 10, height: 10, borderRadius: RADIUS.pill },
   ayirac: { height: StyleSheet.hairlineWidth },
-  oncelik: { ...FONTS.mono, fontSize: 10, lineHeight: 16 },
+  oncelik: { ...FONTS.mono, fontSize: 11, lineHeight: 16 },
   govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
 
 

@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   aciklamaSatiri: { flexDirection: 'row', gap: SPACING.sm, alignItems: 'flex-start' },
   rozet: {
     ...FONTS.mono,
-    fontSize: 9,
+    fontSize: 11,
     letterSpacing: 0.5,
     borderRadius: RADIUS.pill,
     borderWidth: StyleSheet.hairlineWidth,

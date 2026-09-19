@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   kayitSatiri: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 48 },
   kayitMetin: { flex: 1, minWidth: 0, gap: 1 },
   kayitAd: { ...FONTS.body, fontSize: TYPE_SCALE.body },
-  kayitAlt: { ...FONTS.mono, fontSize: 10 },
+  kayitAlt: { ...FONTS.mono, fontSize: 11 },
   kaydet: {
     minHeight: 44,
     justifyContent: 'center',

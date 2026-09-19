@@ -7,16 +7,7 @@ import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
 import { NavRow } from '@/components/ui/row';
 import { useTheme } from '@/theme/theme-provider';
-import {
-  BUS_COLORS,
-  EVENT_COLORS,
-  FONTS,
-  HIT_SIZE,
-  RADIUS,
-  SPACING,
-  TYPE_SCALE,
-  ZONE_COLORS,
-} from '@/theme/tokens';
+import { BUS_COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
 
 /**
  * Araç · canlı veri.
@@ -272,7 +263,7 @@ function SegmentDugmesi({ segment, aktif, onGit }: SegmentDugmesiProps): ReactEl
  * Veri gelmediği için çubukta dolgu yoktur, yalnızca ölçek ve redline bandı görünür.
  */
 function DevirKarti(): ReactElement {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
 
   return (
     <Card>
@@ -298,7 +289,7 @@ function DevirKarti(): ReactElement {
         <Text style={[styles.olcek, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
           0
         </Text>
-        <Text style={[styles.olcek, { color: EVENT_COLORS.redline }]} maxFontSizeMultiplier={1.4}>
+        <Text style={[styles.olcek, { color: markaMetin(EVENT_COLORS.redline, scheme) }]} maxFontSizeMultiplier={1.4}>
           redline
         </Text>
         <Text style={[styles.olcek, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
@@ -452,10 +443,10 @@ function HamBusKarti(): ReactElement {
 
 /** Antriebs hattına ait her şeyi işaretler: bu kanal 2. fazda bağlanır. */
 function FazCipi(): ReactElement {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   return (
     <View style={[styles.fazCip, { backgroundColor: colors.surfaceRaised, borderColor: BUS_COLORS.antriebs }]}>
-      <Text style={[styles.fazMetin, { color: BUS_COLORS.antriebs }]} maxFontSizeMultiplier={1.4}>
+      <Text style={[styles.fazMetin, { color: markaMetin(BUS_COLORS.antriebs, scheme) }]} maxFontSizeMultiplier={1.4}>
         2. faz
       </Text>
     </View>
@@ -525,12 +516,12 @@ const styles = StyleSheet.create({
   },
   redlineBandi: { position: 'absolute', top: 0, bottom: 0, right: 0 },
   olcekSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  olcek: { ...FONTS.mono, fontSize: 10 },
+  olcek: { ...FONTS.mono, fontSize: 11 },
 
   kaynakSatir: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: SPACING.sm },
   kaynakBlok: { flexShrink: 1, gap: 1 },
   kaynakBirincil: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
-  kaynakIkincil: { ...FONTS.mono, fontSize: 10 },
+  kaynakIkincil: { ...FONTS.mono, fontSize: 11 },
   rozetBlok: { alignItems: 'flex-end', gap: 4 },
   rozetBlokAlt: { alignItems: 'flex-start', gap: 4 },
 
@@ -551,7 +542,7 @@ const styles = StyleSheet.create({
 
   kesifSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 32 },
   kesifAd: { flexShrink: 1, ...FONTS.body, fontSize: TYPE_SCALE.caption },
-  kesifHat: { flex: 1, ...FONTS.mono, fontSize: 10 },
+  kesifHat: { flex: 1, ...FONTS.mono, fontSize: 11 },
   kesifDeger: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
   kesifNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
@@ -579,5 +570,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 2,
   },
-  fazMetin: { ...FONTS.mono, fontSize: 10 },
+  fazMetin: { ...FONTS.mono, fontSize: 11 },
 });

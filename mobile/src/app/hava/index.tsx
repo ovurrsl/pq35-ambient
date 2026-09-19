@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: SPACING.sm,
     gap: 4,
   },
-  koseEtiket: { ...FONTS.mono, fontSize: 9, letterSpacing: 0.6 },
+  koseEtiket: { ...FONTS.mono, fontSize: 11, letterSpacing: 0.6 },
   koseCubuk: {
     height: 7,
     borderRadius: RADIUS.pill,

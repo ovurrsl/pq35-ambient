@@ -6,7 +6,7 @@ import { SymbolView } from 'expo-symbols';
 import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS } from '@/theme/tokens';
+import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
 
 type IkonAdi = ComponentProps<typeof SymbolView>['name'];
 
@@ -38,7 +38,7 @@ const TELEFONLAR: readonly EslesmisTelefon[] = [
  * **BLE bonding** ile bağlanır. Biri iptal edilince diğeri etkilenmez.
  */
 export default function CihazlarEkrani() {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const router = useRouter();
 
   // İptal komutları araca BLE üzerinden gidecek; o katman henüz yazılmadı, bu yüzden
@@ -187,7 +187,7 @@ export default function CihazlarEkrani() {
                   <Text style={[styles.notMetin, { color: colors.muted }]} maxFontSizeMultiplier={2}>
                     Misafirde kapalı komutlar:
                   </Text>
-                  <Text style={[styles.mono, { color: ZONE_COLORS.z4 }]} maxFontSizeMultiplier={1.6}>
+                  <Text style={[styles.mono, { color: markaMetin(ZONE_COLORS.z4, scheme) }]} maxFontSizeMultiplier={1.6}>
                     kilit · arama · kodlama
                   </Text>
                 </View>
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
   birincilMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
 
   doluRozet: { borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  doluRozetMetin: { ...FONTS.monoBold, fontSize: 10 },
+  doluRozetMetin: { ...FONTS.monoBold, fontSize: 11 },
 
   not: { flexDirection: 'row', gap: 9 },
   notIkon: { paddingTop: 2 },

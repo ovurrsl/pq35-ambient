@@ -64,5 +64,5 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     alignSelf: 'flex-start',
   },
-  dashedText: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.8 },
+  dashedText: { ...FONTS.mono, fontSize: 11, letterSpacing: 0.8 },
 });

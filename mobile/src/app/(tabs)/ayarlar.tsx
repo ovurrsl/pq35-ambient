@@ -317,9 +317,9 @@ const styles = StyleSheet.create({
   satirNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, flexShrink: 1, textAlign: 'right' },
 
   doluRozet: { borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  doluRozetMetin: { ...FONTS.monoBold, fontSize: 10 },
+  doluRozetMetin: { ...FONTS.monoBold, fontSize: 11 },
   cerceveliRozet: { borderWidth: 1, borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  cerceveliRozetMetin: { ...FONTS.mono, fontSize: 10 },
+  cerceveliRozetMetin: { ...FONTS.mono, fontSize: 11 },
 
   durumSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, flexWrap: 'wrap' },
   aciklama: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },

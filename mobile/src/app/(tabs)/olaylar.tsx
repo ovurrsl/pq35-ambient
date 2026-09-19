@@ -6,20 +6,7 @@ import { SymbolView } from 'expo-symbols';
 import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
 import { useTheme } from '@/theme/theme-provider';
-import {
-  BUS_COLORS,
-  COLORS,
-  EVENT_COLORS,
-  FONTS,
-  HIT_SIZE,
-  RADIUS,
-  SPACING,
-  TYPE_SCALE,
-  ZONE_COLORS,
-  ZONE_IDS,
-  ZONE_LABELS,
-  type ZoneId,
-} from '@/theme/tokens';
+import { BUS_COLORS, COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, ZONE_IDS, ZONE_LABELS, markaMetin, type ZoneId } from '@/theme/tokens';
 
 /**
  * Olaylar — Komfort-CAN tetikleyicisi → bölge eşlemesi.
@@ -145,7 +132,7 @@ const VARSAYILAN_ESLEME: OlayEslemesi = {
 };
 
 export default function OlaylarEkrani(): ReactElement {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const [esleme, setEsleme] = useState<OlayEslemesi>(VARSAYILAN_ESLEME);
 
   const degistir = useCallback((olay: OlayId, bolge: ZoneId): void => {
@@ -179,7 +166,7 @@ export default function OlaylarEkrani(): ReactElement {
         />
         <Text style={[styles.bilgiMetin, { color: colors.text }]} maxFontSizeMultiplier={2}>
           Yalnızca dinler —{' '}
-          <Text style={[styles.bilgiMono, { color: BUS_COLORS.komfort }]}>
+          <Text style={[styles.bilgiMono, { color: markaMetin(BUS_COLORS.komfort, scheme) }]}>
             Komfort-CAN · LISTEN-ONLY · 100 kbps
           </Text>
           . ID’ler araçta log ile bulunacak.
@@ -205,7 +192,7 @@ export default function OlaylarEkrani(): ReactElement {
           {ONCELIK_YIGINI.map((katman, i) => (
             <View key={katman.ad} style={styles.yiginOge}>
               <View style={[styles.yiginCip, { backgroundColor: colors.surfaceRaised, borderColor: katman.renk }]}>
-                <Text style={[styles.yiginNo, { color: katman.renk }]} maxFontSizeMultiplier={1.4}>
+                <Text style={[styles.yiginNo, { color: markaMetin(katman.renk, scheme) }]} maxFontSizeMultiplier={1.4}>
                   {katman.sira}
                 </Text>
                 <Text style={[styles.yiginAd, { color: colors.text }]} maxFontSizeMultiplier={1.4}>
@@ -260,7 +247,7 @@ interface OlaySatiriProps {
 }
 
 function OlaySatiri({ olay, secili, onDegistir }: OlaySatiriProps): ReactElement {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
 
   return (
     <View style={styles.olay}>
@@ -274,7 +261,7 @@ function OlaySatiri({ olay, secili, onDegistir }: OlaySatiriProps): ReactElement
             </View>
           ) : (
             <View style={[styles.oncelikNo, { borderColor: olay.renk }]}>
-              <Text style={[styles.oncelikNoMetin, { color: olay.renk }]} maxFontSizeMultiplier={1.4}>
+              <Text style={[styles.oncelikNoMetin, { color: markaMetin(olay.renk, scheme) }]} maxFontSizeMultiplier={1.4}>
                 {olay.oncelik}
               </Text>
             </View>
@@ -284,7 +271,7 @@ function OlaySatiri({ olay, secili, onDegistir }: OlaySatiriProps): ReactElement
           </Text>
         </View>
         <View style={[styles.davranis, { borderColor: olay.renk }]}>
-          <Text style={[styles.davranisMetin, { color: olay.renk }]} maxFontSizeMultiplier={1.4}>
+          <Text style={[styles.davranisMetin, { color: markaMetin(olay.renk, scheme) }]} maxFontSizeMultiplier={1.4}>
             {olay.davranis}
           </Text>
         </View>
@@ -292,7 +279,7 @@ function OlaySatiri({ olay, secili, onDegistir }: OlaySatiriProps): ReactElement
 
       <View style={styles.cipSatir}>
         <View style={[styles.kaynakCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
-          <Text style={[styles.kaynakMetin, { color: BUS_COLORS.komfort }]} maxFontSizeMultiplier={1.4}>
+          <Text style={[styles.kaynakMetin, { color: markaMetin(BUS_COLORS.komfort, scheme) }]} maxFontSizeMultiplier={1.4}>
             {olay.kaynak}
           </Text>
         </View>
@@ -405,8 +392,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 3,
   },
-  yiginUcMetin: { ...FONTS.mono, fontSize: 10, letterSpacing: 1 },
-  yiginUcNot: { ...FONTS.mono, fontSize: 10 },
+  yiginUcMetin: { ...FONTS.mono, fontSize: 11, letterSpacing: 1 },
+  yiginUcNot: { ...FONTS.mono, fontSize: 11 },
   yiginSira: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, paddingVertical: 2 },
   yiginOge: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs },
   yiginCip: {
@@ -446,7 +433,7 @@ const styles = StyleSheet.create({
   kaynakMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   idCip: { borderRadius: RADIUS.pill, borderWidth: StyleSheet.hairlineWidth, paddingHorizontal: 9, paddingVertical: 3 },
   idMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
-  idYok: { ...FONTS.mono, fontSize: 10 },
+  idYok: { ...FONTS.mono, fontSize: 11 },
 
   olayNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
@@ -477,6 +464,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
   },
-  kuralEtiket: { ...FONTS.mono, fontSize: 10, letterSpacing: 1.2 },
+  kuralEtiket: { ...FONTS.mono, fontSize: 11, letterSpacing: 1.2 },
   kuralMetin: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.caption },
 });

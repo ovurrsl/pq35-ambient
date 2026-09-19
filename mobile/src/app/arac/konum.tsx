@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: SPACING.md,
     ...FONTS.mono,
-    fontSize: 10,
+    fontSize: 11,
     letterSpacing: 0.6,
     textAlign: 'center',
     paddingHorizontal: SPACING.md,

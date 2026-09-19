@@ -92,7 +92,7 @@ const dark: ThemeColors = {
   line: '#2A3746',
   text: '#E8EEF4',
   muted: '#93A2B3',
-  dim: '#6E7C8C',
+  dim: '#7F8B9A',
   accent: ZONE_COLORS.z1,
   ok: '#3FD98A',
   warn: '#FFB020',
@@ -109,10 +109,10 @@ const light: ThemeColors = {
   line: '#D3DCE6',
   text: '#0B0F14',
   muted: '#4A5867',
-  dim: '#6E7C8C',
-  accent: '#0A7FB8',
-  ok: '#1B8F57',
-  warn: '#9A6400',
+  dim: '#636F7E',
+  accent: '#0975A9',
+  ok: '#187E4D',
+  warn: '#976200',
   danger: '#C0332F',
   glassFallback: '#FFFFFF',
   glassBorder: 'rgba(11,15,20,0.12)',
@@ -122,9 +122,68 @@ export const COLORS = { dark, light } as const;
 export type ColorSchemeName = keyof typeof COLORS;
 
 /**
- * Tipografi. Font aileleri kanvastan gelir; yüklenene kadar sistem yazı tipine düşer.
- * Boyutlar Dynamic Type ile ölçeklenir — sabit `fontSize` yerine `useScaledFont` kullan.
+ * Marka renklerinin **metin olarak** okunabilir türevleri.
+ *
+ * NEDEN GEREKLİ:
+ * `ZONE_COLORS`, `EVENT_COLORS` ve `BUS_COLORS` koyu tuval için seçildi ve tek değerli.
+ * Uygulama gerçekten tema değiştiriyor (`theme-provider` `useColorScheme()` okur), ve
+ * açık temada bu renkler metin olarak çöküyordu: ölçülen en kötü oran `EVENT_COLORS.turn`
+ * için beyaz üzerinde **1.59:1** — gerekenin üçte biri. `BUS_COLORS.antriebs` ise koyu
+ * temada bile 4.20:1 ile kalıyordu.
+ *
+ * Buradaki değerler tonu ve doygunluğu koruyup yalnızca açıklığı kaydırarak hesaplandı;
+ * her biri kendi temasının **en kötü** zeminine karşı ≥ 4.5:1 ölçüldü.
+ *
+ * KURAL: bir marka rengi `color` olarak veriliyorsa buradan alınır. Dolgu (`backgroundColor`)
+ * olarak kullanılıyorsa ham `ZONE_COLORS`/`EVENT_COLORS` doğrudur — orada metin oranı değil,
+ * üstüne binen etiketin oranı önemlidir (bkz. `MARKA_ETIKET`).
  */
+export const MARKA_METIN = {
+  dark: {
+    ...ZONE_COLORS,
+    ...EVENT_COLORS,
+    ...BUS_COLORS,
+    // Tek istisna: ham #E5533D koyu temada da 4.20:1 ile kalıyordu.
+    antriebs: '#E75D48',
+  },
+  light: {
+    z1: '#0074AF', z2: '#8839FF', z3: '#1A7E48', z4: '#AE5400',
+    z5: '#2165E9', z6: '#D90057', z7: '#187B70',
+    door: '#DF0000', turn: '#916600', reverse: '#607081', redline: '#DE0028',
+    komfort: '#AD530C', antriebs: '#CE331C', ble: '#774BF7',
+  },
+} as const;
+
+/**
+ * Marka renginden bir **dolgunun üstündeki** etiketin rengi.
+ *
+ * Yedi bölge rengi de parlaktır; üzerlerine koyu etiket 5.95:1 – 10.95:1 arasında okunur,
+ * açık etiket ise 1.63:1 – 3.00:1 ile hepsinde kalır. Bu yüzden tema ne olursa olsun
+ * **koyu** kullanılır — `colors.bg` kullanmak açık temada rozeti okunamaz yapıyordu.
+ */
+export const MARKA_ETIKET = '#0B0F14';
+
+/** Ham marka hex'inden anahtarına — veri yapıları rengi hex olarak taşıdığı için gerekli. */
+const HAM_ANAHTAR: Readonly<Record<string, string>> = Object.fromEntries(
+  Object.entries({ ...ZONE_COLORS, ...EVENT_COLORS, ...BUS_COLORS }).map(([k, v]) => [
+    v.toUpperCase(),
+    k,
+  ])
+);
+
+/**
+ * Bir marka rengini **metin olarak** kullanmadan önce buradan geçir.
+ *
+ * Bazı ekranlar rengi sabitten okur (`BUS_COLORS.komfort`), bazıları veri yapısından
+ * ham hex olarak taşır (`olay.renk`). İkisini de tek yerden çözmek için anahtar değil
+ * **değer** üzerinden eşleşiyoruz; tanınmayan bir renk olduğu gibi geri döner.
+ */
+export function markaMetin(ham: string, scheme: ColorSchemeName): string {
+  const anahtar = HAM_ANAHTAR[ham.toUpperCase()];
+  if (!anahtar) return ham;
+  return (MARKA_METIN[scheme] as Readonly<Record<string, string>>)[anahtar] ?? ham;
+}
+
 /**
  * Tipografi — Apple sistem fontu (San Francisco).
  *
@@ -140,8 +199,8 @@ export type ColorSchemeName = keyof typeof COLORS;
  * Tek istisna tek aralıklı metin (CAN ID'leri, hex, UDID): SF Mono React Native'e
  * ad olarak açılmaz, iOS'ta sistemle gelen `Menlo` kullanılır.
  *
- * KULLANIM: `...FONTS.body` değil, **`...FONTS.body`** — bunlar birer
- * stil parçasıdır, tek bir ad değil.
+ * KULLANIM: stil nesnesine **yayarak** eklenir (`...FONTS.body`), `fontFamily`
+ * alanına atanmaz — bunlar birer stil parçasıdır, tek bir ad değil.
  */
 export const FONTS = {
   display: { fontFamily: 'System', fontWeight: '700' },

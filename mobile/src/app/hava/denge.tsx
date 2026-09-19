@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   uclar: { flexDirection: 'row', justifyContent: 'space-between' },
-  uc: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
+  uc: { ...FONTS.mono, fontSize: 11, letterSpacing: 0.6 },
   not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
   govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

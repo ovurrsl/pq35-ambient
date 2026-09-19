@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   dugmeMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.label },
 
   doluRozet: { borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  doluRozetMetin: { ...FONTS.monoBold, fontSize: 10 },
+  doluRozetMetin: { ...FONTS.monoBold, fontSize: 11 },
 
   aciklama: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },
   vurgu: { ...FONTS.bodySemiBold },
