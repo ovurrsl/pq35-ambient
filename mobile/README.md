@@ -38,14 +38,20 @@ Publishable (anon) anahtarı panelden alınır:
 > değişkeni olarak tutulur:
 
 ```bash
-npx eas env:create --name EXPO_PUBLIC_SUPABASE_URL \
+# eas-cli 24.x'te komut env:set — env:create hâlâ var ama gizli ve "deprecated" işaretli
+npx eas env:set --name EXPO_PUBLIC_SUPABASE_URL \
   --value https://pfyiemswjsmbguallxwy.supabase.co \
   --environment development --environment preview --environment production --visibility plaintext
 
-npx eas env:create --name EXPO_PUBLIC_SUPABASE_ANON_KEY \
+npx eas env:set --name EXPO_PUBLIC_SUPABASE_ANON_KEY \
   --value <panelden aldığın publishable anahtar> \
   --environment development --environment preview --environment production --visibility sensitive
 ```
+
+> **Bu ikisi yapıldı** — üç ortama da yazılı. Kontrol:
+> `npx eas env:list --environment development --include-sensitive`.
+> Kullanılan anahtar modern `sb_publishable_…` biçimi (`supabase-js` 2.116 bunu destekler),
+> eski `anon` JWT'si değil.
 
 Yerel geliştirme için aynı iki değer `.env.local`'a yazılır (o dosya `.gitignore`'da).
 
@@ -84,12 +90,68 @@ Kök dizinde `app.json` olmadığı için bu alan `/` kalırsa build hemen düş
 | Profil | Ne için | Apple Developer hesabı |
 |---|---|---|
 | `development-simulator` | Mac'te iOS simülatörü | **gerekmez** |
-| `development` | Kendi iPhone/iPad'inde | gerekir |
-| `preview` | Dahili dağıtım | gerekir |
-| `production` | App Store | gerekir |
+| `development` | Kendi iPhone/iPad'inde | **ücretli üyelik** gerekir |
+| `preview` | Dahili dağıtım | **ücretli üyelik** gerekir |
+| `production` | App Store | **ücretli üyelik** gerekir |
 
-Apple hesabı yoksa `development-simulator` ile başlanır: ekranlar görünür, **BLE
-görünmez** — simülatörde Bluetooth donanımı yoktur, o zaten araç takılınca test edilecek.
+Ad hoc dağıtım **ücretsiz Apple ID ile yapılamaz** — ücretsiz hesapta distribution
+sertifikası diye bir şey yoktur, dolayısıyla `distribution: "internal"` hiçbir zaman
+derlenmez. Ücretli üyelik yoksa tek çalışan profil `development-simulator`'dır: ekranlar
+görünür, **BLE görünmez** (simülatörde Bluetooth donanımı yoktur) ve çıktısını çalıştırmak
+için yine bir Mac gerekir. Yani BLE testi için ücretli üyelik kaçınılmazdır.
+
+### iOS imzalama — bir kez etkileşimli oturum şart
+
+`development` profili `distribution: "internal"`, yani **ad hoc** imzalama. Bu, EAS
+kasasında şu kaydın **önceden var olmasını** ister: bir Apple **Distribution** sertifikası
++ bir **ad hoc** provisioning profili (`IOS_APP_ADHOC`), ikisi tek bir
+`IosAppBuildCredentials` kaydında `AD_HOC` tipiyle birleşmiş.
+
+**Panelden veya GitHub'dan tetiklenen build bunu üretemez.** Sebep eas-cli'nin kendi
+kaynağında: bulut `build:internal` komutunu çalıştırır ve o komut *"always run with
+implicit --non-interactive"* diye işaretlidir. `SetUpInternalProvisioningProfile`'ın
+non-interactive dalı yalnızca mevcut kayıtları **sayar**; ikisi de sıfırsa
+
+```
+You're in non-interactive mode. EAS CLI couldn't find any credentials
+suitable for internal distribution. Run this command again in interactive mode.
+```
+
+der ve Apple'a hiç bağlanmaz. Panelde düğmeye tekrar basmak bu yüzden işe yaramaz.
+
+**App Store Connect API anahtarı bu boşluğu kapatmaz.** Anahtarın işi mevcut kimlik
+bilgisini *tamir/yenilemek* — cihaz listesini güncellemek, profili yeniden imzalamak.
+`SetUpDistributionCertificate` sertifika üretimini yalnızca `runInteractiveAsync` içinde
+yapar. Sertifika sıfırdan **etkileşimli** bir oturumda doğar; bu bir Apple kısıtı değil,
+eas-cli'nin koyduğu emniyet kilidi.
+
+Önemli ayrım: **"etkileşimli" = soru sorulabilen bir terminal (TTY), Mac değil.**
+Windows veya Linux'ta çalışır — EAS derlemeyi kendi macOS makinelerinde yapar.
+
+```bash
+npx eas device:create      # en az bir iPhone UDID'i kaydet; ad hoc profil bir izin listesidir
+npx eas credentials:configure-build --platform ios --environment development
+```
+
+Apple girişi iki yoldan yapılabilir:
+
+| Yol | Ne gerekir |
+|---|---|
+| Apple ID + şifre + 6 haneli kod | bir insan, her seferinde |
+| App Store Connect API anahtarı | `EXPO_ASC_API_KEY_PATH` + `EXPO_ASC_KEY_ID` + `EXPO_ASC_ISSUER_ID`, yanına `EXPO_APPLE_TEAM_ID` ve `EXPO_APPLE_TEAM_TYPE`. `hasAscEnvVars()` bunları görürse `AuthenticationMode.API_KEY`'e geçer ve şifre sorulmaz |
+
+Anahtar **Admin** yetkili olmalı (Expo'nun şartı), `.p8` Apple'dan **yalnızca bir kez**
+indirilir ve `EXPO_ASC_API_KEY_PATH` `fs.readFile` ile okunduğu için gerçek bir dosya
+yolu olmak zorundadır. `.p8`, Expo jetonu ve Team ID **depoya girmez** — bu depo public.
+
+Bunlar bir kez kurulduktan sonra panelden/GitHub'dan tetiklenen build çalışır. Sonradan
+yeni cihaz eklenirse profil kendiliğinden güncellenmez:
+`--refresh-ad-hoc-provisioning-profile` gerekir (eas-cli ≥ 19.1.0) ve o da EAS'ta kayıtlı
+bir ASC anahtarı ister. Bu bayrak `--freeze-credentials` ile birlikte kullanılamaz.
+
+> Apple, yeni veya yakınlarda yenilenmiş üyeliklerde yeni kaydedilen cihazı işlemek için
+> **24–72 saat** alabilir. O pencerede ilk build cihazı bulamayıp düşebilir; bu bir
+> yapılandırma hatası değildir.
 
 ### Yerel ön kontrol — bulut build'i yakmadan
 
