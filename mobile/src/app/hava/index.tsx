@@ -20,7 +20,7 @@ export default function HavaEkrani() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={HAVA_RENGI}>4 köşe bağımsız</Pill>
         <Pill dotColor={colors.ok}>0 km/s</Pill>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: SPACING.sm,
     gap: 4,
   },
-  koseEtiket: { fontFamily: FONTS.mono, fontSize: 9, letterSpacing: 0.6 },
+  koseEtiket: { ...FONTS.mono, fontSize: 9, letterSpacing: 0.6 },
   koseCubuk: {
     height: 7,
     borderRadius: RADIUS.pill,
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   koseCubukDolu: { height: '100%' },
-  koseDeger: { fontFamily: FONTS.mono, fontSize: 18 },
-  koseBasinc: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  koseDeger: { ...FONTS.mono, fontSize: 18 },
+  koseBasinc: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   tank: {
     height: 10,
     borderRadius: RADIUS.pill,
@@ -110,5 +110,5 @@ const styles = StyleSheet.create({
   },
   tankDolu: { height: '100%' },
   rezervCizgi: { position: 'absolute', left: '26%', width: 2, height: '100%' },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
 });

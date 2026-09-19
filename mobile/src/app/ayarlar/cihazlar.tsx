@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   ayirac: { height: StyleSheet.hairlineWidth },
   esnek: { flex: 1 },
   sonuk: { opacity: 0.55 },
-  mono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  mono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
 
   aracBaslik: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   aracIkon: {
@@ -315,13 +315,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   aracMetin: { gap: 3, flexShrink: 1 },
-  aracAd: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.heading - 4 },
+  aracAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.heading - 4 },
   durumSatir: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   nokta: { width: 7, height: 7, borderRadius: RADIUS.pill },
 
   veriListe: { gap: 0 },
   veriSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 34 },
-  veriBaslik: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
+  veriBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.label },
 
   tehlikeliDugme: {
     minHeight: HIT_SIZE,
@@ -332,14 +332,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: SPACING.sm,
   },
-  tehlikeliMetin: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body - 1 },
+  tehlikeliMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body - 1 },
 
   telefonSatir: { flexDirection: 'row', alignItems: 'center', gap: 9, minHeight: 58 },
   telefonMetin: { gap: 3, flexShrink: 1 },
-  telefonAd: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.label },
+  telefonAd: { ...FONTS.mono, fontSize: TYPE_SCALE.label },
   rozetSatir: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
-  satirAlt: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro },
-  satirAltMono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  satirAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
+  satirAltMono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   satirDugme: {
     minHeight: HIT_SIZE,
     justifyContent: 'center',
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.sm,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  satirDugmeMetin: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.label },
+  satirDugmeMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.label },
 
   misafirNot: {
     flexDirection: 'row',
@@ -366,14 +366,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: SPACING.sm,
   },
-  birincilMetin: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
+  birincilMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
 
   doluRozet: { borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  doluRozetMetin: { fontFamily: FONTS.monoBold, fontSize: 10 },
+  doluRozetMetin: { ...FONTS.monoBold, fontSize: 10 },
 
   not: { flexDirection: 'row', gap: 9 },
   notIkon: { paddingTop: 2 },
-  notMetin: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18, flexShrink: 1 },
+  notMetin: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18, flexShrink: 1 },
 
   ikonYedek: { borderRadius: 4, borderWidth: 1.5 },
 });

@@ -17,7 +17,7 @@ export default function IletisimEkrani() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={BUS_COLORS.ble}>3. faz</Pill>
         <Pill dotColor={colors.warn}>2G</Pill>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   satir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 28 },
-  etiket: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
-  deger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  etiket: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.label },
+  deger: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

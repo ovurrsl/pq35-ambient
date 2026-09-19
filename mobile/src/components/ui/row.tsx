@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
   },
   metin: { flex: 1, minWidth: 0, gap: 1 },
   ikon: { width: 22, alignItems: 'center' },
-  baslik: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.body },
-  alt: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 15 },
-  deger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.body },
+  baslik: { ...FONTS.body, fontSize: TYPE_SCALE.body },
+  alt: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 15 },
+  deger: { ...FONTS.mono, fontSize: TYPE_SCALE.body },
   ayrac: { height: StyleSheet.hairlineWidth, marginLeft: 0 },
   chevron: { width: 12, alignItems: 'center', justifyContent: 'center' },
   chevronUst: {

@@ -37,7 +37,7 @@ export default function SuruslerEkrani() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Kayıt açık</Pill>
         <Pill>10 Hz</Pill>
@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cubukDolu: { height: '100%' },
-  mono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  bos: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
-  durum: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  mono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  bos: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  durum: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   aciklamaSatiri: { flexDirection: 'row', gap: SPACING.sm, alignItems: 'flex-start' },
   rozet: {
-    fontFamily: FONTS.mono,
+    ...FONTS.mono,
     fontSize: 9,
     letterSpacing: 0.5,
     borderRadius: RADIUS.pill,
@@ -140,5 +140,5 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     overflow: 'hidden',
   },
-  aciklama: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  aciklama: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
 });

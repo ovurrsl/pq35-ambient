@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
   merkez: { justifyContent: 'center', alignItems: 'center', gap: SPACING.md },
   basliklar: { gap: SPACING.md },
-  baslik: { fontFamily: FONTS.display, fontSize: 28 },
+  baslik: { ...FONTS.display, fontSize: 28 },
   adimlar: { flexDirection: 'row', gap: SPACING.lg, flexWrap: 'wrap' },
   adimKutu: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   adimNokta: { width: 8, height: 8, borderRadius: RADIUS.pill },
-  adimMetin: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  adimMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
   cihazSatir: {
     minHeight: HIT_SIZE + 8,
     flexDirection: 'row',
@@ -279,9 +279,9 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
   },
   cihazMetin: { flex: 1, gap: 2 },
-  cihazAd: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.body },
-  cihazAlt: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  kucukNot: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
+  cihazAd: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.body },
+  cihazAlt: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  kucukNot: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
   yetkiSatir: {
     minHeight: HIT_SIZE,
     flexDirection: 'row',
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   },
   yetkiMetin: { flex: 1, gap: 2 },
   hata: {
-    fontFamily: FONTS.body,
+    ...FONTS.body,
     fontSize: TYPE_SCALE.label,
     lineHeight: 19,
     borderWidth: 1,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
   },
   birincil: { height: 52, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center' },
-  birincilMetin: { fontFamily: FONTS.bodySemiBold, fontSize: 16 },
+  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
   ikincil: {
     minHeight: HIT_SIZE,
     borderRadius: RADIUS.md,
@@ -306,5 +306,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ikincilMetin: { fontFamily: FONTS.bodySemiBold, fontSize: 15 },
+  ikincilMetin: { ...FONTS.bodySemiBold, fontSize: 15 },
 });

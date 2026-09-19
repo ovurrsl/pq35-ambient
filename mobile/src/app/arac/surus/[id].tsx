@@ -25,7 +25,7 @@ export default function SurusDetayEkrani() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill>KARTTA</Pill>
         <Pill dotColor={colors.muted}>zaman kaynağı GPS</Pill>
@@ -98,15 +98,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   haritaNot: {
-    fontFamily: FONTS.mono,
+    ...FONTS.mono,
     fontSize: 10,
     letterSpacing: 0.6,
     textAlign: 'center',
     paddingHorizontal: SPACING.md,
   },
   efsane: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
-  efsaneEtiket: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
+  efsaneEtiket: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
   efsaneCizgi: { width: 18, height: 4, borderRadius: RADIUS.pill },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
-  kayitId: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, textAlign: 'center' },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  kayitId: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, textAlign: 'center' },
 });

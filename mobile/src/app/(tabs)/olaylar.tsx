@@ -383,8 +383,8 @@ function ZonAnahtari({ bolge, acik, olayId, olayAdi, onDegistir }: ZonAnahtariPr
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
   baslikBlok: { gap: 2 },
-  baslik: { fontFamily: FONTS.display, fontSize: TYPE_SCALE.title },
-  altBaslik: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
+  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
+  altBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
 
   bilgi: {
     flexDirection: 'row',
@@ -396,8 +396,8 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
   },
   ikonYedek: { width: 16, height: 16, borderRadius: RADIUS.pill, borderWidth: 2 },
-  bilgiMetin: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },
-  bilgiMono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  bilgiMetin: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },
+  bilgiMono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
 
   yiginUc: {
     alignSelf: 'flex-start',
@@ -409,8 +409,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 3,
   },
-  yiginUcMetin: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 1 },
-  yiginUcNot: { fontFamily: FONTS.mono, fontSize: 10 },
+  yiginUcMetin: { ...FONTS.mono, fontSize: 10, letterSpacing: 1 },
+  yiginUcNot: { ...FONTS.mono, fontSize: 10 },
   yiginSira: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, paddingVertical: 2 },
   yiginOge: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs },
   yiginCip: {
@@ -422,10 +422,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
-  yiginNo: { fontFamily: FONTS.monoBold, fontSize: TYPE_SCALE.micro },
-  yiginAd: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.micro },
-  yiginOk: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  yiginTaban: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
+  yiginNo: { ...FONTS.monoBold, fontSize: TYPE_SCALE.micro },
+  yiginAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.micro },
+  yiginOk: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  yiginTaban: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
   liste: { paddingVertical: 0, gap: 0 },
   ayirac: { height: StyleSheet.hairlineWidth },
@@ -440,19 +440,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  oncelikNoMetin: { fontFamily: FONTS.monoBold, fontSize: TYPE_SCALE.micro },
-  olayAd: { flexShrink: 1, fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
+  oncelikNoMetin: { ...FONTS.monoBold, fontSize: TYPE_SCALE.micro },
+  olayAd: { flexShrink: 1, ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
   davranis: { borderRadius: RADIUS.pill, borderWidth: 1, paddingHorizontal: 9, paddingVertical: 3 },
-  davranisMetin: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.micro },
+  davranisMetin: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.micro },
 
   cipSatir: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
   kaynakCip: { borderRadius: RADIUS.pill, borderWidth: StyleSheet.hairlineWidth, paddingHorizontal: 9, paddingVertical: 3 },
-  kaynakMetin: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  kaynakMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   idCip: { borderRadius: RADIUS.pill, borderWidth: StyleSheet.hairlineWidth, paddingHorizontal: 9, paddingVertical: 3 },
-  idMetin: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  idYok: { fontFamily: FONTS.mono, fontSize: 10 },
+  idMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  idYok: { ...FONTS.mono, fontSize: 10 },
 
-  olayNot: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
+  olayNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
   zonSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   zonHedef: {
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  zonMetin: { fontFamily: FONTS.monoBold, fontSize: TYPE_SCALE.micro },
+  zonMetin: { ...FONTS.monoBold, fontSize: TYPE_SCALE.micro },
 
   kural: {
     flexDirection: 'row',
@@ -481,6 +481,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.sm,
   },
-  kuralEtiket: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 1.2 },
-  kuralMetin: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
+  kuralEtiket: { ...FONTS.mono, fontSize: 10, letterSpacing: 1.2 },
+  kuralMetin: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.caption },
 });

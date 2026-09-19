@@ -175,8 +175,8 @@ export default function DogrulamaEkrani() {
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg, justifyContent: 'center' },
   basliklar: { gap: 2 },
-  baslik: { fontFamily: FONTS.display, fontSize: 28 },
-  altBaslik: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  baslik: { ...FONTS.display, fontSize: 28 },
+  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
   kodAlani: { position: 'relative' },
   kutular: { flexDirection: 'row', gap: SPACING.sm },
   kutu: {
@@ -187,10 +187,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  kutuMetin: { fontFamily: FONTS.monoBold, fontSize: 22 },
+  kutuMetin: { ...FONTS.monoBold, fontSize: 22 },
   gizliGirdi: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0, color: 'transparent' },
   hata: {
-    fontFamily: FONTS.body,
+    ...FONTS.body,
     fontSize: TYPE_SCALE.label,
     lineHeight: 19,
     borderWidth: 1,
@@ -198,8 +198,8 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
   },
   birincil: { height: 52, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center' },
-  birincilMetin: { fontFamily: FONTS.bodySemiBold, fontSize: 16 },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
   sinirlar: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
 });

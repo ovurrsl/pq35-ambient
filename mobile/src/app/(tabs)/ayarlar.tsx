@@ -262,13 +262,13 @@ function ListeSatiri({
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md, paddingBottom: SPACING.xxl },
   baslikBlok: { gap: SPACING.xs },
-  baslik: { fontFamily: FONTS.display, fontSize: TYPE_SCALE.title },
-  altBaslik: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
+  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
+  altBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
 
   listeKart: { paddingVertical: 0, paddingHorizontal: SPACING.md, gap: 0 },
   ayirac: { height: StyleSheet.hairlineWidth },
   esnek: { flex: 1 },
-  mono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  mono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
 
   hesapSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, paddingVertical: SPACING.md },
   avatar: {
@@ -280,25 +280,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   hesapMetin: { flex: 1, gap: 6 },
-  hesapEposta: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.label + 1 },
+  hesapEposta: { ...FONTS.mono, fontSize: TYPE_SCALE.label + 1 },
   rozetSatir: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
 
   satir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: HIT_SIZE + 6 },
   listeSatir: { minHeight: 62 },
   satirMetin: { gap: 2, flexShrink: 1 },
-  satirBaslik: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.body },
-  satirAlt: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro },
-  satirAltMono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  satirNot: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, flexShrink: 1, textAlign: 'right' },
+  satirBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.body },
+  satirAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
+  satirAltMono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  satirNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, flexShrink: 1, textAlign: 'right' },
 
   doluRozet: { borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  doluRozetMetin: { fontFamily: FONTS.monoBold, fontSize: 10 },
+  doluRozetMetin: { ...FONTS.monoBold, fontSize: 10 },
   cerceveliRozet: { borderWidth: 1, borderRadius: RADIUS.pill, paddingHorizontal: 8, paddingVertical: 2 },
-  cerceveliRozetMetin: { fontFamily: FONTS.mono, fontSize: 10 },
+  cerceveliRozetMetin: { ...FONTS.mono, fontSize: 10 },
 
   durumSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, flexWrap: 'wrap' },
-  aciklama: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },
-  vurgu: { fontFamily: FONTS.bodySemiBold },
+  aciklama: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 18 },
+  vurgu: { ...FONTS.bodySemiBold },
 
   ikonYedek: { borderRadius: 4, borderWidth: 1.5 },
 });

@@ -2,8 +2,20 @@ import type { ReactNode } from 'react';
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTheme } from '@/theme/theme-provider';
+import { GlassSurface } from './glass-surface';
 import { FONTS, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
+/**
+ * İçerik kartı — Liquid Glass yüzeyi.
+ *
+ * Camı tek tek ekranlara değil buraya bağlıyoruz: `Card` 23 ekranın hepsinde
+ * kullanılıyor, dolayısıyla malzeme tek yerden değişiyor ve hiçbir ekran geride
+ * kalmıyor.
+ *
+ * Erişilebilirlik yedeği `GlassSurface` içinde: iOS 26 yoksa veya **Şeffaflığı
+ * Azalt / Kontrastı Artır** açıksa opak zemine düşer. Bu bir bozulma değil, HIG
+ * gereğidir.
+ */
 export function Card({
   children,
   style,
@@ -11,16 +23,10 @@ export function Card({
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }) {
-  const { colors } = useTheme();
   return (
-    <View
-      style={[
-        styles.card,
-        { backgroundColor: colors.surface, borderColor: colors.line },
-        style,
-      ]}>
+    <GlassSurface glass="regular" radius={RADIUS.lg} style={[styles.card, style]}>
       {children}
-    </View>
+    </GlassSurface>
   );
 }
 
@@ -55,13 +61,11 @@ export function RuleBox({ title, children }: { title: string; children: string }
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: RADIUS.lg,
-    borderWidth: StyleSheet.hairlineWidth,
     padding: SPACING.md,
     gap: SPACING.sm,
   },
   sectionLabel: {
-    fontFamily: FONTS.bodySemiBold,
+    ...FONTS.bodySemiBold,
     fontSize: TYPE_SCALE.caption,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
@@ -73,9 +77,9 @@ const styles = StyleSheet.create({
     gap: SPACING.xs,
   },
   ruleTitle: {
-    fontFamily: FONTS.mono,
+    ...FONTS.mono,
     fontSize: TYPE_SCALE.micro,
     letterSpacing: 1.3,
   },
-  ruleBody: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
+  ruleBody: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
 });

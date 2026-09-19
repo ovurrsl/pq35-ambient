@@ -27,7 +27,7 @@ export default function EgzozEkrani() {
   const [otomatik, setOtomatik] = useState(true);
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Kontak açık</Pill>
         <Pill>Kl.15</Pill>
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
   },
   valfCizgi: { width: 40, height: 5, borderRadius: RADIUS.pill },
   durumMetin: { flex: 1, minWidth: 0, gap: 2 },
-  durumBaslik: { fontFamily: FONTS.display, fontSize: 22 },
-  durumAlt: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro },
+  durumBaslik: { ...FONTS.display, fontSize: 22 },
+  durumAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
   dugmeler: { flexDirection: 'row', gap: SPACING.sm },
   dugme: {
     flex: 1,
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  dugmeMetin: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
-  yetki: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, textAlign: 'center' },
+  dugmeMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  yetki: { ...FONTS.body, fontSize: TYPE_SCALE.micro, textAlign: 'center' },
 });

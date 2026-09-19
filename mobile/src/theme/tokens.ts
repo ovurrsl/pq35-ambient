@@ -1,3 +1,5 @@
+import type { TextStyle } from 'react-native';
+
 /**
  * Tasarım token'ları — kaynak: Design kanvası (design/project/*.dc.html).
  *
@@ -123,14 +125,32 @@ export type ColorSchemeName = keyof typeof COLORS;
  * Tipografi. Font aileleri kanvastan gelir; yüklenene kadar sistem yazı tipine düşer.
  * Boyutlar Dynamic Type ile ölçeklenir — sabit `fontSize` yerine `useScaledFont` kullan.
  */
+/**
+ * Tipografi — Apple sistem fontu (San Francisco).
+ *
+ * Eskiden burada SpaceGrotesk / IBMPlexSans / JetBrainsMono adları vardı ama bu
+ * fontlar projeye hiç yüklenmiyordu: ne `useFonts` çağrısı, ne `assets/fonts`
+ * klasörü. iOS tanımadığı font adını sessizce yok sayıp sisteme düşer, yani ekranda
+ * zaten San Francisco görünüyordu — ama kazara ve ağırlıkları kaybederek.
+ *
+ * Artık kasıtlı: `System` iOS'ta SF Pro'dur, ağırlık `fontWeight` ile verilir.
+ * Bunun yan faydası Dynamic Type ve optik boyutlandırmanın doğru çalışmasıdır;
+ * üçüncü parti bir dosyada bunlar olmaz.
+ *
+ * Tek istisna tek aralıklı metin (CAN ID'leri, hex, UDID): SF Mono React Native'e
+ * ad olarak açılmaz, iOS'ta sistemle gelen `Menlo` kullanılır.
+ *
+ * KULLANIM: `...FONTS.body` değil, **`...FONTS.body`** — bunlar birer
+ * stil parçasıdır, tek bir ad değil.
+ */
 export const FONTS = {
-  display: 'SpaceGrotesk_600SemiBold',
-  body: 'IBMPlexSans_400Regular',
-  bodyMedium: 'IBMPlexSans_500Medium',
-  bodySemiBold: 'IBMPlexSans_600SemiBold',
-  mono: 'JetBrainsMono_400Regular',
-  monoBold: 'JetBrainsMono_700Bold',
-} as const;
+  display: { fontFamily: 'System', fontWeight: '700' },
+  body: { fontFamily: 'System', fontWeight: '400' },
+  bodyMedium: { fontFamily: 'System', fontWeight: '500' },
+  bodySemiBold: { fontFamily: 'System', fontWeight: '600' },
+  mono: { fontFamily: 'Menlo', fontWeight: '400' },
+  monoBold: { fontFamily: 'Menlo', fontWeight: '700' },
+} as const satisfies Record<string, Pick<TextStyle, 'fontFamily' | 'fontWeight'>>;
 
 export const TYPE_SCALE = {
   title: 26,

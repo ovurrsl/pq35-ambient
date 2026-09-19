@@ -106,8 +106,8 @@ export default function SahnelerEkrani() {
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md },
   basliklar: { gap: 2 },
-  baslik: { fontFamily: FONTS.display, fontSize: 28 },
-  altBaslik: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.2 },
+  baslik: { ...FONTS.display, fontSize: 28 },
+  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.2 },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   sahne: {
     minHeight: HIT_SIZE + 26,
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
   },
   sahneUst: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   sahneMetin: { flex: 1, gap: 2 },
-  sahneAd: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
-  sahneAciklama: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
+  sahneAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
+  sahneAciklama: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
   serit: { flexDirection: 'row', gap: 3, height: 6 },
   seritParca: { flex: 1, borderRadius: RADIUS.pill },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

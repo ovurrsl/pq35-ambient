@@ -489,22 +489,22 @@ const styles = StyleSheet.create({
   bosIkon: { width: 56, height: 56, borderRadius: RADIUS.pill, borderWidth: 2 },
 
   geri: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, minHeight: HIT_SIZE, alignSelf: 'flex-start' },
-  geriMetin: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.body },
+  geriMetin: { ...FONTS.body, fontSize: TYPE_SCALE.body },
 
   basliklar: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   rozet: { width: 26, height: 26, borderRadius: RADIUS.pill, alignItems: 'center', justifyContent: 'center' },
-  rozetMetin: { fontFamily: FONTS.monoBold, fontSize: TYPE_SCALE.caption },
-  baslik: { flex: 1, fontFamily: FONTS.display, fontSize: 24 },
-  siraMetin: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  rozetMetin: { ...FONTS.monoBold, fontSize: TYPE_SCALE.caption },
+  baslik: { flex: 1, ...FONTS.display, fontSize: 24 },
+  siraMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   cipler: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
 
   renkOzet: { flexDirection: 'row', alignItems: 'center', gap: SPACING.md },
   renkOnizleme: { width: 64, height: 64, borderRadius: RADIUS.xl, borderWidth: StyleSheet.hairlineWidth },
   renkMetin: { flex: 1, gap: 3 },
-  renkKod: { fontFamily: FONTS.monoBold, fontSize: 22 },
-  renkAd: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
+  renkKod: { ...FONTS.monoBold, fontSize: 22 },
+  renkAd: { ...FONTS.body, fontSize: TYPE_SCALE.label },
   not: {
-    fontFamily: FONTS.body,
+    ...FONTS.body,
     fontSize: TYPE_SCALE.micro,
     lineHeight: 17,
     borderWidth: StyleSheet.hairlineWidth,
@@ -517,22 +517,22 @@ const styles = StyleSheet.create({
   renkKare: { width: 32, height: 32, borderRadius: RADIUS.pill },
 
   parlaklikBasi: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.sm },
-  yuzde: { fontFamily: FONTS.monoBold, fontSize: 14 },
+  yuzde: { ...FONTS.monoBold, fontSize: 14 },
 
   segment: { flexDirection: 'row', borderRadius: RADIUS.md, borderWidth: StyleSheet.hairlineWidth, padding: 3, gap: 3 },
   segmentSecenek: { flex: 1, minHeight: 38, borderRadius: RADIUS.sm, alignItems: 'center', justifyContent: 'center' },
-  segmentMetin: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
+  segmentMetin: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
 
   satir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: HIT_SIZE + 4 },
   satirMetin: { flex: 1, minWidth: 0, gap: 1 },
-  satirAd: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
-  satirAlt: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro },
+  satirAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
+  satirAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
   altNokta: { width: 10, height: 10, borderRadius: RADIUS.pill },
   ayirac: { height: StyleSheet.hairlineWidth },
-  oncelik: { fontFamily: FONTS.mono, fontSize: 10, lineHeight: 16 },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
+  oncelik: { ...FONTS.mono, fontSize: 10, lineHeight: 16 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
 
 
   birincil: { minHeight: 52, minWidth: 200, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center', paddingHorizontal: SPACING.lg },
-  birincilMetin: { fontFamily: FONTS.bodySemiBold, fontSize: 16 },
+  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
 });

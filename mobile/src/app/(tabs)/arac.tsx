@@ -483,11 +483,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  gostergeNotu: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  gostergeNotu: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   baslikSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.md },
   baslikBlok: { flexShrink: 1, gap: 2 },
-  baslik: { fontFamily: FONTS.display, fontSize: TYPE_SCALE.title },
-  altBaslik: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1 },
+  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
+  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1 },
   bleCip: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
-  bleMetin: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  bleMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   nokta: { width: 8, height: 8, borderRadius: RADIUS.pill },
 
   segmentKap: {
@@ -516,17 +516,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: SPACING.xs,
   },
-  segmentMetin: { fontFamily: FONTS.bodyMedium, fontSize: 14 },
-  segmentAktifMetin: { fontFamily: FONTS.bodySemiBold, fontSize: 14 },
+  segmentMetin: { ...FONTS.bodyMedium, fontSize: 14 },
+  segmentAktifMetin: { ...FONTS.bodySemiBold, fontSize: 14 },
 
   dinlemeSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, flexWrap: 'wrap' },
   listenOnly: { borderRadius: RADIUS.pill, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 3 },
-  listenOnlyMetin: { fontFamily: FONTS.monoBold, fontSize: TYPE_SCALE.micro, letterSpacing: 0.6 },
-  dinlemeMetin: { flex: 1, minWidth: 180, fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
+  listenOnlyMetin: { ...FONTS.monoBold, fontSize: TYPE_SCALE.micro, letterSpacing: 0.6 },
+  dinlemeMetin: { flex: 1, minWidth: 180, ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
   devirBlok: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center', gap: SPACING.sm },
-  devirSayi: { fontFamily: FONTS.monoBold, fontSize: 48 },
-  devirBirim: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
+  devirSayi: { ...FONTS.monoBold, fontSize: 48 },
+  devirBirim: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
   cubuk: {
     height: 10,
     borderRadius: RADIUS.pill,
@@ -535,21 +535,21 @@ const styles = StyleSheet.create({
   },
   redlineBandi: { position: 'absolute', top: 0, bottom: 0, right: 0 },
   olcekSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  olcek: { fontFamily: FONTS.mono, fontSize: 10 },
+  olcek: { ...FONTS.mono, fontSize: 10 },
 
   kaynakSatir: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: SPACING.sm },
   kaynakBlok: { flexShrink: 1, gap: 1 },
-  kaynakBirincil: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  kaynakIkincil: { fontFamily: FONTS.mono, fontSize: 10 },
+  kaynakBirincil: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  kaynakIkincil: { ...FONTS.mono, fontSize: 10 },
   rozetBlok: { alignItems: 'flex-end', gap: 4 },
   rozetBlokAlt: { alignItems: 'flex-start', gap: 4 },
 
   ikili: { flexDirection: 'row', gap: SPACING.sm },
   degerKart: { flex: 1, minWidth: 0, gap: 4 },
-  degerAd: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.caption },
+  degerAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.caption },
   degerSatir: { flexDirection: 'row', alignItems: 'baseline', gap: 5 },
-  degerSayi: { fontFamily: FONTS.monoBold, fontSize: 30 },
-  degerBirim: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
+  degerSayi: { ...FONTS.monoBold, fontSize: 30 },
+  degerBirim: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
   cubukBoslugu: { height: 8 },
   miniCubuk: {
     height: 8,
@@ -560,10 +560,10 @@ const styles = StyleSheet.create({
   miniDolgu: { height: '100%' },
 
   kesifSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 32 },
-  kesifAd: { flexShrink: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
-  kesifHat: { flex: 1, fontFamily: FONTS.mono, fontSize: 10 },
-  kesifDeger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption },
-  kesifNot: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
+  kesifAd: { flexShrink: 1, ...FONTS.body, fontSize: TYPE_SCALE.caption },
+  kesifHat: { flex: 1, ...FONTS.mono, fontSize: 10 },
+  kesifDeger: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
+  kesifNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 16 },
 
   hamBaslik: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: HIT_SIZE },
   esnek: { flex: 1 },
@@ -576,12 +576,12 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: SPACING.md,
   },
-  logMetin: { fontFamily: FONTS.bodySemiBold, fontSize: TYPE_SCALE.caption },
+  logMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.caption },
   ikonYedek: { width: 14, height: 14, borderRadius: 3, borderWidth: 1.5 },
 
   hatSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 34 },
-  hatAd: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
-  hatDeger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  hatAd: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
+  hatDeger: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
 
   fazCip: {
     borderRadius: RADIUS.pill,
@@ -589,5 +589,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 2,
   },
-  fazMetin: { fontFamily: FONTS.mono, fontSize: 10 },
+  fazMetin: { ...FONTS.mono, fontSize: 10 },
 });

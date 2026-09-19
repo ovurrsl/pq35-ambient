@@ -14,8 +14,8 @@ export default function HavaLayout() {
         headerBackTitle: 'Geri',
         headerTintColor: colors.accent,
         headerStyle: { backgroundColor: colors.bg },
-        headerTitleStyle: { fontFamily: FONTS.bodySemiBold, color: colors.text },
-        headerLargeTitleStyle: { fontFamily: FONTS.display, color: colors.text },
+        headerTitleStyle: { ...FONTS.bodySemiBold, color: colors.text },
+        headerLargeTitleStyle: { ...FONTS.display, color: colors.text },
         contentStyle: { backgroundColor: colors.bg },
       }}>
       <Stack.Screen name="index" options={{ title: 'Hava süspansiyon' }} />

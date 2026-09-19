@@ -95,12 +95,12 @@ export default function KurulumEkrani() {
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg, justifyContent: 'center' },
   basliklar: { gap: 2 },
-  baslik: { fontFamily: FONTS.display, fontSize: 28 },
-  altBaslik: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  baslik: { ...FONTS.display, fontSize: 28 },
+  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   satir: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, minHeight: 26 },
   nokta: { width: 7, height: 7, borderRadius: RADIUS.pill, marginTop: 7 },
-  adimNo: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption, minWidth: 14 },
-  mono: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption },
-  govde: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  adimNo: { ...FONTS.mono, fontSize: TYPE_SCALE.caption, minWidth: 14 },
+  mono: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
+  govde: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

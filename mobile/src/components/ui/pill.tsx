@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   dot: { width: 7, height: 7, borderRadius: RADIUS.pill },
-  text: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro },
+  text: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   dashed: {
     borderRadius: 4,
     borderWidth: 1,
@@ -64,5 +64,5 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     alignSelf: 'flex-start',
   },
-  dashedText: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 0.8 },
+  dashedText: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.8 },
 });

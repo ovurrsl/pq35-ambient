@@ -27,7 +27,7 @@ export default function HavaDengeEkrani() {
   const [yukDengeleme, setYukDengeleme] = useState(true);
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Araç duruyor</Pill>
       </View>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   uclar: { flexDirection: 'row', justifyContent: 'space-between' },
-  uc: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  uc: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

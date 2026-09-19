@@ -33,7 +33,7 @@ export default function PerformansEkrani() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Hazır</Pill>
         <Pill>gösterge hızı</Pill>
@@ -149,11 +149,11 @@ const styles = StyleSheet.create({
   gNokta: { width: 12, height: 12, borderRadius: RADIUS.pill },
   gDegerler: { flex: 1, minWidth: 0, gap: SPACING.sm },
   gDeger: { gap: 1 },
-  gEtiket: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
-  gSayi: { fontFamily: FONTS.mono, fontSize: 22 },
-  gNot: { fontFamily: FONTS.mono, fontSize: 10, lineHeight: 14 },
+  gEtiket: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
+  gSayi: { ...FONTS.mono, fontSize: 22 },
+  gNot: { ...FONTS.mono, fontSize: 10, lineHeight: 14 },
   olcumBaslik: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' },
-  sutunBaslik: { fontFamily: FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
-  olcumDeger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.body },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  sutunBaslik: { ...FONTS.mono, fontSize: 10, letterSpacing: 0.6 },
+  olcumDeger: { ...FONTS.mono, fontSize: TYPE_SCALE.body },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

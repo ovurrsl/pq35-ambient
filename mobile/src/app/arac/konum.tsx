@@ -16,7 +16,7 @@ export default function KonumEkrani() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={BUS_COLORS.ble}>3. faz</Pill>
         <Pill dotColor={colors.warn}>GPRS · SMS yedek</Pill>
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
   haritaNot: {
     position: 'absolute',
     bottom: SPACING.md,
-    fontFamily: FONTS.mono,
+    ...FONTS.mono,
     fontSize: 10,
     letterSpacing: 0.6,
     textAlign: 'center',
     paddingHorizontal: SPACING.md,
   },
   satir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 28 },
-  etiket: { flex: 1, fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
-  deger: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.caption },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  etiket: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.label },
+  deger: { ...FONTS.mono, fontSize: TYPE_SCALE.caption },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

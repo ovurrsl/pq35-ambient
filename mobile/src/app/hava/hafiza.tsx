@@ -28,7 +28,7 @@ export default function HavaHafizaEkrani() {
   const [surtmeKorumasi, setSurtmeKorumasi] = useState(true);
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <Card>
         <SectionLabel>HAFIZA KONUMLARI</SectionLabel>
         {KONUMLAR.map((k, i) => (
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
   kayitSatiri: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 48 },
   kayitMetin: { flex: 1, minWidth: 0, gap: 1 },
-  kayitAd: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.body },
-  kayitAlt: { fontFamily: FONTS.mono, fontSize: 10 },
+  kayitAd: { ...FONTS.body, fontSize: TYPE_SCALE.body },
+  kayitAlt: { ...FONTS.mono, fontSize: 10 },
   kaydet: {
     minHeight: 44,
     justifyContent: 'center',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.sm,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  kaydetMetin: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.caption },
-  not: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
-  govde: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
+  kaydetMetin: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
+  not: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },
+  govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 20 },
 });

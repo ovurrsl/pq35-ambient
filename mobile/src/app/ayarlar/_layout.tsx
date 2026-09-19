@@ -23,12 +23,12 @@ export default function AyarlarLayout() {
         headerStyle: { backgroundColor: colors.bg },
         headerTitleStyle: {
           color: colors.text,
-          fontFamily: FONTS.bodySemiBold,
+          ...FONTS.bodySemiBold,
           fontSize: TYPE_SCALE.body + 2,
         },
         headerLargeTitleStyle: {
           color: colors.text,
-          fontFamily: FONTS.display,
+          ...FONTS.display,
         },
         headerBackTitle: 'Ayarlar',
         contentStyle: { backgroundColor: colors.bg },
