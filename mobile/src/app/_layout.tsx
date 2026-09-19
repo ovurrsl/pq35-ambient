@@ -37,7 +37,7 @@ function AuthGate() {
       if (!pathname.startsWith('/kurulum')) router.replace('/(auth)/kurulum');
     } else if (durum.ad === 'acik' || durum.ad === 'cevrimdisi') {
       if (kimlikAkisinda) router.replace('/(tabs)');
-    } else if (durum.ad === 'kilitli') {
+    } else if (durum.ad === 'kilitli' || durum.ad === 'cevrimdisi-kilitli') {
       if (!pathname.startsWith('/kilit')) router.replace('/(auth)/kilit');
     } else if (!kimlikAkisinda) {
       router.replace('/(auth)/giris');

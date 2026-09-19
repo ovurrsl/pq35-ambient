@@ -19,7 +19,7 @@ import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
  */
 export default function KilitEkrani() {
   const { colors } = useTheme();
-  const { durum, kilidiAc, cikisYap } = useAuth();
+  const { durum, kilidiAc, cevrimdisiKilidiAc, cikisYap } = useAuth();
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
   // Cihazda ne varsa onu yazıyoruz: iPad'lerin çoğunda Touch ID, bazılarında Face ID.
@@ -36,10 +36,25 @@ export default function KilitEkrani() {
   }, []);
 
   const maskeli = durum.ad === 'kilitli' ? durum.maskeliEposta : null;
+  /** Hesapsız kilit: korunan bir Keychain girdisi yok, yalnızca uygulamaya giriş kapısı. */
+  const hesapsiz = durum.ad === 'cevrimdisi-kilitli';
 
   const ac = useCallback(async () => {
     setCalisiyor(true);
     setHata(null);
+
+    if (hesapsiz) {
+      const y = await cevrimdisiKilidiAc();
+      setCalisiyor(false);
+      if (y.kind === 'ok' || y.kind === 'yetenek-yok') {
+        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      } else {
+        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        setHata(`${kilit?.ad ?? 'Kilit'} doğrulanmadı. Tekrar dene.`);
+      }
+      return;
+    }
+
     const sonuc = await kilidiAc();
     setCalisiyor(false);
 
@@ -53,7 +68,7 @@ export default function KilitEkrani() {
     } else if (sonuc.kind === 'yeniden-giris') {
       setHata(`Kayıtlı anahtar geçersiz: ${sonuc.sebep} Yeniden giriş gerekiyor.`);
     }
-  }, [kilidiAc, kilit]);
+  }, [hesapsiz, cevrimdisiKilidiAc, kilidiAc, kilit]);
 
   /** Face ID'yi atlayıp Apple ile girmek, saklanan anahtardan vazgeçmek demektir. */
   const yenidenGir = useCallback(async () => {
@@ -112,8 +127,12 @@ export default function KilitEkrani() {
 
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Apple ile yeniden gir"
-          accessibilityHint="Saklanan anahtarı siler ve Apple ile giriş ekranına döner"
+          accessibilityLabel={hesapsiz ? 'Giriş ekranına dön' : 'Apple ile yeniden gir'}
+          accessibilityHint={
+            hesapsiz
+              ? 'Hesapsız kullanımdan çıkar ve giriş ekranını gösterir'
+              : 'Saklanan anahtarı siler ve Apple ile giriş ekranına döner'
+          }
           disabled={calisiyor}
           onPress={yenidenGir}
           style={({ pressed }) => [
@@ -121,7 +140,7 @@ export default function KilitEkrani() {
             { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
           ]}>
           <Text style={[styles.ikincilMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            Apple ile yeniden gir
+            {hesapsiz ? 'Giriş ekranına dön' : 'Apple ile yeniden gir'}
           </Text>
         </Pressable>
       </View>
@@ -168,9 +187,9 @@ export default function KilitEkrani() {
       ) : null}
 
       <RuleBox title={`${(kilit?.ad ?? 'KİLİT').toLocaleUpperCase('tr-TR')} KİMLİK DOĞRULAMA DEĞİLDİR`}>
-        Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik
-        Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve
-        Apple ile yeniden giriş gerekir.
+        {hesapsiz
+          ? 'Bu kilit bir sırrı korumaz — hesapsız kullanımda saklanan bir anahtar yoktur. Yaptığı tek şey uygulamayı açmayı biyometriye bağlamaktır: telefonu eline alan başkası araç denetimlerine ulaşamasın diye. Biyometri çalışmazsa cihaz parolasına düşer.'
+          : 'Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve Apple ile yeniden giriş gerekir.'}
       </RuleBox>
     </ScrollView>
   );

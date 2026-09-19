@@ -1,8 +1,10 @@
-import { useCallback, useState, type ComponentProps, type ReactNode } from 'react';
+import { useCallback, useState, type ComponentProps, type ReactNode, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
+import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
+import { kilidiDogrula, kilitTercihi, kilitTercihiYaz } from '@/lib/uygulama-kilidi';
 import { useTheme } from '@/theme/theme-provider';
 import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
@@ -19,12 +21,46 @@ type IkonAdi = ComponentProps<typeof SymbolView>['name'];
 export default function GuvenlikEkrani() {
   const { colors } = useTheme();
 
-  // Anahtar durumları şimdilik yerel; gerçek etkileri (Keychain girdisinin yeniden
-  // yazılması, onay akışının devreye girmesi) ilgili katmanlar yazılınca bağlanacak.
-  const [uygulamaKilidi, setUygulamaKilidi] = useState(true);
+  // Komut onayı şimdilik yerel; gerçek etkisi onay akışı yazılınca bağlanacak.
   const [komutOnayi, setKomutOnayi] = useState(true);
 
-  const kilidiDegistir = useCallback((v: boolean) => setUygulamaKilidi(v), []);
+  // Uygulama kilidi ARTIK GERÇEK: tercih saklanıyor ve açılışta/arka plandan dönüşte
+  // uygulanıyor. Varsayılan kapalı — kullanıcı istemeden biyometri sorulmaz.
+  const [uygulamaKilidi, setUygulamaKilidi] = useState(false);
+  const [kilit, setKilit] = useState<KilitYetenegi | null>(null);
+  const [kilitHatasi, setKilitHatasi] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    void Promise.all([kilitTercihi(), kilitYetenegi()]).then(([acik, yetenek]) => {
+      if (!alive) return;
+      setUygulamaKilidi(acik);
+      setKilit(yetenek);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const kilidiDegistir = useCallback(async (v: boolean) => {
+    setKilitHatasi(null);
+    // Açarken önce doğrula: çalışmayan bir biyometriyle kendini dışarıda bırakmak
+    // kolay, geri almak zor. Kapatırken doğrulama istemiyoruz — kilit bir sır
+    // korumuyor, sormak yalnızca sürtünme olurdu.
+    if (v) {
+      const sonuc = await kilidiDogrula();
+      if (sonuc.kind === 'yetenek-yok') {
+        setKilitHatasi('Bu cihazda kullanılabilir bir kilit yok. Önce Face ID, Touch ID veya cihaz parolası kur.');
+        return;
+      }
+      if (sonuc.kind !== 'ok') {
+        setKilitHatasi('Doğrulanmadı, kilit açılmadı.');
+        return;
+      }
+    }
+    setUygulamaKilidi(v);
+    await kilitTercihiYaz(v);
+  }, []);
   const onayiDegistir = useCallback((v: boolean) => setKomutOnayi(v), []);
 
   return (
@@ -33,11 +69,16 @@ export default function GuvenlikEkrani() {
       contentInsetAdjustmentBehavior="automatic">
       <Card style={styles.listeKart}>
         <AnahtarSatiri
-          baslik="Uygulama kilidi (Face ID)"
-          altBaslik="Açılışta Keychain anahtarını Face ID açar"
+          baslik={`Uygulama kilidi${kilit ? ` (${kilit.ad})` : ''}`}
+          altBaslik="Açılışta ve arka plandan dönüşte uygulamayı biyometri açar"
           deger={uygulamaKilidi}
-          onChange={kilidiDegistir}
+          onChange={(v) => void kilidiDegistir(v)}
         />
+        {kilitHatasi ? (
+          <Text style={[styles.kilitHatasi, { color: colors.danger }]} accessibilityRole="alert" maxFontSizeMultiplier={2}>
+            {kilitHatasi}
+          </Text>
+        ) : null}
         <Ayirac />
         <AnahtarSatiri
           ikon="lock.fill"
@@ -287,6 +328,7 @@ function BekleyenDugme({
 }
 
 const styles = StyleSheet.create({
+  kilitHatasi: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md, paddingBottom: SPACING.xxl },
   listeKart: { paddingVertical: 0, paddingHorizontal: SPACING.md, gap: 0 },
   ayirac: { height: StyleSheet.hairlineWidth },

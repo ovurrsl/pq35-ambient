@@ -76,4 +76,11 @@ export const KEYS = {
    * kullanıcıyı rahatsız etmeden karar verilir.
    */
   hasSession: 'pq35.auth.var',
+  /**
+   * Korumasız: yerel uygulama kilidi açık mı?
+   * Korumalı saklanamaz — tercihi okumak için bile Face ID sormak gerekirdi.
+   */
+  uygulamaKilidi: 'pq35.kilit.acik',
+  /** Korumasız: hesapsız kullanım seçildi mi? Her açılışta giriş ekranı çıkmasın diye. */
+  cevrimdisi: 'pq35.cevrimdisi',
 } as const;

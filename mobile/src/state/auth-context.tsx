@@ -22,6 +22,13 @@ import {
   type UnlockResult,
 } from '@/lib/session-vault';
 import { supabase } from '@/lib/supabase';
+import {
+  cevrimdisiTercihi,
+  cevrimdisiTercihiYaz,
+  kilidiDogrula,
+  kilitTercihi,
+  type KilitSonucu,
+} from '@/lib/uygulama-kilidi';
 
 /**
  * Uygulamanın kimlik durumu.
@@ -45,6 +52,11 @@ export type AuthDurum =
    * Dolayısıyla 1. fazda giriş duvarı, var olmayan bir özelliği korur.
    */
   | { ad: 'cevrimdisi' }
+  /**
+   * Hesapsız ama kilitli. Yerel uygulama kilidi açıkken açılışta ve arka plandan
+   * dönüşte buraya düşülür; biyometri geçilmeden sekmelere girilemez.
+   */
+  | { ad: 'cevrimdisi-kilitli' }
   | { ad: 'acik'; session: Session };
 
 interface AuthContextValue {
@@ -53,8 +65,10 @@ interface AuthContextValue {
   kilidiAc: () => Promise<UnlockResult>;
   /** Girişten sonra çağrılır; oturumu korumalı girdiye yazar. */
   girisTamamlandi: (session: Session) => Promise<void>;
-  /** Hesapsız devam. Keychain'e hiçbir şey yazılmaz, sunucuya hiç gidilmez. */
+  /** Hesapsız devam. Sunucuya hiç gidilmez; yalnızca tercih işareti saklanır. */
   cevrimdisiDevamEt: () => void;
+  /** Hesapsız kilidi biyometriyle açar. */
+  cevrimdisiKilidiAc: () => Promise<KilitSonucu>;
   cikisYap: () => Promise<void>;
 }
 
@@ -92,9 +106,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!alive) return;
       if (varMi) {
         await kilide();
-      } else {
-        setDurum({ ad: 'cikis' });
+        return;
       }
+      // Oturum yok: kullanıcı daha önce "hesapsız devam" dediyse giriş ekranını
+      // tekrar göstermeyiz. Kilit açıksa önce biyometri istenir.
+      const hesapsiz = await cevrimdisiTercihi();
+      if (!alive) return;
+      if (!hesapsiz) {
+        setDurum({ ad: 'cikis' });
+        return;
+      }
+      const kilitli = await kilitTercihi();
+      if (!alive) return;
+      setDurum({ ad: kilitli ? 'cevrimdisi-kilitli' : 'cevrimdisi' });
     })();
     return () => {
       alive = false;
@@ -120,6 +144,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (since !== null && Date.now() - since > LOCK_GRACE_MS) {
           setDurum((d) => (d.ad === 'acik' ? { ad: 'kilitli', maskeliEposta: null } : d));
           lock();
+          // Hesapsız kullanımda korunacak bir sır yok, ama uygulamayı açmak yine de
+          // biyometriye bağlanabilir. Tercih her seferinde okunur: ayarlar ekranında
+          // değiştirilmiş olabilir ve bayatlamış bir kopyaya güvenmek istemiyoruz.
+          void (async () => {
+            if (await kilitTercihi()) {
+              setDurum((d) => (d.ad === 'cevrimdisi' ? { ad: 'cevrimdisi-kilitli' } : d));
+            }
+          })();
         }
       }
     });
@@ -143,17 +175,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const cevrimdisiDevamEt = useCallback(() => {
     setDurum({ ad: 'cevrimdisi' });
+    void cevrimdisiTercihiYaz(true);
+  }, []);
+
+  const cevrimdisiKilidiAc = useCallback(async (): Promise<KilitSonucu> => {
+    const sonuc = await kilidiDogrula();
+    // Cihazda kilit kalmadıysa (biyometri silindi, parola kaldırıldı) kullanıcıyı
+    // dışarıda bırakmak yerine içeri alırız: bu kilit bir sırrı korumuyor.
+    if (sonuc.kind === 'ok' || sonuc.kind === 'yetenek-yok') {
+      setDurum({ ad: 'cevrimdisi' });
+    }
+    return sonuc;
   }, []);
 
   const cikisYap = useCallback(async () => {
     await supabase.auth.signOut();
     await forget();
+    await cevrimdisiTercihiYaz(false);
     setDurum({ ad: 'cikis' });
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cikisYap }),
-    [durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cikisYap]
+    () => ({ durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cevrimdisiKilidiAc, cikisYap }),
+    [durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cevrimdisiKilidiAc, cikisYap]
   );
 
   return <AuthContext value={value}>{children}</AuthContext>;
