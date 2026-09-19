@@ -1,11 +1,19 @@
 import { useCallback, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import * as Haptics from 'expo-haptics';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { KRITIK_KOMUTLAR } from '@/lib/ble/protocol';
+import { bleCipMetni, useBle } from '@/state/ble-context';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
@@ -18,116 +26,194 @@ import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
  *
  * Gerçek güvenlik bu ekranda değil: komut oturum anahtarıyla imzalanır ve tekrar sayacı
  * taşır, misafir yetkisinde ise kart komutu hiç kabul etmez.
+ *
+ * ÜÇ SHEET KURALI BURADA UYGULANIYOR:
+ *
+ * 1. **Vazgeç başlık çubuğunun sol kenarında.** `sheets.md › Mobile (iOS, iPadOS)`: "In iOS
+ *    and iPadOS, for sheets with a single view, the Cancel button belongs on the leading edge
+ *    of the top toolbar." Eskiden kaydırmanın ortasındaydı.
+ * 2. **Eylem sabit bir ayakta.** Birincil düğme `ScrollView`'in içindeyken, %80 yükseklikli
+ *    bir sheet'te büyük Dynamic Type ayarında katlamanın altına düşebiliyordu. Artık özet
+ *    kayar, düğme altta durur.
+ * 3. **Grabber ile detent tutarlı.** Tek detent'te grabber, değiştiremeyeceği bir sürükleme
+ *    ve döngüleyeceği ikinci bir durak olmayan bir dokunma vaat ediyordu. İki detent
+ *    verildi: `sheets.md`: "Include a grabber in a resizable sheet."
  */
 export default function OnayEkrani() {
   const { colors } = useTheme();
+  const { arac } = useBle();
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { komut, baslik } = useLocalSearchParams<{ komut?: string; baslik?: string }>();
   const [gonderiliyor, setGonderiliyor] = useState(false);
 
   const komutAdi = baslik ?? 'Kapıları kilitle';
+  const gonderilebilir = arac === 'bagli';
 
+  /**
+   * Gönderim henüz yok.
+   *
+   * Eskiden bu fonksiyon `setGonderiliyor(true)` → **Success haptiği** → `router.back()`
+   * zincirini tek tick içinde çalıştırıyordu. İki sonucu vardı: `Gönderiliyor…` etiketi hiç
+   * render edilemiyordu ve **hiç gönderilmemiş** bir komut için olumlu bir haptik
+   * veriyordu — üstelik `kilit` için, yani kritik komutlardan biri için.
+   *
+   * HIG (`playing-haptics.md › Best practices`): "It's important to build a clear, causal
+   * relationship between each haptic and the action that causes it."
+   *
+   * BLE yazma katmanı gelene kadar **haptik hiç çalmıyor**: sonucu görsel taşıyor, haptik
+   * yalnızca ona eşlik edecek. Gönderim bağlandığında bu fonksiyon `async` olur, `await`
+   * eder ve ancak ondan sonra `Success` ya da başarısızlıkta `Warning` çalar.
+   */
   const gonder = useCallback(() => {
+    if (!gonderilebilir) return;
     setGonderiliyor(true);
-    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    // Gönderim BLE katmanı bağlandığında buraya gelir; şimdilik sayfa kapanıyor.
-    router.back();
-  }, [router]);
+  }, [gonderilebilir]);
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
-      <View style={styles.basliklar}>
-        <Text style={[styles.ustBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
-          KOMUTU ONAYLA
-        </Text>
-        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-          {komutAdi}
-        </Text>
-      </View>
+    <>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          title: 'Komutu onayla',
+          headerStyle: { backgroundColor: colors.bg },
+          headerTitleStyle: { ...FONTS.bodySemiBold, color: colors.text },
+          headerLeft: () => (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Vazgeç"
+              onPress={() => router.back()}
+              hitSlop={12}
+              style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}>
+              <Text
+                style={[styles.iptalMetin, { color: colors.accent }]}
+                maxFontSizeMultiplier={1.4}>
+                Vazgeç
+              </Text>
+            </Pressable>
+          ),
+        }}
+      />
 
-      <Card>
-        <SectionLabel>KOMUT ÖZETİ</SectionLabel>
-        {[
-          { etiket: 'Hedef', deger: 'Araç · ESP32-S3' },
-          { etiket: 'Kanal', deger: 'BLE · yedek: GPRS / SMS' },
-          { etiket: 'Yetki', deger: 'Sahip' },
-          { etiket: 'Tekrar sayacı', deger: '#······' },
-          ...(komut ? [{ etiket: 'Komut', deger: komut }] : []),
-        ].map((satir) => (
-          <View key={satir.etiket} style={styles.ozetSatir}>
-            <Text style={[styles.ozetEtiket, { color: colors.muted }]} maxFontSizeMultiplier={1.6}>
-              {satir.etiket}
-            </Text>
-            <Text style={[styles.ozetDeger, { color: colors.text }]} maxFontSizeMultiplier={1.6}>
-              {satir.deger}
-            </Text>
+      <View style={[styles.kap, { backgroundColor: colors.bg }]}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          contentContainerStyle={styles.page}>
+          <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
+            {komutAdi}
+          </Text>
+
+          <Card>
+            <SectionLabel>KOMUT ÖZETİ</SectionLabel>
+            {[
+              { etiket: 'Hedef', deger: 'Araç · ESP32-S3' },
+              { etiket: 'Kanal', deger: 'BLE · yedek: GPRS / SMS' },
+              { etiket: 'Yetki', deger: 'Sahip' },
+              { etiket: 'Tekrar sayacı', deger: '#······' },
+              ...(komut ? [{ etiket: 'Komut', deger: komut }] : []),
+            ].map((satir) => (
+              <View key={satir.etiket} style={styles.ozetSatir}>
+                <Text
+                  style={[styles.ozetEtiket, { color: colors.muted }]}
+                  maxFontSizeMultiplier={1.6}>
+                  {satir.etiket}
+                </Text>
+                <Text
+                  style={[styles.ozetDeger, { color: colors.text }]}
+                  maxFontSizeMultiplier={1.6}>
+                  {satir.deger}
+                </Text>
+              </View>
+            ))}
+          </Card>
+
+          <View style={styles.cipler}>
+            <Pill dotColor={colors.ok}>
+              Oturum anahtarıyla imzalı
+            </Pill>
+            <Pill dotColor={colors.accent}>
+              Tekrar sayacı taşır
+            </Pill>
           </View>
-        ))}
-      </Card>
-
-      <View style={styles.eylemler}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={komutAdi}
-          disabled={gonderiliyor}
-          onPress={gonder}
-          style={({ pressed }) => [
-            styles.birincil,
-            { backgroundColor: colors.accent, opacity: pressed || gonderiliyor ? 0.7 : 1 },
-          ]}>
-          <Text style={[styles.birincilMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
-            {gonderiliyor ? 'Gönderiliyor…' : komutAdi}
+          <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
+            Aynı paket ikinci kez kabul edilmez.
           </Text>
-        </Pressable>
 
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Vazgeç"
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.ikincil,
-            { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
+          <RuleBox title="KRİTİK KOMUTLAR VE MİSAFİR YETKİSİ">
+            {`${KRITIK_KOMUTLAR.join(', ')} komutları misafir yetkisinde tamamen kapalıdır. Kapı, uygulama kilidi, eşleşmiş telefon ve imzalı komuttur — bu onay ekranı yanlışlıkla göndermeyi engeller, kimlik doğrulamaz.`}
+          </RuleBox>
+        </ScrollView>
+
+        {/*
+          Sabit ayak: birincil eylem her punto ayarında aynı yerde. Kaydırmanın içindeyken
+          %80 yükseklikli sheet'te katlamanın altına düşebiliyordu.
+        */}
+        <View
+          style={[
+            styles.ayak,
+            { borderColor: colors.line, paddingBottom: insets.bottom + SPACING.md },
           ]}>
-          <Text style={[styles.ikincilMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            Vazgeç
-          </Text>
-        </Pressable>
+          {gonderilebilir ? null : (
+            <Text
+              style={[styles.engelNot, { color: colors.warn }]}
+              accessibilityRole="alert"
+              maxFontSizeMultiplier={2}>
+              Komut gönderilemiyor — {bleCipMetni(arac).toLocaleLowerCase('tr-TR')}.
+            </Text>
+          )}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={komutAdi}
+            accessibilityHint={gonderilebilir ? undefined : 'Araç bağlanınca etkinleşir'}
+            disabled={gonderiliyor || !gonderilebilir}
+            onPress={gonder}
+            style={({ pressed }) => [
+              styles.birincil,
+              {
+                backgroundColor: gonderilebilir ? colors.accent : colors.surfaceRaised,
+                opacity: pressed ? 0.7 : 1,
+              },
+            ]}>
+            {gonderiliyor ? <ActivityIndicator color={colors.bg} /> : null}
+            <Text
+              style={[
+                styles.birincilMetin,
+                { color: gonderilebilir ? colors.bg : colors.dim },
+              ]}
+              maxFontSizeMultiplier={1.4}>
+              {gonderiliyor ? 'Gönderiliyor…' : komutAdi}
+            </Text>
+          </Pressable>
+        </View>
       </View>
-
-      <View style={styles.cipler}>
-        <Pill dotColor={colors.ok}>oturum anahtarıyla imzalı</Pill>
-        <Pill dotColor={colors.accent}>tekrar sayacı taşır</Pill>
-      </View>
-      <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
-        Aynı paket ikinci kez kabul edilmez.
-      </Text>
-
-      <RuleBox title="KURAL">
-        {`${KRITIK_KOMUTLAR.join(', ')} komutları misafir yetkisinde tamamen kapalıdır. Kapı, uygulama kilidi (Face ID), eşleşmiş telefon ve imzalı komuttur — bu onay ekranı yanlışlıkla göndermeyi engeller, kimlik doğrulamaz.`}
-      </RuleBox>
-    </ScrollView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg },
-  basliklar: { gap: 4 },
-  ustBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  kap: { flex: 1 },
+  page: { padding: SPACING.lg, gap: SPACING.lg },
   baslik: { ...FONTS.display, fontSize: 26 },
+  iptalMetin: { ...FONTS.body, fontSize: TYPE_SCALE.body },
   ozetSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: 30 },
   ozetEtiket: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.label },
   ozetDeger: { ...FONTS.mono, fontSize: TYPE_SCALE.caption, textAlign: 'right' },
-  eylemler: { gap: SPACING.sm },
-  birincil: { height: 52, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center' },
-  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
-  ikincil: {
-    minHeight: HIT_SIZE,
+  ayak: {
+    gap: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.md,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  engelNot: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
+  birincil: {
+    flexDirection: 'row',
+    gap: SPACING.sm,
+    minHeight: HIT_SIZE + 8,
     borderRadius: RADIUS.md,
-    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ikincilMetin: { ...FONTS.bodySemiBold, fontSize: 15 },
+  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   not: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
 });

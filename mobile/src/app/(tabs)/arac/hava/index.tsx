@@ -23,7 +23,7 @@ export default function HavaEkrani() {
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={HAVA_RENGI}>4 köşe bağımsız</Pill>
-        <Pill dotColor={colors.ok}>0 km/s</Pill>
+        <Pill dotColor={colors.ok} veri>0 km/s</Pill>
       </View>
 
       <RuleBox title="HIZ KİLİDİ ETKİN">

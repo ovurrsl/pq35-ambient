@@ -376,16 +376,6 @@ const styles = StyleSheet.create({
 
   baslikSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.md },
   altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
-  bleCip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderRadius: RADIUS.pill,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  bleMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   nokta: { width: 8, height: 8, borderRadius: RADIUS.pill },
 
 

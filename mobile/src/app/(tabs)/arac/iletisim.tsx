@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, SPACING, TYPE_SCALE } from '@/theme/tokens';
+import { FONTS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /**
  * İletişim — SIM808 GSM hattı (3. faz).
@@ -19,8 +19,8 @@ export default function IletisimEkrani() {
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
-        <Pill dotColor={BUS_COLORS.ble}>3. faz</Pill>
-        <Pill dotColor={colors.warn}>2G</Pill>
+        <Pill dotColor={colors.dim}>3. faz</Pill>
+        <Pill dotColor={colors.warn} veri>2G</Pill>
       </View>
 
       <Card>

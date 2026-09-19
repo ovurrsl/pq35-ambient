@@ -9,7 +9,7 @@ import { maskEmail } from '@/lib/session-vault';
 import { useAuth } from '@/state/auth-context';
 import { BleCip } from '@/components/ui/ble-cip';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS } from '@/theme/tokens';
+import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 type IkonAdi = ComponentProps<typeof SymbolView>['name'];
 
@@ -117,6 +117,18 @@ export default function AyarlarEkrani() {
         )}
       </Card>
 
+      {/*
+        AYARLAR LİSTESİNİN RENGİ:
+        Altı satır altı farklı ton taşıyordu — accent, BUS_COLORS.ble, warn, danger,
+        ZONE_COLORS.z7, muted. "Araç bilgileri" turkuazdı, çünkü z7 arka ayak altının
+        rengiydi; satırla hiçbir ilgisi yoktu. `tokens.ts` başındaki palet kuralı bunu
+        zaten yasaklıyordu (bölge renkleri yalnızca kimlik noktası, hat renkleri yalnızca
+        teknik diyagram) ve `color.md › Best practices` de aynı şeyi söylüyor: "Avoid using
+        the same color to mean different things."
+
+        Artık gezinme satırlarının tamamı accent taşıyor; renk yalnızca **uyarı** için
+        ayrıldı: Gizli özellikler `danger`, çünkü orada gerçekten bir risk var.
+      */}
       <SectionLabel>AYARLAR</SectionLabel>
 
       <Card style={styles.listeKart}>
@@ -130,15 +142,34 @@ export default function AyarlarEkrani() {
         <Ayirac />
         <ListeSatiri
           ikon="iphone"
-          ikonRengi={BUS_COLORS.ble}
+          ikonRengi={colors.accent}
           baslik="Cihazlar ve telefonlar"
           altBaslik="Araç kartı · eşleşmiş telefonlar"
           onPress={() => git('/ayarlar/cihazlar')}
         />
-        <Ayirac />
+      </Card>
+
+      {/*
+        AYRI KART, AYRI BAŞLIK:
+        Altı satırın dördü hiçbir yere gitmiyordu — `onPress` yok, %45 saydamlık, chevron
+        yerine "yakında". Tek listede olunca uygulamanın ana ayar listesi çoğunlukla
+        kullanılamaz görünüyordu.
+
+        Silmek de doğru değil: bu depo yazılmamış şeyleri gizlemiyor, gösteriyor
+        (CLAUDE.md §12'nin ruhu) ve bu dört satır araç sahibinin bilerek ekrana koyduğu
+        yol haritası. Bu yüzden ayrıldılar: yukarıdaki grup tamamen çalışır, aşağıdaki
+        grup ne geleceğinin listesi.
+
+        `design-principles.md › Simplicity`: "A well-designed experience removes the
+        unnecessary, with every element earning its place." — burada eleman yerini
+        koruyor, ama doğru grupta.
+      */}
+      <SectionLabel>HENÜZ YAZILMADI</SectionLabel>
+
+      <Card style={styles.listeKart}>
         <ListeSatiri
           ikon="bell"
-          ikonRengi={colors.warn}
+          ikonRengi={colors.accent}
           baslik="Bildirimler"
           altBaslik="Kapı açık · düşük akü · hat sessiz"
         />
@@ -159,7 +190,7 @@ export default function AyarlarEkrani() {
         <Ayirac />
         <ListeSatiri
           ikon="car"
-          ikonRengi={ZONE_COLORS.z7}
+          ikonRengi={colors.accent}
           baslik="Araç bilgileri"
           altBaslik="VIN WVW··· · firmware"
           mono

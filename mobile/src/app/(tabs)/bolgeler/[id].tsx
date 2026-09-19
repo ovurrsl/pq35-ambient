@@ -142,7 +142,7 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
 
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Uygulama rengi</Pill>
-        <Pill tone="uyari">LISTEN-ONLY</Pill>
+        <Pill tone="uyari" veri>LISTEN-ONLY</Pill>
       </View>
 
       <Card>
@@ -158,10 +158,6 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
             </Text>
           </View>
         </View>
-
-        <Text style={[styles.not, { color: colors.dim, borderColor: colors.line }]} maxFontSizeMultiplier={2}>
-          Renk uygulamadan seçilir. CAN yalnız tetik.
-        </Text>
 
         <View style={styles.palet}>
           {HAZIR_RENKLER.map((secenek) => (
@@ -459,15 +455,6 @@ const styles = StyleSheet.create({
   renkMetin: { flex: 1, gap: 3 },
   renkKod: { ...FONTS.monoBold, fontSize: 22 },
   renkAd: { ...FONTS.body, fontSize: TYPE_SCALE.label },
-  not: {
-    ...FONTS.body,
-    fontSize: TYPE_SCALE.micro,
-    lineHeight: 17,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: RADIUS.sm,
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: 6,
-  },
   palet: { flexDirection: 'row', flexWrap: 'wrap', gap: SPACING.xs },
   renkKareDokunma: { width: HIT_SIZE, height: HIT_SIZE, alignItems: 'center', justifyContent: 'center' },
   renkKare: { width: 32, height: 32, borderRadius: RADIUS.pill },
@@ -476,7 +463,7 @@ const styles = StyleSheet.create({
   yuzde: { ...FONTS.monoBold, fontSize: 14 },
 
   segment: { flexDirection: 'row', borderRadius: RADIUS.md, borderWidth: StyleSheet.hairlineWidth, padding: 3, gap: 3 },
-  segmentSecenek: { flex: 1, minHeight: 38, borderRadius: RADIUS.sm, alignItems: 'center', justifyContent: 'center' },
+  segmentSecenek: { flex: 1, minHeight: HIT_SIZE, borderRadius: RADIUS.sm, alignItems: 'center', justifyContent: 'center' },
   segmentMetin: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
 
   satir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: HIT_SIZE + 4 },

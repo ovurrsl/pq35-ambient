@@ -49,9 +49,21 @@ function AuthGate() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Screen name="(auth)" />
       <Stack.Screen name="(tabs)" />
+      {/*
+        İki detent: grabber artık gerçekten bir şey yapıyor. Tek detent'te grabber,
+        değiştiremeyeceği bir sürükleme ve döngüleyeceği ikinci bir durak olmayan bir
+        dokunma vaat ediyordu (`sheets.md`: "Include a grabber in a resizable sheet. A
+        grabber shows people that they can drag the sheet to resize it; they can also tap
+        it to cycle through the detents.").
+        Vazgeç ekranın kendi `headerLeft`inde — HIG onu başlığın sol kenarında istiyor.
+      */}
       <Stack.Screen
         name="onay"
-        options={{ presentation: 'formSheet', sheetGrabberVisible: true, sheetAllowedDetents: [0.8] }}
+        options={{
+          presentation: 'formSheet',
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: [0.6, 1.0],
+        }}
       />
     </Stack>
   );

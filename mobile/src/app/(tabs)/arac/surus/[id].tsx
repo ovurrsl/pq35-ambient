@@ -27,8 +27,8 @@ export default function SurusDetayEkrani() {
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
-        <Pill>KARTTA</Pill>
-        <Pill dotColor={colors.muted}>zaman kaynağı GPS</Pill>
+        <Pill>Kartta</Pill>
+        <Pill dotColor={colors.muted}>Zaman kaynağı GPS</Pill>
       </View>
 
       <View style={[styles.harita, { backgroundColor: colors.glassFallback, borderColor: colors.line }]}>

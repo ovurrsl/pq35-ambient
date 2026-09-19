@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { Anahtar } from '@/components/ui/anahtar';
@@ -134,8 +142,33 @@ export default function EslestirmeEkrani() {
           Bluetooth kapalı
         </Text>
         <Text style={[styles.govde, { color: colors.muted }]} maxFontSizeMultiplier={2}>
-          Araçla eşleşmek için Bluetooth açık olmalı. Ayarlar’dan aç ve bu ekrana dön.
+          Araçla eşleşmek için Bluetooth açık olmalı. iOS bu ekran açılırken kendi
+          uyarısını da gösterir; Denetim Merkezi’nden veya Ayarlar’dan açabilirsin.
         </Text>
+        {/*
+          Düğme yerini tarif etmek yerine oraya götürüyor
+          (`writing.md › Best practices`: "If you need to direct someone to a setting,
+          provide a direct link or button, rather than trying to describe its location.").
+
+          Ama etiketi "Bluetooth ayarları" DEĞİL: `Linking.openSettings()` bu uygulamanın
+          kendi ayar sayfasını açar, sistemin Bluetooth panelini değil. Oraya götüren
+          `App-Prefs:Bluetooth` özel API'dir ve App Store reddi riskidir. Düğme bu yüzden
+          tutamayacağı bir söz vermiyor.
+        */}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Ayarları aç"
+          onPress={() => void Linking.openSettings()}
+          style={({ pressed }) => [
+            styles.yenidenDugme,
+            { borderColor: colors.accent, opacity: pressed ? 0.6 : 1 },
+          ]}>
+          <Text
+            style={[styles.yenidenMetin, { color: colors.accent }]}
+            maxFontSizeMultiplier={1.4}>
+            Ayarları aç
+          </Text>
+        </Pressable>
       </View>
     );
   }
@@ -235,7 +268,7 @@ export default function EslestirmeEkrani() {
                     RSSI {c.rssi ?? '··'} dBm
                   </Text>
                 </View>
-                {seciliMi ? <Pill dotColor={colors.accent}>seçili</Pill> : null}
+                {seciliMi ? <Pill dotColor={colors.accent}>Seçili</Pill> : null}
               </Pressable>
             );
           })

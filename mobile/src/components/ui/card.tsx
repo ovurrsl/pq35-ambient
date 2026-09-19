@@ -45,6 +45,20 @@ export function Card({
   );
 }
 
+/**
+ * Grup başlığı — **kartın üstünde** durur.
+ *
+ * İKİ ROL KARIŞTIRILIYORDU: bazı ekranlarda bu etiket kartın üstünde (gerçek bir gruplu
+ * liste başlığı gibi), bazılarında kartın **ilk satırı** olarak çiziliyordu. Aynı token bir
+ * ekranda "bu grubun başlığı", diğerinde "bu kutunun içindeki alt yazı" demeye başlıyordu;
+ * Apple'ın gruplu listelerinin dayandığı ayırıcı boşluk yalnızca ilk biçimde oluşuyor
+ * (`lists-and-tables.md › Style`: "In iOS and iPadOS… the grouped style uses headers,
+ * footers, and additional space to separate groups of data").
+ *
+ * Çözüm iki rolü **adlandırmak**: grup başlığı `SectionLabel`, kartın içindeki
+ * etiket+aksesuar satırı `CardHeader`. Aynı tipografi, bilinçli olarak farklı yapısal
+ * eleman.
+ */
 export function SectionLabel({ children }: { children: string }) {
   const { colors } = useTheme();
   return (
@@ -53,6 +67,31 @@ export function SectionLabel({ children }: { children: string }) {
       maxFontSizeMultiplier={1.6}>
       {children}
     </Text>
+  );
+}
+
+/**
+ * Kartın içindeki başlık satırı: etiket + (varsa) sağda bir aksesuar.
+ *
+ * `SectionLabel` yerine bu kullanılır çünkü bir kartın ilk satırı grup başlığı değildir.
+ * Aksesuarı (rozet, düğme) kartın dışına taşımak onu başlıktan koparırdı.
+ */
+export function CardHeader({ children, sag }: { children: string; sag?: ReactNode }) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.cardHeader}>
+      <Text
+        style={[styles.sectionLabel, { color: colors.muted }]}
+        maxFontSizeMultiplier={1.6}>
+        {children}
+      </Text>
+      {sag ? (
+        <>
+          <View style={styles.cardHeaderEsnek} />
+          {sag}
+        </>
+      ) : null}
+    </View>
   );
 }
 
@@ -87,6 +126,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
     textTransform: 'uppercase',
   },
+  cardHeader: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  cardHeaderEsnek: { flex: 1 },
   rule: {
     borderRadius: RADIUS.md,
     borderWidth: 1,

@@ -43,7 +43,7 @@ export default function SuruslerEkrani() {
 
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Kayıt açık</Pill>
-        <Pill>10 Hz</Pill>
+        <Pill veri>10 Hz</Pill>
       </View>
 
       <Card>

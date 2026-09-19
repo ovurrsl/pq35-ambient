@@ -162,8 +162,8 @@ export default function DogrulamaEkrani() {
         </Card>
 
         <View style={styles.sinirlar}>
-          <Pill dotColor={colors.accent}>Bulut · JWT + TOTP</Pill>
-          <Pill dotColor={colors.ok}>Araç · BLE bonding</Pill>
+          <Pill dotColor={colors.accent} veri>Bulut · JWT + TOTP</Pill>
+          <Pill dotColor={colors.ok} veri>Araç · BLE bonding</Pill>
         </View>
         <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
           MFA yalnızca buluta girişi korur. Araçla bağlantı ayrı bir güven sınırıdır.

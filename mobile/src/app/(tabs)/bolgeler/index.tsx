@@ -105,8 +105,8 @@ export default function BolgelerEkrani(): JSX.Element {
 
       <View style={styles.cipler}>
         <BleCip />
-        <Pill dotColor={BUS_COLORS.komfort}>Komfort 100k</Pill>
-        <Pill tone="uyari">LISTEN-ONLY</Pill>
+        <Pill dotColor={BUS_COLORS.komfort} veri>Komfort 100k</Pill>
+        <Pill tone="uyari" veri>LISTEN-ONLY</Pill>
       </View>
 
       <Card>

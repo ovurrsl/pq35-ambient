@@ -38,6 +38,43 @@ const ADLAR: Readonly<Record<KilitTuru, string>> = {
 };
 
 /**
+ * Kilidin **SF Symbol** adı. `expo-symbols` gerçek sembol adı ister; uydurma bir ad
+ * sessizce hiç çizilmez. Doğru adlar: `faceid` · `touchid` · `opticid` (iris için
+ * `irisid` DEĞİL) · parola ve yoksa `lock.shield`.
+ */
+export function kilitSembolu(
+  tur: KilitTuru
+): 'faceid' | 'touchid' | 'opticid' | 'lock.shield' {
+  switch (tur) {
+    case 'face-id':
+      return 'faceid';
+    case 'touch-id':
+      return 'touchid';
+    case 'iris':
+      return 'opticid';
+    default:
+      return 'lock.shield';
+  }
+}
+
+/**
+ * "X cihazda yereldir" cümlesinin öznesi.
+ *
+ * NEDEN AYRI BİR FONKSİYON: `ad`'ı doğrudan cümleye gömmek `yok` durumunda
+ * "Kilit yok cihazda yereldir" gibi bozuk Türkçe üretiyor. Özne `tur`'dan türetiliyor.
+ */
+export function kilitOznesi(yetenek: KilitYetenegi): string {
+  return yetenek.tur === 'yok' ? 'Cihaz kilidi' : yetenek.ad;
+}
+
+/**
+ * "Kayıtlı yüz seti" yerine cihaza uygun ifade. Touch ID'de yüz seti yoktur.
+ */
+export function kilitKaydiIfadesi(tur: KilitTuru): string {
+  return tur === 'face-id' ? 'kayıtlı yüz seti' : 'kayıtlı biyometri';
+}
+
+/**
  * Cihazda hangi kilit var? iPad'lerin çoğunda Touch ID, bazılarında Face ID bulunur;
  * hiçbiri yoksa yalnızca parola kalır.
  */

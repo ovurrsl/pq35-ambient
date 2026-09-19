@@ -1,11 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 import * as Haptics from 'expo-haptics';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
-import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
+import {
+  kilitKaydiIfadesi,
+  kilitOznesi,
+  kilitSembolu,
+  kilitYetenegi,
+  type KilitYetenegi,
+} from '@/lib/biyometri';
 import { useAuth } from '@/state/auth-context';
 import { BleCip } from '@/components/ui/ble-cip';
 import { useTheme } from '@/theme/theme-provider';
@@ -73,9 +79,26 @@ export default function KilitEkrani() {
     }
   }, [hesapsiz, cevrimdisiKilidiAc, kilidiAc, kilit]);
 
-  /** Face ID'yi atlayıp Apple ile girmek, saklanan anahtardan vazgeçmek demektir. */
+  /**
+   * Face ID'yi atlayıp Apple ile girmek, saklanan anahtardan vazgeçmek demektir.
+   *
+   * `calisiyor` bilerek burada da set ediliyor: eskiden yalnızca `ac` set ediyordu, bu
+   * yüzden düğmedeki `disabled={calisiyor}` hiç devreye girmiyordu — Supabase'e gidiş
+   * dönüş boyunca düğme dokunulabilir kalıyor ve hiçbir şey göstermiyordu. Etiket de
+   * silmekten söz etmiyordu; yalnızca `accessibilityHint` söylüyordu, yani gören
+   * kullanıcı karanlıkta kalan taraftı.
+   *
+   * Uyarı penceresi **bilerek yok**: `alerts.md › Best practices` "Avoid displaying alerts
+   * for common, undoable actions, even when they're destructive" diyor ve burada veri
+   * kaybı beklenen sonuçtur — kullanıcı zaten yeniden girmeyi seçiyor.
+   */
   const yenidenGir = useCallback(async () => {
-    await cikisYap();
+    setCalisiyor(true);
+    try {
+      await cikisYap();
+    } finally {
+      setCalisiyor(false);
+    }
   }, [cikisYap]);
 
   return (
@@ -88,8 +111,12 @@ export default function KilitEkrani() {
       </View>
 
       <View style={styles.merkez}>
+        {/*
+          Sembol de cihaza göre: Touch ID'li bir iPad'de "faceid" glifi çizmek, ekranın
+          geri kalanının doğru söylediği şeyi görselde yalanlıyordu.
+        */}
         <SymbolView
-          name="faceid"
+          name={kilitSembolu(kilit?.tur ?? 'yok')}
           size={92}
           tintColor={colors.accent}
           fallback={<View style={[styles.ikonYedek, { borderColor: colors.accent }]} />}
@@ -142,8 +169,13 @@ export default function KilitEkrani() {
             styles.ikincil,
             { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
           ]}>
+          {calisiyor && !hesapsiz ? <ActivityIndicator color={colors.muted} /> : null}
           <Text style={[styles.ikincilMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            {hesapsiz ? 'Giriş ekranına dön' : 'Apple ile yeniden gir'}
+            {hesapsiz
+              ? 'Giriş ekranına dön'
+              : calisiyor
+                ? 'Çıkılıyor…'
+                : 'Apple ile yeniden gir (anahtarı siler)'}
           </Text>
         </Pressable>
       </View>
@@ -192,7 +224,9 @@ export default function KilitEkrani() {
       <RuleBox title={`${(kilit?.ad ?? 'KİLİT').toLocaleUpperCase('tr-TR')} KİMLİK DOĞRULAMA DEĞİLDİR`}>
         {hesapsiz
           ? 'Bu kilit bir sırrı korumaz — hesapsız kullanımda saklanan bir anahtar yoktur. Yaptığı tek şey uygulamayı açmayı biyometriye bağlamaktır: telefonu eline alan başkası araç denetimlerine ulaşamasın diye. Biyometri çalışmazsa cihaz parolasına düşer.'
-          : 'Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve Apple ile yeniden giriş gerekir.'}
+          : `${kilit ? kilitOznesi(kilit) : 'Cihaz kilidi'} cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik Supabase JWT’dir. ${
+              kilit ? kilitKaydiIfadesi(kilit.tur) : 'Kayıtlı biyometri'
+            } değişirse saklanan anahtar geçersiz olur ve Apple ile yeniden giriş gerekir.`}
       </RuleBox>
     </ScrollView>
   );

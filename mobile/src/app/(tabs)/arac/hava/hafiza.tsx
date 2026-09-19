@@ -72,7 +72,7 @@ export default function HavaHafizaEkrani() {
           onDegisim={setOtoYukselt}
         />
         <RowDivider />
-        <DataRow etiket="Hız eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA</UnverifiedBadge>} />
+        <DataRow etiket="Hız eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA BELİRLENECEK</UnverifiedBadge>} />
         <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
           Geri alınamaz: eşiğin üstünde aracı aşağı indiremezsin. Yüksek hızdaki koruma
           budur, sensör değil.

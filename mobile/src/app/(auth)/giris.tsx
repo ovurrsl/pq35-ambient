@@ -1,10 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import type { Session } from '@supabase/supabase-js';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
+import { kilitOznesi, kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
 import { appleHatasi, authHatasi } from '@/lib/hata-metni';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/state/auth-context';
@@ -44,9 +52,28 @@ export default function GirisEkrani() {
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
   const [appleVar, setAppleVar] = useState<boolean | null>(null);
+  /**
+   * Cihazda gerçekten hangi kilit var?
+   *
+   * "açılışta Face ID yeter" cümlesi Touch ID'li bir iPad'de yanlıştı. Yetenek gelene
+   * kadar nötr bir ifade kullanılıyor; uydurma bir ad yazılmıyor.
+   */
+  const [kilit, setKilit] = useState<KilitYetenegi | null>(null);
 
   // Sign in with Apple yalnızca iOS 13+ üzerinde vardır. `null` "henüz bilinmiyor"
   // demektir; düğme yerine boşluk göstermemek için bu ayrım korunuyor.
+  useEffect(() => {
+    let durduruldu = false;
+    void kilitYetenegi().then((y) => {
+      if (!durduruldu) setKilit(y);
+    });
+    return () => {
+      durduruldu = true;
+    };
+  }, []);
+
+  const kilitAdi = kilit ? kilitOznesi(kilit).toLocaleLowerCase('tr-TR') : 'cihaz kilidi';
+
   useEffect(() => {
     let iptal = false;
     AppleAuthentication.isAvailableAsync()
@@ -128,17 +155,31 @@ export default function GirisEkrani() {
       </View>
 
       {appleVar === true ? (
-        <AppleAuthentication.AppleAuthenticationButton
-          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-          buttonStyle={
-            scheme === 'dark'
-              ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-              : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-          }
-          cornerRadius={RADIUS.md}
-          style={[styles.appleDugme, calisiyor && styles.calisiyor]}
-          onPress={appleIleGir}
-        />
+        /*
+          Uçuş hâli: eskiden yalnızca %50 saydamlık vardı ve düğme dokunulabilir kalıyordu,
+          yani Apple sayfası açılana kadar ikinci kez basılabiliyordu. Apple'ın kendi
+          düğmesi `disabled` almadığı için sarmalayıcı `View` `pointerEvents`i kapatıyor ve
+          durumu görünür bir gösterge taşıyor (`loading.md`: "Whenever possible, avoid
+          making people wait without telling them what's happening").
+        */
+        <View style={styles.appleKap} pointerEvents={calisiyor ? 'none' : 'auto'}>
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonStyle={
+              scheme === 'dark'
+                ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+                : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+            }
+            cornerRadius={RADIUS.md}
+            style={[styles.appleDugme, calisiyor && styles.calisiyor]}
+            onPress={appleIleGir}
+          />
+          {calisiyor ? (
+            <View style={styles.appleOrtu}>
+              <ActivityIndicator color={scheme === 'dark' ? '#0B0F14' : '#FFFFFF'} />
+            </View>
+          ) : null}
+        </View>
       ) : null}
 
       {appleVar === false ? (
@@ -185,7 +226,7 @@ export default function GirisEkrani() {
           'Apple kimliği doğrular; şifre ne oluşturulur ne sorulur.',
           'İki adımlı doğrulama açıksa TOTP kodu istenir.',
           'Refresh token Keychain’e biyometrik korumayla yazılır.',
-          'Bir daha bu ekran görünmez; açılışta Face ID yeter.',
+          `Bir daha bu ekran görünmez; açılışta ${kilitAdi} yeter.`,
         ].map((satir, i) => (
           <View key={satir} style={styles.adimSatir}>
             <Text style={[styles.adimNo, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
@@ -213,7 +254,17 @@ const styles = StyleSheet.create({
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
   altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
+  appleKap: { position: 'relative' },
   appleDugme: { height: HIT_SIZE + 6 },
+  appleOrtu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   calisiyor: { opacity: 0.5 },
   ikincil: {
     minHeight: HIT_SIZE,

@@ -59,10 +59,16 @@ export default function HavaDengeEkrani() {
         ))}
         <RowDivider />
         <DataRow etiket="Çapraz denge" deger="—" />
-        <UnverifiedBadge>DÜZ ZEMİN · SÜRÜCÜ KOLTUKTA</UnverifiedBadge>
+        {/*
+          "DÜZ ZEMİN · SÜRÜCÜ KOLTUKTA" bir doğrulama durumu değil, bir **ölçüm koşuluydu**;
+          kesikli rozetin içinde iki farklı iş yapıyordu. Rozet artık tek bir şey anlatıyor:
+          "bu değer araçta ölçülmedi".
+        */}
+        <UnverifiedBadge>ARAÇTA BELİRLENECEK</UnverifiedBadge>
         <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
-          Çapraz ağırlıkları eşitlemek gerçek, ölçülebilir bir yol tutuş kazancıdır — dört
-          köşe bağımsız basınç kontrolünün asıl sebebi budur.
+          Ölçüm koşulu: düz zemin, sürücü koltukta. Çapraz ağırlıkları eşitlemek gerçek,
+          ölçülebilir bir yol tutuş kazancıdır — dört köşe bağımsız basınç kontrolünün asıl
+          sebebi budur.
         </Text>
       </Card>
 

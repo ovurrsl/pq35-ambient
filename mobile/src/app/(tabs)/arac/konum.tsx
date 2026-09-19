@@ -4,7 +4,7 @@ import { AracSegmentKontrolu } from '@/components/nav/arac-segmenti';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
+import { FONTS, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /**
  * Konum — SIM808 GPS (3. faz).
@@ -21,8 +21,8 @@ export default function KonumEkrani() {
       <AracSegmentKontrolu aktif="konum" />
 
       <View style={styles.cipler}>
-        <Pill dotColor={BUS_COLORS.ble}>3. faz</Pill>
-        <Pill dotColor={colors.warn}>GPRS · SMS yedek</Pill>
+        <Pill dotColor={colors.dim}>3. faz</Pill>
+        <Pill dotColor={colors.warn} veri>GPRS · SMS yedek</Pill>
       </View>
 
       {/* Şematik alan — gerçek harita katmanı bilerek yok; koordinat da gösterilmiyor. */}
@@ -67,8 +67,8 @@ export default function KonumEkrani() {
       <RuleBox title="SIM808 2G-ONLY — TARİHLİ ÖMÜR">
         Şebekede 2G kapalıysa veri, SMS ve arama çalışmaz; GPS sabitleme alsa bile veriyi
         taşıyamaz. Sözleşmelerdeki kapanış son tarihi 30 Nisan 2029 — engel değil, tarihli
-        bir ömür. Modül tek bir `modem` katmanının ardında durur ve o gün LTE Cat-1 ile
-        değiştirilir. Operatör daha erken kapatabilir, teyit alınır.
+        bir ömür. Modül firmware’de tek bir soyutlama katmanının ardında durur ve o gün LTE Cat-1
+        ile değiştirilir. Operatör daha erken kapatabilir, teyit alınır.
       </RuleBox>
     </ScrollView>
   );

@@ -180,6 +180,12 @@ export const MARKA_METIN = {
  * Yedi bölge rengi de parlaktır; üzerlerine koyu etiket 5.95:1 – 10.95:1 arasında okunur,
  * açık etiket ise 1.63:1 – 3.00:1 ile hepsinde kalır. Bu yüzden tema ne olursa olsun
  * **koyu** kullanılır — `colors.bg` kullanmak açık temada rozeti okunamaz yapıyordu.
+ *
+ * YALNIZCA MARKA DOLGULARI İÇİN. Dolgu semantik bir token ise (`colors.ok`, `colors.warn`,
+ * `colors.accent`) doğru etiket `colors.bg`'dir: o dolgular temayla birlikte dönüyor, yani
+ * açık temada koyulaşıyorlar. Ölçüm: `colors.bg` semantik dolgular üstünde koyu temada
+ * 6.20–10.53:1, açık temada 4.73–4.81:1; sabit koyu etiket ise açık temada **3.72–3.78:1**
+ * ile eşiğin altına düşüyor.
  */
 export const MARKA_ETIKET = '#0B0F14';
 

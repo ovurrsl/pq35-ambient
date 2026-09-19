@@ -1,13 +1,13 @@
 import { useCallback, useState, type ComponentProps, type ReactNode } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { SymbolView, type SymbolWeight } from 'expo-symbols';
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { bleCipMetni, useBle } from '@/state/ble-context';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
+import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 type IkonAdi = ComponentProps<typeof SymbolView>['name'];
 
@@ -39,7 +39,7 @@ const TELEFONLAR: readonly EslesmisTelefon[] = [
  * **BLE bonding** ile bağlanır. Biri iptal edilince diğeri etkilenmez.
  */
 export default function CihazlarEkrani() {
-  const { colors, scheme } = useTheme();
+  const { colors } = useTheme();
   const { arac } = useBle();
   const router = useRouter();
 
@@ -50,25 +50,34 @@ export default function CihazlarEkrani() {
 
   const tokenIptalEt = useCallback(() => {
     Alert.alert(
-      'Cihaz anahtarını iptal et',
+      'Anahtarı geçersiz kıl',
       'Aracın device token’ı geçersiz olur ve araç buluta yazamaz. Etkilenen tek şey bu cihazdır; hesabın ve diğer telefonlar etkilenmez.',
       [
+        // Yıkıcı düğme sonucun adını taşır. Eskiden 'İptal et' yazıyordu; Türkçede bu
+        // "vazgeç" diye okunur, yani yıkıcı eylem kaçış kapısının adını taşıyordu
+        // (`alerts.md › Buttons`: "A specific button title like "Erase," "Convert,"
+        // "Clear," or "Delete" helps people understand the action they're taking.").
+        // Vazgeç olduğu gibi kalıyor: uygulamanın her yerinde kaçış kapısının adı bu.
         { text: 'Vazgeç', style: 'cancel' },
-        { text: 'İptal et', style: 'destructive', onPress: () => setTokenIptalBekliyor(true) },
+        {
+          text: 'Anahtarı geçersiz kıl',
+          style: 'destructive',
+          onPress: () => setTokenIptalBekliyor(true),
+        },
       ]
     );
   }, []);
 
   const telefonIptalEt = useCallback((telefon: EslesmisTelefon) => {
     Alert.alert(
-      'Eşleşmeyi iptal et',
+      'Eşleşmeyi sil',
       telefon.buCihaz
         ? 'Bu telefonun bonding kaydı silinir. Araca yeniden bağlanmak için baştan eşleştirme gerekir.'
         : 'Bu telefonun bonding kaydı ve yetkisi silinir. Araca yeniden bağlanamaz.',
       [
         { text: 'Vazgeç', style: 'cancel' },
         {
-          text: 'İptal et',
+          text: 'Eşleşmeyi sil',
           style: 'destructive',
           onPress: () => setIptalEdilenler((onceki) => (onceki.includes(telefon.id) ? onceki : [...onceki, telefon.id])),
         },
@@ -102,7 +111,7 @@ export default function CihazlarEkrani() {
             </View>
           </View>
           <View style={styles.esnek} />
-          <Pill>ESP32-S3</Pill>
+          <Pill veri>ESP32-S3</Pill>
         </View>
 
         <View style={styles.veriListe}>
@@ -125,7 +134,7 @@ export default function CihazlarEkrani() {
 
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Cihaz anahtarını iptal et"
+          accessibilityLabel="Anahtarı geçersiz kıl"
           accessibilityHint="Aracın device token’ı geçersiz olur"
           accessibilityState={{ disabled: tokenIptalBekliyor }}
           disabled={tokenIptalBekliyor}
@@ -136,7 +145,7 @@ export default function CihazlarEkrani() {
           ]}>
           <Ikon name="xmark" color={colors.danger} size={15} />
           <Text style={[styles.tehlikeliMetin, { color: colors.danger }]} maxFontSizeMultiplier={1.4}>
-            {tokenIptalBekliyor ? 'İptal bekliyor' : 'Cihaz anahtarını iptal et'}
+            {tokenIptalBekliyor ? 'Geçersiz kılma bekliyor' : 'Anahtarı geçersiz kıl'}
           </Text>
         </Pressable>
       </Card>
@@ -158,7 +167,7 @@ export default function CihazlarEkrani() {
                     <Text style={[styles.telefonAd, { color: colors.text }]} maxFontSizeMultiplier={1.6}>
                       ·········
                     </Text>
-                    <DoluRozet bg={misafir ? ZONE_COLORS.z4 : colors.accent} fg={colors.bg}>
+                    <DoluRozet bg={misafir ? colors.warn : colors.accent} fg={colors.bg}>
                       {misafir ? 'Misafir' : 'Sahip'}
                     </DoluRozet>
                     {telefon.buCihaz ? <Pill>Bu cihaz</Pill> : null}
@@ -173,7 +182,7 @@ export default function CihazlarEkrani() {
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel={
-                    misafir ? 'Misafir telefonun eşleşmesini iptal et' : 'Sahip telefonun eşleşmesini iptal et'
+                    misafir ? 'Misafir telefonun eşleşmesini sil' : 'Sahip telefonun eşleşmesini sil'
                   }
                   accessibilityState={{ disabled: iptalli }}
                   disabled={iptalli}
@@ -183,18 +192,18 @@ export default function CihazlarEkrani() {
                     { borderColor: colors.line, opacity: iptalli ? 0.5 : pressed ? 0.6 : 1 },
                   ]}>
                   <Text style={[styles.satirDugmeMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-                    İptal et
+                    Eşleşmeyi sil
                   </Text>
                 </Pressable>
               </View>
 
               {misafir ? (
                 <View style={[styles.misafirNot, { borderTopColor: colors.line }]}>
-                  <Ikon name="lock.fill" color={ZONE_COLORS.z4} size={13} />
+                  <Ikon name="lock.fill" color={colors.warn} size={13} />
                   <Text style={[styles.notMetin, { color: colors.muted }]} maxFontSizeMultiplier={2}>
                     Misafirde kapalı komutlar:
                   </Text>
-                  <Text style={[styles.mono, { color: markaMetin(ZONE_COLORS.z4, scheme) }]} maxFontSizeMultiplier={1.6}>
+                  <Text style={[styles.mono, { color: colors.warn }]} maxFontSizeMultiplier={1.6}>
                     kilit · arama · kodlama
                   </Text>
                 </View>
@@ -213,7 +222,8 @@ export default function CihazlarEkrani() {
           styles.birincilDugme,
           { backgroundColor: colors.accent, opacity: pressed ? 0.75 : 1 },
         ]}>
-        <Ikon name="plus" color={colors.bg} size={16} />
+        {/* Etiket `FONTS.bodySemiBold` (600); sembol de öyle olsun. */}
+        <Ikon name="plus" color={colors.bg} size={16} agirlik="semibold" />
         <Text style={[styles.birincilMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
           Yeni telefon eşleştir
         </Text>
@@ -234,11 +244,34 @@ export default function CihazlarEkrani() {
 }
 
 /** SF Symbol + yedek çerçeve. */
-function Ikon({ name, color, size = 16 }: { name: IkonAdi; color: string; size?: number }) {
+/**
+ * SF Symbol + yedek çerçeve.
+ *
+ * `agirlik` yalnızca sembolün yanındaki metin kalınsa verilir. HIG
+ * (`icons.md › Best practices`): "In general, match the weights of interface icons and
+ * adjacent text. Unless you want to emphasize either the icons or the text, using the same
+ * weight for both gives your content a consistent appearance and level of emphasis."
+ *
+ * Liste satırlarında bilerek verilmiyor: satır başlıkları `FONTS.body` (400) ve sembolün
+ * varsayılan `regular` ağırlığı onlarla zaten eşleşiyor — ağırlık eklemek olmayan bir
+ * uyumsuzluğu düzeltmeye çalışıp yenisini yaratırdı.
+ */
+function Ikon({
+  name,
+  color,
+  size = 16,
+  agirlik,
+}: {
+  name: IkonAdi;
+  color: string;
+  size?: number;
+  agirlik?: SymbolWeight;
+}) {
   return (
     <SymbolView
       name={name}
       size={size}
+      weight={agirlik}
       tintColor={color}
       fallback={<View style={[styles.ikonYedek, { width: size, height: size, borderColor: color }]} />}
     />
@@ -295,7 +328,7 @@ function NotSatiri({ children }: { children: string }) {
   return (
     <View style={styles.not}>
       <View style={styles.notIkon}>
-        <Ikon name="checkmark" color={BUS_COLORS.ble} size={14} />
+        <Ikon name="checkmark" color={colors.ok} size={14} />
       </View>
       <Text style={[styles.notMetin, { color: colors.muted }]} maxFontSizeMultiplier={2}>
         {children}

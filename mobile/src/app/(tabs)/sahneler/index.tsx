@@ -48,7 +48,7 @@ export default function SahnelerEkrani() {
 
       <View style={styles.cipler}>
         <BleCip />
-        <Pill dotColor={colors.warn}>LISTEN-ONLY</Pill>
+        <Pill dotColor={colors.warn} veri>LISTEN-ONLY</Pill>
       </View>
 
       {SAHNELER.map((s) => {
@@ -78,7 +78,7 @@ export default function SahnelerEkrani() {
                   {s.aciklama}
                 </Text>
               </View>
-              {seciliMi ? <Pill dotColor={colors.accent}>etkin</Pill> : null}
+              {seciliMi ? <Pill dotColor={colors.accent}>Etkin</Pill> : null}
             </View>
             <View style={styles.serit} accessibilityElementsHidden>
               {s.renkler.map((z) => (

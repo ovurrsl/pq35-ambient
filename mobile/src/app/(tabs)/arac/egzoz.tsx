@@ -34,8 +34,8 @@ export default function EgzozEkrani() {
         sunmaktı; CLAUDE.md §12'nin kuralı burada da geçerli.
       */}
       <View style={styles.cipler}>
-        <Pill dotColor={colors.dim}>Kontak ··</Pill>
-        <Pill>Kl.15</Pill>
+        <Pill dotColor={colors.dim} veri>Kontak ··</Pill>
+        <Pill veri>Kl.15</Pill>
         <UnverifiedBadge>KL.15 CAN’DAN OKUNACAK</UnverifiedBadge>
       </View>
 
@@ -112,9 +112,9 @@ export default function EgzozEkrani() {
           onDegisim={setOtomatik}
         />
         <RowDivider />
-        <DataRow etiket="Devir eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA</UnverifiedBadge>} />
+        <DataRow etiket="Devir eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA BELİRLENECEK</UnverifiedBadge>} />
         <RowDivider />
-        <DataRow etiket="Hız eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA</UnverifiedBadge>} />
+        <DataRow etiket="Hız eşiği" deger="—" sag={<UnverifiedBadge>ARAÇTA BELİRLENECEK</UnverifiedBadge>} />
         <Text style={[styles.not, { color: colors.dim }]} maxFontSizeMultiplier={2}>
           Her eşiğin bir geri dönüş payı vardır; yoksa eşik civarında sürerken valf sürekli
           açılıp kapanır.

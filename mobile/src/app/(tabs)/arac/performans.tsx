@@ -36,11 +36,14 @@ export default function PerformansEkrani() {
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Hazır</Pill>
-        <Pill>gösterge hızı</Pill>
+        <Pill>Gösterge hızı</Pill>
       </View>
 
       <Card>
-        <SectionLabel>CANLI g</SectionLabel>
+        {/* "CANLI g" idi; SectionLabel textTransform:uppercase uyguladığı için ekranda
+            "CANLI G" çıkıyordu — iki satır altta "0,00 g" doğru yazılırken. g ivme birimi
+            olarak yalnızca değerlerde kalıyor. */}
+        <SectionLabel>ANLIK İVME</SectionLabel>
         <View style={styles.gSatir}>
           <View
             style={[styles.gDairesi, { borderColor: colors.line }]}

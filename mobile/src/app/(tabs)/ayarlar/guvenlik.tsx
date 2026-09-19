@@ -3,11 +3,11 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 
 import { Anahtar } from '@/components/ui/anahtar';
-import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
-import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
+import { Card, CardHeader, RuleBox } from '@/components/ui/card';
+import { kilitKaydiIfadesi, kilitOznesi, kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
 import { kilidiDogrula, kilitTercihi, kilitTercihiYaz } from '@/lib/uygulama-kilidi';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
+import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 type IkonAdi = ComponentProps<typeof SymbolView>['name'];
 
@@ -23,7 +23,12 @@ export default function GuvenlikEkrani() {
   const { colors } = useTheme();
 
   // Komut onayı şimdilik yerel; gerçek etkisi onay akışı yazılınca bağlanacak.
-  const [komutOnayi, setKomutOnayi] = useState(true);
+  /**
+   * Onay ekranı tercihi. Şimdilik **sabit açık** ve anahtarı kilitli: komut akışı
+   * yazılmadan bu tercihin bir etkisi olamaz. Akış geldiğinde `kilitTercihi` gibi
+   * kalıcı bir tercihe bağlanacak ve `setKomutOnayi` geri gelecek.
+   */
+  const komutOnayi = true;
 
   // Uygulama kilidi ARTIK GERÇEK: tercih saklanıyor ve açılışta/arka plandan dönüşte
   // uygulanıyor. Varsayılan kapalı — kullanıcı istemeden biyometri sorulmaz.
@@ -51,7 +56,7 @@ export default function GuvenlikEkrani() {
     if (v) {
       const sonuc = await kilidiDogrula();
       if (sonuc.kind === 'yetenek-yok') {
-        setKilitHatasi('Bu cihazda kullanılabilir bir kilit yok. Önce Face ID, Touch ID veya cihaz parolası kur.');
+        setKilitHatasi('Bu cihazda kullanılabilir bir kilit yok. Ayarlar’dan biyometri veya cihaz parolası kur.');
         return;
       }
       if (sonuc.kind !== 'ok') {
@@ -62,7 +67,6 @@ export default function GuvenlikEkrani() {
     setUygulamaKilidi(v);
     await kilitTercihiYaz(v);
   }, []);
-  const onayiDegistir = useCallback((v: boolean) => setKomutOnayi(v), []);
 
   return (
     <ScrollView
@@ -89,22 +93,35 @@ export default function GuvenlikEkrani() {
           kilitli
         />
         <Ayirac />
+        {/*
+          Bu anahtar canlı görünüyordu ama hiçbir şey yapmıyordu: `useState(true)` ile
+          tutuluyordu, kaydedilmiyordu (ekran kapanınca seçim kayboluyordu) ve vaat ettiği
+          `/onay` ekranına uygulamada hiçbir yerden gidilmiyordu. Yanı başındaki uygulama
+          kilidi anahtarı ise gerçekten `kilitTercihi`'ni okuyup yazıyor — aynı ekranda iki
+          farklı dürüstlük seviyesi.
+
+          `feedback.md › Best practices`: "Show people when a command can't be carried out
+          and help them understand why." Ekranın kendi icat ettiği çözüm uygulanıyor:
+          `BekleyenDugme` gibi görünür biçimde kilitli ve sebebi alt başlıkta yazılı.
+          Komut akışı yazıldığında `kilitTercihi` yanında kalıcı bir tercihe bağlanacak.
+        */}
         <AnahtarSatiri
           baslik="Geri alınamayan komutlarda onay sor"
-          altBaslik="Kilit ve arama gönderilmeden önce onay ekranı"
+          altBaslik="Komut akışı yazılınca etkinleşir — kilit ve arama henüz gönderilemiyor"
           deger={komutOnayi}
-          onChange={onayiDegistir}
+          kilitli
         />
       </Card>
 
       <Card>
-        <View style={styles.kartBaslik}>
-          <SectionLabel>İKİ ADIMLI DOĞRULAMA</SectionLabel>
-          <View style={styles.esnek} />
-          <DoluRozet bg={colors.ok} fg={colors.bg}>
-            TOTP açık
-          </DoluRozet>
-        </View>
+        <CardHeader
+          sag={
+            <DoluRozet bg={colors.ok} fg={colors.bg}>
+              TOTP açık
+            </DoluRozet>
+          }>
+          İKİ ADIMLI DOĞRULAMA
+        </CardHeader>
         <Text style={[styles.aciklama, { color: colors.muted }]} maxFontSizeMultiplier={2}>
           Yalnızca <Text style={[styles.vurgu, { color: colors.text }]}>buluta</Text> girişi korur.
           Kurtarma kodları bir kez gösterilir, her kod tek kullanımlıktır.
@@ -116,15 +133,16 @@ export default function GuvenlikEkrani() {
             kenar={colors.line}
             genis
           />
-          <BekleyenDugme etiket="MFA'yı kapat" renk={colors.danger} kenar={colors.danger} />
+          <BekleyenDugme etiket="MFA’yı kapat" renk={colors.danger} kenar={colors.danger} />
         </View>
       </Card>
 
       <Card style={styles.listeKart}>
-        <View style={[styles.kartBaslik, styles.kartBaslikSatir]}>
-          <SectionLabel>OTURUMLAR</SectionLabel>
-          <View style={styles.esnek} />
-          <BekleyenDugme etiket="Tüm oturumları kapat" renk={colors.danger} duz />
+        <View style={styles.kartBaslikSatir}>
+          <CardHeader
+            sag={<BekleyenDugme etiket="Tüm oturumları kapat" renk={colors.danger} duz />}>
+            OTURUMLAR
+          </CardHeader>
         </View>
         <Ayirac />
         <VeriSatiri baslik="Bu telefon" deger="iOS · BLE + JWT">
@@ -137,18 +155,21 @@ export default function GuvenlikEkrani() {
       </Card>
 
       <Card>
-        <View style={styles.kartBaslik}>
-          <SectionLabel>ARAÇ BAĞLANTISI (BLE)</SectionLabel>
-          <View style={styles.esnek} />
-          <DoluRozet bg={BUS_COLORS.ble} fg={colors.bg}>
-            BONDED
-          </DoluRozet>
-        </View>
+        {/* Rozet zemini hat rengi (BUS_COLORS.ble) taşıyordu; hat renkleri yalnızca teknik
+            diyagramlarda kullanılır (tokens.ts palet kuralı). Durum rozeti `ok` taşır. */}
+        <CardHeader
+          sag={
+            <DoluRozet bg={colors.ok} fg={colors.bg}>
+              BONDED
+            </DoluRozet>
+          }>
+          ARAÇ BAĞLANTISI (BLE)
+        </CardHeader>
         <View style={styles.bleListe}>
           <BleSatiri baslik="Eşleşme" deger="LE Secure Connections · IRK" />
           <BleSatiri baslik="Oturum anahtarı" deger="bağlantı başına · sayaç ··" />
           <BleSatiri baslik="Directed advertising" deger="yalnız eşleşmiş telefona" />
-          <BleSatiri baslik="iOS adresi" deger="~15 dk'da bir değişir (RPA)" son />
+          <BleSatiri baslik="iOS adresi" deger="~15 dk’da bir değişir (RPA)" son />
         </View>
         <Text style={[styles.aciklama, { color: colors.muted }]} maxFontSizeMultiplier={2}>
           Araç yakındayken internet gerekmez; bu sınır bonding’e dayanır, buluta değil. Sabit MAC
@@ -156,10 +177,16 @@ export default function GuvenlikEkrani() {
         </Text>
       </Card>
 
-      <RuleBox title="FACE ID KİMLİK DOĞRULAMA DEĞİLDİR">
-        Face ID, Keychain’deki refresh token’ı açar; sunucuya karşı kimlik Supabase JWT’dir. Yüz
-        seti değişirse (biometryCurrentSet) anahtar geçersiz olur ve Apple ile
-        yeniden giriş gerekir. Face ID yalnızca uygulama açılışındadır, her komutta değil.
+      {/*
+        Başlık ve gövde aynı kaynaktan: ekranın üstü `kilit.ad`'ı dinamik kullanırken burası
+        "Face ID" yazıyordu. Touch ID'li bir iPad'de kullanıcı kendi cihazında olmayan bir
+        özellik hakkında bir kural okuyordu.
+      */}
+      <RuleBox
+        title={`${(kilit ? kilitOznesi(kilit) : 'CİHAZ KİLİDİ').toLocaleUpperCase('tr-TR')} KİMLİK DOĞRULAMA DEĞİLDİR`}>
+        {`${kilit ? kilitOznesi(kilit) : 'Cihaz kilidi'}, Keychain’deki refresh token’ı açar; sunucuya karşı kimlik Supabase JWT’dir. ${
+          kilit ? kilitKaydiIfadesi(kilit.tur) : 'Kayıtlı biyometri'
+        } değişirse (biometryCurrentSet) anahtar geçersiz olur ve Apple ile yeniden giriş gerekir. Kilit yalnızca uygulama açılışındadır, her komutta değil.`}
       </RuleBox>
     </ScrollView>
   );
@@ -333,7 +360,6 @@ const styles = StyleSheet.create({
   sonuk: { opacity: 0.55 },
   mono: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
 
-  kartBaslik: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   kartBaslikSatir: { minHeight: HIT_SIZE + 4 },
 
   anahtarSatir: {
