@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { NavRow, RowDivider } from '@/components/ui/row';
@@ -72,7 +71,6 @@ const BASLANGIC: Readonly<Record<ZoneId, BolgeDurumu>> = {
 
 export default function BolgelerEkrani(): JSX.Element {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
   const router = useRouter();
 
   const [sistemAcik, setSistemAcik] = useState<boolean>(true);
@@ -92,10 +90,8 @@ export default function BolgelerEkrani(): JSX.Element {
 
   return (
     <ScrollView
-      contentContainerStyle={[
-        styles.page,
-        { backgroundColor: colors.bg, paddingTop: insets.top + SPACING.md, paddingBottom: insets.bottom + 96 },
-      ]}>
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.basliklar}>
         <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
           Ambiyans
@@ -328,7 +324,13 @@ function BolgeSatiri({
 }
 
 const styles = StyleSheet.create({
-  page: { flexGrow: 1, paddingHorizontal: SPACING.lg, gap: SPACING.md },
+  page: {
+    flexGrow: 1,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.md,
+    paddingBottom: SPACING.xxl,
+    gap: SPACING.md,
+  },
   basliklar: { gap: 3 },
   baslik: { ...FONTS.display, fontSize: 26 },
   altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.1 },

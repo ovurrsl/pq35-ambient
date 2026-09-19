@@ -1,6 +1,5 @@
 import { useCallback, type ReactElement } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 
@@ -79,14 +78,11 @@ const HATLAR: readonly HatTanimi[] = [
 
 export default function AracEkrani(): ReactElement {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
 
   return (
     <ScrollView
-      contentContainerStyle={[
-        styles.page,
-        { backgroundColor: colors.bg, paddingTop: insets.top + SPACING.sm },
-      ]}>
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.baslikSatir}>
         <View style={styles.baslikBlok}>
           <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>

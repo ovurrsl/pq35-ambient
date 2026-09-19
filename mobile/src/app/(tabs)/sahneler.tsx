@@ -38,7 +38,9 @@ export default function SahnelerEkrani() {
   const [aktif, setAktif] = useState<string | null>(null);
 
   return (
-    <ScrollView contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.basliklar}>
         <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
           Sahneler
@@ -104,7 +106,7 @@ export default function SahnelerEkrani() {
 }
 
 const styles = StyleSheet.create({
-  page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md },
+  page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
   altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.2 },

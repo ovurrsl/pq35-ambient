@@ -1,6 +1,5 @@
 import { useCallback, useState, type ReactElement } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { SymbolView } from 'expo-symbols';
 
@@ -147,7 +146,6 @@ const VARSAYILAN_ESLEME: OlayEslemesi = {
 
 export default function OlaylarEkrani(): ReactElement {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
   const [esleme, setEsleme] = useState<OlayEslemesi>(VARSAYILAN_ESLEME);
 
   const degistir = useCallback((olay: OlayId, bolge: ZoneId): void => {
@@ -161,10 +159,8 @@ export default function OlaylarEkrani(): ReactElement {
 
   return (
     <ScrollView
-      contentContainerStyle={[
-        styles.page,
-        { backgroundColor: colors.bg, paddingTop: insets.top + SPACING.sm },
-      ]}>
+      contentInsetAdjustmentBehavior="automatic"
+      contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.baslikBlok}>
         <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
           Olaylar
