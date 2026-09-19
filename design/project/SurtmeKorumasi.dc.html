@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Sürtme koruması — fizik sınırı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FFB020; box-shadow: 0 0 24px 2px rgba(255,176,32,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">SÜRTME KORUMASI</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Sensör yalnızca düşük hızda yetişir</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1150px;">"Araç altı sensörü engeli görsün, sistem yükseltsin" fikri doğru — ama <strong style="color: #E8EEF4; font-weight: 600;">sınırı fizik çiziyor</strong>, sensörün kalitesi değil. Aşağıdaki hesabı yumuşatmanın yolu yok.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>KONTROLCÜ B</div>
+  </div>
+
+  <!-- FİZİK -->
+  <div style="display: flex; gap: 20px; flex-shrink: 0;">
+
+    <div style="flex: 1.45; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px 14px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ELİNDEKİ SÜRE — 4 m İLERİYİ GÖREN BİR SENSÖRLE</h2>
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">4 m BİR VARSAYIM</span>
+      </div>
+
+      <svg width="860" height="212" viewBox="0 0 860 212" fill="none" aria-label="Hıza göre kalan süre: 10 kilometre saatte 1,4 saniye, 30'da 0,48 saniye, 50'de 0,29 saniye; yükselme 1 ila 2 saniye sürüyor" style="display: block;">
+        <g font-family="'IBM Plex Sans', sans-serif">
+          <rect x="420" y="16" width="300" height="150" fill="rgba(255,90,90,0.09)"></rect>
+          <path d="M420 16v150M720 16v150" stroke="#FF5A5A" stroke-width="1.4" stroke-dasharray="5 4"></path>
+          <text x="570" y="190" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FF5A5A">YÜKSELME SÜRESİ 1–2 s</text>
+          <text x="570" y="206" text-anchor="middle" font-size="12" fill="#93A2B3">iyi tank ve büyük valflerle; yavaş sistemde ~10 s</text>
+
+          <text x="0" y="46" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">10 km/s</text>
+          <rect x="120" y="30" width="432" height="22" rx="5" fill="#6FA0FF"></rect>
+          <text x="564" y="46" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">1,44 s</text>
+          <text x="646" y="46" font-size="12" fill="#93A2B3">2,8 m/s</text>
+
+          <text x="0" y="100" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">30 km/s</text>
+          <rect x="120" y="84" width="144" height="22" rx="5" fill="#6FA0FF" opacity="0.55"></rect>
+          <text x="276" y="100" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">0,48 s</text>
+          <text x="646" y="100" font-size="12" fill="#93A2B3">8,3 m/s</text>
+
+          <text x="0" y="154" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">50 km/s</text>
+          <rect x="120" y="138" width="87" height="22" rx="5" fill="#6FA0FF" opacity="0.35"></rect>
+          <text x="219" y="154" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E8EEF4">0,29 s</text>
+          <text x="646" y="154" font-size="12" fill="#93A2B3">13,9 m/s</text>
+
+          <path d="M120 16v150" stroke="#2A3746" stroke-width="1.4"></path>
+          <text x="120" y="10" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">0</text>
+          <text x="420" y="10" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">1 s</text>
+          <text x="720" y="10" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">2 s</text>
+        </g>
+      </svg>
+
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">SONUÇ — BU MADDEYİ YUMUŞATMA</div>
+      <div style="font-size: 16px; line-height: 1.5; color: #E8EEF4;">İleri bakan bir sensörle "engeli gör, yüksel" <strong style="font-weight: 600;">yalnızca düşük hızda</strong> işe yarar. 30 km/s üzerinde sensör uyarsa bile sistem yetişemez.</div>
+      <div style="font-size: 15px; line-height: 1.55; color: #E8EEF4;">Ama bu bir kayıp değil: <strong style="font-weight: 600;">sürtme zaten düşük hızda olur</strong> — rampa, kasis, garaj girişi, kaldırım. Yüksek hızda koruma sensörden değil, <strong style="font-weight: 600;">hıza bağlı otomatik yükseltmeden</strong> gelir.</div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; border-top: 1px solid rgba(255,90,90,0.25); padding-top: 10px;">Sensörün menzilini artırmak da kurtarmaz: 8 m'lik bir sensör 50 km/s'de yalnızca 0,58 s verir ve daha uzak bir "engel" çoğu zaman yol yüzeyinin kendisidir.</div>
+    </div>
+
+  </div>
+
+  <!-- İKİ KATMAN -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 13px; flex-shrink: 0;">
+    <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KORUMA İKİ KATMANDIR — HANGİSİ NE ZAMAN</h2>
+
+    <div style="display: flex; gap: 20px;">
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 9px; height: 9px; border-radius: 999px; background: #6FA0FF; flex-shrink: 0;"></span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Düşük hız — sensör katmanı</span>
+        </div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Eşiğin altında sensör görürse yükselt. <strong style="font-weight: 600;">Zaman var.</strong> Rampa, kasis, garaj girişi, kaldırım — sürtmenin gerçekten olduğu yerler.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Yanlış pozitif burada ucuzdur: araç boşuna yükselir, kimse zarar görmez.</div>
+      </div>
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 9px; height: 9px; border-radius: 999px; background: #3FD98A; flex-shrink: 0;"></span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Yüksek hız — zaten yukarıdayız</span>
+        </div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Hız eşiği geçilince araç <strong style="font-weight: 600;">otomatik yükselmiştir</strong>; korumayı sensör değil bu sağlar. Hız <span class="mono">0x351</span>'den bedavaya geliyor.</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Ve kilit 03 gereği: eşiğin üstünde kullanıcı aşağı indiremez.</div>
+      </div>
+
+      <div style="flex: 1; min-width: 0; background: #1B2430; border: 1px solid #2A3746; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 9px; height: 9px; border-radius: 999px; background: #93A2B3; flex-shrink: 0;"></span>
+          <span style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Her zaman — hafıza konumu</span>
+        </div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Bilinen bir rampa için kayıtlı bir yükseklik, hiçbir sensörden hızlıdır: sürücü <strong style="font-weight: 600;">önceden</strong> basar.</div>
+        <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">En güvenilir koruma, otomatik olanı değil, zamanında verilen komuttur.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SENSÖR SEÇENEKLERİ -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 11px; flex: 1; min-height: 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 20px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SENSÖR SEÇENEKLERİ VE KISITLARI</h2>
+      <span style="font-size: 14px; color: #93A2B3;">Araç altı, sensör için <strong style="color: #E8EEF4; font-weight: 600;">en kötü yerdir</strong>: çamur, tuz, su, taş, titreşim, ısı.</span>
+    </div>
+    <table>
+      <thead><tr><th style="width: 18%;">Tip</th><th style="width: 30%;">Güçlü yanı</th><th>Kısıtı</th></tr></thead>
+      <tbody>
+        <tr><td>Ultrasonik</td><td style="color:#93A2B3;">Ucuz, geniş huzme, yüzey rengine duyarsız</td><td style="color:#93A2B3;">Kir ve su filmi performansı düşürür; güncelleme yavaş; ses hızı sıcaklıkla değişir</td></tr>
+        <tr><td>Kızılötesi ToF</td><td style="color:#93A2B3;">Hızlı güncelleme, dar huzme</td><td style="color:#93A2B3;">Güneş ışığı ve lensteki kir doğrudan etkiler; koyu ve ıslak yüzeyde menzil düşer</td></tr>
+        <tr><td>Mekanik temas</td><td style="color:#93A2B3;">Basit, yanılmaz</td><td style="color:#FF5A5A;"><strong style="font-weight:600;">Temas ettikten sonra haber verir — geç kalmıştır.</strong> Koruma değil, kayıt tutar</td></tr>
+        <tr><td>Kamera</td><td style="color:#93A2B3;">Zengin bilgi</td><td style="color:#93A2B3;">Bu iş için orantısız: işlem yükü, aydınlatma, kirlenme ve kalibrasyon</td></tr>
+      </tbody>
+    </table>
+    <div style="display: flex; gap: 11px; align-items: center; margin-top: auto; padding-top: 4px;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">MENZİL VE HIZ EŞİĞİ ARAÇTA</span>
+      <span style="font-size: 13px; line-height: 1.4; color: #93A2B3;">Sensör menzili, montaj yüksekliği, güncelleme hızı ve sensör katmanının devreye girdiği hız eşiği — hiçbiri burada sayı olarak yazılmaz. Yukarıdaki 4 m, hesabın nasıl yapılacağını göstermek için seçilmiş bir <strong style="color: #E8EEF4; font-weight: 600;">örnek</strong>tir.</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

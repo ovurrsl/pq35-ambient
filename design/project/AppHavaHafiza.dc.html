@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Hava hafıza ve ayarlar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+    <a href="#hava" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Hava süspansiyon
+    </a>
+    <h1 style="font-size: 25px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Hafıza ve ayarlar</h1>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 4px 16px 8px; display: flex; flex-direction: column; gap: 9px;">
+
+    <!-- HAFIZA -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 4px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 13px 6px;">
+        <span style="font-size: 12px; font-weight: 600; color: #93A2B3;">Hafıza konumları</span>
+        <span class="mono" style="font-size: 10px; color: #6E7C8C;">4 KÖŞE AYRI KAYDEDİLİR</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; color: #E8EEF4;">Yerde</span>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">PARK · araç dururken</span>
+        </span>
+        <button type="button" style="min-height: 34px; padding: 0 12px; border-radius: 9px; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); color: #E8EEF4; font-size: 13px; cursor: pointer; white-space: nowrap;">Şu anı kaydet</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; color: #E8EEF4;">Sürüş</span>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">VARSAYILAN · açılışta bu</span>
+        </span>
+        <button type="button" style="min-height: 34px; padding: 0 12px; border-radius: 9px; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); color: #E8EEF4; font-size: 13px; cursor: pointer; white-space: nowrap;">Şu anı kaydet</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; color: #E8EEF4;">Yüksek</span>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">RAMPA · bilinen engeller için</span>
+        </span>
+        <button type="button" style="min-height: 34px; padding: 0 12px; border-radius: 9px; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); color: #E8EEF4; font-size: 13px; cursor: pointer; white-space: nowrap;">Şu anı kaydet</button>
+      </div>
+
+      <div style="padding: 8px 13px 6px; border-top: 1px solid rgba(232,238,244,0.07); font-size: 11px; line-height: 1.4; color: #6E7C8C;">Bilinen bir rampa için kayıtlı yükseklik, <strong style="color: #93A2B3; font-weight: 600;">hiçbir sensörden hızlıdır</strong> — sürücü önceden basar.</div>
+
+    </div>
+
+    <!-- OTOMATİK YÜKSELTME -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 4px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <label for="hava-oto" style="display: flex; align-items: center; gap: 11px; min-height: 50px; padding: 7px 13px; cursor: pointer;">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; font-weight: 500; color: #E8EEF4;">Hızda otomatik yükseltme</span>
+          <span style="font-size: 11px; color: #6E7C8C;">Eşiği geçince araç kendiliğinden yükselir</span>
+        </span>
+        <input type="checkbox" id="hava-oto" class="vh" checked>
+        <span style="width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #0B0F14;"></span></span>
+      </label>
+
+      <div style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 13px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Hız eşiği</span>
+        <span class="mono" style="font-size: 15px; color: #6E7C8C;">—</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">ARAÇTA</span>
+      </div>
+
+      <div style="display: flex; gap: 8px; padding: 8px 13px 6px; border-top: 1px solid rgba(232,238,244,0.07);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px;"><rect x="5" y="10.5" width="14" height="9.5" rx="2"></rect><path d="M8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7"></path></svg>
+        <span style="font-size: 11px; line-height: 1.4; color: #6E7C8C;"><strong style="color: #93A2B3; font-weight: 600;">Geri alınamaz:</strong> eşiğin üstünde aracı aşağı indiremezsin. Yüksek hızdaki koruma budur, sensör değil.</span>
+      </div>
+
+    </div>
+
+    <!-- SÜRTME KORUMASI -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 4px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <label for="hava-surtme" style="display: flex; align-items: center; gap: 11px; min-height: 50px; padding: 7px 13px; cursor: pointer;">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+          <span style="font-size: 15px; font-weight: 500; color: #E8EEF4;">Sürtme koruması</span>
+          <span style="font-size: 11px; color: #6E7C8C;">Araç altı sensörü engel görünce yükseltir</span>
+        </span>
+        <input type="checkbox" id="hava-surtme" class="vh" checked>
+        <span style="width: 50px; height: 30px; border-radius: 999px; background: #3FD98A; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 3px; left: 23px; width: 24px; height: 24px; border-radius: 999px; background: #0B0F14;"></span></span>
+      </label>
+
+      <div style="display: flex; gap: 9px; padding: 8px 13px 8px; border-top: 1px solid rgba(232,238,244,0.07); background: rgba(255,176,32,0.06);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.4v.1"></path></svg>
+        <span style="font-size: 12px; line-height: 1.42; color: #93A2B3;"><strong style="color: #E8EEF4; font-weight: 600;">Yalnızca düşük hızda çalışır.</strong> Yükselme 1–2 saniye sürer; 50 km/s'de 4 m ilerideki bir engel yalnızca 0,29 saniye verir. Yüksek hızda koruma otomatik yükseltmeden gelir.</span>
+      </div>
+
+    </div>
+
+    <!-- KALİBRASYON -->
+    <a href="#hava-kalibrasyon" style="display: flex; align-items: center; gap: 11px; background: rgba(255,90,90,0.08); border: 1px solid rgba(255,90,90,0.30); border-radius: 12px; padding: 10px 12px; text-decoration: none; min-height: 48px; box-sizing: border-box; flex-shrink: 0;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FF5A5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M4 18h16"></path><path d="M12 18V8"></path><path d="m7.5 12.5 4.5-4.5 4.5 4.5"></path></svg>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span style="font-size: 14px; font-weight: 600; color: #E8EEF4;">Yükseklik kalibrasyonu</span>
+        <span style="font-size: 11px; line-height: 1.35; color: #93A2B3;">Kalibrasyon yapılmadan yükseklik kontrolü açılmaz</span>
+      </span>
+      <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #FF5A5A; border: 1px solid rgba(255,90,90,0.5); border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">YAPILMADI</span>
+    </a>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

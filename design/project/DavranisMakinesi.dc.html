@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Davranış Makinesi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FFB300; box-shadow: 0 0 24px 2px rgba(255,179,0,0.55);"></div>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 06 — DAVRANIŞ MAKİNESİ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Sistem nasıl davranıyor?</h1>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Taban (mod) → olay katmanları → uygulama override. Mod ve renk uygulamadan seçilir; Komfort-CAN yalnızca tetikleyici kaynağıdır.</div>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch;">
+
+    <div style="width: 700px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ÖNCELİK KATMANLARI</h2>
+      <svg width="656" height="520" viewBox="0 0 656 520" role="img" aria-label="Katmanli oncelik diyagrami">
+        <defs>
+          <marker id="arrUpDm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#B98BFF"></path></marker>
+          <marker id="arrBaseDm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4CC2FF"></path></marker>
+          <marker id="arrPrioDm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#93A2B3"></path></marker>
+          <marker id="arrBackDm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#FFB300"></path></marker>
+          <filter id="glowDmTurn" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
+            <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+          </filter>
+        </defs>
+
+        <rect x="70" y="16" width="440" height="64" rx="12" fill="rgba(185,139,255,0.09)" stroke="#B98BFF" stroke-width="1.4" stroke-dasharray="7 5"></rect>
+        <text x="86" y="36" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#B98BFF">KATMAN 2 — UYGULAMA OVERRIDE</text>
+        <text x="86" y="55" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#E8EEF4">Sabit renk; CAN olayları geçici devre dışı.</text>
+        <text x="86" y="72" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">İptal edilince araç dinlenmeye devam eder.</text>
+
+        <path d="M290,100 V86" fill="none" stroke="#B98BFF" stroke-width="2" marker-end="url(#arrUpDm)"></path>
+
+        <rect x="70" y="104" width="440" height="258" rx="12" fill="rgba(255,179,0,0.04)" stroke="#2A3746" stroke-width="1.2" stroke-dasharray="6 5"></rect>
+        <text x="86" y="124" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#FFB300">KATMAN 1 — OLAY KATMANLARI</text>
+        <text x="494" y="124" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">en üstteki kazanır</text>
+
+        <rect x="84" y="134" width="412" height="46" rx="10" fill="rgba(130,150,170,0.14)" stroke="#8296AA" stroke-opacity="0.65" stroke-width="1.2"></rect>
+        <circle cx="106" cy="157" r="13" fill="#8296AA"></circle>
+        <text x="106" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">1</text>
+        <text x="130" y="153" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="#E8EEF4">Geri vites</text>
+        <text x="130" y="170" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Tüm zonlar (Z1–Z7) karartılır — diğer her şeyi ezer</text>
+
+        <rect x="84" y="190" width="412" height="46" rx="10" fill="rgba(255,90,90,0.14)" stroke="#FF5A5A" stroke-opacity="0.65" stroke-width="1.2"></rect>
+        <circle cx="106" cy="213" r="13" fill="#FF5A5A"></circle>
+        <text x="106" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">2</text>
+        <text x="130" y="209" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="#E8EEF4">Kapı açık</text>
+        <text x="130" y="226" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">O kapının zonu (Z1 / Z2) kırmızı; kapanınca fade-out</text>
+
+        <rect x="84" y="246" width="412" height="46" rx="10" fill="rgba(255,179,0,0.14)" stroke="#FFB300" stroke-opacity="0.65" stroke-width="1.2"></rect>
+        <circle cx="106" cy="269" r="13" fill="#FFB300"></circle>
+        <text x="106" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">3</text>
+        <text x="130" y="265" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="#E8EEF4">Sinyal</text>
+        <text x="130" y="282" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Sol: Z1+Z5 · Sağ: Z2+Z6 — kayan sarı sweep</text>
+        <path d="M400,269 H478" stroke="#FFB300" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 8" filter="url(#glowDmTurn)"></path>
+
+        <rect x="84" y="302" width="412" height="46" rx="10" fill="rgba(255,77,126,0.14)" stroke="#FF4D7E" stroke-opacity="0.65" stroke-width="1.2"></rect>
+        <circle cx="106" cy="325" r="13" fill="#FF4D7E"></circle>
+        <text x="106" y="330" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0F14">4</text>
+        <text x="130" y="321" font-family="IBM Plex Sans, sans-serif" font-size="13.5" font-weight="600" fill="#E8EEF4">Redline / shift-light</text>
+        <text x="130" y="338" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Devir eşiğinde uyarı — en düşük öncelik</text>
+
+        <path d="M290,390 V366" fill="none" stroke="#4CC2FF" stroke-width="2" marker-end="url(#arrBaseDm)"></path>
+
+        <rect x="70" y="394" width="440" height="100" rx="12" fill="rgba(76,194,255,0.07)" stroke="#4CC2FF" stroke-width="1.4"></rect>
+        <text x="86" y="416" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#4CC2FF">KATMAN 0 — TABAN</text>
+
+        <rect x="84" y="424" width="124" height="58" rx="8" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="96" y="443" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#E8EEF4">MOD</text>
+        <text x="96" y="458" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">düz renk (bağlı | bölge)</text>
+        <text x="96" y="470" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">animasyon</text>
+        <text x="96" y="482" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#93A2B3">ses tepkili</text>
+        <text x="218" y="459" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" fill="#93A2B3">×</text>
+
+        <rect x="228" y="424" width="124" height="58" rx="8" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="240" y="446" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#E8EEF4">GÖSTERGE DIMMER</text>
+        <text x="240" y="462" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#93A2B3">Kl.58d</text>
+        <text x="240" y="476" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">kısma seviyesi</text>
+        <text x="362" y="459" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" fill="#93A2B3">×</text>
+
+        <rect x="372" y="424" width="124" height="58" rx="8" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="384" y="446" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#E8EEF4">FAR DURUMU</text>
+        <text x="384" y="462" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">gece / farlar açık</text>
+        <text x="384" y="476" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">otomatik kısma</text>
+
+        <path d="M40,356 V130" fill="none" stroke="#93A2B3" stroke-width="1.6" marker-end="url(#arrPrioDm)"></path>
+        <text x="26" y="243" text-anchor="middle" transform="rotate(-90 26 243)" font-family="JetBrains Mono, monospace" font-size="10.5" letter-spacing="0.12em" fill="#93A2B3">ÖNCELİK ARTAR</text>
+
+        <path d="M514,244 C596,254 606,396 522,418" fill="none" stroke="#FFB300" stroke-width="2.2" marker-end="url(#arrBackDm)"></path>
+        <text x="520" y="190" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="#FFB300">MESAJ 2 sn</text>
+        <text x="520" y="205" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="#FFB300">KESİLİRSE</text>
+        <text x="520" y="220" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="#FFB300">TABANA DÖN</text>
+
+        <text x="70" y="512" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Üstteki katman alttakini geçici olarak ezer; olay bitince ışık kendiliğinden tabana döner.</text>
+      </svg>
+    </div>
+
+    <div style="width: 748px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">CAN OLAY SÖZLÜĞÜ</h2>
+        <div style="display: flex; gap: 6px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #F4A261; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 10px; white-space: nowrap;">Komfort-CAN</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 10px; white-space: nowrap;">100 kbps</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 10px; white-space: nowrap;">LISTEN-ONLY</span>
+        </div>
+      </div>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th style="text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 5px 8px; border-bottom: 1px solid #2A3746; width: 118px;">Olay</th>
+          <th style="text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 5px 8px; border-bottom: 1px solid #2A3746; width: 108px;">Kaynak</th>
+          <th style="text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 5px 8px; border-bottom: 1px solid #2A3746; width: 244px;">Tetikleyici</th>
+          <th style="text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 5px 8px; border-bottom: 1px solid #2A3746;">LED tepkisi</th>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Kapı aç / kapa</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Kapı durum biti <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">O kapının zonu (Z1 veya Z2) kırmızı; kapanınca fade-out</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Sinyal sol / sağ</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Flaşör bitinin <span style="color: #FFB300;">yükselen kenarı</span> <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Sol: Z1+Z5, sağ: Z2+Z6 — ilgili taraftaki ön ve arka zonlarda kayan sarı sweep, tanım gereği senkron</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Geri vites</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Geri vites biti — kaynak manuel / DSG'ye göre değişir <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Tüm zonlar (Z1–Z7) karartılır (en yüksek öncelik)</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Far / gece</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Otomatik far / ışık sensörü durumu <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Taban parlaklık tüm zonlarda (Z1–Z7) otomatik kısılır — OEM davranışı, araç kendi ışık sensöründen besler</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Gösterge dimmer</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace;">Kl.58d</span> kısma seviyesi <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Taban parlaklık tüm zonlarda ölçeklenir</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Hız</td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace;">0x351</span> — araç hareket hâlinde mi <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">EŞİK ARAÇTA AYARLANACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><strong style="color: #FFCE6A;">Güvenlik sınırı:</strong> hareket hâlindeyken animasyon ve ses tepkisi yoğunluğu sınırlanır, vuruş / strobo sınıfı efektler kapanır. Kapatılabilir bir tercih değildir.</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Kilit / <span style="font-family: 'JetBrains Mono', monospace;">Kl.15</span></td>
+          <td style="font-size: 12px; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">v1: kontak açılışı · v2: kilit açılışı <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #93A2B3; border: 1px dashed #55636F; border-radius: 4px; padding: 1px 5px; white-space: nowrap;">LOG İLE BULUNACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Welcome animasyonu — tüm zonlar (Z1–Z7) sırayla</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Hız</td>
+          <td style="font-size: 12px; line-height: 1.4; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN (yansıtılmış)</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">0x351</span> <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 6px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Parlaklık / efekt hızı</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Devir (RPM)</td>
+          <td style="font-size: 12px; line-height: 1.4; color: #93A2B3; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Komfort-CAN (yansıtılmış)</td>
+          <td style="font-size: 12px; line-height: 1.5; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;"><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">0x353</span> · <span style="font-family: 'JetBrains Mono', monospace;">rpm = 0,25 × (256×Byte2 + Byte1)</span> <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 1px 6px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></td>
+          <td style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Redline / shift-light uyarısı</td>
+        </tr>
+      </table>
+      <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Yer tutucu ID yok: kapı, kilit, far, sinyal ve 58d ID'leri yalnız araçtan alınan dinleme logundan çıkar — PQ35 komfort matrisi kamuya açık değil. Komfort-CAN'de sniff edilecek hazır bir RGB paketi de <span style="color: #E8EEF4;">yok</span>; renk uygulamadan gelir.</div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch;">
+
+    <div style="width: 490px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 15px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ÖRNEK SENARYO</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Telefondan mavi seçildi → sağ sinyal verildi → sağ taraf zonlarında (Z2+Z6) sarı sweep → sinyal bitince 2 sn içinde maviye dönüş. Uygulamada güncel durum senkron görünür.</div>
+    </div>
+
+    <div style="width: 450px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 15px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">ZON DAVRANIŞI FIRMWARE'DE SABİT DEĞİL</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Yedi zonun (Z1–Z7) her birinin modu (bağımsız / paylaşımlı) ve hangi olaylara tepki vereceği iOS uygulamasından zon başına ayarlanır.</div>
+    </div>
+
+    <div style="width: 484px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 15px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">OEM NOTU — GOLF 8 GERÇEĞİ</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Kapı açıkken düz kırmızı yanar. Yanıp sönen kırmızı, arka radarlı çıkış uyarısıdır. Strobo bir tercihtir, OEM emülasyonu değil.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uzaktan erişim — GSM üzerinden</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--v2:#6FA0FF; --ble:#B08CFF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #6FA0FF; box-shadow: 0 0 24px 2px rgba(111,160,255,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">UZAKTAN ERİŞİM · 3. FAZ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Araca bağlanılmaz — araç bağlanır</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1120px;">Web paneli kalktı, uzaktan kontrol iOS uygulamasına taşındı. Bunun tek yolu GSM; ve GSM'in şekli, ne yapabileceğimizi baştan belirliyor.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <!-- ÜST İKİLİ -->
+  <div style="display: flex; gap: 20px; flex-shrink: 0;">
+
+    <div style="flex: 1.5; min-width: 0; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px;">
+      <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — CGNAT</div>
+      <div style="font-size: 16px; line-height: 1.5; color: #E8EEF4;">SIM kart operatör NAT'ının arkasındadır; aracın dışarıdan erişilebilir bir adresi <strong style="font-weight: 600;">yoktur</strong>. Telefon aracı arayamaz. <strong style="font-weight: 600;">Her oturumu araç başlatır.</strong></div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Aşağıdaki üç yolun neden tam da bu üç yol olduğunu açıklayan şey budur: ya şebeke aracı uyandırır (SMS), ya araç boruyu açık tutar (MQTT), ya da araç periyodik olarak sorar (yoklama).</div>
+    </div>
+
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">BAĞIMLILIK — v2 GÜÇ MİMARİSİ</h2>
+      <div style="font-size: 15px; line-height: 1.5; color: #E8EEF4;">v1 <span class="mono">Kl.15</span> tetiklidir: araç parkta uykudadır, hiçbir uzaktan komut ulaşmaz.</div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">Kl.30</span>
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">wake-on-bus</span>
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">periyodik uyanma</span>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Uzaktan erişim <strong style="color: #E8EEF4; font-weight: 600;">v2 öncesi çalışmaz</strong>. Bu bir yazılım eksiği değil, güç mimarisinin sonucudur.</div>
+    </div>
+
+  </div>
+
+  <!-- ÜÇ YOL -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 20px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KOMUT ARACA NASIL İNER — ÜÇ YOL</h2>
+      <span style="font-size: 14px; color: #93A2B3;">Hiçbiri anlık değildir. Uzaktan erişim <strong style="color: #E8EEF4; font-weight: 600;">ön hazırlık içindir</strong> — sürüş sırasında canlı kontrol için değil.</span>
+    </div>
+    <table>
+      <thead><tr><th style="width: 15%;">Yol</th><th style="width: 20%;">Gecikme</th><th style="width: 32%;">Bedeli</th><th>Ne zaman</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="mono" style="font-weight: 700;">SMS</span></td>
+          <td style="color:#93A2B3;">saniyeler – onlarca saniye</td>
+          <td style="color:#93A2B3;">mesaj başına ücret; veri hattı gerekmez</td>
+          <td><strong style="font-weight: 600;">En güvenilir.</strong> Kritik ve seyrek komutlar — araç uykudayken de ulaşır.</td>
+        </tr>
+        <tr>
+          <td><span class="mono" style="font-weight: 700;">HTTP yoklama</span></td>
+          <td style="color:#93A2B3;">yoklama aralığı kadar</td>
+          <td style="color:#93A2B3;">sık yoklama = pil ve veri maliyeti</td>
+          <td>Arka planda durum senkronu; komut için yavaş.</td>
+        </tr>
+        <tr style="background: rgba(111,160,255,0.06);">
+          <td><span class="mono" style="font-weight: 700; color: #6FA0FF;">MQTT</span></td>
+          <td style="color:#93A2B3;">~saniye</td>
+          <td style="color:#93A2B3;">keepalive trafiği; 2G'de bağlantı sık düşer, yeniden bağlanma mantığı şart</td>
+          <td><strong style="font-weight: 600;">Uygulama açıkken.</strong> Araç dışarı bağlanıp boruyu açık tutar, komut o borudan iner.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 12px 15px; display: flex; gap: 12px; align-items: flex-start;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;">TUZAK</span>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Modülün <strong style="font-weight: 600;">dahili MQTT AT komutlarına güvenilmez</strong> — TLS'le aynı hikâye, firmware sürümüne göre var ya da yok. Çözüm: ham TCP soketi açılır, MQTT paketleri <strong style="font-weight: 600;">kendimiz</strong> üretilir. Böylece sürümden bağımsız hâle gelir.</div>
+    </div>
+  </div>
+
+  <!-- ALT İKİLİ -->
+  <div style="display: flex; gap: 20px; flex: 1; min-height: 0;">
+
+    <!-- 2G TAKVİMİ -->
+    <div style="flex: 1; min-width: 0; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">2G TAKVİMİ — ARTIK BİLİNMEYEN DEĞİL</h2>
+
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span class="mono" style="font-size: 11px; letter-spacing: 0.1em; color: #6E7C8C;">2G / 3G KAPANIŞ SON TARİHİ</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: #E8EEF4; line-height: 1.1;">30 Nisan 2029</span>
+        </div>
+        <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">OPERATÖRDEN TEYİT EDİLECEK</span>
+      </div>
+
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">BTK ile operatörler arasındaki sözleşmelerde son tarih bu. Turkcell ve Vodafone'un GSM lisansları bu tarihe uzatıldı; Türk Telekom'unki 2026'da bitiyordu, o da aynı tarihe hizalandı. Lisans bitişi kesin kapanış günü demek değildir — operatör daha erken kapatabilir.</div>
+
+      <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 13px 15px; display: flex; flex-direction: column; gap: 7px;">
+        <div class="mono" style="font-size: 11px; letter-spacing: 0.1em; color: #3FD98A;">MADDENİN DURUMU DEĞİŞTİ</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Eskiden <strong style="font-weight: 600;">engelleyici</strong>ydi: takvim bilinmeden sipariş yoktu. Şimdi <strong style="font-weight: 600;">tarihli bir ömür</strong>. Sipariş önündeki engel kalktı.</div>
+      </div>
+
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Ama tarih bir son kullanma tarihidir: <strong style="font-weight: 600;">SIM808 bir soyutlama katmanının ardında durur</strong>. Firmware'de modülle konuşan tek bir <span class="mono">modem</span> katmanı olur; üst katman "konum gönder", "SMS gönder" der. Modül değişirse yalnızca o katman değişir.</div>
+
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: auto;">
+        <span style="font-size: 13px; color: #93A2B3;">Yerine geçecek sınıf hazır:</span>
+        <span class="mono" style="font-size: 12px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px; white-space: nowrap;">LTE Cat-1</span>
+        <span style="font-size: 13px; color: #93A2B3;">— GNSS dahili, gerçek TLS, aynı UART.</span>
+      </div>
+    </div>
+
+    <!-- TLS + SIM -->
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">"HTTPS DESTEKLER" — VERİ SAYFASI DOĞRUSU</h2>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Doğrudur, ama saha doğrusu değildir. Dahili SSL yığını firmware sürümüne göre değişir; desteklediği TLS sürümü ve şifre takımı eskidir, Supabase modern TLS ister.</div>
+        <div style="background: rgba(63,217,138,0.07); border: 1px solid rgba(63,217,138,0.30); border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.5; color: #E8EEF4;">Bu yüzden karar aynen duruyor: <strong style="font-weight: 600;">taşımaya güvenilmez, veri uygulama katmanında korunur.</strong> Cihaz payload'ı kendi ön paylaşımlı anahtarıyla AES-GCM ile şifreler ve imzalar, Edge Function çözer. TLS kurulabilirse üstüne biner; kurulamazsa veri yine okunamaz ve taklit edilemez.</div>
+      </div>
+
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SIM KART — YAPILACAKLAR</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">01</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">APN firmware'e gömülmez</strong>, yapılandırmada durur — operatöre ve tarifeye göre değişir</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">02</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">SIM PIN kapatılır</strong> — araçta PIN soran bir modem takılı kalır</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">03</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Bireysel hat mı <strong style="font-weight: 600;">M2M/IoT hattı</strong> mı — M2M bu iş için tasarlanmıştır, ayrıca yeni BTK M2M düzenlemeleri var; operatöre sorulacak</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">04</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Roaming kapalı, veri limiti tanımlı</span></div>
+          <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 11px; color: #6E7C8C; flex-shrink: 0;">05</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;">Ön ödemeli hat kullanılacaksa <strong style="font-weight: 600;">hareketsizlikten kapanma</strong> kuralı sorulacak</span></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

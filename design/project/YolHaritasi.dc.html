@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>5 Aşamalı Yol Haritası</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1100px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 20px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #3FD98A; box-shadow: 0 0 24px 2px rgba(63,217,138,0.55);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="height: 68px; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">YOL HARİTASI — HANGİ SIRAYLA İLERLİYORUZ?</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">5 aşamalı yol haritası</h1>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: 16px;">
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; text-align: right; max-width: 440px;">Sıfırdan başlayan biri için: her aşamada ne yapılır, ne çıkar, ne zaman "bitti" sayılır. 5 aşama v1'i bitirir; Antriebs (Faz 6) ve GSM/GPS + bulut (Faz 7) ayrı fazlardır.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+    </div>
+  </div>
+
+  <!-- SERT SIRALAMA KURALI -->
+  <div style="height: 52px; flex-shrink: 0; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 12px 20px; display: flex; align-items: center; gap: 20px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A; flex-shrink: 0;">KURAL</div>
+    <div style="width: 1px; height: 26px; background: rgba(255,90,90,0.4); flex-shrink: 0;"></div>
+    <div style="font-size: 16px; line-height: 1.45; color: #E8EEF4;">Araçtaki ilk yazılım <strong style="color: #FF8F8F;">sadece dinler — LED'e dokunmaz.</strong> Log al → masada analiz et → gerçek ID'leri bul → LED kodunu ondan sonra yaz.</div>
+  </div>
+
+  <!-- ZAMAN ÇİZGİSİ -->
+  <div style="height: 484px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px;">
+
+    <svg width="1472" height="56" viewBox="0 0 1472 56" style="display: block; flex-shrink: 0;">
+      <defs>
+        <marker id="okHarita" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#2A3746"></path>
+        </marker>
+        <filter id="glowHarita" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"></feGaussianBlur>
+          <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+        </filter>
+      </defs>
+
+      <line x1="168" y1="34" x2="411" y2="34" stroke="#2A3746" stroke-width="2" marker-end="url(#okHarita)"></line>
+      <line x1="466" y1="34" x2="709" y2="34" stroke="#2A3746" stroke-width="2" marker-end="url(#okHarita)"></line>
+      <line x1="763" y1="34" x2="1007" y2="34" stroke="#2A3746" stroke-width="2" marker-end="url(#okHarita)"></line>
+      <line x1="1061" y1="34" x2="1304" y2="34" stroke="#2A3746" stroke-width="2" marker-end="url(#okHarita)"></line>
+
+      <text x="885" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#FFB020">log analizi masada yapılır</text>
+
+      <circle cx="141" cy="34" r="21" fill="#93A2B3" filter="url(#glowHarita)"></circle>
+      <text x="141" y="41" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#0B0F14">1</text>
+
+      <circle cx="438" cy="34" r="21" fill="#4CC2FF" filter="url(#glowHarita)"></circle>
+      <text x="438" y="41" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#0B0F14">2</text>
+
+      <circle cx="736" cy="34" r="21" fill="#FF9F45" filter="url(#glowHarita)"></circle>
+      <text x="736" y="41" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#0B0F14">3</text>
+
+      <circle cx="1034" cy="34" r="21" fill="#FFB020" filter="url(#glowHarita)"></circle>
+      <text x="1034" y="41" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#0B0F14">4</text>
+
+      <circle cx="1331" cy="34" r="21" fill="#3FD98A" filter="url(#glowHarita)"></circle>
+      <text x="1331" y="41" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#0B0F14">5</text>
+    </svg>
+
+    <div style="display: flex; gap: 16px; height: 418px;">
+
+      <!-- AŞAMA 1 -->
+      <div style="width: 281px; height: 449px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-top: 3px solid #93A2B3; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 15px; font-weight: 700; color: #E8EEF4; line-height: 1.25;">Proje hazırlık</h2>
+        <div style="font-size: 11.5px; color: #93A2B3; margin-top: 4px; line-height: 1.35;">Donanım seçimi, tedarik ve araç-gereç listesi</div>
+        <div style="height: 1px; background: #2A3746; margin: 11px 0;"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Nano ESP32 (ESP32-S3) elde var; SN65HVD230 (3,3 V), 74AHCT125 ×2, 330 Ω ×7 sipariş edilir</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">ZBL 12 V şerit numunesi istenir — IC tipi ve RGB sırası sorulur</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Güç seti: buck 12→5 V + TVS, MOSFET, sigorta musluğu + sigorta</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Araç-gereç: multimetre (zorunlu), crimp + ısı büzüşmeli, laptop + USB</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">VIN'e özel kablo şeması (erWin / ELSAWin); J533 fişinin fotoğrafı</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+            <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: 3px;">Kapanmış malzeme listesi; tüm parçalar masada.</div>
+          </div>
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+            <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Numune şerit geldi, şema indirildi, fiş varyantı belli.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AŞAMA 2 -->
+      <div style="width: 281px; height: 418px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-top: 3px solid #4CC2FF; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 15px; font-weight: 700; color: #E8EEF4; line-height: 1.25;">Kurulum öncesi hazırlık</h2>
+        <div style="font-size: 11.5px; color: #93A2B3; margin-top: 4px; line-height: 1.35;">Yazılım ortamı ve masaüstü şablonlar</div>
+        <div style="height: 1px; background: #2A3746; margin: 11px 0;"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Arduino IDE / PlatformIO + ESP32 çekirdeği; kart: Arduino Nano ESP32</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span class="mono" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #4CC2FF;">driver/twai.h</span> şablonu: LISTEN_ONLY, 100 kbps, ACCEPT_ALL, seri log</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">FastLED + RMT şablonu; jenerik WS2812B parçasıyla masada LED testi</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Mock zon durum makinesi: sahte olaylarla öncelik mantığı masada koşar</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">iOS SwiftUI prototipi + NimBLE bonding iskeleti; nRF Connect ile test</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+            <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: 3px;">Log / LED / BLE — üç şablon masada çalışıyor.</div>
+          </div>
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+            <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Araca hiç dokunmadan tüm iskelet derleniyor ve koşuyor.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AŞAMA 3 -->
+      <div style="width: 281px; height: 448px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-top: 3px solid #FF9F45; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 15px; font-weight: 700; color: #E8EEF4; line-height: 1.25;">Araç içi kurulum</h2>
+        <div style="font-size: 11.5px; color: #93A2B3; margin-top: 4px; line-height: 1.35;">Harness, 7 zon yerleşimi, güç dağıtımı</div>
+        <div style="height: 1px; background: #2A3746; margin: 11px 0;"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Splice öncesi kontrol listesi: akü (−) sökülü, hatlarda ~2,5 V ölçümü</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">J533 soketine passthrough (geçiş) harness takılır; sonrasında DTC kontrolü</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #FFC49A; background: rgba(255,90,90,0.10); border: 1px solid #FF5A5A; border-radius: 7px; padding: 6px 8px;"><strong style="color: #FF8F8F;">İLK FIRMWARE: YALNIZCA DİNLER</strong> — LED yok, BLE yok, USB'ye log</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Z1–Z7 şeritleri + 12 V / MOSFET hattı; Z5–Z7 eşik (marşpiyel) trimi rotasından çekilir</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Kl.15 musluğu, şase, körükten bükümlü çift; toplam şerit metrajı ölçülür</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+            <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: 3px;">Ham CAN logu (kapı, kilit, far, sinyal) + ölçülmüş toplam metraj.</div>
+          </div>
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+            <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Hatasız ID akışı, yeni DTC yok; sigorta metraja göre seçildi.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AŞAMA 4 -->
+      <div style="width: 281px; height: 434px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-top: 3px solid #FFB020; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 15px; font-weight: 700; color: #E8EEF4; line-height: 1.25;">Bütünleştirme ve kodlama</h2>
+        <div style="font-size: 11.5px; color: #93A2B3; margin-top: 4px; line-height: 1.35;">Masada analiz, sonra araçta doğrulama</div>
+        <div style="height: 1px; background: #2A3746; margin: 11px 0;"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020;">4a</span> Log oturumu: kapı aç/kapa, kilit, far, sinyal, kontak, kısa sürüş</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020;">4b</span> Masada analiz: değişen ID'ler bulunur; 0x351 hız / 0x353 devir teyit edilir</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020;">4c</span> Parsing + öncelik makinesi + zon yapılandırması yazılır</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020;">4d</span> İlk LED tepkisi: tek test LED'i kapı açılınca — yine dinleme modunda</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020;">4e</span> BLE: renk ve parlaklık iOS uygulamasından; (ops.) modül 09 kodlaması</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+            <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: 3px;">Çalışan tetikleyici → zon eşlemesi ve uygulama kontrolü.</div>
+          </div>
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+            <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Kapı açılınca doğru zon, her seferinde tepki veriyor.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AŞAMA 5 -->
+      <div style="width: 281px; height: 418px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-top: 3px solid #3FD98A; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 15px; font-weight: 700; color: #E8EEF4; line-height: 1.25;">Test ve devreye alma</h2>
+        <div style="font-size: 11.5px; color: #93A2B3; margin-top: 4px; line-height: 1.35;">Son kontroller, arıza tespiti, validasyon</div>
+        <div style="height: 1px; background: #2A3746; margin: 11px 0;"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Tüm olay senaryoları araç dururken; BLE aktifken titreme testi</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Sinyal senkronu: sweep, flaşör bitinin yükselen kenarında başlar</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Mesaj 2 sn kesilirse tabana dönüş testi</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">Kontak kapalıyken akım ölçümü: MOSFET şerit 12 V'unu kesiyor mu?</div>
+          <div style="font-size: 11.8px; line-height: 1.42; color: #E8EEF4;">OBD ile DTC yeniden kontrolü; arıza tespiti ve geri alma planı</div>
+        </div>
+        <div style="margin-top: auto; padding-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+            <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: 3px;">v1 devrede; günlük kullanımda stabil sistem.</div>
+          </div>
+          <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+            <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">DTC yok, park hâlinde ölçülebilir akım yok → v2 kararı.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ALT KULVARLAR -->
+  <div style="height: 254px; flex-shrink: 0; display: flex; gap: 24px;">
+
+    <div style="width: 480px; box-sizing: border-box; background: rgba(229,83,61,0.06); border: 1px solid #E5533D; border-radius: 14px; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #E5533D;">FAZ 6 — ANTRIEBS-CAN</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #E5533D; border: 1px solid #E5533D; border-radius: 999px; padding: 3px 10px; white-space: nowrap;">2. FAZ · 5 AŞAMADAN SONRA</span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">1 · Kontrolcü B’yi (GIGA R1) bağla</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">2 · ikinci çifti J533'ten al</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">3 · 500 kbps listen-only logla</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">4 · 0x280'i doğrula</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">5 · devir / gaz pedalını bağla</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">6 · kalanını logdan keşfet</span>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: stretch;">
+        <div style="flex: 1;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+          <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Araç ekranında gerçek devir ve gaz pedalı; iki hatta da ham bus izleme.</div>
+        </div>
+        <div style="flex: 1; background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+          <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">0x280 araçta doğrulandı, iki kanal da hatasız akıyor, yeni DTC yok.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
+        <span style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">0x280'in byte offset'i model yılına göre kayabilir · <span style="color: #FF8F8F;">"İlk yazılım sadece dinler"</span> kuralı bu fazda da geçerli.</span>
+      </div>
+    </div>
+
+    <div style="width: 480px; box-sizing: border-box; background: rgba(176,140,255,0.06); border: 1px solid #B08CFF; border-radius: 14px; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B08CFF;">FAZ 7 — GSM / GPS VE BULUT</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #B08CFF; border: 1px solid #B08CFF; border-radius: 999px; padding: 3px 10px; white-space: nowrap;">3. FAZ · EN SON</span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">1 · modülü masada besle</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">2 · AT ile şebekeye gir</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">3 · GPS sabitlemesi al</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">4 · şifreli konumu gönder</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">5 · panelde ve uygulamada göster</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap;">6 · SMS → ses devresi</span>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: stretch;">
+        <div style="flex: 1;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">ÇIKTI</div>
+          <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Panelde ve uygulamada şifreli konum; SMS ve arama kumandası çalışıyor.</div>
+        </div>
+        <div style="flex: 1; background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 10px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: #3FD98A;">BİTTİ KRİTERİ</div>
+          <div style="font-size: 11.5px; line-height: 1.38; color: #E8EEF4; margin-top: 3px;">Şebekeye girişte reset yok; Edge Function payload'ı doğruluyor.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FF5A5A; border: 1px dashed #FF5A5A; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ENGELLEYİCİ</span>
+        <span style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">2G kapanış takvimi satın alma öncesi teyit edilir · konuşma araç içindeki mikrofon ve hoparlörden yürür.</span>
+      </div>
+    </div>
+
+    <div style="width: 220px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">GÜÇ MİMARİSİ</h2>
+
+      <div style="box-sizing: border-box; background: rgba(63,217,138,0.07); border: 1px solid #3FD98A; border-radius: 10px; padding: 9px 12px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0B0F14; background: #3FD98A; border-radius: 999px; padding: 3px 10px;">v1 · ŞİMDİ</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 10px;">Kl.15</span>
+        </div>
+        <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Kontak kapalıyken kart ölü, MOSFET şeridi keser → <strong style="color: #7FE7B4;">akü riski sıfır.</strong></div>
+      </div>
+
+      <div style="box-sizing: border-box; background: rgba(111,160,255,0.07); border: 1px dashed #6FA0FF; border-radius: 10px; padding: 9px 12px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0B0F14; background: #6FA0FF; border-radius: 999px; padding: 3px 10px;">v2 · SONRA</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 3px 10px;">Kl.30</span>
+        </div>
+        <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Wake-on-bus + deep sleep &lt; 10 µA → gerçek <strong style="color: #A9C7FF;">"kilit aç → welcome".</strong></div>
+      </div>
+    </div>
+
+    <div style="width: 220px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">İLERİDE</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+        <span style="font-size: 11.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px;">HomeKit</span>
+        <span style="font-size: 11.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px;">Find My</span>
+        <span style="font-size: 11.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px;">Garaj RF</span>
+        <span style="font-size: 11.5px; color: #93A2B3; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px;">Telemetri</span>
+      </div>
+      <div style="margin-top: auto; background: rgba(255,176,32,0.07); border: 1px solid #FFB020; border-radius: 10px; padding: 8px 11px; font-size: 11.5px; line-height: 1.35; color: #E8EEF4;"><strong style="color: #FFCE6A;">Yol B keşfi (pano 11)</strong> — faz değil: Faz 4'ten sonra denenebilir, başarısızlığı Yol A'yı etkilemez.</div>
+      <div style="background: rgba(63,217,138,0.07); border: 1px solid #3FD98A; border-radius: 10px; padding: 8px 11px; font-size: 11.5px; line-height: 1.35; color: #E8EEF4;"><strong style="color: #7FE7B4;">Kapsamda kalan:</strong> far / ışık sensöründen otomatik gece kısması.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

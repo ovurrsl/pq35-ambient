@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Sürüş detayı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hiz-1:#2F4A6B; --hiz-2:#4C7FC0; --hiz-3:#8FD0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+    <a href="#surusler" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Sürüşler
+    </a>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+        <h1 style="font-size: 24px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Bugün · 08:42</h1>
+        <div class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #6E7C8C;">08:42 – 09:17 · ZAMAN KAYNAĞI GPS</div>
+      </div>
+      <span style="display: inline-flex; align-items: center; gap: 5px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.05em; color: #93A2B3; background: rgba(232,238,244,0.07); border: 1px solid rgba(232,238,244,0.14); border-radius: 999px; padding: 3px 8px; white-space: nowrap; flex-shrink: 0;">KARTTA</span>
+    </div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 8px; display: flex; flex-direction: column; gap: 9px;">
+
+    <!-- HARİTA -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 10px 11px 9px; display: flex; flex-direction: column; gap: 7px; flex-shrink: 0;">
+
+      <svg width="318" height="172" viewBox="0 0 318 172" fill="none" aria-label="Rota: hıza göre renklendirilmiş, başlangıç ve bitiş noktaları, bir duruş ve bir sert frenleme işareti" style="display: block; border-radius: 12px; background: #0F1620;">
+        <rect x="0" y="0" width="318" height="172" rx="12" fill="#0F1620"></rect>
+        <g stroke="#18222E" stroke-width="1">
+          <path d="M0 40h318M0 84h318M0 128h318M60 0v172M130 0v172M200 0v172M266 0v172"></path>
+        </g>
+        <path d="M22 152C44 152 60 146 78 138" stroke="#2F4A6B" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
+        <path d="M78 138C96 130 104 116 118 106" stroke="#4C7FC0" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
+        <path d="M118 106C140 96 156 96 176 96" stroke="#8FD0FF" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
+        <path d="M176 96C198 96 212 78 230 64" stroke="#4C7FC0" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
+        <path d="M230 64C252 50 268 44 286 40" stroke="#8FD0FF" stroke-width="5.5" stroke-linecap="round" fill="none"></path>
+        <circle cx="118" cy="106" r="9" fill="#0F1620" stroke="#93A2B3" stroke-width="2"></circle>
+        <path d="M115 102.5v7M121 102.5v7" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round"></path>
+        <circle cx="176" cy="96" r="9" fill="#0F1620" stroke="#FFB020" stroke-width="2"></circle>
+        <path d="M172.5 93.5 176 99l3.5-5.5" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+        <circle cx="22" cy="152" r="7" fill="#E8EEF4"></circle>
+        <circle cx="286" cy="40" r="7" fill="#0F1620" stroke="#E8EEF4" stroke-width="2.5"></circle>
+        <circle cx="286" cy="40" r="2.6" fill="#E8EEF4"></circle>
+      </svg>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 7px;">
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">HIZ</span>
+          <span style="width: 16px; height: 4px; border-radius: 999px; background: #2F4A6B;"></span>
+          <span style="width: 16px; height: 4px; border-radius: 999px; background: #4C7FC0;"></span>
+          <span style="width: 16px; height: 4px; border-radius: 999px; background: #8FD0FF;"></span>
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">YAVAŞ → HIZLI</span>
+        </div>
+        <span class="mono" style="font-size: 10px; color: #6E7C8C; white-space: nowrap;">Apple Haritalar</span>
+      </div>
+
+    </div>
+
+    <!-- ÖZET METRİKLER -->
+    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+      <div style="flex: 1; min-width: 0; background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 9px 10px; display: flex; flex-direction: column; gap: 2px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">MESAFE</span>
+        <span class="mono" style="font-size: 20px; font-weight: 700; color: #E8EEF4; line-height: 1.15;">12,4<span style="font-size: 11px; font-weight: 500; color: #93A2B3;"> km</span></span>
+      </div>
+      <div style="flex: 1; min-width: 0; background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 9px 10px; display: flex; flex-direction: column; gap: 2px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">SÜRE</span>
+        <span class="mono" style="font-size: 20px; font-weight: 700; color: #E8EEF4; line-height: 1.15;">35<span style="font-size: 11px; font-weight: 500; color: #93A2B3;"> dk</span></span>
+      </div>
+      <div style="flex: 1; min-width: 0; background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 9px 10px; display: flex; flex-direction: column; gap: 2px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">EN YÜKSEK</span>
+        <span class="mono" style="font-size: 20px; font-weight: 700; color: #E8EEF4; line-height: 1.15;">74<span style="font-size: 11px; font-weight: 500; color: #93A2B3;"> km/s</span></span>
+      </div>
+    </div>
+
+    <!-- İKİ ORTALAMA -->
+    <div style="background: rgba(19,26,34,0.55); border: 1px solid rgba(232,238,244,0.08); border-radius: 14px; padding: 9px 12px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">ORT. — HAREKETTE</span>
+        <span class="mono" style="font-size: 17px; font-weight: 700; color: #E8EEF4;">26 km/s</span>
+      </div>
+      <span style="width: 1px; align-self: stretch; background: rgba(232,238,244,0.10);"></span>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">ORT. — TOPLAM</span>
+        <span class="mono" style="font-size: 17px; font-weight: 700; color: #E8EEF4;">21 km/s</span>
+      </div>
+      <span style="width: 1px; align-self: stretch; background: rgba(232,238,244,0.10);"></span>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span class="mono" style="font-size: 9px; letter-spacing: 0.06em; color: #6E7C8C;">RÖLANTİ</span>
+        <span class="mono" style="font-size: 17px; font-weight: 700; color: #E8EEF4;">6 dk</span>
+      </div>
+    </div>
+
+    <!-- OLAYLAR -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 4px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 13px 6px;">
+        <span style="font-size: 12px; font-weight: 600; color: #93A2B3;">Olaylar</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap;">EŞİKLER ARAÇTA</span>
+      </div>
+
+      <a href="#olay-hizlanma" style="display: flex; align-items: center; gap: 11px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5"></path></svg>
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Sert hızlanma</span>
+        <span class="mono" style="font-size: 15px; font-weight: 700; color: #E8EEF4;">3</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+      <a href="#olay-fren" style="display: flex; align-items: center; gap: 11px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"></path></svg>
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Sert frenleme</span>
+        <span class="mono" style="font-size: 15px; font-weight: 700; color: #E8EEF4;">1</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+      <a href="#olay-durus" style="display: flex; align-items: center; gap: 11px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M9.5 6v12M14.5 6v12"></path></svg>
+        <span style="flex: 1; min-width: 0; font-size: 15px; color: #E8EEF4;">Duruş</span>
+        <span class="mono" style="font-size: 15px; font-weight: 700; color: #E8EEF4;">7</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+    </div>
+
+    <!-- EYLEMLER -->
+    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+      <button type="button" style="flex: 1; min-height: 46px; border-radius: 12px; background: rgba(232,238,244,0.08); border: 1px solid rgba(232,238,244,0.14); color: #E8EEF4; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8EEF4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7.5 9.5 12 4l4.5 5.5"></path><path d="M4.5 16v2.5a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5V16"></path></svg>
+        BLE ile indir
+      </button>
+      <button type="button" style="flex: 1; min-height: 46px; border-radius: 12px; background: rgba(255,90,90,0.08); border: 1px solid rgba(255,90,90,0.30); color: #FF5A5A; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF5A5A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"></path><path d="M7 7v11.5A1.5 1.5 0 0 0 8.5 20h7a1.5 1.5 0 0 0 1.5-1.5V7"></path></svg>
+        Sürüşü sil
+      </button>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Güvenli Kurulum</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1000px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 28px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FF5A5A; box-shadow: 0 0 24px 2px rgba(255,90,90,0.55);"></div>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 05 — GÜVENLİ KURULUM</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Araca dokunmadan önce ne yapmalı?</h1>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Gerçek risk hacker değil; CAN-H/L'yi yanlış bağlayıp aracı kilitlemektir. Bu panodaki altı adım atlanmaz.</div>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch;">
+
+    <div style="width: 728px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 11px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">BAĞLANTIDAN ÖNCE — ZORUNLU KONTROL LİSTESİ</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; color: #FF5A5A; background: rgba(255,90,90,0.10); border: 1px solid #FF5A5A; border-radius: 999px; padding: 3px 11px; white-space: nowrap;">KISAYOL YOK</span>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">1</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Akü (−) kutbu sökülü</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Geçiş kablosu ve tüm araç tarafı bağlantılar akü ayrıkken yapılır.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">2</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Pinler VIN'e özel şemadan teyit edildi — tahminle bağlanmaz</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Komfort CAN-H / CAN-L pin numaraları ve kablo renkleri erWin / ELSAWin / Ross-Tech şemasından okunur. Forum bilgisiyle bağlantı yapılmaz.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">3</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Modüldeki 120 Ω sonlandırma söküldü</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Araç hattı zaten iki uçtan sonlandırılmış; ikinci direnç bus'ı bozar.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">4</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Multimetre: bekleme voltajı ~2,5 V, her iki hatta</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">CAN-H ve CAN-L ayrı ayrı şaseye göre ~2,5 V; iki hat arasında ~0 V fark. Değer tutmuyorsa bağlantı yapılmaz.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">5</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">Bağlantı sonrası VCDS / OBDeleven ile yeni DTC yok</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Hata kaydı taranır; kapı, kilit, cam ve far fonksiyonları normal çalışıyor mu diye tek tek denenir.</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px; align-items: flex-start;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; flex-shrink: 0;">6</span>
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+          <div style="font-size: 15px; font-weight: 600; color: #E8EEF4;">İlk çalıştırma araç dururken ve kontak kapalı — asla sürüş sırasında</div>
+          <div style="font-size: 13px; line-height: 1.45; color: #93A2B3;">Sıra: önce geçiş kablosu, sonra transceiver, en son USB.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width: 720px; display: flex; flex-direction: column; gap: 11px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">SERT KURALLAR — İSTİSNASI YOK</h2>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Yazılımda <span style="font-family: 'JetBrains Mono', monospace;">Listen-Only</span> zorunlu, TX pini fiziksel olarak bağlanmaz. ACK basmaya çalışan bir kontrolcü okuyamadığı her çerçevede hata sayaçlarını şişirir; kesik TX bunun mekanik yedeğidir.</div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Araç tarafı bağlantılarda krimp + ısı büzüşmeli manşon. Lehim yok — titreşimde çatlar. Elektrik bandı ve iğneli (Scotchlok) konnektör de yok.</div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Kablo kesilmez. Gateway soketine soket-sokete geçiş kablosu girer; tüm pinler düz geçer, yalnız iki pinden paralel çıkılır.</div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">EPS / direksiyon modülüne asla dokunulmaz.</div>
+      </div>
+
+      <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Canlı araçta brute-force asla: ne hatta yazma, ne rastgele ID veya kod denemesi. İlk sürüm hiçbir şey yazmaz.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch;">
+
+    <div style="width: 470px; background: #131A22; border: 1px solid rgba(63,217,138,0.45); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #3FD98A;">GERİ DÖNÜŞ — İZ BIRAKMAZ</h2>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 13px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 11px;">Ara kabloyu çıkar</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #3FD98A;">→</span>
+        <span style="font-size: 13px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 8px; padding: 7px 11px;">Orijinal fiş doğrudan J533'e</span>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">Araç fabrika hâlinde. Kesik kablo, delinmiş izolasyon, kalıcı ek yok — servis veya satış öncesi tek hamlede sökülür.</div>
+    </div>
+
+    <div style="width: 522px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">İLK ARAÇ YAZILIMI SADECE DİNLER</h2>
+      <div style="display: flex; align-items: center; gap: 9px; flex-wrap: wrap;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px;">USB seri log</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #93A2B3;">→</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px;">masada analiz</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #93A2B3;">→</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 11px;">sonra LED</span>
+      </div>
+      <div style="font-size: 14px; line-height: 1.5; color: #E8EEF4;">İlk turda LED yok, BLE yok, yazma yok. Araçta yazılım geliştirilmez — yalnız veri toplanır; parse, LED ve BLE katmanları loglar incelendikten sonra masada yazılır.</div>
+    </div>
+
+    <div style="width: 432px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">GEREKLİ ALETLER</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Multimetre <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FFB020; border: 1px solid #FFB020; border-radius: 4px; padding: 1px 6px;">ZORUNLU</span></div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Krimp pensesi + ısı büzüşmeli manşon seti</div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Laptop + USB kablosu (loglama)</div>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">VCDS / OBDeleven erişimi (DTC kontrolü)</div>
+      <div style="font-size: 12px; line-height: 1.45; color: #93A2B3; border-top: 1px solid #2A3746; padding-top: 7px;">Elektrik bandı ve Scotchlok listede yok — bilerek.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

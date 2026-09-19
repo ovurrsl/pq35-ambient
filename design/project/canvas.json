@@ -1,0 +1,516 @@
+{
+ "attachments": {},
+ "boards": {
+  "AppAnimasyon.dc.html": {
+   "h": 844,
+   "title": "iOS — Animasyon",
+   "w": 390,
+   "x": 5640,
+   "y": 4700
+  },
+  "AppArac.dc.html": {
+   "h": 844,
+   "title": "iOS — Araç · canlı veri",
+   "w": 390,
+   "x": 1410,
+   "y": 4700
+  },
+  "AppAyarlar.dc.html": {
+   "h": 844,
+   "title": "iOS — Ayarlar",
+   "w": 390,
+   "x": 2350,
+   "y": 5944
+  },
+  "AppCihazlar.dc.html": {
+   "h": 844,
+   "title": "iOS — Cihazlar",
+   "w": 390,
+   "x": 3290,
+   "y": 5944
+  },
+  "AppDogrulama.dc.html": {
+   "h": 844,
+   "title": "iOS — İki adımlı doğrulama",
+   "w": 390,
+   "x": 940,
+   "y": 5944
+  },
+  "AppEgzoz.dc.html": {
+   "h": 844,
+   "title": "iOS — Egzoz",
+   "w": 390,
+   "x": 6580,
+   "y": 4700
+  },
+  "AppEslestirme.dc.html": {
+   "h": 844,
+   "title": "iOS — Araçla eşleştirme",
+   "w": 390,
+   "x": 1410,
+   "y": 5944
+  },
+  "AppGiris.dc.html": {
+   "h": 844,
+   "title": "iOS — Giriş",
+   "w": 390,
+   "x": 470,
+   "y": 5944
+  },
+  "AppGuvenlik.dc.html": {
+   "h": 844,
+   "title": "iOS — Güvenlik ayarları",
+   "w": 390,
+   "x": 2820,
+   "y": 5944
+  },
+  "AppHava.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava süspansiyon",
+   "w": 390,
+   "x": 7050,
+   "y": 4700
+  },
+  "AppHavaDenge.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava denge ve kurulum",
+   "w": 390,
+   "x": 7990,
+   "y": 4700
+  },
+  "AppHavaHafiza.dc.html": {
+   "h": 844,
+   "title": "iOS — Hava hafıza ve ayarlar",
+   "w": 390,
+   "x": 7520,
+   "y": 4700
+  },
+  "AppIletisim.dc.html": {
+   "h": 844,
+   "title": "iOS — İletişim",
+   "w": 390,
+   "x": 3760,
+   "y": 4700
+  },
+  "AppKilit.dc.html": {
+   "h": 844,
+   "title": "iOS — Uygulama kilidi",
+   "w": 390,
+   "x": 0,
+   "y": 5944
+  },
+  "AppKodlama.dc.html": {
+   "h": 844,
+   "title": "iOS — Gizli özellikler",
+   "w": 390,
+   "x": 4700,
+   "y": 4700
+  },
+  "AppKonum.dc.html": {
+   "h": 844,
+   "title": "iOS — Konum",
+   "w": 390,
+   "x": 3290,
+   "y": 4700
+  },
+  "AppKurulum.dc.html": {
+   "h": 844,
+   "title": "iOS — Kurulum",
+   "w": 390,
+   "x": 3760,
+   "y": 5944
+  },
+  "AppOlaylar.dc.html": {
+   "h": 844,
+   "title": "iOS — CAN olayları",
+   "w": 390,
+   "x": 940,
+   "y": 4700
+  },
+  "AppOnay.dc.html": {
+   "h": 844,
+   "title": "iOS — Komut onayı",
+   "w": 390,
+   "x": 1880,
+   "y": 5944
+  },
+  "AppPerformans.dc.html": {
+   "h": 844,
+   "title": "iOS — Performans",
+   "w": 390,
+   "x": 1880,
+   "y": 4700
+  },
+  "AppRenkStudyosu.dc.html": {
+   "h": 844,
+   "title": "iOS — Renk stüdyosu",
+   "w": 390,
+   "x": 5170,
+   "y": 4700
+  },
+  "AppSahnelerBle.dc.html": {
+   "h": 844,
+   "title": "iOS — Sahneler ve bağlantı",
+   "w": 390,
+   "x": 4230,
+   "y": 4700
+  },
+  "AppSesTepkili.dc.html": {
+   "h": 844,
+   "title": "iOS — Ses tepkili",
+   "w": 390,
+   "x": 6110,
+   "y": 4700
+  },
+  "AppSurusDetay.dc.html": {
+   "h": 844,
+   "title": "iOS — Sürüş detayı",
+   "w": 390,
+   "x": 2820,
+   "y": 4700
+  },
+  "AppSurusler.dc.html": {
+   "h": 844,
+   "title": "iOS — Sürüşler",
+   "w": 390,
+   "x": 2350,
+   "y": 4700
+  },
+  "AppZonDetay.dc.html": {
+   "h": 844,
+   "title": "iOS — Bölge detayı",
+   "w": 390,
+   "x": 470,
+   "y": 4700
+  },
+  "AppZonlar.dc.html": {
+   "h": 844,
+   "title": "iOS — Bölgeler",
+   "w": 390,
+   "x": 0,
+   "y": 4700
+  },
+  "AracAglari.dc.html": {
+   "h": 1000,
+   "title": "Araç ağları",
+   "w": 1600,
+   "x": 1680,
+   "y": 0
+  },
+  "DavranisMakinesi.dc.html": {
+   "h": 1200,
+   "title": "Davranış makinesi",
+   "w": 1600,
+   "x": 3360,
+   "y": 1400
+  },
+  "DiyKodlama.dc.html": {
+   "h": 1300,
+   "title": "DIY VAG kodlama",
+   "w": 1600,
+   "x": 1680,
+   "y": 3000
+  },
+  "EgzozVarex.dc.html": {
+   "h": 1300,
+   "title": "Varex egzoz valfi",
+   "w": 1600,
+   "x": 0,
+   "y": 10388
+  },
+  "Ekipman.dc.html": {
+   "h": 1400,
+   "title": "Kullanılacak ekipmanlar",
+   "w": 1600,
+   "x": 6720,
+   "y": 3000
+  },
+  "GuvenliKurulum.dc.html": {
+   "h": 1000,
+   "title": "Güvenli kurulum",
+   "w": 1600,
+   "x": 1680,
+   "y": 1400
+  },
+  "Guvenlik.dc.html": {
+   "h": 1300,
+   "title": "Güvenlik mimarisi",
+   "w": 1600,
+   "x": 0,
+   "y": 7188
+  },
+  "HavaDenge.dc.html": {
+   "h": 1300,
+   "title": "Hava — dengeleme ve yol tutuş",
+   "w": 1600,
+   "x": 6720,
+   "y": 10388
+  },
+  "HavaKablolama.dc.html": {
+   "h": 1300,
+   "title": "Hava süspansiyon — kablolama",
+   "w": 1600,
+   "x": 5040,
+   "y": 10388
+  },
+  "HavaMimarisi.dc.html": {
+   "h": 1300,
+   "title": "Hava süspansiyon — mimari",
+   "w": 1600,
+   "x": 1680,
+   "y": 10388
+  },
+  "KablolamaPinout.dc.html": {
+   "h": 1300,
+   "title": "Kablolama ve pinout",
+   "w": 1600,
+   "x": 0,
+   "y": 1400
+  },
+  "Main.dc.html": {
+   "h": 1100,
+   "title": "Kapak ve özet",
+   "w": 1600,
+   "x": 0,
+   "y": 0
+  },
+  "MalzemeRisk.dc.html": {
+   "h": 1400,
+   "title": "Malzeme ve risk",
+   "w": 1600,
+   "x": 0,
+   "y": 3000
+  },
+  "Mimari.dc.html": {
+   "h": 1100,
+   "title": "Sistem mimarisi",
+   "w": 1600,
+   "x": 3360,
+   "y": 0
+  },
+  "PadCihazlar.dc.html": {
+   "h": 834,
+   "title": "iPad — Cihazlar",
+   "w": 1194,
+   "x": 2548,
+   "y": 11988
+  },
+  "PadGenel.dc.html": {
+   "h": 834,
+   "title": "iPad — Genel bakış",
+   "w": 1194,
+   "x": 0,
+   "y": 11988
+  },
+  "PadKonum.dc.html": {
+   "h": 834,
+   "title": "iPad — Konum ve sürüşler",
+   "w": 1194,
+   "x": 1274,
+   "y": 11988
+  },
+  "PerformansOlcumu.dc.html": {
+   "h": 1200,
+   "title": "Performans ölçümü",
+   "w": 1600,
+   "x": 1680,
+   "y": 8788
+  },
+  "SesDonanimi.dc.html": {
+   "h": 1200,
+   "title": "Ses donanımı ve BTL tuzağı",
+   "w": 1600,
+   "x": 5040,
+   "y": 3000
+  },
+  "SurtmeKorumasi.dc.html": {
+   "h": 1200,
+   "title": "Sürtme koruması",
+   "w": 1600,
+   "x": 3360,
+   "y": 10388
+  },
+  "UzaktanErisim.dc.html": {
+   "h": 1300,
+   "title": "Uzaktan erişim — GSM",
+   "w": 1600,
+   "x": 3360,
+   "y": 7188
+  },
+  "VeriKaydi.dc.html": {
+   "h": 1300,
+   "title": "Sürüş kaydı — mimari",
+   "w": 1600,
+   "x": 0,
+   "y": 8788
+  },
+  "YiginMimarisi.dc.html": {
+   "h": 1200,
+   "title": "Yığın mimarisi — Expo · Supabase · Vercel",
+   "w": 1600,
+   "x": 1680,
+   "y": 7188
+  },
+  "YolB.dc.html": {
+   "h": 1200,
+   "title": "Yol B — MIB2 renk keşfi",
+   "w": 1600,
+   "x": 3360,
+   "y": 3000
+  },
+  "YolHaritasi.dc.html": {
+   "h": 1100,
+   "title": "5 aşamalı yol haritası",
+   "w": 1600,
+   "x": 5040,
+   "y": 1400
+  },
+  "ZonHaritasi.dc.html": {
+   "h": 1000,
+   "title": "LED bölge haritası",
+   "w": 1600,
+   "x": 5040,
+   "y": 0
+  }
+ },
+ "createdOnFiles": {
+  "at": "2026-09-18T04:01:03Z",
+  "v": 1
+ },
+ "designSystems": [],
+ "launch": {
+  "view": "canvas"
+ },
+ "notes": {
+  "grup1": {
+   "kind": "title1",
+   "maxW": 6640,
+   "text": "1 · Sistem ve araç",
+   "w": 240,
+   "x": 0,
+   "y": -260
+  },
+  "grup2": {
+   "kind": "title1",
+   "maxW": 6640,
+   "text": "2 · Kurulum ve davranış",
+   "w": 240,
+   "x": 0,
+   "y": 1140
+  },
+  "grup3": {
+   "kind": "title1",
+   "maxW": 8320,
+   "text": "3 · Malzeme, ekipman, risk ve kodlama",
+   "w": 240,
+   "x": 0,
+   "y": 2740
+  },
+  "grup4": {
+   "kind": "title1",
+   "maxW": 8380,
+   "text": "4 · iOS — kontrol ekranları",
+   "w": 240,
+   "x": 0,
+   "y": 4440
+  },
+  "grup5": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "5 · iOS — kimlik, güvenlik ve ayarlar",
+   "w": 240,
+   "x": 0,
+   "y": 5684
+  },
+  "grup6": {
+   "kind": "title1",
+   "maxW": 4960,
+   "text": "6 · Bulut, güvenlik ve uzaktan erişim",
+   "w": 240,
+   "x": 0,
+   "y": 6928
+  },
+  "grup7": {
+   "kind": "title1",
+   "maxW": 3280,
+   "text": "7 · Sürüş verisi ve performans",
+   "w": 240,
+   "x": 0,
+   "y": 8528
+  },
+  "grup8": {
+   "kind": "title1",
+   "maxW": 8320,
+   "text": "8 · Egzoz ve hava süspansiyon",
+   "w": 240,
+   "x": 0,
+   "y": 10128
+  },
+  "grup9": {
+   "kind": "title1",
+   "maxW": 3742,
+   "text": "9 · iPad — geniş ekran",
+   "w": 240,
+   "x": 0,
+   "y": 11728
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "AracAglari.dc.html",
+  "Mimari.dc.html",
+  "ZonHaritasi.dc.html",
+  "KablolamaPinout.dc.html",
+  "GuvenliKurulum.dc.html",
+  "DavranisMakinesi.dc.html",
+  "YolHaritasi.dc.html",
+  "MalzemeRisk.dc.html",
+  "Ekipman.dc.html",
+  "DiyKodlama.dc.html",
+  "YolB.dc.html",
+  "SesDonanimi.dc.html",
+  "AppZonlar.dc.html",
+  "AppZonDetay.dc.html",
+  "AppRenkStudyosu.dc.html",
+  "AppAnimasyon.dc.html",
+  "AppSesTepkili.dc.html",
+  "AppEgzoz.dc.html",
+  "AppHava.dc.html",
+  "AppHavaHafiza.dc.html",
+  "AppHavaDenge.dc.html",
+  "AppOlaylar.dc.html",
+  "AppArac.dc.html",
+  "AppPerformans.dc.html",
+  "AppSurusler.dc.html",
+  "AppSurusDetay.dc.html",
+  "AppKonum.dc.html",
+  "AppIletisim.dc.html",
+  "AppSahnelerBle.dc.html",
+  "AppKodlama.dc.html",
+  "AppKurulum.dc.html",
+  "AppKilit.dc.html",
+  "AppGiris.dc.html",
+  "AppDogrulama.dc.html",
+  "AppEslestirme.dc.html",
+  "AppOnay.dc.html",
+  "AppAyarlar.dc.html",
+  "AppGuvenlik.dc.html",
+  "AppCihazlar.dc.html",
+  "Guvenlik.dc.html",
+  "YiginMimarisi.dc.html",
+  "UzaktanErisim.dc.html",
+  "VeriKaydi.dc.html",
+  "PerformansOlcumu.dc.html",
+  "EgzozVarex.dc.html",
+  "HavaMimarisi.dc.html",
+  "HavaKablolama.dc.html",
+  "SurtmeKorumasi.dc.html",
+  "HavaDenge.dc.html",
+  "PadGenel.dc.html",
+  "PadKonum.dc.html",
+  "PadCihazlar.dc.html"
+ ],
+ "pages": [],
+ "title": "PQ35-AMBIENT Tasarım Kanvası",
+ "v": 3
+}

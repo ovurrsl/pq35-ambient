@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Performans</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+    <a href="#arac" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Araç
+    </a>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+        <h1 style="font-size: 25px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Performans</h1>
+        <div class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #6E7C8C;">ÖLÇÜM OTOMATİK BAŞLAR</div>
+      </div>
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 4px 9px; white-space: nowrap; flex-shrink: 0;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #3FD98A;"></span>Hazır</span>
+    </div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 8px; display: flex; flex-direction: column; gap: 9px;">
+
+    <!-- DÜRÜSTLÜK UYARISI -->
+    <div style="background: rgba(255,176,32,0.07); border: 1px solid rgba(255,176,32,0.32); border-radius: 12px; padding: 8px 11px; display: flex; gap: 8px; flex-shrink: 0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.4v.1"></path></svg>
+      <div style="font-size: 12px; line-height: 1.42; color: #93A2B3;">Süreler <strong style="color: #E8EEF4; font-weight: 600;">gösterge hızıyla</strong> ölçülür; gösterge gerçek hızın üstünü okur, sonuç olduğundan iyi çıkar. Çözünürlüğü CAN frame aralığı belirler. <strong style="color: #E8EEF4; font-weight: 600;">Rollout yok</strong> — dergi sayılarıyla karşılaştırılmaz.</div>
+    </div>
+
+    <!-- CANLI G -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 11px 12px 10px; display: flex; gap: 12px; flex-shrink: 0;">
+
+      <svg width="152" height="152" viewBox="0 0 160 160" fill="none" aria-label="g diyagramı: boylamsal 0,00 g, yanal 0,00 g" style="flex-shrink: 0;">
+        <circle cx="80" cy="80" r="68" stroke="#2A3746" stroke-width="1.4" fill="none"></circle>
+        <circle cx="80" cy="80" r="34" stroke="#2A3746" stroke-width="1.2" stroke-dasharray="3 4" fill="none"></circle>
+        <path d="M80 8v144M8 80h144" stroke="#2A3746" stroke-width="1.2"></path>
+        <text x="80" y="6" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="9" fill="#6E7C8C">HIZLANMA</text>
+        <text x="80" y="158" text-anchor="middle" font-family="'IBM Plex Sans', sans-serif" font-size="9" fill="#6E7C8C">FREN</text>
+        <text x="6" y="92" text-anchor="start" font-family="'IBM Plex Sans', sans-serif" font-size="9" fill="#6E7C8C">SOL</text>
+        <text x="154" y="92" text-anchor="end" font-family="'IBM Plex Sans', sans-serif" font-size="9" fill="#6E7C8C">SAĞ</text>
+        <circle cx="80" cy="80" r="6" fill="#E8EEF4"></circle>
+        <circle cx="80" cy="80" r="11" stroke="rgba(232,238,244,0.30)" stroke-width="1.4" fill="none"></circle>
+      </svg>
+
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; justify-content: center;">
+        <div style="font-size: 12px; font-weight: 600; color: #93A2B3;">Canlı g</div>
+        <div style="display: flex; flex-direction: column; gap: 1px;">
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">BOYLAMSAL</span>
+          <span class="mono" style="font-size: 25px; font-weight: 700; color: #E8EEF4; line-height: 1.1;">0,00<span style="font-size: 12px; font-weight: 500; color: #93A2B3;"> g</span></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1px;">
+          <span class="mono" style="font-size: 10px; color: #6E7C8C;">YANAL</span>
+          <span class="mono" style="font-size: 25px; font-weight: 700; color: #E8EEF4; line-height: 1.1;">0,00<span style="font-size: 12px; font-weight: 500; color: #93A2B3;"> g</span></span>
+        </div>
+        <span class="mono" style="font-size: 10px; color: #6E7C8C; line-height: 1.4;">IMU · 6 eksen<br>araçtan gelmiyor</span>
+      </div>
+
+    </div>
+
+    <!-- ÖLÇÜMLER -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 4px 0 2px; display: flex; flex-direction: column; flex-shrink: 0;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 13px 6px;">
+        <span style="font-size: 12px; font-weight: 600; color: #93A2B3;">Ölçümler</span>
+        <span class="mono" style="font-size: 10px; color: #6E7C8C; display: flex; gap: 22px;"><span>SON</span><span>EN İYİ</span></span>
+      </div>
+
+      <a href="#olcum-0-100" style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; font-weight: 500; color: #E8EEF4;">0 – 100 km/s</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+      <a href="#olcum-100-0" style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; font-weight: 500; color: #E8EEF4;">100 – 0 fren</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+      <a href="#olcum-80-120" style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; font-weight: 500; color: #E8EEF4;">80 – 120 esneklik</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+      <a href="#olcum-400m" style="display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 13px; text-decoration: none; border-top: 1px solid rgba(232,238,244,0.07);">
+        <span style="flex: 1; min-width: 0; font-size: 15px; font-weight: 500; color: #E8EEF4;">400 m</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <span class="mono" style="width: 52px; text-align: right; font-size: 15px; color: #6E7C8C;">—</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+      </a>
+
+    </div>
+
+    <!-- TETİKLEME TANIMI -->
+    <div style="background: rgba(19,26,34,0.55); border: 1px solid rgba(232,238,244,0.08); border-radius: 12px; padding: 9px 12px; display: flex; flex-direction: column; gap: 5px; flex-shrink: 0;">
+      <div style="font-size: 12px; font-weight: 600; color: #93A2B3;">Nasıl tetiklenir</div>
+      <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Araç duruyorken ilk hareket saati başlatır, hedef hıza ulaşınca durdurur. <strong style="color: #E8EEF4; font-weight: 600;">Sürüş sırasında ekrana dokunulmaz.</strong></div>
+    </div>
+
+    <!-- GPS KALİBRASYONU -->
+    <a href="#gps-kalibrasyon" style="display: flex; align-items: center; gap: 11px; background: rgba(19,26,34,0.55); border: 1px solid rgba(232,238,244,0.08); border-radius: 12px; padding: 10px 12px; text-decoration: none; min-height: 46px; box-sizing: border-box; flex-shrink: 0;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><circle cx="12" cy="12" r="9"></circle><path d="M12 3v3M12 18v3M21 12h-3M6 12H3"></path><circle cx="12" cy="12" r="2.4"></circle></svg>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span style="font-size: 14px; font-weight: 500; color: #E8EEF4;">GPS ile kalibrasyon</span>
+        <span style="font-size: 11px; color: #6E7C8C;">Sabit hızda CAN ↔ GPS farkı ölçülür</span>
+      </span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">YAPILMADI</span>
+    </a>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

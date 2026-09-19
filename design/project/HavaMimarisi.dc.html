@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Hava süspansiyon — mimari</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF; --pwr:#FF6A4D;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+table{border-collapse: collapse; width: 100%;}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#93A2B3;padding:9px 11px;border-bottom:1px solid #2A3746;font-weight:500;}
+td{font-size:14px;color:#E8EEF4;padding:9px 11px;border-bottom:1px solid #2A3746;line-height:1.45;vertical-align:top;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 20px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #6FA0FF; box-shadow: 0 0 24px 2px rgba(111,160,255,0.5);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="mono" style="font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">HAVA SÜSPANSİYON · MİMARİ</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">4 bölge bağımsız — ama önce bir karar var</h1>
+      <div style="font-size: 16px; line-height: 1.5; color: #93A2B3; max-width: 1150px;">Süspansiyon <strong style="color: #E8EEF4; font-weight: 600;">güvenlik kritik bir aktüatördür</strong>. Sıfırdan valf sürücüsü yazmak, ambiyans LED'i sürmekle aynı şey değil. Bu yüzden hava tarafında iki yol var ve seçim her şeyi belirliyor.</div>
+    </div>
+    <div class="mono" style="font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>KONTROLCÜ B</div>
+  </div>
+
+  <!-- ZİNCİR -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 22px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+    <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">HAVA ZİNCİRİ</h2>
+
+    <svg width="1424" height="238" viewBox="0 0 1424 238" fill="none" aria-label="Hava zinciri: kompresör tankı doldurur, manifold dört köşeye ayrı ayrı hava verir, her köşede basınç ve yükseklik ölçülür" style="display: block;">
+      <g font-family="'IBM Plex Sans', sans-serif">
+
+        <rect x="0" y="78" width="158" height="82" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="79" y="110" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">KOMPRESÖR</text>
+        <text x="79" y="132" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">röle · görev süresi</text>
+
+        <path d="M158 119h42" stroke="#6FA0FF" stroke-width="2.4"></path>
+        <path d="m192 113 8 6-8 6" stroke="#6FA0FF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <rect x="206" y="78" width="158" height="82" rx="11" fill="#1B2430" stroke="#6FA0FF" stroke-width="1.5"></rect>
+        <text x="285" y="110" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">TANK</text>
+        <text x="285" y="132" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç sensörü</text>
+
+        <path d="M364 119h42" stroke="#6FA0FF" stroke-width="2.4"></path>
+        <path d="m398 113 8 6-8 6" stroke="#6FA0FF" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <rect x="412" y="46" width="186" height="146" rx="12" fill="#1B2430" stroke="#6FA0FF" stroke-width="1.6"></rect>
+        <text x="505" y="86" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">MANİFOLD</text>
+        <text x="505" y="112" text-anchor="middle" font-size="13" fill="#93A2B3">8 solenoid</text>
+        <text x="505" y="136" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">4 dolum + 4 boşaltma</text>
+        <text x="505" y="162" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">her valfte flyback diyot</text>
+
+        <path d="M598 119h44M642 119V36h56M642 119V92h56M642 119v54h56M642 119v82h56" stroke="#6FA0FF" stroke-width="2" fill="none"></path>
+
+        <rect x="704" y="10" width="270" height="52" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="726" y="42" font-size="14" fill="#E8EEF4">Ön sol körük</text>
+        <text x="954" y="42" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç + yükseklik</text>
+
+        <rect x="704" y="66" width="270" height="52" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="726" y="98" font-size="14" fill="#E8EEF4">Ön sağ körük</text>
+        <text x="954" y="98" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç + yükseklik</text>
+
+        <rect x="704" y="122" width="270" height="52" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="726" y="154" font-size="14" fill="#E8EEF4">Arka sol körük</text>
+        <text x="954" y="154" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç + yükseklik</text>
+
+        <rect x="704" y="178" width="270" height="52" rx="10" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="726" y="210" font-size="14" fill="#E8EEF4">Arka sağ körük</text>
+        <text x="954" y="210" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç + yükseklik</text>
+
+        <path d="M974 36h34M974 92h34M974 148h34M974 204h34" stroke="#2A3746" stroke-width="2"></path>
+        <rect x="1008" y="10" width="184" height="220" rx="12" fill="#1B2430" stroke="#2A3746"></rect>
+        <text x="1100" y="104" text-anchor="middle" font-size="14" font-weight="600" fill="#E8EEF4">9 ANALOG</text>
+        <text x="1100" y="128" text-anchor="middle" font-size="13" fill="#93A2B3">4 basınç · 4 yükseklik</text>
+        <text x="1100" y="150" text-anchor="middle" font-size="13" fill="#93A2B3">+ tank</text>
+
+        <path d="M1192 120h34" stroke="#2A3746" stroke-width="2.4"></path>
+        <path d="m1218 114 8 6-8 6" stroke="#2A3746" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <rect x="1232" y="78" width="192" height="84" rx="12" fill="#1B2430" stroke="#6FA0FF" stroke-width="1.6"></rect>
+        <text x="1328" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#E8EEF4">KONTROLCÜ B</text>
+        <text x="1328" y="132" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">GIGA R1 · Kl.15</text>
+
+      </g>
+    </svg>
+
+  </div>
+
+  <!-- İKİ YOL -->
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 20px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">İKİ YOL — SEÇİM HER ŞEYİ BELİRLİYOR</h2>
+      <span style="font-size: 14px; color: #93A2B3;">Öneri: <strong style="color: #3FD98A; font-weight: 600;">Yol 1</strong>. Güvenlik mantığı test edilmiş hâlde gelir.</span>
+    </div>
+    <table>
+      <thead><tr><th style="width: 22%;"></th><th style="width: 39%;">Yol 1 — hazır hava yönetim ECU'su</th><th>Yol 2 — tam DIY</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#93A2B3;">Valf ve güvenlik</td><td>ECU'nun içinde, test edilmiş</td><td>Bizde, sıfırdan</td></tr>
+        <tr><td style="color:#93A2B3;">Bizim rolümüz</td><td>Gösterge + CAN'den hız tetiği</td><td>Her şey</td></tr>
+        <tr><td style="color:#93A2B3;">Risk</td><td><span style="color:#3FD98A; font-weight:600;">Düşük</span></td><td><span style="color:#FF5A5A; font-weight:600;">Yüksek</span> — güvenlik kritik aktüatör</td></tr>
+        <tr><td style="color:#93A2B3;">Esneklik</td><td>ECU ne veriyorsa</td><td>Tam</td></tr>
+        <tr><td style="color:#93A2B3;">Tuzağı</td><td><strong style="font-weight:600;">Belgelenmiş açık API'si yok.</strong> Sistemimizin onu "sürmesi" mümkün değil; ya ECU'su değiştirilir ya paralel bağlanır — ikisi de sorunlu</td><td>Aşağıdaki altı kilit <strong style="font-weight:600;">opsiyonel değildir</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ALTI KİLİT -->
+  <div style="background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0;">
+    <div class="mono" style="font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">ALTI KİLİT — HAVA SÜSPANSİYONUNDA OPSİYONEL DEĞİL</div>
+
+    <div style="display: flex; gap: 18px; flex: 1; min-height: 0;">
+
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px;">
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">01</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Hareket hâlinde minimum yüksekliğin altına inilmez.</strong> Hız zaten <span class="mono">0x351</span>'de. Bu kilit yazılımda tek noktadan uygulanır ve <strong style="font-weight: 600;">arayüzde kapatılamaz</strong>.</span></div>
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">02</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Tank rezervi korunur.</strong> Yükselmeye yetecek basınç bırakmayan bir indirme kabul edilmez.</span></div>
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">03</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Hızda otomatik yükseltme geri alınamaz.</strong> Eşiğin üstünde kullanıcı aşağı indiremez.</span></div>
+      </div>
+
+      <span style="width: 1px; background: rgba(255,90,90,0.25); flex-shrink: 0;"></span>
+
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 11px;">
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">04</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Solenoidler endüktif yüktür:</strong> her valfte flyback diyot, MOSFET sürücü. Diyotsuz bir solenoid kapanırken sürücüyü öldürür.</span></div>
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">05</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Kompresör yüksek akımlı endüktif yüktür:</strong> röle + görev süresi ve termal sınır. Sürekli çalıştırma kompresörü yakar.</span></div>
+        <div style="display: flex; gap: 11px; align-items: baseline;"><span class="mono" style="font-size: 12px; font-weight: 700; color: #FF5A5A; flex-shrink: 0;">06</span><span style="font-size: 14px; line-height: 1.45; color: #E8EEF4;"><strong style="font-weight: 600;">Kalibrasyon olmadan yükseklik kontrolü yapılmaz.</strong> Sensörlerin sıfır noktası araçta öğrenilir.</span></div>
+      </div>
+
+    </div>
+
+    <div style="display: flex; gap: 11px; align-items: center; border-top: 1px solid rgba(255,90,90,0.25); padding-top: 11px;">
+      <span class="mono" style="font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;">YAZILMAYAN DEĞERLER</span>
+      <span style="font-size: 13px; line-height: 1.4; color: #93A2B3;">Solenoid modeli · tank hacmi · kompresör debisi · çalışma basıncı · yükseklik değerleri · hız eşikleri — hiçbiri sayı olarak yazılmaz, hepsi araçta belirlenir.</span>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

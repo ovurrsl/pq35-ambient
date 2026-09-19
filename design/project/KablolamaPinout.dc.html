@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kablolama ve Pinout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 44px 64px 32px; display: flex; flex-direction: column; gap: 12px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #F4A261; box-shadow: 0 0 24px 2px rgba(244,162,97,0.55);"></div>
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">PANO 04 — KABLOLAMA VE PINOUT</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Neyi nereye bağlıyoruz?</h1>
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3;">Kesme yok, lehim yok, yazma yok — gateway soketine soket-sokete geçiş kablosu girer, iki pinden paralel dinlenir.</div>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+  </div>
+
+  <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 22px 10px; display: flex; flex-direction: column; gap: 8px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">J533 GATEWAY GEÇİŞ KABLOSU — PASSTHROUGH · 2 ÇİFT</h2>
+      <span style="font-size: 12px; line-height: 1.4; color: #9FE8C2; background: rgba(63,217,138,0.10); border: 1px solid rgba(63,217,138,0.45); border-radius: 999px; padding: 5px 13px;">Kazanım: hiçbir kablo kesilmez — ara kabloyu çıkar, araç fabrika hâlinde, iz yok</span>
+    </div>
+
+    <svg width="1420" height="306" viewBox="0 0 1420 334" role="img" aria-label="J533 gateway gecis kablosu semasi">
+      <defs>
+        <marker id="arrKpH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#F4A261"></path></marker>
+        <marker id="arrKpL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#C9895C"></path></marker>
+        <filter id="glowKpHarness" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
+          <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="16" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#93A2B3">ORİJİNAL ARAÇ FİŞİ</text>
+      <text x="500" y="16" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#93A2B3">ARA KABLO — PASSTHROUGH ADAPTÖR</text>
+      <text x="500" y="33" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#F4A261">20 pinin tamamı düz geçer · yalnız 2 pinden paralel çıkış alınır</text>
+      <text x="1080" y="16" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.1em" fill="#93A2B3">J533 GATEWAY MODÜLÜ</text>
+
+      <rect x="500" y="44" width="300" height="168" rx="12" fill="rgba(244,162,97,0.06)" stroke="#F4A261" stroke-width="1.4" stroke-dasharray="7 5"></rect>
+
+      <line x1="246" y1="68.8" x2="1074" y2="68.8" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="75.6" x2="1074" y2="75.6" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="82.4" x2="1074" y2="82.4" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="89.2" x2="1074" y2="89.2" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="102.8" x2="1074" y2="102.8" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="109.6" x2="1074" y2="109.6" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="116.4" x2="1074" y2="116.4" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="123.2" x2="1074" y2="123.2" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="130" x2="1074" y2="130" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="136.8" x2="1074" y2="136.8" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="143.6" x2="1074" y2="143.6" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="150.4" x2="1074" y2="150.4" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="157.2" x2="1074" y2="157.2" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="170.8" x2="1074" y2="170.8" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="177.6" x2="1074" y2="177.6" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="184.4" x2="1074" y2="184.4" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="191.2" x2="1074" y2="191.2" stroke="#33424F" stroke-width="1.4"></line>
+      <line x1="246" y1="198" x2="1074" y2="198" stroke="#33424F" stroke-width="1.4"></line>
+
+      <line x1="246" y1="96" x2="1074" y2="96" stroke="#F4A261" stroke-width="2.8" filter="url(#glowKpHarness)"></line>
+      <line x1="246" y1="96" x2="1074" y2="96" stroke="#46D98A" stroke-width="2.8" stroke-dasharray="3 15"></line>
+      <line x1="246" y1="164" x2="1074" y2="164" stroke="#C9895C" stroke-width="2.8"></line>
+      <line x1="246" y1="164" x2="1074" y2="164" stroke="#A98C6B" stroke-width="2.8" stroke-dasharray="3 15"></line>
+
+      <rect x="40" y="52" width="200" height="156" rx="10" fill="#131A22" stroke="#2A3746" stroke-width="1.4"></rect>
+      <circle cx="58" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="76" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="94" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="112" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="148" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="166" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="184" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="202" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="220" cy="96" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="58" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="76" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="94" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="112" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="148" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="166" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="184" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="202" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="220" cy="164" r="6" fill="#1B2430" stroke="#2A3746"></circle>
+      <circle cx="130" cy="96" r="10.5" fill="none" stroke="#F4A261" stroke-width="1.2" opacity="0.55"></circle>
+      <circle cx="130" cy="96" r="7" fill="#F4A261"></circle>
+      <circle cx="130" cy="164" r="10.5" fill="none" stroke="#C9895C" stroke-width="1.2" opacity="0.55"></circle>
+      <circle cx="130" cy="164" r="7" fill="#C9895C"></circle>
+      <text x="130" y="80" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#F4A261">5</text>
+      <text x="130" y="188" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#C9895C">15</text>
+      <text x="40" y="33" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">T20 · 20 kavite — şematik; kavite geometrisi VIN şemasından</text>
+
+      <rect x="1080" y="52" width="300" height="156" rx="10" fill="#131A22" stroke="#2A3746" stroke-width="1.4"></rect>
+      <text x="1230" y="112" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700" fill="#E8EEF4">J533</text>
+      <text x="1230" y="138" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#E8EEF4">Gateway — ağ geçidi</text>
+      <text x="1230" y="160" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Antriebs · Komfort · Infotainment</text>
+      <text x="1230" y="182" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">sürücü tarafı ayak boşluğu</text>
+
+      <path d="M620,96 V244 H892" fill="none" stroke="#0B0F14" stroke-width="7"></path>
+      <path d="M620,96 V244 H892" fill="none" stroke="#F4A261" stroke-width="2.6" marker-end="url(#arrKpH)"></path>
+      <path d="M620,96 V244 H892" fill="none" stroke="#46D98A" stroke-width="2.6" stroke-dasharray="3 15"></path>
+      <circle cx="620" cy="96" r="4.5" fill="#F4A261"></circle>
+      <path d="M680,164 V292 H892" fill="none" stroke="#0B0F14" stroke-width="7"></path>
+      <path d="M680,164 V292 H892" fill="none" stroke="#C9895C" stroke-width="2.6" marker-end="url(#arrKpL)"></path>
+      <path d="M680,164 V292 H892" fill="none" stroke="#A98C6B" stroke-width="2.6" stroke-dasharray="3 15"></path>
+      <circle cx="680" cy="164" r="4.5" fill="#C9895C"></circle>
+
+      <rect x="40" y="218" width="560" height="54" rx="10" fill="#131A22" stroke="#2A3746"></rect>
+      <circle cx="70" cy="245" r="15" fill="#F4A261"></circle>
+      <text x="70" y="250" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#0B0F14">5</text>
+      <text x="98" y="240" font-family="IBM Plex Sans, sans-serif" font-size="13.5" fill="#E8EEF4">Komfort CAN-H · pin 5 · or/gn (turuncu/yeşil)</text>
+      <rect x="98" y="248" width="146" height="17" rx="4" fill="none" stroke="#FFB020" stroke-width="1" stroke-dasharray="3 3"></rect>
+      <text x="105" y="260.5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.06em" fill="#FFB020">ARAÇTA DOĞRULANACAK</text>
+      <text x="256" y="261" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">VIN'e özel şemadan (erWin / ELSAWin) teyit edilir</text>
+
+      <rect x="40" y="276" width="560" height="54" rx="10" fill="#131A22" stroke="#2A3746"></rect>
+      <circle cx="70" cy="303" r="15" fill="#C9895C"></circle>
+      <text x="70" y="308" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#0B0F14">15</text>
+      <text x="98" y="298" font-family="IBM Plex Sans, sans-serif" font-size="13.5" fill="#E8EEF4">Komfort CAN-L · pin 15 · or/br (turuncu/kahverengi)</text>
+      <rect x="98" y="306" width="146" height="17" rx="4" fill="none" stroke="#FFB020" stroke-width="1" stroke-dasharray="3 3"></rect>
+      <text x="105" y="318.5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.06em" fill="#FFB020">ARAÇTA DOĞRULANACAK</text>
+      <text x="256" y="319" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">tahminle bağlanmaz; konnektör fotoğrafla belirlenir</text>
+
+      <rect x="900" y="218" width="480" height="112" rx="12" fill="#131A22" stroke="#2A3746"></rect>
+      <text x="920" y="242" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#F4A261">SN65HVD230 · 3,3 V · LISTEN-ONLY</text>
+      <text x="920" y="262" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#E8EEF4">CANH ← pin 5 · CANL ← pin 15</text>
+      <text x="920" y="281" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#E8EEF4">RXD → ESP32 TWAI RX · TXD BAĞLANMAZ</text>
+      <text x="920" y="300" font-family="JetBrains Mono, monospace" font-size="11.5" fill="#E8EEF4">VCC ← 3,3 V (asla 5 V) · GND ← ortak şase</text>
+      <text x="920" y="319" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">Modüldeki 120 Ω sonlandırma sökülür — araç hattı zaten sonlandırılmış.</text>
+    </svg>
+
+    <div style="border-top: 1px solid #2A3746; padding-top: 10px; display: flex; align-items: flex-start; gap: 16px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #F4A261; flex-shrink: 0; padding-top: 2px;">KABLO ROTASI</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;"><span style="font-family: 'JetBrains Mono', monospace; color: #4CC2FF;">Z1 / Z2</span> kapı körüğünden · <span style="font-family: 'JetBrains Mono', monospace; color: #46D98A;">Z3 / Z4</span> konsol içinden · <span style="font-family: 'JetBrains Mono', monospace; color: #5B8DEF;">Z5 / Z6 / Z7</span> koltuk altı ve eşik (marşpiyel) trimi boyunca — hepsi ön konsoldaki aynı ESP32'den. Scirocco 3 kapılı coupé; arkada kapı yok, Z5 / Z6 arka yan döşeme panellerine gider. Uzun rotada kalın kesit besleme + GND ile bükümlü çift veri.</div>
+    </div>
+
+    <div style="border-top: 1px solid #2A3746; padding-top: 10px; display: flex; align-items: flex-start; gap: 18px;">
+      <div style="width: 176px; flex-shrink: 0; display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #E5533D;">ANTRIEBS ÇİFTİ</div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #E5533D; border: 1px solid #E5533D; border-radius: 4px; padding: 2px 8px; align-self: flex-start;">2. FAZ</span>
+        <div style="font-size: 11.5px; line-height: 1.4; color: #93A2B3;">Aynı ara kablo; yalnızca iki tel daha çıkar.</div>
+      </div>
+
+      <svg width="420" height="92" viewBox="0 0 420 92" style="display: block; flex-shrink: 0;" role="img" aria-label="Antriebs CAN-H ve CAN-L pin numaraları belirsiz: iki boş kesikli pin balonu GIGA R1'in dahili FDCAN transceiver'ına gider">
+        <circle cx="24" cy="26" r="14" fill="none" stroke="#E5533D" stroke-width="1.4" stroke-dasharray="4 3"></circle>
+        <text x="24" y="31" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#E5533D">?</text>
+        <text x="46" y="23" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Antriebs CAN-H</text>
+        <text x="46" y="37" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">pin no belirsiz</text>
+
+        <circle cx="24" cy="68" r="14" fill="none" stroke="#E5533D" stroke-width="1.4" stroke-dasharray="4 3"></circle>
+        <text x="24" y="73" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#E5533D">?</text>
+        <text x="46" y="65" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#E8EEF4">Antriebs CAN-L</text>
+        <text x="46" y="79" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">pin no belirsiz</text>
+
+        <path d="M152 26 L234 26" fill="none" stroke="#E5533D" stroke-width="1.5" stroke-dasharray="5 4"></path>
+        <path d="M152 68 L234 68" fill="none" stroke="#E5533D" stroke-width="1.5" stroke-dasharray="5 4"></path>
+
+        <rect x="238" y="14" width="182" height="66" rx="9" fill="#1B2430" stroke="#E5533D" stroke-width="1.3" stroke-dasharray="6 4"></rect>
+        <text x="252" y="38" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">TJA1042</text>
+        <text x="252" y="56" font-family="JetBrains Mono, monospace" font-size="10" fill="#93A2B3">500 kbps · LISTEN-ONLY</text>
+        <text x="252" y="72" font-family="JetBrains Mono, monospace" font-size="10" fill="#FF5A5A">TX BAĞLANMAZ</text>
+      </svg>
+
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 7px;">
+        <div style="font-size: 12px; line-height: 1.45; color: #E8EEF4;">Antriebs CAN-H / CAN-L pin numaraları kaynaklarda <span style="color: #FF5A5A;">yok</span> — VIN'e özel şemadan (erWin / ELSAWin) belirlenecek, tahminle bağlanmaz. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></div>
+        <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">Bekleme voltajı ölçümü (~2,5 V, her iki hat) bu çift için de geçerli; bağlantı sonrası DTC kontrolü tekrarlanır. Antriebs kanalı artık Kontrolcü B'nin (GIGA R1) dahili FDCAN'indedir; harici modül ve onun 120 Ω sonlandırma tuzağı ortadan kalktı.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 24px; align-items: stretch;">
+
+    <div style="width: 306px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">VW KABLO RENK KODLARI</h2>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #E8EEF4; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">ws</span><span style="font-size: 13px; color: #E8EEF4;">beyaz</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #10161D; border: 1px solid #55636F; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">sw</span><span style="font-size: 13px; color: #E8EEF4;">siyah</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #E5533D; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">ro/rt</span><span style="font-size: 13px; color: #E8EEF4;">kırmızı — artı kutup</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #A98C6B; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">br</span><span style="font-size: 13px; color: #E8EEF4;">kahverengi — şase (GND)</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #46D98A; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">gn</span><span style="font-size: 13px; color: #E8EEF4;">yeşil</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #4CC2FF; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">bl</span><span style="font-size: 13px; color: #E8EEF4;">mavi</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #8296AA; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">gr</span><span style="font-size: 13px; color: #E8EEF4;">gri — aydınlatma / tetik</span></div>
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 15px; height: 15px; border-radius: 4px; background: #F4A261; border: 1px solid #2A3746; flex-shrink: 0;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: #E8EEF4; width: 42px;">or</span><span style="font-size: 13px; color: #E8EEF4;">turuncu — CAN-Bus</span></div>
+      <div style="font-size: 12px; line-height: 1.45; color: #93A2B3; border-top: 1px solid #2A3746; padding-top: 8px;">Bileşik kod <span style="font-family: 'JetBrains Mono', monospace; color: #E8EEF4;">or/gn</span> = turuncu gövde + yeşil şerit. Renkler şasi ve model yılına göre değişebilir.</div>
+    </div>
+
+    <div style="width: 478px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">12 V VE ŞASE MUSLUĞU</h2>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Hat</th>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Nereden</th>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid #2A3746;">Beklenen ölçüm</th>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746; width: 96px;">ESP32 12 V</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Sürücü tarafı alt sigorta kutusu — <span style="font-family: 'JetBrains Mono', monospace;">Kl.15</span> slotunda sigorta musluğu (add-a-circuit)</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746; width: 118px;">kapalı 0 V<br>açık 12–14,4 V</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Şerit 12 V</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Kendi sigortası üzerinden (başlangıç <span style="font-family: 'JetBrains Mono', monospace;">7,5 A</span> — ölçüm sonrası boyutlandırılacak); MOSFET ile tamamen kesilir — iç aydınlatma sigortasından alınmaz</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">~1,25 A/m @ 12 V<br>3,5 m tam beyaz ≈ 4,4 A</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Şase (GND)</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Orijinal fabrika şase saplaması, somunla sıkılır. Kart, şerit ve transceiver ortak GND</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">süreklilik (bip)<br>~0 V fark</td>
+        </tr>
+        <tr>
+          <td style="font-size: 12.5px; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">CAN-H / CAN-L</td>
+          <td style="font-size: 12.5px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">Gateway geçiş kablosundan paralel çıkış — hat kesilmez (her iki çift)</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.4; color: #E8EEF4; padding: 7px 8px; border-bottom: 1px solid #2A3746;">bekleme ~2,5 V<br>ikisi arası ~0 V</td>
+        </tr>
+      </table>
+      <div style="font-size: 12px; line-height: 1.45; color: #93A2B3;">12 V asla doğrudan karta gitmez: <span style="font-family: 'JetBrains Mono', monospace; color: #E8EEF4;">TVS → buck 12→5 V → VIN</span>. VW'de "ACC" terminali yoktur; doğru ad <span style="font-family: 'JetBrains Mono', monospace; color: #E8EEF4;">Kl.15</span> (kontak).</div>
+    </div>
+
+    <div style="width: 640px; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">J387 YOLCU KAPISI T20 — SEÇME SATIRLAR</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span>
+      </div>
+      <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 10px; border-bottom: 1px solid #2A3746; width: 46px;">Pin</th>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 10px; border-bottom: 1px solid #2A3746; width: 78px;">Renk</th>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 10px; border-bottom: 1px solid #2A3746;">İşlev</th>
+          <th style="text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #93A2B3; font-weight: 600; padding: 6px 10px; border-bottom: 1px solid #2A3746; width: 176px;">Değer</th>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">1</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">ro/ge</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Kapı modülü ana beslemesi</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">12 V sabit (Kl.30)</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">2</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">br</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Ana şase / toprak (GND)</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">0 V · süreklilik</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4A261; font-weight: 700; padding: 6px 10px; border-bottom: 1px solid #2A3746;">3</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4A261; padding: 6px 10px; border-bottom: 1px solid #2A3746;">or/gn</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Komfort CAN-High</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">~2,5 – 3,5 V</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C9895C; font-weight: 700; padding: 6px 10px; border-bottom: 1px solid #2A3746;">4</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C9895C; padding: 6px 10px; border-bottom: 1px solid #2A3746;">or/br</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Komfort CAN-Low</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">~1,5 – 2,5 V</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">5</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">vi/ws</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">LIN-Bus (ayna / cam)</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">~9 – 11 V kare dalga</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">15</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">br/sw</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Kapı açık şalteri</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">açık 0 V · kapalı 12 V</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FFB300; font-weight: 700; padding: 6px 10px; border-bottom: 1px solid #2A3746;">16</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FFB300; padding: 6px 10px; border-bottom: 1px solid #2A3746;">br/ro</td>
+          <td style="font-size: 13px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">Kapı altı ambiyans aydınlatma</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #E8EEF4; padding: 6px 10px; border-bottom: 1px solid #2A3746;">12 V PWM dimmer</td>
+        </tr>
+      </table>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #93A2B3;">Pin 16 yalnız <span style="color: #E8EEF4;">parlaklık</span> taşır — renk bu hattan geçmez, tek başına RGB süremez. Uyandırma / dimmer takibi için okunur.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

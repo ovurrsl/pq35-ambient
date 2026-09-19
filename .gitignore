@@ -34,3 +34,8 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Üçüncü taraf beceriler — `npx skills add` ile kurulur, depoya girmez.
+# apple-design, Apple'ın HIG metnini birebir içerir; bu depo public olduğu için
+# yeniden yayımlanmaz. Kurulum komutları docs/03-apple-hig-kontrol-listesi.md'de.
+.claude/skills/

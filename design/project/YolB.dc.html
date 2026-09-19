@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Yol B — MIB2 renk keşfi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1200px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #FFB020; box-shadow: 0 0 24px 2px rgba(255,176,32,0.55);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="height: 68px; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">YOL B — MIB2 RENK KEŞFİ · BU BİR DENEY, VAAT DEĞİL</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Teypten seçilen renk okunabilir mi?</h1>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: 16px;">
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; text-align: right; max-width: 520px;">Kaynaklar bunun PQ35'te çalıştığını göstermiyor. Onun yerine kesin cevabı kendi aracında verecek 7 adımlı bir keşif protokolü: çıkan sonuç ne olursa olsun Yol A etkilenmez.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+    </div>
+  </div>
+
+  <!-- ANA SATIR -->
+  <div style="height: 790px; flex-shrink: 0; display: flex; gap: 24px;">
+
+    <!-- SOL SÜTUN — NEDEN ŞU AN ÇALIŞMIYOR -->
+    <div style="width: 440px; height: 790px; display: flex; flex-direction: column; gap: 16px;">
+
+      <!-- ZİNCİR DİYAGRAMI -->
+      <div style="height: 330px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">RENK ZİNCİRİ — MQB'DE BÖYLE İŞLİYOR</h2>
+        <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">Aynı zincirin PQ35'te de kurulu olduğuna dair kanıt bulunamadı.</div>
+
+        <svg width="400" height="242" viewBox="0 0 400 242" style="display: block; margin-top: 10px;">
+          <defs>
+            <marker id="yolb-ok-komfort" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#F4A261"></path>
+            </marker>
+            <marker id="yolb-ok-gri" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#93A2B3"></path>
+            </marker>
+            <filter id="yolb-glow-bus" filterUnits="userSpaceOnUse" x="76" y="8" width="48" height="176">
+              <feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur>
+              <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+            </filter>
+          </defs>
+
+          <text x="100" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#F4A261">KOMFORT-CAN 100 kbps</text>
+          <line x1="100" y1="20" x2="100" y2="166" stroke="#F4A261" stroke-width="3" marker-end="url(#yolb-ok-komfort)" filter="url(#yolb-glow-bus)"></line>
+
+          <rect x="190" y="24" width="205" height="42" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+          <text x="292" y="43" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="700" fill="#E8EEF4">MIB2 (5F) — ekran menüsü</text>
+          <text x="292" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">renk burada seçilir</text>
+
+          <line x1="188" y1="45" x2="110" y2="45" stroke="#F4A261" stroke-width="1.6" marker-end="url(#yolb-ok-komfort)"></line>
+          <text x="149" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#F4A261">BAP index</text>
+          <text x="149" y="71" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#93A2B3">soyut seçim</text>
+
+          <line x1="100" y1="100" x2="182" y2="100" stroke="#F4A261" stroke-width="1.6" marker-end="url(#yolb-ok-komfort)"></line>
+
+          <rect x="190" y="78" width="205" height="46" rx="10" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+          <text x="292" y="97" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="700" fill="#E8EEF4">BCM — Merkezi Elektrik 09</text>
+          <text x="292" y="113" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#93A2B3">RGB tablosu burada (adaptasyon)</text>
+
+          <line x1="292" y1="124" x2="292" y2="166" stroke="#93A2B3" stroke-width="1.6" marker-end="url(#yolb-ok-gri)"></line>
+          <text x="284" y="140" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#E8EEF4">LIN — ayrı hat</text>
+          <text x="284" y="152" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8.5" fill="#FF8F8F">ESP32 bu hatta değil</text>
+
+          <rect x="22" y="168" width="156" height="50" rx="10" fill="#131A22" stroke="#FFB020" stroke-width="1" stroke-dasharray="5 4"></rect>
+          <text x="100" y="188" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11.5" font-weight="700" fill="#E8EEF4">ESP32 · Listen-Only</text>
+          <text x="100" y="203" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#FFB020">gördüğü en iyi şey: index</text>
+
+          <rect x="190" y="168" width="205" height="50" rx="10" fill="#131A22" stroke="#2A3746" stroke-width="1"></rect>
+          <text x="292" y="188" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11.5" font-weight="700" fill="#93A2B3">OEM ambiyans LED'leri</text>
+          <text x="292" y="203" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#6E7C8C">LIN ucunda · yalnızca MQB'de</text>
+
+          <circle cx="16" cy="232" r="9" fill="#1B2430" stroke="#FF5A5A" stroke-width="1"></circle>
+          <line x1="11.5" y1="227.5" x2="20.5" y2="236.5" stroke="#FF5A5A" stroke-width="1.8"></line>
+          <line x1="20.5" y1="227.5" x2="11.5" y2="236.5" stroke="#FF5A5A" stroke-width="1.8"></line>
+          <text x="32" y="236" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#FF8F8F">Konfor hattında düz bir RGB paketi yok.</text>
+        </svg>
+      </div>
+
+      <!-- ÜÇ GEREKÇE -->
+      <div style="height: 310px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+        <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">NEDEN ŞU AN ÇALIŞMIYOR</h2>
+
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 11px;">
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; flex-shrink: 0;">1</span>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <div style="font-size: 12.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Teyp renk basmaz, "kaçıncı rengi seçtim" der</div>
+              <div style="font-size: 11.5px; line-height: 1.42; color: #93A2B3;">MIB2, BCM'ye soyut bir BAP seçim/index'i gönderir. Gerçek RGB değeri BCM'nin kendi adaptasyon tablosunda durur ve fiziksel LED'lere ayrı bir LIN hattından gider.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; flex-shrink: 0;">2</span>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <div style="font-size: 12.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Bu mimari yalnızca MQB'de doğrulanmış</div>
+              <div style="font-size: 11.5px; line-height: 1.42; color: #93A2B3;">Golf 7 / 7.5, A3 8V, Leon 5F. PQ35'e transfer olduğuna dair kanıt yok; ekran senkronlu çalışan bir Scirocco örneği bulunamadı.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; flex-shrink: 0;">3</span>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <div style="font-size: 12.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Menünün var olması bile şüpheli</div>
+              <div style="font-size: 11.5px; line-height: 1.42; color: #93A2B3;">MQB'de menüyü açmak 5F'te adaptasyon, BCM'de "kurulu" (installed / verbaut) bayrakları istiyor; bazı BCM'ler bu LIN kanalını fiziksel olarak desteklemiyor. PQ35 BCM'leri (5K0 937 087, 1K0 937 084 ailesi) daha eski. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">ARAÇTA DOĞRULANACAK</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KRİTİK NÜANS -->
+      <div style="height: 118px; box-sizing: border-box; background: rgba(255,176,32,0.07); border: 1px solid #FFB020; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB020;">KRİTİK NÜANS</div>
+        <div style="font-size: 12.5px; line-height: 1.5; color: #E8EEF4;">Yol B çalışsa bile ESP32'nin okuyacağı şey <strong style="color: #FFD08A;">RGB değil, bir index</strong> olur. Firmware'in kendi <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px;">index → RGB</span> eşleme tablosunu tutması gerekir; o tablo da araçta gözlemle çıkarılır (adım 7).</div>
+      </div>
+
+    </div>
+
+    <!-- ORTA SÜTUN — KEŞİF PROTOKOLÜ -->
+    <div style="width: 560px; height: 790px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KEŞİF PROTOKOLÜ — 7 ADIM</h2>
+      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3; margin-top: 5px;">Sıra atlanmaz. Her adımın kendi durdurma noktası var; erken biten deney başarısızlık değildir.</div>
+
+      <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #3FD98A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">1</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Yedek al — değiştirmeden önce</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">5F, 09 ve 19 modüllerinin mevcut kodlama ve adaptasyon değerleri okunur ve kaydedilir. Geri dönüşün tek garantisi budur.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #3FD98A;">salt okuma · 0x21 ReadDataByLocalIdentifier · hiçbir şey yazılmaz</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">2</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Sadece oku: kanal var mı, yok mu?</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">5F'te <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4;">Car_Function_Adaptations_Gen2</span> benzeri bir kanal, 09'da ambiyans / iç aydınlatma geçen adaptasyon kanalları aranır. <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 7px; white-space: nowrap;">MQB'DE DOĞRULANDI · PQ35'TE ARANACAK</span></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #FF8F8F;">kanal yoksa → Yol B bu araçta biter, Yol A'da kalınır</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #4CC2FF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">3</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Komfort-CAN logger'ını kur</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">v1 donanımı yeterli: J533 geçiş kablosu, SN65HVD230, TX bağlı değil. Önce menüye dokunmadan temel trafik kaydedilir — karşılaştırma bunun üstüne yapılır.</div>
+            <div style="display: flex; gap: 6px; align-items: center;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 2px 9px; white-space: nowrap;">100 kbps</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 2px 9px; white-space: nowrap;">LISTEN-ONLY</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; color: #E8EEF4; background: #1B2430; border: 1px solid #2A3746; border-radius: 999px; padding: 2px 9px; white-space: nowrap;">referans log</span></div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #FF5A5A; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">4</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Menüyü aç — protokolün tek yazan adımı</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">09'da Security Access (<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4;">31347</span>) altında "kurulu" bayrakları, 5F'te menü adaptasyonu denenir.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #FF8F8F;">bu adım 5F'e yazar · bricking riski · adım 1 yapılmadan başlanmaz</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #FFB020; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">5</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Ekranda rengi değiştirirken logla</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">Aynı renk 3 kez seçilir, aralara başka renk sokulur. Böylece rastgele trafik ile seçime bağlı trafik ayrışır.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #FFB020;">aranan: her seferinde aynı biçimde değişen bir frame</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #FFB020; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">6</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Tekrarlanabilirlik testi</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">Kontak kapatılıp açılır, aynı diziliş baştan denenir. Tek seferlik bir eşleşme kanıt sayılmaz.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #FFB020;">aynı ID ve aynı byte değişiyorsa bulundu demektir</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 999px; background: #B08CFF; color: #0B0F14; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0;">7</span>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <div style="font-size: 13.5px; font-weight: 600; color: #E8EEF4; line-height: 1.3;">Index → RGB tablosunu çıkar</div>
+            <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">Menüdeki her renk sırayla seçilir, karşılık gelen index değeri kaydedilir. Firmware bu tabloyu tutar; uygulamadaki renkler onunla eşleşir.</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; line-height: 1.4; color: #D6BEFF;">çıktı: araçta ölçülmüş bir eşleme tablosu — tahmin değil</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-size: 11.5px; line-height: 1.45; color: #93A2B3;"><strong style="color: #E8EEF4;">Yedi adımın yalnızca biri yazar.</strong> 1, 2, 3, 5, 6 ve 7 salt okuma veya dinlemedir; araca dokunan tek adım 4'tür ve yedek alınmadan başlamaz.</div>
+        <div style="font-size: 11.5px; line-height: 1.45; color: #93A2B3;">Security Access kodları (<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4;">09 → 31347</span>, <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E8EEF4;">19 → 20103</span>, <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF8F8F;">5F → S12345</span>) literal gönderilmez: <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D6BEFF;">key = seed + login_code (mod 2^32)</span> toplama sabitidir.</div>
+      </div>
+    </div>
+
+    <!-- SAĞ SÜTUN — KARAR VE RİSKLER -->
+    <div style="width: 424px; height: 790px; display: flex; flex-direction: column; gap: 12px;">
+
+      <h2 style="height: 16px; flex-shrink: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">KARAR VE RİSKLER</h2>
+
+      <div style="height: 140px; box-sizing: border-box; background: #131A22; border: 1px solid rgba(63,217,138,0.5); border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #3FD98A;">BAŞARI KRİTERİ — İKİSİ BİRDEN</div>
+        <div style="display: flex; gap: 9px; align-items: flex-start;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; color: #3FD98A; flex-shrink: 0;">a</span>
+          <div style="font-size: 12.2px; line-height: 1.45; color: #E8EEF4;">Kodlama, MIB2 ambiyans menüsünü bu araçta gerçekten gösteriyor.</div>
+        </div>
+        <div style="display: flex; gap: 9px; align-items: flex-start;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 700; color: #3FD98A; flex-shrink: 0;">b</span>
+          <div style="font-size: 12.2px; line-height: 1.45; color: #E8EEF4;">Renk değişince değişen, tekrarlanabilir bir Komfort-CAN frame'i yakalandı.</div>
+        </div>
+      </div>
+
+      <div style="height: 128px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB020;">DURDURMA KRİTERİ</div>
+        <div style="font-size: 12.2px; line-height: 1.45; color: #E8EEF4;">Kanal yok, menü açılmıyor veya frame tekrarlanmıyorsa deney biter ve <strong style="color: #3FD98A;">Yol A'da kalınır.</strong></div>
+        <div style="font-size: 12.2px; line-height: 1.45; color: #93A2B3;">Bu normal ve beklenen sonuçtur; sistemde hiçbir eksik oluşmaz.</div>
+      </div>
+
+      <div style="height: 112px; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 12.6px; line-height: 1.45; color: #E8EEF4;"><strong style="color: #FF8F8F;">3 yanlış Security Access denemesi modülü 20 dakika kilitler.</strong> Kod zaten biliniyor; deneme yanılma yapılmaz.</div>
+      </div>
+
+      <div style="height: 112px; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 12.6px; line-height: 1.45; color: #E8EEF4;"><strong style="color: #FF8F8F;">5F (MIB2) UDS tabanlı ve bricking riski taşır.</strong> En sona bırakılır, yalnız yedek alındıktan sonra ve adım adım.</div>
+      </div>
+
+      <div style="height: 106px; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 12.6px; line-height: 1.45; color: #E8EEF4;"><strong style="color: #FF8F8F;">EPS / direksiyon modülüne asla dokunulmaz.</strong> Bu deneyin hiçbir adımı o modüle uğramaz.</div>
+      </div>
+
+      <div style="height: 104px; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 6px; overflow: hidden;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+        <div style="font-size: 12.6px; line-height: 1.45; color: #E8EEF4;"><strong style="color: #FF8F8F;">Canlı araçta brute-force asla.</strong> pq-flasher'ın password tarama script'i bu protokolde çalıştırılmaz.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ALT SATIR -->
+  <div style="height: 194px; flex-shrink: 0; display: flex; gap: 24px;">
+
+    <div style="width: 620px; box-sizing: border-box; background: #131A22; border: 1px solid rgba(63,217,138,0.5); border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #3FD98A;">YOL A ETKİLENMEZ</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Bu deney başarısız olsa da sistem tam çalışır. Renk ve parlaklık iOS uygulamasından seçilir; Komfort-CAN yalnızca tetikleyici kaynağıdır — kapı, kilit, far, sinyal, hız (<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px;">0x351</span>), devir (<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px;">0x353</span>).</div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <span style="font-size: 12.5px; color: #E8EEF4; background: #1B2430; border: 1px solid #3FD98A; border-radius: 999px; padding: 4px 12px; white-space: nowrap;">Yol A — bağımsız kontrol · plan bu</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #93A2B3;">+</span>
+        <span style="font-size: 12.5px; color: #E8EEF4; background: #1B2430; border: 1px dashed #FFB020; border-radius: 999px; padding: 4px 12px; white-space: nowrap;">Yol B — opsiyonel konfor · çıkarsa kâr</span>
+      </div>
+      <div style="font-size: 11.6px; line-height: 1.42; color: #93A2B3;">Yol B başarılı olursa eklenen tek şey şudur: rengi uygulamanın yanı sıra MIB2 ekranından da seçebilmek. Bölge sayısı, davranışlar, tetikler ve donanım aynı kalır.</div>
+    </div>
+
+    <div style="width: 420px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">MENÜ AÇILMASA BİLE</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Gösterge dimmer'ı (<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px;">Kl.58d</span>) ve far / ışık sensörü durumu konfor hattından zaten okunabiliyor.</div>
+      <div style="font-size: 11.8px; line-height: 1.45; color: #93A2B3;">Karanlıkta otomatik kısma ve taban parlaklık bu deneye bağlı değil; taban katman aracın kendi ışık durumundan besleniyor.</div>
+    </div>
+
+    <div style="width: 384px; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #93A2B3;">NE ZAMAN DENENİR</h2>
+      <div style="font-size: 13.5px; line-height: 1.5; color: #E8EEF4;">Faz 4 bittikten sonra, herhangi bir zamanda. Bir faz değil, <strong style="color: #FFD08A;">opsiyonel keşif</strong> — başarısız olabilir.</div>
+      <div style="font-size: 11.8px; line-height: 1.45; color: #93A2B3;">Yol haritasında bir kutu işgal etmez, takvimi geciktirmez; sonucu Yol A'yı etkilemez.</div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

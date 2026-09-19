@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Güvenlik mimarisi — Üç güven sınırı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--z1:#4CC2FF; --z2:#B98BFF; --z3:#46D98A; --z4:#FF9F45;
+--z5:#5B8DEF; --z6:#FF7BB0; --z7:#3FD9C7;
+--ev-door:#FF5A5A; --ev-turn:#FFB300; --ev-rev:#8296AA; --ev-red:#FF4D7E;
+--komfort:#F4A261; --antriebs:#E5533D; --info:#7C8798;
+--pwr:#FF6A4D; --gnd:#A98C6B; --ble:#B08CFF; --v2:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:var(--z1);} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+</style>
+</helmet>
+<div style="width: 1600px; height: 1300px; box-sizing: border-box; padding: 56px 64px 48px; display: flex; flex-direction: column; gap: 22px; background: #0B0F14; position: relative; overflow: hidden;">
+
+  <div style="position: absolute; top: 0; left: 0; width: 1600px; height: 4px; background: #3FD98A; box-shadow: 0 0 24px 2px rgba(63,217,138,0.55);"></div>
+
+  <!-- BAŞLIK -->
+  <div style="height: 76px; flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #93A2B3; text-transform: uppercase;">GÜVENLİK MİMARİSİ — KİM, NEYLE, NEREYE KADAR?</div>
+      <h1 style="font-size: 40px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Üç ayrı güven sınırı</h1>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: 16px;">
+      <div style="font-size: 14px; line-height: 1.5; color: #93A2B3; text-align: right; max-width: 520px;">Üç sınır birbirinden bağımsızdır: birinin anahtarı diğerini açmaz. Bulut tarafı 3. fazdır — Komfort, LED ve Antriebs çalıştıktan sonra devreye girer.</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6E7C8C; text-align: right; line-height: 1.6;">PQ35-AMBIENT<br>YOL A · REV.1</div>
+    </div>
+  </div>
+
+  <!-- ÜÇ GÜVEN SINIRI — ŞEMA -->
+  <div style="height: 600px; flex-shrink: 0; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 14px 24px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+    <svg width="1420" height="546" viewBox="0 0 1420 546" role="img" aria-label="Üç güven sınırı yan yana. Birinci sınır telefon ile araç arasında BLE üzerinden: bonding, IRK ile adres çözümleme, directed advertising, nonce ve HMAC-SHA256 ile challenge-response, bağlantı başına oturum anahtarı ve komut tekrar sayacı; ayrıca aynı anda birden çok telefon, her biri ayrı bonding kaydı ve ayrı yetki seviyesiyle. İkinci sınır araçtan buluta GPRS üzerinden: payload AES-GCM ile şifrelenip imzalanır, Edge Function device token ile birlikte doğrular, service role anahtarı yalnızca fonksiyonun içindedir. Üçüncü sınır kullanıcıdan buluta HTTPS üzerinden: Supabase Auth, TOTP MFA, Face ID ile Keychain'den token açma, RLS varsayılan reddet.">
+      <defs>
+        <marker id="arrBleGuv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#B08CFF"></path>
+        </marker>
+        <marker id="arrGprsGuv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#FF9F45"></path>
+        </marker>
+        <marker id="arrHttpsGuv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L10 5 L0 10 Z" fill="#4CC2FF"></path>
+        </marker>
+      </defs>
+
+      <!-- ================= SINIR 1 — TELEFON ↔ ARAÇ (BLE) ================= -->
+      <rect x="0" y="22" width="454" height="516" rx="14" fill="rgba(176,140,255,0.05)" stroke="#B08CFF" stroke-width="1.3" stroke-dasharray="8 6"></rect>
+      <text x="20" y="14" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#B08CFF">GÜVEN SINIRI 1</text>
+      <text x="20" y="46" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="700" fill="#E8EEF4">Telefon ↔ Araç</text>
+      <text x="20" y="64" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">taşıma: BLE · tamamen yerel, buluta çıkmaz</text>
+
+      <rect x="20" y="76" width="414" height="54" rx="10" fill="rgba(176,140,255,0.10)" stroke="#B08CFF" stroke-width="1.3"></rect>
+      <text x="36" y="99" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">iPhone · iOS uygulaması</text>
+      <text x="36" y="118" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">eşleşme anahtarları iOS Keychain'de</text>
+
+      <path d="M46 130 L46 374" fill="none" stroke="#B08CFF" stroke-width="1.6" marker-end="url(#arrBleGuv)"></path>
+
+      <path d="M46 158 L72 158" stroke="#B08CFF" stroke-width="1.2"></path>
+      <rect x="72" y="138" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="92" cy="158" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="92" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">1</text>
+      <text x="110" y="155" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Bonding — LE Secure Connections</text>
+      <text x="110" y="170" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">bir kez eşleşilir, anahtarlar iki tarafta saklanır</text>
+
+      <path d="M46 204 L72 204" stroke="#B08CFF" stroke-width="1.2"></path>
+      <rect x="72" y="184" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="92" cy="204" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="92" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">2</text>
+      <text x="110" y="201" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">IRK ile adres çözümleme</text>
+      <text x="110" y="216" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">iOS adresi ~15 dk'da bir değişir — sabit MAC listesi olmaz</text>
+
+      <path d="M46 250 L72 250" stroke="#B08CFF" stroke-width="1.2"></path>
+      <rect x="72" y="230" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="92" cy="250" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="92" y="254" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">3</text>
+      <text x="110" y="247" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Directed advertising</text>
+      <text x="110" y="262" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">kart yalnız eşleşmiş telefonlara görünür</text>
+
+      <path d="M46 296 L72 296" stroke="#B08CFF" stroke-width="1.2"></path>
+      <rect x="72" y="276" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="92" cy="296" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="92" y="300" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">4</text>
+      <text x="110" y="293" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Challenge-response: nonce + HMAC-SHA256</text>
+      <text x="110" y="308" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">kartta senkron saat yok — zaman damgası işe yaramaz</text>
+
+      <path d="M46 342 L72 342" stroke="#B08CFF" stroke-width="1.2"></path>
+      <rect x="72" y="322" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="92" cy="342" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="92" y="346" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">5</text>
+      <text x="110" y="339" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Bağlantı başına oturum anahtarı</text>
+      <text x="110" y="354" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">komut tekrar sayacı: aynı komut ikinci kez geçmez</text>
+
+      <rect x="20" y="378" width="414" height="52" rx="10" fill="rgba(176,140,255,0.10)" stroke="#B08CFF" stroke-width="1.3"></rect>
+      <text x="36" y="400" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">ESP32-S3 · araç</text>
+      <text x="36" y="419" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">kritik komutlar misafir yetkisinde tümüyle kapalıdır</text>
+
+      <rect x="20" y="442" width="414" height="84" rx="10" fill="rgba(176,140,255,0.07)" stroke="#B08CFF" stroke-width="1.1"></rect>
+      <text x="34" y="459" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em" fill="#B08CFF">AYNI ANDA BİRDEN ÇOK TELEFON — TASARLANMIŞ ÖZELLİK</text>
+      <text x="34" y="476" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Her telefon ayrı bonding kaydı ve ayrı yetki taşır: sahip / misafir.</text>
+      <text x="34" y="491" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Misafir LED ve sahneleri kullanır; kilit, arama, kodlama kapalıdır.</text>
+      <text x="34" y="506" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Eşleşmiş cihazlar listelenir ve tek tek iptal edilebilir.</text>
+      <text x="34" y="521" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">Eşzamanlı bağlantı sayısı firmware'de sınırlanır.</text>
+
+      <!-- ================= SINIR 2 — ARAÇ → BULUT (GPRS) ================= -->
+      <rect x="483" y="22" width="454" height="516" rx="14" fill="rgba(255,159,69,0.05)" stroke="#FF9F45" stroke-width="1.3" stroke-dasharray="8 6"></rect>
+      <text x="503" y="14" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#FF9F45">GÜVEN SINIRI 2</text>
+      <text x="503" y="46" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="700" fill="#E8EEF4">Araç → Bulut</text>
+      <text x="503" y="64" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">taşıma: 2G / GPRS · tek yön, araç yalnızca yazar</text>
+
+      <rect x="503" y="76" width="414" height="54" rx="10" fill="rgba(255,159,69,0.10)" stroke="#FF9F45" stroke-width="1.3"></rect>
+      <text x="519" y="99" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">ESP32-S3 + SIM808 · araç</text>
+      <text x="519" y="118" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">taşıdığı sır: device token + ön paylaşımlı AES anahtarı</text>
+
+      <path d="M529 130 L529 374" fill="none" stroke="#FF9F45" stroke-width="1.6" marker-end="url(#arrGprsGuv)"></path>
+
+      <path d="M529 158 L555 158" stroke="#FF9F45" stroke-width="1.2"></path>
+      <rect x="555" y="138" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="575" cy="158" r="9" fill="rgba(255,159,69,0.16)" stroke="#FF9F45" stroke-width="1"></circle>
+      <text x="575" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#FF9F45">1</text>
+      <text x="593" y="155" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Payload AES-GCM ile şifrelenir ve imzalanır</text>
+      <text x="593" y="170" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">uygulama katmanında, taşımadan bağımsız olarak</text>
+
+      <path d="M529 204 L555 204" stroke="#FF9F45" stroke-width="1.2"></path>
+      <rect x="555" y="184" width="362" height="40" rx="9" fill="rgba(255,176,32,0.08)" stroke="#FFB020" stroke-width="1"></rect>
+      <circle cx="575" cy="204" r="9" fill="rgba(255,176,32,0.16)" stroke="#FFB020" stroke-width="1"></circle>
+      <text x="575" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#FFB020">2</text>
+      <text x="593" y="201" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">2G / GPRS hattı — taşımaya güvenilmez</text>
+      <text x="593" y="216" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#FFB020">SIM808'in TLS'i kararsız; koruma bu yüzden payload'da</text>
+
+      <path d="M529 250 L555 250" stroke="#FF9F45" stroke-width="1.2"></path>
+      <rect x="555" y="230" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="575" cy="250" r="9" fill="rgba(255,159,69,0.16)" stroke="#FF9F45" stroke-width="1"></circle>
+      <text x="575" y="254" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#FF9F45">3</text>
+      <text x="593" y="247" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Supabase Edge Function doğrular</text>
+      <text x="593" y="262" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">device token + AES-GCM etiketi birlikte kontrol edilir</text>
+
+      <path d="M529 296 L555 296" stroke="#FF9F45" stroke-width="1.2"></path>
+      <rect x="555" y="276" width="362" height="40" rx="9" fill="rgba(63,217,138,0.07)" stroke="#3FD98A" stroke-width="1"></rect>
+      <circle cx="575" cy="296" r="9" fill="rgba(63,217,138,0.16)" stroke="#3FD98A" stroke-width="1"></circle>
+      <text x="575" y="300" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#3FD98A">4</text>
+      <text x="593" y="293" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">service role yalnızca fonksiyonun içinde</text>
+      <text x="593" y="308" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">ne cihazda ne tarayıcıda bulunur</text>
+
+      <path d="M529 342 L555 342" stroke="#FF9F45" stroke-width="1.2"></path>
+      <rect x="555" y="322" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="575" cy="342" r="9" fill="rgba(255,90,90,0.16)" stroke="#FF5A5A" stroke-width="1"></circle>
+      <text x="575" y="346" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#FF5A5A">5</text>
+      <text x="593" y="339" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Doğrulanamayan paket yazılmaz</text>
+      <text x="593" y="354" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">reddedilir ve denetim kaydına düşer</text>
+
+      <rect x="503" y="378" width="414" height="52" rx="10" fill="rgba(255,159,69,0.10)" stroke="#FF9F45" stroke-width="1.3"></rect>
+      <text x="519" y="400" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Supabase · konum tablosu</text>
+      <text x="519" y="419" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">RLS açık, varsayılan reddet · saklama süresi sınırlı</text>
+
+      <rect x="503" y="442" width="414" height="84" rx="10" fill="rgba(255,159,69,0.07)" stroke="#FF9F45" stroke-width="1.1"></rect>
+      <text x="517" y="459" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em" fill="#FF9F45">SINIR NOTU</text>
+      <text x="517" y="476" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Hat düz HTTP'ye düşse bile paket okunamaz ve taklit edilemez.</text>
+      <text x="517" y="491" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">SIM808'in TLS yığını kararsızdır; taşımaya güvenilmez.</text>
+      <text x="517" y="506" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Koruma bu yüzden payload'dadır — tersi değil.</text>
+      <text x="517" y="521" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">Araç yalnızca yazar; buluttan komut almaz.</text>
+
+      <!-- ================= SINIR 3 — KULLANICI → BULUT (HTTPS) ================= -->
+      <rect x="966" y="22" width="454" height="516" rx="14" fill="rgba(76,194,255,0.05)" stroke="#4CC2FF" stroke-width="1.3" stroke-dasharray="8 6"></rect>
+      <text x="986" y="14" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.12em" fill="#4CC2FF">GÜVEN SINIRI 3</text>
+      <text x="986" y="46" font-family="Space Grotesk, sans-serif" font-size="16" font-weight="700" fill="#E8EEF4">Kullanıcı → Bulut</text>
+      <text x="986" y="64" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#93A2B3">taşıma: HTTPS · uygulama ve panel aynı kapıdan</text>
+
+      <rect x="986" y="76" width="414" height="54" rx="10" fill="rgba(76,194,255,0.10)" stroke="#4CC2FF" stroke-width="1.3"></rect>
+      <text x="1002" y="99" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Kullanıcı · iOS uygulaması (iPhone ve iPad)</text>
+      <text x="1002" y="118" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">iki istemci, tek kimlik ve tek politika kümesi</text>
+
+      <path d="M1012 130 L1012 374" fill="none" stroke="#4CC2FF" stroke-width="1.6" marker-end="url(#arrHttpsGuv)"></path>
+
+      <path d="M1012 158 L1038 158" stroke="#4CC2FF" stroke-width="1.2"></path>
+      <rect x="1038" y="138" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="1058" cy="158" r="9" fill="rgba(76,194,255,0.16)" stroke="#4CC2FF" stroke-width="1"></circle>
+      <text x="1058" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#4CC2FF">1</text>
+      <text x="1076" y="155" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Supabase Auth — e-posta + şifre</text>
+      <text x="1076" y="170" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">hesap bulutta, cihazda değil</text>
+
+      <path d="M1012 204 L1038 204" stroke="#4CC2FF" stroke-width="1.2"></path>
+      <rect x="1038" y="184" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="1058" cy="204" r="9" fill="rgba(76,194,255,0.16)" stroke="#4CC2FF" stroke-width="1"></circle>
+      <text x="1058" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#4CC2FF">2</text>
+      <text x="1076" y="201" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">TOTP MFA — ikinci faktör</text>
+      <text x="1076" y="216" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">şifre tek başına yeterli değildir</text>
+
+      <path d="M1012 250 L1038 250" stroke="#4CC2FF" stroke-width="1.2"></path>
+      <rect x="1038" y="230" width="362" height="40" rx="9" fill="rgba(176,140,255,0.08)" stroke="#B08CFF" stroke-width="1"></rect>
+      <circle cx="1058" cy="250" r="9" fill="rgba(176,140,255,0.16)" stroke="#B08CFF" stroke-width="1"></circle>
+      <text x="1058" y="254" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#B08CFF">3</text>
+      <text x="1076" y="247" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">Face ID, Keychain'deki token'ı açar</text>
+      <text x="1076" y="262" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#93A2B3">refresh token · biometryCurrentSet</text>
+
+      <path d="M1012 296 L1038 296" stroke="#4CC2FF" stroke-width="1.2"></path>
+      <rect x="1038" y="276" width="362" height="40" rx="9" fill="#1B2430" stroke="#2A3746" stroke-width="1"></rect>
+      <circle cx="1058" cy="296" r="9" fill="rgba(76,194,255,0.16)" stroke="#4CC2FF" stroke-width="1"></circle>
+      <text x="1058" y="300" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#4CC2FF">4</text>
+      <text x="1076" y="293" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">İstek HTTPS üzerinden JWT ile gider</text>
+      <text x="1076" y="308" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">sunucuya karşı kimlik JWT'dir — Face ID değil</text>
+
+      <path d="M1012 342 L1038 342" stroke="#4CC2FF" stroke-width="1.2"></path>
+      <rect x="1038" y="322" width="362" height="40" rx="9" fill="rgba(63,217,138,0.07)" stroke="#3FD98A" stroke-width="1"></rect>
+      <circle cx="1058" cy="342" r="9" fill="rgba(63,217,138,0.16)" stroke="#3FD98A" stroke-width="1"></circle>
+      <text x="1058" y="346" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#3FD98A">5</text>
+      <text x="1076" y="339" font-family="IBM Plex Sans, sans-serif" font-size="12.5" font-weight="600" fill="#E8EEF4">RLS varsayılan reddet</text>
+      <text x="1076" y="354" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A2B3">her tabloda açık; politikalar auth.uid() üzerinden</text>
+
+      <rect x="986" y="378" width="414" height="52" rx="10" fill="rgba(76,194,255,0.10)" stroke="#4CC2FF" stroke-width="1.3"></rect>
+      <text x="1002" y="400" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E8EEF4">Supabase · yalnızca kendi satırları</text>
+      <text x="1002" y="419" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#93A2B3">panel admin rolüyle gelir ama aynı politikaların içinden okur</text>
+
+      <rect x="986" y="442" width="414" height="84" rx="10" fill="rgba(76,194,255,0.07)" stroke="#4CC2FF" stroke-width="1.1"></rect>
+      <text x="1000" y="459" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em" fill="#4CC2FF">SINIR NOTU</text>
+      <text x="1000" y="476" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Panelin ayrıcalıklı yan yolu yok: iki istemci aynı kapıdan girer.</text>
+      <text x="1000" y="491" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Sunucuya karşı kimlik JWT'dir; Face ID yalnızca yerel kilidi açar.</text>
+      <text x="1000" y="506" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#E8EEF4">Politika yazılmamış bir tablo hiç kimseye açılmaz.</text>
+      <text x="1000" y="521" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#93A2B3">Admin rolü RLS'i atlamaz; yalnızca kapsamı genişletir.</text>
+    </svg>
+
+    <div style="font-size: 12.5px; line-height: 1.4; color: #93A2B3;">Üç sınır ayrı anahtarlarla çalışır: BLE'nin bonding anahtarı buluta erişim vermez, cihazın device token'ı kullanıcı hesabını açmaz, kullanıcının JWT'si cihazın yerine paket yazamaz.</div>
+  </div>
+
+  <!-- ALT KARTLAR -->
+  <div style="height: 376px; flex-shrink: 0; display: flex; gap: 20px;">
+
+    <!-- FACE ID -->
+    <div style="width: 372px; flex-shrink: 0; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B08CFF;">FACE ID KİMLİK DOĞRULAMA DEĞİLDİR</h2>
+      <div style="font-size: 13px; line-height: 1.45; color: #E8EEF4;">Face ID cihazda yereldir; sunucu onu göremez. Tek yaptığı, saklanan anahtarın kilidini açmaktır.</div>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="background: #1B2430; border: 1px solid #B08CFF; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #B08CFF;">1 · YEREL</div>
+          <div style="font-size: 13px; font-weight: 600; color: #E8EEF4;">Face ID — telefonun içinde</div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <svg width="16" height="12" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"></path></svg>
+        </div>
+        <div style="background: #1B2430; border: 1px solid #2A3746; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">2 · SAKLAMA</div>
+          <div style="font-size: 13px; font-weight: 600; color: #E8EEF4;">iOS Keychain · refresh token</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #93A2B3;">koruma: biometryCurrentSet</div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <svg width="16" height="12" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"></path></svg>
+        </div>
+        <div style="background: rgba(63,217,138,0.08); border: 1px solid #3FD98A; border-radius: 10px; padding: 8px 11px; display: flex; flex-direction: column; gap: 2px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #3FD98A;">3 · SUNUCUYA KARŞI KİMLİK</div>
+          <div style="font-size: 13px; font-weight: 600; color: #E8EEF4;">Supabase JWT</div>
+        </div>
+      </div>
+
+      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3;">Yüz kaydı değişirse <span style="font-family: 'JetBrains Mono', monospace;">biometryCurrentSet</span> anahtarı geçersiz kılar; kullanıcı şifre ve TOTP ile yeniden girer.</div>
+    </div>
+
+    <!-- KURAL — SERVICE ROLE -->
+    <div style="width: 255px; flex-shrink: 0; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+      <div style="font-size: 15px; line-height: 1.35; font-weight: 600; color: #E8EEF4;">ESP32 asla Supabase service role anahtarı taşımaz.</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;">Service role, RLS'i tamamen atlar. Araçtaki kart ise fiziksel erişime açıktır: sökülebilir, flash'ı okunabilir.</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;">Doğrusu: cihazın kendi <span style="font-family: 'JetBrains Mono', monospace; color: #FF9F45;">device token</span>'ı olur; yazmayı Edge Function kendi içinde yapar.</div>
+      <div style="background: #131A22; border: 1px solid #2A3746; border-radius: 10px; padding: 9px 11px; display: flex; flex-direction: column; gap: 3px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #93A2B3;">SIZINTI OLURSA</div>
+        <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Etki tek cihazla sınırlıdır ve o cihaz iptal edilir.</div>
+      </div>
+    </div>
+
+    <!-- KURAL — TEK RADYO -->
+    <div style="width: 255px; flex-shrink: 0; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL — TEK RADYO</div>
+      <div style="font-size: 15px; line-height: 1.35; font-weight: 600; color: #E8EEF4;">SIM808'in Bluetooth'u kullanılmaz.</div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">01</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Klasik Bluetooth SPP'ye üçüncü parti iOS uygulaması erişemez (MFi gerekir) — iPhone o radyoyla zaten konuşamaz.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">02</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">İkinci radyo, ikinci saldırı yüzeyi ve ikinci eşleşme yönetimidir; klasik BT'nin eşleşme modeli BLE'ninkinden zayıf.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">03</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Durum tek yerde, ESP32'de tutulur; SIM808 UART üzerinden onun çevre birimidir.</span>
+      </div>
+      <div style="font-size: 12px; line-height: 1.4; color: #E8EEF4; margin-top: auto;">Telefonla tüm haberleşme ESP32-S3'ün BLE'si üzerinden yürür; <span style="font-weight: 600;">SIM808'in BT anteni bağlanmaz.</span></div>
+    </div>
+
+    <!-- KURAL — KONUM GEÇMİŞİ -->
+    <div style="width: 255px; flex-shrink: 0; box-sizing: border-box; background: rgba(255,90,90,0.08); border: 1px solid #FF5A5A; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5A5A;">KURAL</div>
+      <div style="font-size: 15px; line-height: 1.35; font-weight: 600; color: #E8EEF4;">Konum geçmişi hassas veridir.</div>
+      <div style="font-size: 12.5px; line-height: 1.45; color: #E8EEF4;">Kimin nerede yaşadığını ve gününü nasıl geçirdiğini gösterir; bir LED ayarından farklı muamele görür.</div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">01</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Saklama süresi sınırlı — eski kayıtlar silinir.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">02</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Panelde maskeleme — koordinat ve IP kapalı gelir.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">03</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Dışa aktarım loglanır — kim, ne zaman, hangi aralık.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 7px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #FF5A5A; flex-shrink: 0; line-height: 1.5;">04</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">RLS varsayılan reddet — politikasız tablo açılmaz.</span>
+      </div>
+    </div>
+
+    <!-- CİHAZ ÇIKARMA VE ANAHTAR İPTALİ -->
+    <div style="width: 255px; flex-shrink: 0; box-sizing: border-box; background: #131A22; border: 1px solid #2A3746; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <h2 style="font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #3FD98A;">CİHAZ ÇIKARMA VE İPTAL</h2>
+      <div style="font-size: 12px; line-height: 1.4; color: #93A2B3;">Kart çalınırsa, bir telefon kaybolursa ya da misafir erişimi bitince.</div>
+
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">1</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Eşleşmiş cihazlar listesinden ilgili kaydı iptal et.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">2</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">O telefonun BLE bonding kaydı silinir; diğerleri etkilenmez.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">3</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Araç kartı için: device token iptal edilir, Edge Function artık reddeder.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">4</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Telefon kaybıysa Supabase oturumları kapatılır.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">5</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Yeni cihaz anahtarı karta elden yüklenir — uzaktan değil.</span>
+      </div>
+      <div style="display: flex; align-items: flex-start; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; border-radius: 999px; background: rgba(63,217,138,0.14); border: 1px solid #3FD98A; color: #3FD98A; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; flex-shrink: 0;">6</span>
+        <span style="font-size: 12px; line-height: 1.4; color: #E8EEF4;">Her adım denetim kaydına yazılır</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

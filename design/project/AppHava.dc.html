@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Uygulama — Hava süspansiyon</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+:root{
+--bg:#0B0F14; --surface:#131A22; --surface-2:#1B2430; --line:#2A3746;
+--text:#E8EEF4; --muted:#93A2B3; --dim:#6E7C8C;
+--hava:#6FA0FF;
+--ok:#3FD98A; --warn:#FFB020; --danger:#FF5A5A;
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:"IBM Plex Sans",system-ui,sans-serif;
+-webkit-font-smoothing:antialiased;}
+a{color:#4CC2FF;} a:hover{color:#8FD9FF;}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;letter-spacing:-0.01em;}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+button{font-family:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:-1px;padding:0;border:0;}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 0; display: flex; flex-direction: column; background: #0B0F14; position: relative; overflow: hidden; font-size: 15px;">
+
+  <!-- BAŞLIK -->
+  <div style="padding: 12px 16px 6px; display: flex; flex-direction: column; gap: 2px; flex-shrink: 0;">
+    <a href="#bolgeler" style="display: inline-flex; align-items: center; gap: 4px; height: 34px; text-decoration: none; color: #4CC2FF; font-size: 15px; align-self: flex-start;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4CC2FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>
+      Bölgeler
+    </a>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+        <h1 style="font-size: 25px; line-height: 1.1; font-weight: 700; color: #E8EEF4;">Hava süspansiyon</h1>
+        <div class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #6E7C8C;">4 KÖŞE BAĞIMSIZ</div>
+      </div>
+      <a href="#hava-hafiza" aria-label="Hafıza ve ayarlar" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; background: rgba(232,238,244,0.08); border: 1px solid rgba(232,238,244,0.12); text-decoration: none; flex-shrink: 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8EEF4" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 3.2v2.3M12 18.5v2.3M20.8 12h-2.3M5.5 12H3.2M18.2 5.8l-1.6 1.6M7.4 16.6l-1.6 1.6M18.2 18.2l-1.6-1.6M7.4 7.4 5.8 5.8"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- İÇERİK -->
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 0 16px 8px; display: flex; flex-direction: column; gap: 10px;">
+
+    <!-- HIZ KİLİDİ -->
+    <div style="display: flex; align-items: center; gap: 9px; background: rgba(63,217,138,0.08); border: 1px solid rgba(63,217,138,0.30); border-radius: 12px; padding: 9px 12px; flex-shrink: 0;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3FD98A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><rect x="5" y="10.5" width="14" height="9.5" rx="2"></rect><path d="M8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7"></path></svg>
+      <div style="flex: 1; min-width: 0; font-size: 12px; line-height: 1.4; color: #93A2B3;"><strong style="color: #E8EEF4; font-weight: 600;">Hız kilidi etkin.</strong> Araç hareket hâlindeyken minimum yüksekliğin altına inilmez. Bu kilit kapatılamaz.</div>
+      <span class="mono" style="font-size: 11px; color: #E8EEF4; flex-shrink: 0;">0 km/s</span>
+    </div>
+
+    <!-- ARAÇ + 4 KÖŞE -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 18px; backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); padding: 12px 11px 10px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+
+      <svg width="318" height="222" viewBox="0 0 318 222" fill="none" aria-label="Dört köşenin yüksekliği ve basıncı: ön sol, ön sağ, arka sol, arka sağ" style="display: block;">
+        <g font-family="'IBM Plex Sans', sans-serif">
+          <path d="M136 14c0-5 8-8 23-8s23 3 23 8v194c0 5-8 8-23 8s-23-3-23-8z" fill="#131A22" stroke="#2A3746" stroke-width="1.5"></path>
+          <path d="M142 34h34M142 186h34" stroke="#2A3746" stroke-width="1.3"></path>
+          <text x="159" y="116" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6E7C8C">ÖN</text>
+          <path d="M159 100V84M154 90l5-6 5 6" stroke="#6E7C8C" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+
+          <rect x="0" y="12" width="118" height="84" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+          <text x="12" y="32" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="0.6" fill="#6E7C8C">ÖN SOL</text>
+          <rect x="12" y="42" width="66" height="7" rx="3.5" fill="#0B0F14" stroke="#2A3746"></rect>
+          <rect x="13" y="43" width="34" height="5" rx="2.5" fill="#6FA0FF"></rect>
+          <text x="12" y="70" font-family="'JetBrains Mono', monospace" font-size="19" font-weight="700" fill="#E8EEF4">—</text>
+          <text x="40" y="70" font-family="'IBM Plex Sans', sans-serif" font-size="11" fill="#93A2B3">mm</text>
+          <text x="12" y="88" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç —</text>
+
+          <rect x="200" y="12" width="118" height="84" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+          <text x="212" y="32" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="0.6" fill="#6E7C8C">ÖN SAĞ</text>
+          <rect x="212" y="42" width="66" height="7" rx="3.5" fill="#0B0F14" stroke="#2A3746"></rect>
+          <rect x="213" y="43" width="34" height="5" rx="2.5" fill="#6FA0FF"></rect>
+          <text x="212" y="70" font-family="'JetBrains Mono', monospace" font-size="19" font-weight="700" fill="#E8EEF4">—</text>
+          <text x="240" y="70" font-family="'IBM Plex Sans', sans-serif" font-size="11" fill="#93A2B3">mm</text>
+          <text x="212" y="88" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç —</text>
+
+          <rect x="0" y="126" width="118" height="84" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+          <text x="12" y="146" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="0.6" fill="#6E7C8C">ARKA SOL</text>
+          <rect x="12" y="156" width="66" height="7" rx="3.5" fill="#0B0F14" stroke="#2A3746"></rect>
+          <rect x="13" y="157" width="30" height="5" rx="2.5" fill="#6FA0FF"></rect>
+          <text x="12" y="184" font-family="'JetBrains Mono', monospace" font-size="19" font-weight="700" fill="#E8EEF4">—</text>
+          <text x="40" y="184" font-family="'IBM Plex Sans', sans-serif" font-size="11" fill="#93A2B3">mm</text>
+          <text x="12" y="202" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç —</text>
+
+          <rect x="200" y="126" width="118" height="84" rx="11" fill="#1B2430" stroke="#2A3746"></rect>
+          <text x="212" y="146" font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="0.6" fill="#6E7C8C">ARKA SAĞ</text>
+          <rect x="212" y="156" width="66" height="7" rx="3.5" fill="#0B0F14" stroke="#2A3746"></rect>
+          <rect x="213" y="157" width="30" height="5" rx="2.5" fill="#6FA0FF"></rect>
+          <text x="212" y="184" font-family="'JetBrains Mono', monospace" font-size="19" font-weight="700" fill="#E8EEF4">—</text>
+          <text x="240" y="184" font-family="'IBM Plex Sans', sans-serif" font-size="11" fill="#93A2B3">mm</text>
+          <text x="212" y="202" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6E7C8C">basınç —</text>
+
+          <path d="M118 54h14M186 54h14M118 168h14M186 168h14" stroke="#2A3746" stroke-width="1.6"></path>
+        </g>
+      </svg>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: #FFB020; border: 1px dashed #FFB020; border-radius: 4px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0;">KALİBRE EDİLMEDİ</span>
+        <span style="font-size: 11px; line-height: 1.35; color: #6E7C8C;">Sensörlerin sıfır noktası araçta öğrenilmeden yükseklik gösterilmez.</span>
+      </div>
+
+    </div>
+
+    <!-- TANK -->
+    <div style="background: rgba(27,36,48,0.62); border: 1px solid rgba(232,238,244,0.09); border-radius: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 13px; font-weight: 600; color: #93A2B3;">Tank</span>
+        <span style="flex: 1;"></span>
+        <span class="mono" style="font-size: 11px; color: #6E7C8C;">kompresör beklemede</span>
+      </div>
+      <div style="height: 8px; border-radius: 999px; background: #1B2430; border: 1px solid #2A3746; box-sizing: border-box; overflow: hidden; position: relative;">
+        <span style="position: absolute; top: 0; left: 0; width: 64%; height: 100%; background: #6FA0FF;"></span>
+        <span style="position: absolute; top: 0; left: 26%; width: 2px; height: 100%; background: #FF5A5A;"></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 7px;">
+        <span style="width: 10px; height: 2px; background: #FF5A5A; flex-shrink: 0;"></span>
+        <span style="font-size: 11px; line-height: 1.35; color: #6E7C8C;"><strong style="color: #93A2B3; font-weight: 600;">Rezerv çizgisi</strong> — bunun altına inecek bir indirme kabul edilmez.</span>
+      </div>
+    </div>
+
+    <!-- HIZLI KONUMLAR -->
+    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+      <button type="button" style="flex: 1; min-height: 50px; border-radius: 13px; background: rgba(232,238,244,0.05); border: 1px solid rgba(232,238,244,0.12); color: #93A2B3; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">Yerde<span class="mono" style="font-size: 9px; color: #6E7C8C;">PARK</span></button>
+      <button type="button" aria-pressed="true" style="flex: 1; min-height: 50px; border-radius: 13px; background: rgba(232,238,244,0.14); border: 1px solid rgba(232,238,244,0.22); color: #E8EEF4; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">Sürüş<span class="mono" style="font-size: 9px; color: #93A2B3;">VARSAYILAN</span></button>
+      <button type="button" style="flex: 1; min-height: 50px; border-radius: 13px; background: rgba(232,238,244,0.05); border: 1px solid rgba(232,238,244,0.12); color: #93A2B3; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">Yüksek<span class="mono" style="font-size: 9px; color: #6E7C8C;">RAMPA</span></button>
+    </div>
+
+    <!-- KÖŞE AYARI -->
+    <a href="#hava-kose" style="display: flex; align-items: center; gap: 11px; background: rgba(19,26,34,0.55); border: 1px solid rgba(232,238,244,0.08); border-radius: 12px; padding: 10px 12px; text-decoration: none; min-height: 46px; box-sizing: border-box; flex-shrink: 0;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#93A2B3" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="flex-shrink: 0;"><path d="M6 20V10M6 6.5V4M12 20v-6M12 10.5V4M18 20v-9M18 7.5V4"></path><path d="M3.5 8.2h5M9.5 12.7h5M15.5 9.2h5"></path></svg>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+        <span style="font-size: 14px; font-weight: 500; color: #E8EEF4;">Köşeleri tek tek ayarla</span>
+        <span style="font-size: 11px; color: #6E7C8C;">Araç dururken · hız kilidi geçerli</span>
+      </span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7C8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><path d="m9 5 7 7-7 7"></path></svg>
+    </a>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
