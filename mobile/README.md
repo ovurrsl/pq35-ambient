@@ -100,6 +100,41 @@ derlenmez. Ücretli üyelik yoksa tek çalışan profil `development-simulator`'
 görünür, **BLE görünmez** (simülatörde Bluetooth donanımı yoktur) ve çıktısını çalıştırmak
 için yine bir Mac gerekir. Yani BLE testi için ücretli üyelik kaçınılmazdır.
 
+### OTA güncelleme — `--platform ios` bayrağı zorunlu
+
+`expo-updates` kurulu ve `runtimeVersion` politikası **fingerprint**. Güncelleme
+yayınlarken **her zaman** platform belirtilir:
+
+```bash
+npx eas update --channel development --platform ios \
+  --message "..." --environment development
+```
+
+**`--platform ios` yazılmazsa güncelleme sessizce işe yaramaz.** Sebebi ölçülerek
+bulundu: platform verilmediğinde eas-cli Android tarafını da hazırlamaya çalışır ve
+`app.json`'a `android.runtimeVersion` yazar — **fingerprint'i hesaplamadan önce**.
+iOS fingerprint'i app config'in tamamından türediği için Android'e ait tek bir anahtar
+bile onu kaydırır:
+
+| app.json durumu | iOS fingerprint |
+|---|---|
+| temiz (commit'teki hâli) | `d34a1ef47158fe35d966c61f83fb78f088b8bc1e` |
+| `android.runtimeVersion` eklenmiş | `9b4db3fd47d2784824aa9555317bf2b6a9759507` |
+
+Build `d34a1ef…` ile imzalanmışken güncelleme `9b4db3fd…` olarak yayınlanır ve cihaza
+**hiç ulaşmaz** — hata da vermez, sadece görünmez. Fingerprint politikasının güvenli
+tarafı budur (`appVersion` olsaydı uyumsuz paket yüklenip çökerdi), ama teşhisi zordur.
+
+Aynı yazma davranışı `app.json`'daki Android izinlerini de **çiftler**; eklenti zaten
+sağladığı için o satırlar app.json'da hiç durmamalı. Yayından sonra kontrol:
+
+```bash
+git status --porcelain mobile/app.json      # boş olmalı
+npx expo-updates fingerprint:generate --platform ios   # build'inkiyle aynı olmalı
+```
+
+Geçerli güncellemeler: `npx eas update:list --branch development`
+
 ### iOS imzalama — bir kez etkileşimli oturum şart
 
 `development` profili `distribution: "internal"`, yani **ad hoc** imzalama. Bu, EAS
