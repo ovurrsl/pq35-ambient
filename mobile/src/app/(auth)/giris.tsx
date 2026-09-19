@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -10,6 +10,8 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import type { Session } from '@supabase/supabase-js';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
@@ -18,14 +20,19 @@ import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /**
- * Giriş — Supabase Auth (e-posta + şifre).
+ * Giriş — Sign in with Apple (birincil) veya Supabase Auth e-posta + şifre (yedek).
+ *
+ * Apple akışında şifre diye bir şey yoktur: Apple imzalı bir `identityToken` döner,
+ * Supabase onu `signInWithIdToken` ile doğrular. Token'ı Apple imzaladığı için
+ * istemciye güvenmek gerekmez. Native akışta Supabase tarafında gizli anahtar da
+ * gerekmez; sağlayıcıya yalnızca bundle identifier tanıtılır.
  *
  * Şifre uygulamada saklanmaz. Uygulamanın tuttuğu tek sır, Keychain'deki refresh token'dır.
  * Oran kısıtlaması ve hatalı deneme sınırı sunucuda uygulanır; istemci tarafı bir sayaç
  * güvenlik sağlamaz.
  */
 export default function GirisEkrani() {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const { girisTamamlandi } = useAuth();
   const router = useRouter();
 
@@ -33,6 +40,76 @@ export default function GirisEkrani() {
   const [sifre, setSifre] = useState('');
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
+  const [appleVar, setAppleVar] = useState(false);
+
+  // Sign in with Apple yalnızca iOS 13+ gerçek cihaz/simülatörde vardır; yoksa düğmeyi
+  // hiç göstermeyiz, çalışmayan bir düğme göstermek yerine e-posta yolu açık kalır.
+  useEffect(() => {
+    let iptal = false;
+    AppleAuthentication.isAvailableAsync()
+      .then((v) => !iptal && setAppleVar(v))
+      .catch(() => !iptal && setAppleVar(false));
+    return () => {
+      iptal = true;
+    };
+  }, []);
+
+  /** Her iki giriş yolunun ortak sonu: MFA gerekiyor mu, gerekmiyorsa oturumu aç. */
+  const oturumuTamamla = useCallback(
+    async (session: Session | null) => {
+      // MFA açıksa Supabase oturumu "aal1" seviyesinde döner; TOTP doğrulaması gerekir.
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (aal && aal.nextLevel === 'aal2' && aal.nextLevel !== aal.currentLevel) {
+        router.push('/(auth)/dogrulama');
+        return;
+      }
+      if (session) {
+        await girisTamamlandi(session);
+      }
+    },
+    [girisTamamlandi, router],
+  );
+
+  const appleIleGir = useCallback(async () => {
+    setCalisiyor(true);
+    setHata(null);
+    try {
+      const kimlik = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      // Apple ad ve e-postayı YALNIZCA ilk girişte gönderir; sonraki girişlerde alan boş
+      // gelir. Kalıcı olan tek şey identityToken içindeki `sub`, Supabase kullanıcıyı
+      // ona bağlar.
+      if (!kimlik.identityToken) {
+        setHata('Apple kimlik jetonu alınamadı.');
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signInWithIdToken({
+        provider: 'apple',
+        token: kimlik.identityToken,
+      });
+
+      if (error) {
+        setHata(error.message);
+        return;
+      }
+
+      await oturumuTamamla(data.session);
+    } catch (e) {
+      // Kullanıcı Apple sayfasını kapattıysa bu bir hata değil, sessizce geç.
+      if ((e as { code?: string }).code === 'ERR_REQUEST_CANCELED') {
+        return;
+      }
+      setHata(e instanceof Error ? e.message : 'Apple ile giriş başarısız.');
+    } finally {
+      setCalisiyor(false);
+    }
+  }, [oturumuTamamla]);
 
   const gonder = useCallback(async () => {
     setCalisiyor(true);
@@ -50,17 +127,8 @@ export default function GirisEkrani() {
       return;
     }
 
-    // MFA açıksa Supabase oturumu "aal1" seviyesinde döner; TOTP doğrulaması gerekir.
-    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    if (aal && aal.nextLevel === 'aal2' && aal.nextLevel !== aal.currentLevel) {
-      router.push('/(auth)/dogrulama');
-      return;
-    }
-
-    if (data.session) {
-      await girisTamamlandi(data.session);
-    }
-  }, [eposta, sifre, girisTamamlandi, router]);
+    await oturumuTamamla(data.session);
+  }, [eposta, sifre, oturumuTamamla]);
 
   const gonderilebilir = eposta.trim().length > 3 && sifre.length > 0 && !calisiyor;
 
@@ -79,6 +147,31 @@ export default function GirisEkrani() {
             SUPABASE AUTH
           </Text>
         </View>
+
+        {appleVar ? (
+          <View style={styles.appleBolum}>
+            <AppleAuthentication.AppleAuthenticationButton
+              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+              buttonStyle={
+                scheme === 'dark'
+                  ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+                  : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+              }
+              cornerRadius={RADIUS.md}
+              style={styles.appleDugme}
+              onPress={appleIleGir}
+            />
+            <View style={styles.ayirac}>
+              <View style={[styles.ayiracCizgi, { backgroundColor: colors.line }]} />
+              <Text
+                style={[styles.ayiracMetin, { color: colors.dim }]}
+                maxFontSizeMultiplier={1.4}>
+                ya da e-posta ile
+              </Text>
+              <View style={[styles.ayiracCizgi, { backgroundColor: colors.line }]} />
+            </View>
+          </View>
+        ) : null}
 
         <View style={styles.alanlar}>
           <View style={styles.alan}>
@@ -152,6 +245,7 @@ export default function GirisEkrani() {
         <Card>
           <SectionLabel>BUNDAN SONRA NE OLUR</SectionLabel>
           {[
+            'Apple ile girersen şifre hiç oluşmaz; kimliği Apple imzalar.',
             'İki adımlı doğrulama açıksa TOTP kodu istenir.',
             'Refresh token Keychain’e biyometrik korumayla yazılır.',
             'Bir daha bu ekran görünmez; açılışta Face ID yeter.',
@@ -168,8 +262,10 @@ export default function GirisEkrani() {
         </Card>
 
         <RuleBox title="KURAL">
-          Şifre uygulamada saklanmaz. Uygulamanın tuttuğu tek sır Keychain’deki refresh
-          token’dır. Hatalı deneme sınırı ve oran kısıtlaması sunucuda uygulanır.
+          Şifre uygulamada saklanmaz; Apple yolunda hiç oluşmaz. Uygulamanın tuttuğu tek
+          sır Keychain’deki refresh token’dır. Apple’ın döndürdüğü kimlik jetonunu
+          sunucuda Supabase doğrular — istemcinin söylediğine güvenilmez. Hatalı deneme
+          sınırı ve oran kısıtlaması sunucuda uygulanır.
         </RuleBox>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -181,6 +277,11 @@ const styles = StyleSheet.create({
   basliklar: { gap: 2 },
   baslik: { fontFamily: FONTS.display, fontSize: 28 },
   altBaslik: { fontFamily: FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  appleBolum: { gap: SPACING.lg },
+  appleDugme: { height: HIT_SIZE + 6 },
+  ayirac: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  ayiracCizgi: { flex: 1, height: StyleSheet.hairlineWidth },
+  ayiracMetin: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
   alanlar: { gap: SPACING.md },
   alan: { gap: 6 },
   etiket: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.label },

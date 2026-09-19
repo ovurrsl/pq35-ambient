@@ -20,7 +20,8 @@
       },
       "runtimeVersion": {
         "policy": "fingerprint"
-      }
+      },
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "com.ovurrsl.pq35ambient",
