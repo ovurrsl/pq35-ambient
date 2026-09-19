@@ -531,7 +531,8 @@ design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
 mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript (§9.1)
 supabase/     şema + RLS migration'ları + Edge Function
 firmware/     Listen-Only CAN logger (PlatformIO, ESP32-S3) — araçtaki ilk yazılım
-tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID) · rota-agaci.js (rota ağacı denetimi)
+tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID) · rota-agaci.js (rota
+              ağacı denetimi) · pano-dogrula.mjs (pano ölçümü + render)
 ```
 
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u
@@ -545,6 +546,13 @@ sayılarını da güncelle.
 **Pano doğrulaması iki adımdır, biri yetmez.** Ölçüm (içerik alt kenarı ≤ çerçeve) `overflow:
 hidden` içindeki kırpılmayı yakalamaz — pano "sığıyor" der ama metin sekme çubuğunun altında
 kesilir. Her değişen pano ayrıca **render edilip gözle kontrol edilir**.
+İkisini birden `tools/pano-dogrula.mjs` yapar; tarayıcı indirmez, ortamdaki Chromium'u
+kullanır ve `playwright` depo bağımlılığı değildir:
+
+```
+npm i --prefix /tmp/pw playwright
+PQ35_PLAYWRIGHT=/tmp/pw node tools/pano-dogrula.mjs design/project/AppKurulum.dc.html out.png
+```
 
 **Henüz yok:** LED sürüş firmware'i. `firmware/` şu an yalnızca **Listen-Only logger**
 içeriyor ve sert kural 6 gereği öyle kalacak — LED kodu, log alınıp masada çözümlendikten

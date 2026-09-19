@@ -239,9 +239,9 @@ export default function GirisEkrani() {
         ))}
       </Card>
 
-      <RuleBox title="KURAL">
-        Bu uygulamada şifre yoktur. Apple’ın döndürdüğü kimlik jetonunu sunucuda Supabase
-        doğrular — istemcinin söylediğine güvenilmez. Uygulamanın tuttuğu tek sır
+      <RuleBox title="BU UYGULAMADA ŞİFRE YOKTUR">
+        Apple’ın döndürdüğü kimlik jetonunu sunucuda Supabase doğrular — istemcinin
+        söylediğine güvenilmez. Uygulamanın tuttuğu tek sır
         Keychain’deki refresh token’dır. Oran kısıtlaması ve hatalı deneme sınırı sunucuda
         uygulanır.
       </RuleBox>
