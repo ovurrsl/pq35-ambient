@@ -8,6 +8,7 @@ import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { maskEmail } from '@/lib/session-vault';
 import { useAuth } from '@/state/auth-context';
 import { BleCip } from '@/components/ui/ble-cip';
+import { GuncellemeDurumu } from '@/components/ui/guncelleme-durumu';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
@@ -220,6 +221,16 @@ export default function AyarlarEkrani() {
           Araç yakındayken internet gerekmez; bulut oturumu konum geçmişi ve panel senkronu
           içindir.
         </Text>
+        <Ayirac />
+
+        {/*
+          Uygulama kendini güncelliyordu ama bunu hiç söylemiyordu; yeni sürümün bir
+          sonraki açılışta devreye girdiği de hiçbir yerde yazmıyordu.
+        */}
+        <GuncellemeDurumu />
+
+        <Ayirac />
+
         <Text style={[styles.aciklama, { color: colors.muted }]} maxFontSizeMultiplier={2}>
           Telefon ↔ Araç:{' '}
           <Text style={[styles.vurgu, { color: colors.text }]}>BLE bonding</Text> · Telefon ↔ Bulut:{' '}
