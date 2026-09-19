@@ -46,3 +46,4 @@ example
 .env
 .env.local
 .env*.local
+dist-web/
