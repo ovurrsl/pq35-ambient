@@ -531,6 +531,7 @@ design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
 mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript (§9.1)
 supabase/     şema + RLS migration'ları + Edge Function
 firmware/     Listen-Only CAN logger (PlatformIO, ESP32-S3) — araçtaki ilk yazılım
+firmware-uno-r4/  aynı logger'ın UNO R4 ikizi — aynı çıktı biçimi, ikinci bir tanık
 tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID) · rota-agaci.js (rota
               ağacı denetimi) · pano-dogrula.mjs (pano ölçümü + render)
 ```
