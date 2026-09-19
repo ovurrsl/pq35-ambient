@@ -17,6 +17,9 @@
         "NSFaceIDUsageDescription": "Uygulama kilidini açmak ve Keychain'de saklanan oturum anahtarına erişmek için Face ID kullanılır. Face ID kimlik doğrulama değildir; sunucuya karşı kimlik Supabase JWT'dir.",
         "NSBluetoothAlwaysUsageDescription": "Araçtaki ambiyans denetleyicisine bağlanmak için Bluetooth kullanılır.",
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "runtimeVersion": {
+        "policy": "fingerprint"
       }
     },
     "android": {
@@ -66,6 +69,9 @@
       "eas": {
         "projectId": "2ea85b1a-b6d7-4b5f-ba3e-535bef47669a"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2ea85b1a-b6d7-4b5f-ba3e-535bef47669a"
     }
   }
 }
