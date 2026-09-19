@@ -2,19 +2,28 @@ import type { ReactNode } from 'react';
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useTheme } from '@/theme/theme-provider';
-import { GlassSurface } from './glass-surface';
 import { FONTS, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /**
- * İçerik kartı — Liquid Glass yüzeyi.
+ * İçerik kartı — standart yüzey, **Liquid Glass DEĞİL**.
  *
- * Camı tek tek ekranlara değil buraya bağlıyoruz: `Card` 23 ekranın hepsinde
- * kullanılıyor, dolayısıyla malzeme tek yerden değişiyor ve hiçbir ekran geride
- * kalmıyor.
+ * Bir süre camla denendi ve geri alındı. Apple'ın Human Interface Guidelines'ı
+ * (Materials) bunu açıkça yasaklıyor:
  *
- * Erişilebilirlik yedeği `GlassSurface` içinde: iOS 26 yoksa veya **Şeffaflığı
- * Azalt / Kontrastı Artır** açıksa opak zemine düşer. Bu bir bozulma değil, HIG
- * gereğidir.
+ *   "Don't use Liquid Glass in the content layer. ... including it in the content
+ *    layer can result in unnecessary complexity and a confusing visual hierarchy.
+ *    Instead, use [standard materials] for elements in the content layer."
+ *
+ *   "Use Liquid Glass effects sparingly. ... overusing this material in multiple
+ *    custom controls can provide a subpar user experience by distracting from that
+ *    content. Limit these effects to the most important functional elements."
+ *
+ * `Card` 23 ekranın hepsinde kullanılıyor; camı buraya koymak tam olarak "içerik
+ * katmanında aşırı kullanım" demekti.
+ *
+ * Cam nerede: sekme çubuğu (`NativeTabs` → gerçek UITabBar), yığın başlıkları ve
+ * modal sheet'ler. Üçünü de **sistem** kendisi uyguluyor, elle taklit edilmiyor —
+ * `GlassSurface` yalnızca gerçekten gerekirse özel bir kabuk öğesi için durur.
  */
 export function Card({
   children,
@@ -23,10 +32,16 @@ export function Card({
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }) {
+  const { colors } = useTheme();
   return (
-    <GlassSurface glass="regular" radius={RADIUS.lg} style={[styles.card, style]}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: colors.surface, borderColor: colors.line },
+        style,
+      ]}>
       {children}
-    </GlassSurface>
+    </View>
   );
 }
 
@@ -61,6 +76,8 @@ export function RuleBox({ title, children }: { title: string; children: string }
 
 const styles = StyleSheet.create({
   card: {
+    borderRadius: RADIUS.lg,
+    borderWidth: StyleSheet.hairlineWidth,
     padding: SPACING.md,
     gap: SPACING.sm,
   },

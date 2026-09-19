@@ -578,6 +578,8 @@ ve modal sheet'lerde kullanılır. Kanvas ile kod çelişirse **kanvas kazanır*
 | `docs/01-gemini-arduino-canbus-sohbeti.md` | Erken donanım araştırması, TWAI/FastLED örnek kodu, güç kaynağı notları. Kapsam dışı fikirler (GSM, HomeKit, Find My) içerir — hepsi "ileride". |
 | `docs/02-vw-scirocco-elektrik-semasi-rehberi.md` | Kablo renk kodları, J387 kapı pinout'u, güç/şase tap noktaları. **MIB2 RGB yayını varsayımı geçersizdir** (dosya başında not var); pinout bilgisi geçerli. |
 
+| `docs/03-apple-hig-kontrol-listesi.md` | **Apple HIG kontrol listesi.** Sayfalar JavaScript ile render edildiği için düz çekimle okunmaz; DocC JSON uçları ve ayrıştırma yöntemi burada. Uygulanan kurallar (cam içerik katmanında kullanılmaz, ince font ağırlığı yok, safe area zorunlu) birebir alıntılarla. Tasarım kararı HIG ile çelişirse **HIG kazanır**. |
+
 Dördüncü bir sohbet dökümü daha vardı; `docs/00`'ın birebir alt kümesi olduğu için depoya eklenmedi.
 
 ---
