@@ -19,7 +19,7 @@ export default function TabsLayout() {
 
   return (
     <NativeTabs tintColor={colors.accent} minimizeBehavior="onScrollDown">
-      <NativeTabTrigger name="index">
+      <NativeTabTrigger name="bolgeler">
         <NativeTabTrigger.Icon sf={{ default: 'light.panel', selected: 'light.panel.fill' }} />
         <NativeTabTrigger.Label>Bölgeler</NativeTabTrigger.Label>
       </NativeTabTrigger>

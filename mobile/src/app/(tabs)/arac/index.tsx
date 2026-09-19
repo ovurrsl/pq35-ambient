@@ -5,7 +5,7 @@ import { SymbolView } from 'expo-symbols';
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
-import { NavRow } from '@/components/ui/row';
+import { NavRow, RowDivider } from '@/components/ui/row';
 import { useTheme } from '@/theme/theme-provider';
 import { BUS_COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
 
@@ -16,6 +16,10 @@ import { BUS_COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE,
  * canlı alanlar `··` yer tutucusuyla çizilir. Yalnızca üç ID kaynaklarda doğrulanmıştır
  * (0x280 · 0x351 · 0x353) ve üçü de byte offset'i model yılına göre kayabildiği için
  * kesikli rozet taşır (CLAUDE.md §3.1 ve §12). Diğer değerlerin ID'si bilinmiyor.
+ *
+ * Egzoz ve hava süspansiyon bu sekmenin alt ekranları: ikisi de Kontrolcü B sistemi
+ * (CLAUDE.md §3.3). Eskiden Bölgeler ekranından açılıyorlardı — yanlış sekme, ve kök
+ * `Stack`e itildikleri için sekme çubuğunu da kapatıyorlardı.
  */
 
 /** Canlı veri gelmediğini gösteren yer tutucu — sıfır yazmak yanlış okunurdu. */
@@ -133,6 +137,27 @@ export default function AracEkrani(): ReactElement {
           href="/arac/performans"
           baslik="Performans"
           altBaslik="0–100, fren, esneklik, canlı g"
+        />
+      </Card>
+
+      <View style={styles.grupBaslik}>
+        <SectionLabel>ARAÇ SİSTEMLERİ</SectionLabel>
+        <Text style={[styles.grupNot, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
+          Kontrolcü B · Kl.15
+        </Text>
+      </View>
+
+      <Card>
+        <NavRow
+          href="/arac/egzoz"
+          baslik="Egzoz"
+          altBaslik="Varex valfi · aç, kapat, otomatik mod"
+        />
+        <RowDivider />
+        <NavRow
+          href="/arac/hava"
+          baslik="Hava süspansiyon"
+          altBaslik="4 köşe bağımsız · hafıza · denge"
         />
       </Card>
 
@@ -455,6 +480,14 @@ function FazCipi(): ReactElement {
 
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
+
+  grupBaslik: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    gap: SPACING.sm,
+  },
+  grupNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
 
   baslikSag: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   telefonDugmesi: {

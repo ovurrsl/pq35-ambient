@@ -11,7 +11,6 @@ import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
-import { NavRow, RowDivider } from '@/components/ui/row';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
 import { useTheme } from '@/theme/theme-provider';
@@ -23,6 +22,10 @@ import { BUS_COLORS, FONTS, HIT_SIZE, MARKA_ETIKET, RADIUS, SPACING, TYPE_SCALE,
  * Renk ve parlaklık **uygulamadan** seçilir (Yol A, CLAUDE.md §1). Araçtan okunan hiçbir
  * renk yoktur; CAN yalnızca tetik kaynağıdır ve **her iki kanalda da Listen-Only** dinlenir.
  * Bu yüzden ekrandaki hiçbir kontrol araca komut yazmaz — LED'i ESP32-S3 kendi sürer.
+ *
+ * Egzoz ve hava süspansiyon **buradan çıkarıldı**, Araç sekmesine taşındı: ikisi de
+ * Kontrolcü B sistemi (CLAUDE.md §3.3), bu sekme ise ambiyansın kendisi. Kartın adı
+ * zaten "ARAÇ SİSTEMLERİ"ydi ve uygulamada "Araç" diye bir sekme var. Geri ekleme.
  */
 
 /** Satırın ikinci satırı — kaynak: design/project/AppZonlar.dc.html (kanvas kazanır). */
@@ -72,7 +75,7 @@ export default function BolgelerEkrani(): JSX.Element {
 
   const detayaGit = useCallback(
     (id: ZoneId): void => {
-      router.push({ pathname: '/bolge/[id]', params: { id } });
+      router.push({ pathname: '/bolgeler/[id]', params: { id } });
     },
     [router]
   );
@@ -177,27 +180,6 @@ export default function BolgelerEkrani(): JSX.Element {
             onAc={detayaGit}
           />
         ))}
-      </Card>
-
-      <View style={styles.grupBaslik}>
-        <SectionLabel>ARAÇ SİSTEMLERİ</SectionLabel>
-        <Text style={[styles.grupNot, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
-          Kontrolcü B · Kl.15
-        </Text>
-      </View>
-
-      <Card style={styles.liste}>
-        <NavRow
-          href="/egzoz"
-          baslik="Egzoz"
-          altBaslik="Varex valfi · aç, kapat, otomatik mod"
-        />
-        <RowDivider />
-        <NavRow
-          href="/hava"
-          baslik="Hava süspansiyon"
-          altBaslik="4 köşe bağımsız · hafıza · denge"
-        />
       </Card>
 
       <Card>

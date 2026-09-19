@@ -117,7 +117,7 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
 
   const geriDon = useCallback((): void => {
     if (router.canGoBack()) router.back();
-    else router.replace('/(tabs)');
+    else router.replace('/(tabs)/bolgeler');
   }, [router]);
 
   const secilenRenkAdi =
@@ -325,7 +325,7 @@ function BolgeBulunamadi(): JSX.Element {
   const router = useRouter();
 
   const listeyeDon = useCallback((): void => {
-    router.replace('/(tabs)');
+    router.replace('/(tabs)/bolgeler');
   }, [router]);
 
   return (

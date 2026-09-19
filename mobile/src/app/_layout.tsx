@@ -36,7 +36,7 @@ function AuthGate() {
     if (durum.ad === 'yapilandirma-gerekli') {
       if (!pathname.startsWith('/kurulum')) router.replace('/(auth)/kurulum');
     } else if (durum.ad === 'acik' || durum.ad === 'cevrimdisi') {
-      if (kimlikAkisinda) router.replace('/(tabs)');
+      if (kimlikAkisinda) router.replace('/(tabs)/bolgeler');
     } else if (durum.ad === 'kilitli' || durum.ad === 'cevrimdisi-kilitli') {
       if (!pathname.startsWith('/kilit')) router.replace('/(auth)/kilit');
     } else if (!kimlikAkisinda) {
@@ -48,8 +48,6 @@ function AuthGate() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Screen name="(auth)" />
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="hava" />
-      <Stack.Screen name="egzoz" />
       <Stack.Screen
         name="onay"
         options={{ presentation: 'formSheet', sheetGrabberVisible: true, sheetAllowedDetents: [0.8] }}

@@ -432,6 +432,36 @@ Güvenlik, Cihazlar ve Gizli özellikler `Ayarlar` sekmesinin alt ekranlarıdır
 Kilit, Giriş, Doğrulama ve Eşleştirme ekranlarında **sekme çubuğu yoktur** — uygulama henüz
 açılmamıştır.
 
+**Egzoz ve hava süspansiyon `Araç` sekmesinin alt ekranlarıdır** (`/arac/egzoz`, `/arac/hava`).
+İkisi de Kontrolcü B sistemi (§3.3), ambiyans değil. Eskiden `Bölgeler` ekranındaki "ARAÇ
+SİSTEMLERİ" kartından açılıyorlardı; kart Araç sekmesine taşındı.
+
+### Sert kural: alt ekran sekmenin içinde yaşar
+
+Her sekmenin **kendi `Stack`i** vardır ve alt ekranlar o `Stack`in altındadır — asla kök
+`Stack`in altında değil. Kök `Stack`e itilen bir ekran gerçek `UITabBar`'ın üstünü kapatır.
+HIG (`tab-bars.md › Best practices`):
+
+> "Make sure the tab bar is visible when people navigate to different sections of your app.
+>  If you hide the tab bar, people can forget which area of the app they're in. The exception
+>  is when a modal view covers the tab bar, because a modal is temporary and self-contained."
+
+Tek istisna **onay ekranıdır**: `formSheet` olarak sunulur, yani HIG'in kendi saydığı modal
+istisnası. Dosya düzeni bunu zorunlu kılıyor:
+
+```
+app/(tabs)/bolgeler/{_layout,index,[id]}.tsx
+app/(tabs)/arac/{_layout,index,konum,surusler,surus/[id],performans,iletisim,egzoz}.tsx
+app/(tabs)/arac/hava/{index,hafiza,denge}.tsx      ← kendi _layout'u yok, Araç Stack'inde
+app/(tabs)/ayarlar/{_layout,index,guvenlik,cihazlar}.tsx
+app/(tabs)/{olaylar,sahneler}.tsx                  ← alt ekranı yok, düz dosya
+app/onay.tsx                                        ← kökte, formSheet (tek istisna)
+```
+
+Rota ağacı tahminle değil ölçümle doğrulanır: `expo-router`'ın kendi `getRoutes`'u dosya
+ağacından ağacı kurar (`tools/rota-agaci.js`), `typedRoutes` ise her `href`'i tipe çevirir —
+taşınan bir ekrandan sonra `tsc` eski `href`'leri hata olarak verir.
+
 ### Kimlik zinciri — arayüzde bu şekilde anlatılır
 
 ```
@@ -501,7 +531,7 @@ design/       Design kanvasının artboard kaynakları (.dc.html + canvas.json)
 mobile/       iOS uygulaması — Expo (React Native) + Expo Router + TypeScript (§9.1)
 supabase/     şema + RLS migration'ları + Edge Function
 firmware/     Listen-Only CAN logger (PlatformIO, ESP32-S3) — araçtaki ilk yazılım
-tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID)
+tools/        masaüstü araçları — can-analiz.py (log → aday CAN ID) · rota-agaci.js (rota ağacı denetimi)
 ```
 
 `design/` altındaki `.dc.html` dosyaları Claude Design kanvasının kaynağıdır. Bir board'u

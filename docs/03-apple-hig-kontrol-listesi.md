@@ -84,6 +84,40 @@ Büyük başlık (`headerLargeTitle`) kullanan yığınlardaki ScrollView'lar
 `contentInsetAdjustmentBehavior="automatic"` almalıdır; yoksa başlık doğru toplanmaz ve
 üstte ölü bir bant kalır.
 
+### Sekme çubuğu — alt ekranda da görünür kalır
+
+> "**Make sure the tab bar is visible when people navigate to different sections of your
+>  app.** If you hide the tab bar, people can forget which area of the app they're in. The
+>  exception is when a modal view covers the tab bar, because a modal is temporary and
+>  self-contained." — `tab-bars.md › Best practices`
+
+Bulgu: alt ekranların tamamı (`arac/`, `ayarlar/`, `bolge/`, `hava/`, `egzoz/`) kök
+`Stack`te, `(tabs)` grubunun **kardeşi** olarak duruyordu; hangisi itilse gerçek
+`UITabBar`'ın üstünü kapatıyordu.
+
+Düzeltme: her sekme kendi `Stack`ine kavuştu ve alt ekranlar onun altına taşındı. Ölçüm
+`tools/rota-agaci.js` ile yapıldı — `expo-router`'ın kendi `getRoutes`'u, ağacı dosya
+adlarından değil router mantığından kurar. Eskimiş `href`'leri `typedRoutes` + `tsc`
+yakaladı (iki tane: `/(tabs)` → `/(tabs)/bolgeler`).
+
+Tek istisna `app/onay.tsx`: `formSheet` olarak sunulur, yani HIG'in kendi saydığı modal
+istisnası.
+
+### Renk — kontrast hesapla, gözle bakma
+
+> "The **contrast ratio** between text and its background must be at least **4.5:1** for
+>  text smaller than 18 points… **3:1** for text that's 18 points or larger, or bold text
+>  that's 14 points or larger." — `accessibility.md › Color and effects`
+
+Ölçüm `tools/` dışında, oturum içinde WCAG formülüyle yapıldı. Renk sistemi koyu tema için
+seçilmiş, açık tema için hiç yeniden türetilmemişti; uygulama gerçekten tema değiştirdiği
+için (`theme-provider` `useColorScheme()` okuyor) bu teorik değil ölçülen bir hataydı. En
+kötü değer `EVENT_COLORS.turn` beyaz üzerinde **1.59:1**.
+
+Kural: bir marka rengi **metin** olarak kullanılıyorsa `markaMetin(ham, scheme)` üzerinden
+geçer; **dolgu** olarak kullanılıyorsa ham renk doğrudur ve üstüne binen etiket
+`MARKA_ETIKET` olur (yedi bölge rengi de parlak, koyu etiket 5.95:1–10.95:1 okunuyor).
+
 ## Yeni kod yazarken
 
 1. Dokunulan bileşenin HIG sayfasını yukarıdaki JSON uçlarından çek.

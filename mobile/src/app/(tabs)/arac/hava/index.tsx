@@ -72,9 +72,9 @@ export default function HavaEkrani() {
       </Card>
 
       <Card>
-        <NavRow href="/hava/hafiza" baslik="Hafıza ve ayarlar" altBaslik="Konumlar · otomatik yükseltme · sürtme koruması" />
+        <NavRow href="/arac/hava/hafiza" baslik="Hafıza ve ayarlar" altBaslik="Konumlar · otomatik yükseltme · sürtme koruması" />
         <RowDivider />
-        <NavRow href="/hava/denge" baslik="Denge ve kurulum" altBaslik="Köşe ağırlığı · basınç dağılımı · yük dengeleme" />
+        <NavRow href="/arac/hava/denge" baslik="Denge ve kurulum" altBaslik="Köşe ağırlığı · basınç dağılımı · yük dengeleme" />
       </Card>
     </ScrollView>
   );
