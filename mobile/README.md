@@ -103,6 +103,60 @@ derlenmez. Ücretli üyelik yoksa tek çalışan profil `development-simulator`'
 görünür, **BLE görünmez** (simülatörde Bluetooth donanımı yoktur) ve çıktısını çalıştırmak
 için yine bir Mac gerekir. Yani BLE testi için ücretli üyelik kaçınılmazdır.
 
+### Yeni bir iOS yetkisi eklerken — profil kendiliğinden yenilenmez
+
+`app.json`'a bir yetenek eklemek (örn. `ios.usesAppleSignIn`) **tek başına yetmez**.
+Üç ayrı yerde iz bırakması gerekir ve EAS bunların hepsini kendiliğinden yapmaz:
+
+1. **Uygulamanın entitlement dosyası** — bunu config plugin prebuild'de üretir, sorun yok.
+2. **Apple'daki App ID'nin yetenek listesi** — açılması gerekir.
+3. **Provisioning profil** — App ID'de yetenek açıkken *yeniden üretilmesi* gerekir.
+   Mevcut profil geçerli göründüğü için EAS onu olduğu gibi kullanmaya devam eder.
+
+2 ve 3 atlanırsa build Xcode aşamasında şu hatayla düşer:
+
+```
+Provisioning profile "...AdHoc..." doesn't include the Sign In with Apple capability.
+Provisioning profile "...AdHoc..." doesn't include the com.apple.developer.applesignin entitlement.
+```
+
+**Neden kendiliğinden olmuyor:** EAS Apple'a **ASC API anahtarıyla** bağlandığında
+kimlik senkronunun bir kısmını atlıyor ve bunu logda söylüyor:
+
+```
+Skipping capability identifier syncing because the current Apple authentication
+session is not using Cookies (username/password).
+```
+
+**Çözüm sırası:**
+
+```bash
+# 1) App ID'de yeteneği aç — App Store Connect API
+#    POST /v1/bundleIdCapabilities
+#    Sign in with Apple çıplak açılmaz, 409 "Please select at least one
+#    configuration" der; settings şart:
+#      capabilityType: APPLE_ID_AUTH
+#      settings: [{ key: APPLE_ID_AUTH_APP_CONSENT,
+#                   options: [{ key: PRIMARY_APP_CONSENT }] }]
+#    (tek uygulama -> PRIMARY; bir gruba bağlıysa GROUPED_APP_CONSENT)
+
+# 2) Profili yenileyerek build al
+npx eas build --profile preview --platform ios \
+  --non-interactive --refresh-ad-hoc-provisioning-profile
+```
+
+**Build'i beklemeden doğrula:** profili `GET /v1/profiles/<id>` ile çek,
+`profileContent`'i base64'ten çöz, içindeki plist'te entitlement'ı ara. Varsa build
+geçer, yoksa 7 dakika boşa gitmez:
+
+```
+<key>com.apple.developer.applesignin</key>
+<array><string>Default</string></array>
+```
+
+Aynı kontrol `ProvisionedDevices` listesinin korunduğunu da gösterir — profil
+yenilenirken cihazlar düşerse uygulama telefona kurulamaz.
+
 ### OTA güncelleme — `--platform ios` bayrağı zorunlu
 
 `expo-updates` kurulu ve `runtimeVersion` politikası **fingerprint**. Güncelleme
