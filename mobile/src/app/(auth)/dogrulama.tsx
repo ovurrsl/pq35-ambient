@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg, justifyContent: 'center' },
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   kodAlani: { position: 'relative' },
   kutular: { flexDirection: 'row', gap: SPACING.sm },
   kutu: {

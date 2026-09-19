@@ -141,12 +141,7 @@ export default function AracEkrani(): ReactElement {
         <NavRow
           href="/arac/performans"
           baslik="Performans"
-          altBaslik="0–100, fren, esneklik · canlı g"
-          sag={
-            <Text style={[styles.gostergeNotu, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
-              gösterge hızı
-            </Text>
-          }
+          altBaslik="0–100, fren, esneklik, canlı g"
         />
       </Card>
 
@@ -479,11 +474,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  gostergeNotu: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   baslikSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.md },
   baslikBlok: { flexShrink: 1, gap: 2 },
   baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   bleCip: {
     flexDirection: 'row',
     alignItems: 'center',

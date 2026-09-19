@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.2 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   sahne: {
     minHeight: HIT_SIZE + 26,

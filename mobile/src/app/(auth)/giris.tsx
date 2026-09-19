@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg, justifyContent: 'center' },
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   appleDugme: { height: HIT_SIZE + 6 },
   calisiyor: { opacity: 0.5 },
   ikincil: {

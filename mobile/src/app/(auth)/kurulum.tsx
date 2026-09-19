@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.lg, justifyContent: 'center' },
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   satir: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, minHeight: 26 },
   nokta: { width: 7, height: 7, borderRadius: RADIUS.pill, marginTop: 7 },

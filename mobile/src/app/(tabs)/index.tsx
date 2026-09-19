@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
   },
   basliklar: { gap: 3 },
   baslik: { ...FONTS.display, fontSize: 26 },
-  altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.1 },
+  altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   cipler: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
 
   sistemSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, minHeight: HIT_SIZE },
