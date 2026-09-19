@@ -4,8 +4,8 @@ import Constants, { ExecutionEnvironment } from 'expo-constants';
  * Ortam değişkenleri.
  *
  * DİKKAT: `EXPO_PUBLIC_*` değişkenleri derleme sırasında **pakete gömülür ve okunabilir**.
- * Buraya yalnızca herkese açık olması sorun olmayan değerler konur: Supabase publishable
- * (anon) anahtarı ve API URL'i.
+ * Buraya yalnızca herkese açık olması sorun olmayan değerler konur: Supabase URL'i ve
+ * publishable (anon) anahtarı.
  *
  * Buraya ASLA konmaz (CLAUDE.md sert kural 11): service role anahtarı, SIM808 ön
  * paylaşımlı AES-GCM anahtarı, cihaz device token'ı. Güvenlik anon anahtarın
@@ -23,13 +23,11 @@ function oku(ad: string, deger: string | undefined): string | null {
 
 const supabaseUrl = oku('EXPO_PUBLIC_SUPABASE_URL', process.env.EXPO_PUBLIC_SUPABASE_URL);
 const supabaseAnonKey = oku('EXPO_PUBLIC_SUPABASE_ANON_KEY', process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY);
-const apiUrl = oku('EXPO_PUBLIC_API_URL', process.env.EXPO_PUBLIC_API_URL);
 
 /** Eksik olan değişkenlerin adları — kurulum ekranında listelenir. */
 export const eksikDegiskenler: readonly string[] = [
   supabaseUrl ? null : 'EXPO_PUBLIC_SUPABASE_URL',
   supabaseAnonKey ? null : 'EXPO_PUBLIC_SUPABASE_ANON_KEY',
-  apiUrl ? null : 'EXPO_PUBLIC_API_URL',
 ].filter((d): d is string => d !== null);
 
 export const yapilandirildi = eksikDegiskenler.length === 0;
@@ -37,7 +35,6 @@ export const yapilandirildi = eksikDegiskenler.length === 0;
 export const env = {
   supabaseUrl,
   supabaseAnonKey,
-  apiUrl,
 } as const;
 
 /**

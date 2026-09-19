@@ -16,8 +16,11 @@ npm install
 cp .env.example .env.local   # ve doldur
 ```
 
-`.env.local` üç değer ister: `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`,
-`EXPO_PUBLIC_API_URL`.
+`.env.local` iki değer ister: `EXPO_PUBLIC_SUPABASE_URL` ve `EXPO_PUBLIC_SUPABASE_ANON_KEY`.
+
+> Eskiden bir üçüncüsü vardı, `EXPO_PUBLIC_API_URL`. Vercel yığından çıkınca (CLAUDE.md §9)
+> işlevsiz kaldı ama kurulum kontrolünde zorunlu olarak duruyordu; uygulama bu yüzden
+> "Kurulum gerekli" ekranında takılıyordu. Kaldırıldı.
 
 ### Supabase projesi — kurulu ve çalışıyor
 
