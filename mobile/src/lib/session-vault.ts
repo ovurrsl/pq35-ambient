@@ -30,7 +30,14 @@ export type UnlockResult =
    * Girdi okundu ama sunucu reddetti: refresh token süresi dolmuş, iptal edilmiş
    * veya kayıtlı yüz seti değiştiği için (`biometryCurrentSet`) girdi geçersiz olmuş.
    */
-  | { kind: 'yeniden-giris'; sebep: string };
+  | {
+      kind: 'yeniden-giris';
+      /**
+       * Ham SDK mesajı — **yalnızca geliştirici günlüğü için**. Ekrana basılmaz: İngilizce
+       * gelir ve kullanıcıya ne yapacağını söylemez (bkz. `lib/hata-metni.ts`).
+       */
+      sebep: string;
+    };
 
 const PROMPT = 'PQ35 Ambient uygulamasını aç';
 

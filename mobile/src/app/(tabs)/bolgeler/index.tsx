@@ -3,16 +3,19 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 
+import { Anahtar } from '@/components/ui/anahtar';
+import { BleCip } from '@/components/ui/ble-cip';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
+import { bleCipMetni, useBle } from '@/state/ble-context';
 import { useTheme } from '@/theme/theme-provider';
 import { BUS_COLORS, FONTS, HIT_SIZE, MARKA_ETIKET, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, ZONE_IDS, ZONE_LABELS, type ZoneId } from '@/theme/tokens';
 
@@ -63,7 +66,19 @@ const BASLANGIC: Readonly<Record<ZoneId, BolgeDurumu>> = {
 
 export default function BolgelerEkrani(): JSX.Element {
   const { colors } = useTheme();
+  const { arac } = useBle();
   const router = useRouter();
+
+  /**
+   * Komut gerçekten gidebiliyor mu?
+   *
+   * Ana anahtar da yedi bölge anahtarı da girdi kabul ediyordu ama alacak bir şey yoktu:
+   * araçta denetleyici henüz yok. Bir anahtarın dönüp hiçbir şey olmaması, kullanıcıya
+   * arızayı kendi tarafında aratır. HIG (`feedback.md › Best practices`): "Show people
+   * when a command can't be carried out and help them understand why." — sebep de
+   * anahtarın yanında, satırın alt metninde yazılı.
+   */
+  const komutGider = arac === 'bagli';
 
   const [sistemAcik, setSistemAcik] = useState<boolean>(true);
   const [genelParlaklik, setGenelParlaklik] = useState<number>(72);
@@ -89,7 +104,7 @@ export default function BolgelerEkrani(): JSX.Element {
       </Text>
 
       <View style={styles.cipler}>
-        <Pill dotColor={BUS_COLORS.ble}>BLE bağlı</Pill>
+        <BleCip />
         <Pill dotColor={BUS_COLORS.komfort}>Komfort 100k</Pill>
         <Pill tone="uyari">LISTEN-ONLY</Pill>
       </View>
@@ -101,16 +116,16 @@ export default function BolgelerEkrani(): JSX.Element {
               Sistem
             </Text>
             <Text style={[styles.sistemAlt, { color: colors.muted }]} maxFontSizeMultiplier={2}>
-              Araç dinleniyor · telefon komutu öne geçer
+              {komutGider
+                ? 'Araç dinleniyor · telefon komutu öne geçer'
+                : `${bleCipMetni(arac)} — anahtarlar araca komut göndermez`}
             </Text>
           </View>
-          <Switch
-            accessibilityLabel="Sistem ana anahtarı"
-            value={sistemAcik}
-            onValueChange={setSistemAcik}
-            trackColor={{ false: colors.surfaceRaised, true: colors.ok }}
-            thumbColor={colors.surface}
-            ios_backgroundColor={colors.surfaceRaised}
+          <Anahtar
+            erisimEtiketi="Sistem ana anahtarı"
+            deger={sistemAcik}
+            kilitli={!komutGider}
+            onDegisim={setSistemAcik}
           />
         </View>
 
@@ -149,7 +164,7 @@ export default function BolgelerEkrani(): JSX.Element {
             id={id}
             durum={bolgeler[id]}
             sonSatir={i === ON_BOLGELER.length - 1}
-            sistemAcik={sistemAcik}
+            sistemAcik={sistemAcik && komutGider}
             onAnahtar={bolgeyiAnahtarla}
             onAc={detayaGit}
           />
@@ -170,7 +185,7 @@ export default function BolgelerEkrani(): JSX.Element {
             id={id}
             durum={bolgeler[id]}
             sonSatir={i === ARKA_BOLGELER.length - 1}
-            sistemAcik={sistemAcik}
+            sistemAcik={sistemAcik && komutGider}
             onAnahtar={bolgeyiAnahtarla}
             onAc={detayaGit}
           />
@@ -217,72 +232,88 @@ function BolgeSatiri({
   onAc,
 }: BolgeSatiriProps): JSX.Element {
   const { colors } = useTheme();
+  const { fontScale } = useWindowDimensions();
   const bolgeRengi = ZONE_COLORS[id];
   const etkin = sistemAcik && durum.acik;
+
+  /**
+   * Erişilebilirlik puntolarında satır tek sıraya sığmıyor.
+   *
+   * 320 pt genişliğindeki bir iPhone SE'de kartın içinde ~264 pt var; rozet (24), yüzde
+   * (~34), `Switch` (~51), chevron ve boşluklar çıkınca ada ~110 pt kalıyor. "Arka sol yan
+   * panel" taban 15 pt'de zaten ~120 pt istiyor, izin verilen 2.0× katsayıda ~240 pt.
+   * Eskiden bu `numberOfLines={1}` ile kırpılıyordu — yani satırın **birincil kimliği**
+   * birkaç harfe düşüyor, alt satır da onunla birlikte kayboluyordu.
+   *
+   * HIG (`typography.md › Supporting Dynamic Type`): "Keep text truncation to a minimum as
+   * font size increases. In general, aim to display as much useful text at the largest
+   * accessibility font size as you do at the largest standard font size." ve "Consider
+   * adjusting your layout at large font sizes."
+   *
+   * İki parça: kırpma kalktı (satırın `minHeight`i var, sabit yüksekliği yok) ve 1.4×
+   * üstünde satır dikey akışa geçiyor.
+   */
+  const genisPunto = fontScale > 1.4;
 
   const anahtarla = useCallback((acik: boolean): void => onAnahtar(id, acik), [id, onAnahtar]);
   const ac = useCallback((): void => onAc(id), [id, onAc]);
 
   return (
     <View>
-      <View style={styles.satir}>
-        <View style={[styles.rozet, { backgroundColor: bolgeRengi }]}>
-          <Text style={[styles.rozetMetin, { color: MARKA_ETIKET }]} maxFontSizeMultiplier={1.4}>
-            {id.toUpperCase()}
-          </Text>
-        </View>
-
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={`${ZONE_LABELS[id]}, parlaklık yüzde ${durum.parlaklik}, ${durum.acik ? 'açık' : 'kapalı'}`}
-          accessibilityHint="Bölge ayrıntılarını açar"
-          onPress={ac}
-          style={({ pressed }) => [styles.satirDokunma, { opacity: pressed ? 0.6 : 1 }]}>
-          <View style={styles.satirMetin}>
-            <Text
-              style={[styles.satirAd, { color: colors.text }]}
-              numberOfLines={1}
-              maxFontSizeMultiplier={2}>
-              {ZONE_LABELS[id]}
-            </Text>
-            <Text
-              style={[styles.satirAlt, { color: colors.muted }]}
-              numberOfLines={1}
-              maxFontSizeMultiplier={2}>
-              {ZONE_ICERIK[id]}
+      <View style={[styles.satir, genisPunto && styles.satirDikey]}>
+        <View style={styles.satirBas}>
+          <View style={[styles.rozet, { backgroundColor: bolgeRengi }]}>
+            <Text style={[styles.rozetMetin, { color: MARKA_ETIKET }]} maxFontSizeMultiplier={1.4}>
+              {id.toUpperCase()}
             </Text>
           </View>
-          <SymbolView
-            name="chevron.right"
-            size={13}
-            tintColor={colors.dim}
-            fallback={
-              <Text
-                style={{ color: colors.dim }}
-                accessibilityElementsHidden
-                maxFontSizeMultiplier={1.4}>
-                ›
+
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${ZONE_LABELS[id]}, parlaklık yüzde ${durum.parlaklik}, ${
+              durum.acik ? 'açık' : 'kapalı'
+            }${sistemAcik ? '' : ', sistem kapalı'}`}
+            accessibilityHint="Bölge ayrıntılarını açar"
+            onPress={ac}
+            style={({ pressed }) => [styles.satirDokunma, { opacity: pressed ? 0.6 : 1 }]}>
+            <View style={styles.satirMetin}>
+              <Text style={[styles.satirAd, { color: colors.text }]} maxFontSizeMultiplier={2}>
+                {ZONE_LABELS[id]}
               </Text>
-            }
+              <Text style={[styles.satirAlt, { color: colors.muted }]} maxFontSizeMultiplier={2}>
+                {ZONE_ICERIK[id]}
+              </Text>
+            </View>
+            <SymbolView
+              name="chevron.right"
+              size={13}
+              tintColor={colors.dim}
+              fallback={
+                <Text
+                  style={{ color: colors.dim }}
+                  accessibilityElementsHidden
+                  maxFontSizeMultiplier={1.4}>
+                  ›
+                </Text>
+              }
+            />
+          </Pressable>
+        </View>
+
+        <View style={[styles.satirKuyruk, genisPunto && styles.satirKuyrukGenis]}>
+          <Text
+            style={[styles.satirYuzde, { color: etkin ? colors.muted : colors.dim }]}
+            maxFontSizeMultiplier={1.4}>
+            {etkin ? `%${durum.parlaklik}` : '—'}
+          </Text>
+
+          <Anahtar
+            erisimEtiketi={`${ZONE_LABELS[id]} bölge gücü`}
+            deger={durum.acik}
+            kilitli={!sistemAcik}
+            onDegisim={anahtarla}
           />
-        </Pressable>
-
-        <View
-          style={[styles.renkNoktasi, { backgroundColor: bolgeRengi, opacity: etkin ? 1 : 0.25 }]}
-        />
-        <Text style={[styles.satirYuzde, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-          %{durum.parlaklik}
-        </Text>
-
-        <Switch
-          accessibilityLabel={`${ZONE_LABELS[id]} bölge gücü`}
-          value={durum.acik}
-          disabled={!sistemAcik}
-          onValueChange={anahtarla}
-          trackColor={{ false: colors.surfaceRaised, true: colors.ok }}
-          thumbColor={colors.surface}
-          ios_backgroundColor={colors.surfaceRaised}
-        />
+        </View>
       </View>
       {sonSatir ? null : <View style={[styles.ayirac, { backgroundColor: colors.line }]} />}
     </View>
@@ -321,9 +352,13 @@ const styles = StyleSheet.create({
   satirMetin: { flex: 1, minWidth: 0, gap: 1 },
   satirAd: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
   satirAlt: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
-  renkNoktasi: { width: 12, height: 12, borderRadius: RADIUS.pill },
   satirYuzde: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, minWidth: 34, textAlign: 'right' },
 
+  /** Normal puntoda satırın iki yarısı yan yana; 1.4× üstünde alt alta. */
+  satirBas: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  satirKuyruk: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  satirDikey: { flexDirection: 'column', alignItems: 'stretch', paddingVertical: SPACING.xs },
+  satirKuyrukGenis: { justifyContent: 'flex-end' },
 
   govde: { ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },
   dipnot: { ...FONTS.body, fontSize: TYPE_SCALE.micro, lineHeight: 17 },

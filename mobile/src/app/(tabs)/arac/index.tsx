@@ -3,11 +3,12 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 
 import { AracSegmentKontrolu } from '@/components/nav/arac-segmenti';
+import { BleCip } from '@/components/ui/ble-cip';
 import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
 import { NavRow, RowDivider } from '@/components/ui/row';
 import { useTheme } from '@/theme/theme-provider';
-import { BUS_COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
+import { BUS_COLORS, EVENT_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, markaMetin } from '@/theme/tokens';
 
 /**
  * Araç · canlı veri.
@@ -67,12 +68,7 @@ export default function AracEkrani(): ReactElement {
         <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
           CANLI VERİ · SCIROCCO
         </Text>
-        <View style={[styles.bleCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
-          <View style={[styles.nokta, { backgroundColor: colors.dim }]} />
-          <Text style={[styles.bleMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            BLE bağlı değil
-          </Text>
-        </View>
+        <BleCip />
       </View>
 
       <AracSegmentKontrolu aktif="canli" />
@@ -126,7 +122,6 @@ export default function AracEkrani(): ReactElement {
           birim="km/s"
           kaynak="0x351 · Komfort"
           oran={null}
-          cubukRengi={ZONE_COLORS.z1}
           ikinciFaz={false}
         />
         <DegerKarti
@@ -135,7 +130,6 @@ export default function AracEkrani(): ReactElement {
           birim={null}
           kaynak="0x280 b6 · Antriebs"
           oran={0}
-          cubukRengi={ZONE_COLORS.z3}
           ikinciFaz
         />
       </View>
@@ -241,19 +235,10 @@ interface DegerKartiProps {
   kaynak: string;
   /** 0–1 arası dolgu; veri yoksa çubuk hiç çizilmez. */
   oran: number | null;
-  cubukRengi: string;
   ikinciFaz: boolean;
 }
 
-function DegerKarti({
-  ad,
-  deger,
-  birim,
-  kaynak,
-  oran,
-  cubukRengi,
-  ikinciFaz,
-}: DegerKartiProps): ReactElement {
+function DegerKarti({ ad, deger, birim, kaynak, oran, ikinciFaz }: DegerKartiProps): ReactElement {
   const { colors } = useTheme();
 
   return (
@@ -276,7 +261,13 @@ function DegerKarti({
         <View style={styles.cubukBoslugu} />
       ) : (
         <View style={[styles.miniCubuk, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
-          <View style={[styles.miniDolgu, { width: `${oran * 100}%`, backgroundColor: cubukRengi }]} />
+          {/*
+            Çubuk **nötr**: bu bir okuma, bölge değil. Eskiden Hız çubuğu ZONE_COLORS.z1
+            (Sol kapı), Gaz pedalı çubuğu ZONE_COLORS.z3 (Ön ayak altı) ile doluyordu —
+            iki bölge rengi, bölgelerle hiç ilgisi olmayan iki sayıyı boyuyordu.
+            `color.md › Best practices`: "Avoid using the same color to mean different things."
+          */}
+          <View style={[styles.miniDolgu, { width: `${oran * 100}%`, backgroundColor: colors.muted }]} />
         </View>
       )}
 

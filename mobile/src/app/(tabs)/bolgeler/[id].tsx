@@ -3,7 +3,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   View,
 } from 'react-native';
@@ -11,6 +10,7 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Anahtar } from '@/components/ui/anahtar';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { ParlaklikKaydiraci } from '@/components/ui/slider';
@@ -225,13 +225,10 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
               Kapı · sinyal · geri vites · redline
             </Text>
           </View>
-          <Switch
-            accessibilityLabel="Bu bölge araç olaylarına tepki versin"
-            value={olaylaraTepki}
-            onValueChange={setOlaylaraTepki}
-            trackColor={{ false: colors.surfaceRaised, true: colors.ok }}
-            thumbColor={colors.surface}
-            ios_backgroundColor={colors.surfaceRaised}
+          <Anahtar
+            erisimEtiketi="Bu bölge araç olaylarına tepki versin"
+            deger={olaylaraTepki}
+            onDegisim={setOlaylaraTepki}
           />
         </View>
 
@@ -434,14 +431,12 @@ function OlaySatiri({
           {olay.aciklama}
         </Text>
       </View>
-      <Switch
-        accessibilityLabel={`${olay.ad} olayına tepki ver`}
-        value={acik}
-        disabled={devreDisi}
-        onValueChange={anahtarla}
-        trackColor={{ false: colors.surfaceRaised, true: olay.renk }}
-        thumbColor={colors.surface}
-        ios_backgroundColor={colors.surfaceRaised}
+      <Anahtar
+        erisimEtiketi={`${olay.ad} olayına tepki ver`}
+        deger={acik}
+        kilitli={devreDisi}
+        onDegisim={anahtarla}
+        acikRengi={olay.renk}
       />
     </View>
   );

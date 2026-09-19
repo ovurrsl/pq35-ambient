@@ -1,6 +1,7 @@
 import type { BleManager, Device, Subscription } from 'react-native-ble-plx';
 
 import { expoGoIcinde } from '@/lib/env';
+import { bleHatasi } from '@/lib/hata-metni';
 import { SERVICE_UUID } from './protocol';
 
 /**
@@ -36,6 +37,25 @@ export type BluetoothDurumu =
   /** Bu yapıda BLE yok (Expo Go veya modül yüklenemedi). */
   | 'Yok';
 
+/**
+ * **Araçla** bağlantı durumu — Bluetooth radyosunun durumu değil.
+ *
+ * İkisi ayrı sorulardır ve karıştırılması uygulamanın en büyük yalanıydı: beş ekran
+ * "BLE bağlı" yazan yeşil bir çip çiziyordu, hiçbiri hiçbir yerden okumuyordu. Radyonun
+ * açık olması araca bağlı olmak demek değildir.
+ */
+export type AracBaglantisi =
+  /** Radyo durumu henüz okunmadı. Kısa sürer ama "bağlı değil" demek de bir iddiadır. */
+  | 'bilinmiyor'
+  /** Bu yapıda BLE yok (Expo Go veya modül yüklenemedi). */
+  | 'yok'
+  /** Radyo kapalı veya izin verilmemiş. */
+  | 'kapali'
+  /** Radyo hazır, araca bağlı değil. */
+  | 'bagli-degil'
+  | 'baglaniyor'
+  | 'bagli';
+
 export interface BulunanCihaz {
   /** iOS'ta kalıcı DEĞİLDİR — yalnızca bu oturum boyunca geçerli bir tanıtıcıdır. */
   id: string;
@@ -61,6 +81,13 @@ export class BleBaglanti {
   private taramaAcik = false;
   private durumAboneligi: Subscription | null = null;
 
+  /** Bağlı cihaz tutuluyor; olmadan "bağlı mıyız" sorusunun cevabı yok. */
+  private cihaz: Device | null = null;
+  private kopmaAboneligi: Subscription | null = null;
+  private btDurum: BluetoothDurumu = 'Unknown';
+  private baglaniyor = false;
+  private aracDinleyiciler = new Set<(durum: AracBaglantisi) => void>();
+
   /** Modül yoksa `null` döner; çağıranlar buna göre sessizce devre dışı kalır. */
   private yonetici(): BleManager | null {
     if (this.manager) return this.manager;
@@ -83,11 +110,17 @@ export class BleBaglanti {
   durumuIzle(geriCagir: (durum: BluetoothDurumu) => void): () => void {
     const m = this.yonetici();
     if (!m) {
+      this.btDurum = 'Yok';
       geriCagir('Yok');
+      this.aracDurumunuYayinla();
       return () => {};
     }
     this.durumAboneligi?.remove();
-    this.durumAboneligi = m.onStateChange((d) => geriCagir(d as BluetoothDurumu), true);
+    this.durumAboneligi = m.onStateChange((d) => {
+      this.btDurum = d as BluetoothDurumu;
+      geriCagir(this.btDurum);
+      this.aracDurumunuYayinla();
+    }, true);
     return () => {
       this.durumAboneligi?.remove();
       this.durumAboneligi = null;
@@ -110,7 +143,7 @@ export class BleBaglanti {
     m.startDeviceScan([SERVICE_UUID], { allowDuplicates: false }, (err, device) => {
       if (err) {
         this.taramaAcik = false;
-        hata(err.message);
+        hata(bleHatasi(err));
         return;
       }
       if (device) {
@@ -135,9 +168,26 @@ export class BleBaglanti {
     const m = this.yonetici();
     if (!m) throw new Error('Bu yapıda BLE yok.');
     this.taramayiDurdur();
-    const cihaz = await m.connectToDevice(cihazId, { timeout: 15_000 });
-    await cihaz.discoverAllServicesAndCharacteristics();
-    return cihaz;
+    this.baglaniyor = true;
+    this.aracDurumunuYayinla();
+    try {
+      const cihaz = await m.connectToDevice(cihazId, { timeout: 15_000 });
+      await cihaz.discoverAllServicesAndCharacteristics();
+      this.cihaz = cihaz;
+      // Kopma kendiliğinden olur (menzil, araç uykuya geçti, kart resetlendi). Haber
+      // vermeyen bir bağlantı, "bağlı" yazan bir çipi süresiz doğru gösterir.
+      this.kopmaAboneligi?.remove();
+      this.kopmaAboneligi = cihaz.onDisconnected(() => {
+        this.cihaz = null;
+        this.kopmaAboneligi?.remove();
+        this.kopmaAboneligi = null;
+        this.aracDurumunuYayinla();
+      });
+      return cihaz;
+    } finally {
+      this.baglaniyor = false;
+      this.aracDurumunuYayinla();
+    }
   }
 
   async kes(cihazId: string): Promise<void> {
@@ -145,13 +195,52 @@ export class BleBaglanti {
     if (m && (await m.isDeviceConnected(cihazId))) {
       await m.cancelDeviceConnection(cihazId);
     }
+    if (this.cihaz?.id === cihazId) {
+      this.cihaz = null;
+      this.kopmaAboneligi?.remove();
+      this.kopmaAboneligi = null;
+      this.aracDurumunuYayinla();
+    }
+  }
+
+  /** Şu andaki araç bağlantısı durumu. */
+  aracDurumu(): AracBaglantisi {
+    if (this.btDurum === 'Yok' || this.btDurum === 'Unsupported') return 'yok';
+    if (this.cihaz) return 'bagli';
+    if (this.baglaniyor) return 'baglaniyor';
+    if (this.btDurum === 'PoweredOn') return 'bagli-degil';
+    if (this.btDurum === 'PoweredOff' || this.btDurum === 'Unauthorized') return 'kapali';
+    // 'Unknown' ve 'Resetting': henüz bilmiyoruz. Bunu "kapalı" diye göstermek yanlış olur.
+    return 'bilinmiyor';
+  }
+
+  /**
+   * Araç bağlantısını dinler. İlk değeri hemen verir, sonra her değişimde bildirir.
+   * Dönen fonksiyon aboneliği bırakır.
+   */
+  aracDurumunuIzle(geriCagir: (durum: AracBaglantisi) => void): () => void {
+    this.aracDinleyiciler.add(geriCagir);
+    geriCagir(this.aracDurumu());
+    return () => {
+      this.aracDinleyiciler.delete(geriCagir);
+    };
+  }
+
+  private aracDurumunuYayinla(): void {
+    const d = this.aracDurumu();
+    for (const dinleyici of this.aracDinleyiciler) dinleyici(d);
   }
 
   /** Ekran kapanırken veya uygulama sonlanırken çağrılır. */
   yokEt(): void {
     this.taramayiDurdur();
     this.durumAboneligi?.remove();
+    this.durumAboneligi = null;
+    this.kopmaAboneligi?.remove();
+    this.kopmaAboneligi = null;
+    this.cihaz = null;
     this.manager?.destroy();
     this.manager = null;
+    this.aracDurumunuYayinla();
   }
 }

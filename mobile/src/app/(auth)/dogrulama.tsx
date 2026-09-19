@@ -12,6 +12,7 @@ import {
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
+import { authHatasi } from '@/lib/hata-metni';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/state/auth-context';
 import { useTheme } from '@/theme/theme-provider';
@@ -46,7 +47,7 @@ export default function DogrulamaEkrani() {
     const { data: faktorler, error: listeHatasi } = await supabase.auth.mfa.listFactors();
     if (listeHatasi) {
       setCalisiyor(false);
-      setHata(listeHatasi.message);
+      setHata(authHatasi(listeHatasi));
       return;
     }
 
@@ -65,7 +66,7 @@ export default function DogrulamaEkrani() {
     if (error) {
       setCalisiyor(false);
       setKod('');
-      setHata(error.message);
+      setHata(authHatasi(error));
       return;
     }
 

@@ -1,7 +1,8 @@
 import { useCallback, useState, type ComponentProps, type ReactNode, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SymbolView } from 'expo-symbols';
 
+import { Anahtar } from '@/components/ui/anahtar';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
 import { kilidiDogrula, kilitTercihi, kilitTercihiYaz } from '@/lib/uygulama-kilidi';
@@ -225,16 +226,12 @@ function AnahtarSatiri({
           {altBaslik}
         </Text>
       </View>
-      <Switch
-        value={deger}
-        onValueChange={onChange}
-        disabled={kilitli}
-        accessibilityRole="switch"
-        accessibilityLabel={baslik}
-        accessibilityHint={kilitli ? 'Bu ayar kapatılamaz' : altBaslik}
-        accessibilityState={{ checked: deger, disabled: kilitli }}
-        trackColor={{ false: colors.line, true: colors.ok }}
-        ios_backgroundColor={colors.surfaceRaised}
+      <Anahtar
+        deger={deger}
+        onDegisim={onChange}
+        kilitli={kilitli}
+        erisimEtiketi={baslik}
+        erisimIpucu={kilitli ? 'Bu ayar kapatılamaz' : altBaslik}
       />
     </View>
   );

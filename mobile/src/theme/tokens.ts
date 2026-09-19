@@ -93,7 +93,27 @@ const dark: ThemeColors = {
   text: '#E8EEF4',
   muted: '#93A2B3',
   dim: '#7F8B9A',
-  accent: ZONE_COLORS.z1,
+  /**
+   * `accent` **hiçbir bölge rengi değildir** ve olmamalıdır.
+   *
+   * Eskiden `ZONE_COLORS.z1`'in takma adıydı; yani #4CC2FF aynı anda üç şeydi: Z1 "Sol
+   * kapı"nın kimliği, uygulamanın etkileşim rengi (sekme çubuğu tint'i, birincil düğmeler,
+   * parlaklık kaydıracı, "UYGULAMA OVERRIDE" kutusu) ve Hız çubuğunun dolgusu. Olaylar
+   * ekranında Z1 çipi ile override kutusu birebir aynı renkteydi ve alakasız şeyler
+   * anlatıyorlardı. Açık tema bu bağı zaten kurmuyordu (accent ayrı bir hex'ti) — yani
+   * eşleşme kasıtlı değil, kazaydı.
+   *
+   * HIG (`color.md › Best practices`): "Avoid using the same color to mean different
+   * things. Use color consistently throughout your interface, especially when you use it
+   * to help communicate information like status or interactivity."
+   *
+   * #2E9BD6 ölçülerek seçildi: en kötü zemine (`surfaceRaised` #1B2430) karşı **5.05:1**,
+   * ve 18 marka renginin tamamından ayrık — en yakın ikisi z1 (ΔE2000 11.2) ve z5 (11.3).
+   * Palet dolu olduğu için "kimsenin kullanmadığı ton" aramak asit yeşiline çıkıyordu;
+   * ayrım ton değil, **rol** üzerinden kuruluyor: accent yalnızca etkileşimi boyar,
+   * veri veya bölge boyamaz.
+   */
+  accent: '#2E9BD6',
   ok: '#3FD98A',
   warn: '#FFB020',
   danger: '#FF5A5A',

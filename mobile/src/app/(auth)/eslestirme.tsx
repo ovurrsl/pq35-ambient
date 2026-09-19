@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
+import { Anahtar } from '@/components/ui/anahtar';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
-import { BleBaglanti, type BluetoothDurumu, type BulunanCihaz } from '@/lib/ble/connection';
+import type { BluetoothDurumu, BulunanCihaz } from '@/lib/ble/connection';
 import { KRITIK_KOMUTLAR, type Yetki } from '@/lib/ble/protocol';
+import { bleHatasi } from '@/lib/hata-metni';
+import { useBle } from '@/state/ble-context';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
@@ -21,9 +24,9 @@ type Adim = 'bul' | 'eslesk' | 'dogrula';
  */
 export default function EslestirmeEkrani() {
   const { colors } = useTheme();
+  const { baglanti } = useBle();
   const router = useRouter();
 
-  const baglantiRef = useRef<BleBaglanti | null>(null);
   const [adim, setAdim] = useState<Adim>('bul');
   const [btDurum, setBtDurum] = useState<BluetoothDurumu>('Unknown');
   const [cihazlar, setCihazlar] = useState<readonly BulunanCihaz[]>([]);
@@ -31,52 +34,79 @@ export default function EslestirmeEkrani() {
   const [yetki, setYetki] = useState<Yetki>('sahip');
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
+  /**
+   * Tarama süresiz sürmez.
+   *
+   * Eskiden liste boşken ekranda sonsuza kadar "Aranıyor…" yazıyordu: ne bir ilerleme
+   * göstergesi, ne bir bitiş, ne de yeniden deneme vardı. Araçta henüz denetleyici
+   * olmadığı için görülen tek şey bu ekrandı ve hiçbir zaman değişmiyordu.
+   *
+   * HIG (`loading.md › Best practices`): "Whenever possible, avoid making people wait
+   * without telling them what's happening" ve `feedback.md`: "Show people when a command
+   * can't be carried out and help them understand why."
+   */
+  const [taramaBitti, setTaramaBitti] = useState(false);
 
-  // Yönetici tek örnek; ekran kapanınca yerel kaynaklar bırakılır.
-  useEffect(() => {
-    const b = new BleBaglanti();
-    baglantiRef.current = b;
-    const birak = b.durumuIzle(setBtDurum);
-    return () => {
-      birak();
-      b.yokEt();
-      baglantiRef.current = null;
-    };
-  }, []);
+  /**
+   * Yönetici uygulama genelinde **tek**: `BleProvider` kuruyor.
+   *
+   * Eskiden bu ekran kendi `new BleBaglanti()`'sini kuruyordu, yani ikinci bir
+   * `BleManager` açıyordu; kapanırken de `yokEt()` ile onu yok ediyordu. İki yönetici
+   * olduğu için durum ekranlar arasında ayrışıyordu. Burada yalnızca **dinliyoruz**;
+   * yöneticiyi yok etmek artık bu ekranın işi değil.
+   */
+  useEffect(() => baglanti.durumuIzle(setBtDurum), [baglanti]);
 
+  /**
+   * Taramayı başlatır. **Senkron durum yazmaz** — bulunan cihazlar ve hata, geri
+   * çağrılardan sonradan gelir. Efektin içinden çağrıldığı için bu ayrım önemli:
+   * efekt gövdesinde `setState` çağırmak render'ı gereksiz yere tekrarlatır.
+   */
   const tara = useCallback(() => {
-    const b = baglantiRef.current;
-    if (!b) return;
-    setHata(null);
-    setCihazlar([]);
-    b.taramayaBasla(
+    baglanti.taramayaBasla(
       (cihaz) =>
         setCihazlar((onceki) =>
           onceki.some((c) => c.id === cihaz.id) ? onceki : [...onceki, cihaz]
         ),
       (mesaj) => setHata(mesaj)
     );
-  }, []);
+  }, [baglanti]);
+
+  /** Kullanıcı yeniden taratıyor: liste ve hata burada sıfırlanır, efektte değil. */
+  const yenidenTara = useCallback(() => {
+    setHata(null);
+    setCihazlar([]);
+    setTaramaBitti(false);
+    baglanti.taramayiDurdur();
+    tara();
+  }, [baglanti, tara]);
 
   useEffect(() => {
-    if (btDurum === 'PoweredOn') tara();
-    return () => baglantiRef.current?.taramayiDurdur();
-  }, [btDurum, tara]);
+    if (btDurum !== 'PoweredOn' || taramaBitti) return;
+    tara();
+    // 15 s, `baglan`ın kendi zaman aşımıyla aynı büyüklükte: BLE reklamı 20–100 ms
+    // aralıklarla gelir, menzildeki bir cihaz bu sürede kesin görünür.
+    const sayac = setTimeout(() => setTaramaBitti(true), 15_000);
+    return () => {
+      clearTimeout(sayac);
+      baglanti.taramayiDurdur();
+    };
+  }, [baglanti, btDurum, tara, taramaBitti]);
 
   const baglan = useCallback(async () => {
-    const b = baglantiRef.current;
-    if (!b || !secili) return;
+    const b = baglanti;
+    if (!secili) return;
     setCalisiyor(true);
     setHata(null);
     try {
       await b.baglan(secili);
       setAdim('dogrula');
     } catch (e) {
-      setHata(e instanceof Error ? e.message : 'Bağlanılamadı.');
+      setHata(bleHatasi(e));
     } finally {
       setCalisiyor(false);
     }
-  }, [secili]);
+  }, [baglanti, secili]);
 
   // BLE'nin hiç olmaması ile Bluetooth'un kapalı olması farklı sorunlardır;
   // ikisine aynı mesajı vermek kullanıcıyı yanlış yere bakmaya gönderir.
@@ -142,9 +172,40 @@ export default function EslestirmeEkrani() {
       <Card>
         <SectionLabel>BULUNAN CİHAZLAR</SectionLabel>
         {cihazlar.length === 0 ? (
-          <Text style={[styles.govde, { color: colors.dim }]} maxFontSizeMultiplier={2}>
-            Aranıyor… Aracın kontağı açık ve denetleyici beslemede olmalı.
-          </Text>
+          <View style={styles.taramaDurumu}>
+            {taramaBitti ? (
+              <>
+                <Text style={[styles.govde, { color: colors.text }]} maxFontSizeMultiplier={2}>
+                  Denetleyici bulunamadı.
+                </Text>
+                <Text style={[styles.kucukNot, { color: colors.dim }]} maxFontSizeMultiplier={2}>
+                  Aracın kontağı açık ve denetleyici beslemede olmalı. Telefonu araca
+                  yaklaştırıp yeniden dene.
+                </Text>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Yeniden tara"
+                  onPress={yenidenTara}
+                  style={({ pressed }) => [
+                    styles.yenidenDugme,
+                    { borderColor: colors.accent, opacity: pressed ? 0.6 : 1 },
+                  ]}>
+                  <Text
+                    style={[styles.yenidenMetin, { color: colors.accent }]}
+                    maxFontSizeMultiplier={1.4}>
+                    Yeniden tara
+                  </Text>
+                </Pressable>
+              </>
+            ) : (
+              <View style={styles.araniyorSatir}>
+                <ActivityIndicator color={colors.accent} />
+                <Text style={[styles.govde, { color: colors.dim }]} maxFontSizeMultiplier={2}>
+                  Aranıyor… Aracın kontağı açık ve denetleyici beslemede olmalı.
+                </Text>
+              </View>
+            )}
+          </View>
         ) : (
           cihazlar.map((c) => {
             const seciliMi = c.id === secili;
@@ -196,11 +257,10 @@ export default function EslestirmeEkrani() {
               Kapalıyken misafir: {KRITIK_KOMUTLAR.join(' · ')} kullanılamaz
             </Text>
           </View>
-          <Switch
-            value={yetki === 'sahip'}
-            onValueChange={(v) => setYetki(v ? 'sahip' : 'misafir')}
-            accessibilityLabel="Sahip yetkisi"
-            trackColor={{ true: colors.ok, false: colors.line }}
+          <Anahtar
+            deger={yetki === 'sahip'}
+            onDegisim={(v) => setYetki(v ? 'sahip' : 'misafir')}
+            erisimEtiketi="Sahip yetkisi"
           />
         </View>
         <UnverifiedBadge>KART ONAYLAYACAK</UnverifiedBadge>
@@ -282,6 +342,18 @@ const styles = StyleSheet.create({
   cihazAd: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.body },
   cihazAlt: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   kucukNot: { ...FONTS.body, fontSize: TYPE_SCALE.caption, lineHeight: 17 },
+
+  taramaDurumu: { gap: SPACING.sm },
+  araniyorSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
+  yenidenDugme: {
+    alignSelf: 'flex-start',
+    minHeight: HIT_SIZE,
+    justifyContent: 'center',
+    paddingHorizontal: SPACING.md,
+    borderRadius: RADIUS.md,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  yenidenMetin: { ...FONTS.bodySemiBold, fontSize: TYPE_SCALE.body },
   yetkiSatir: {
     minHeight: HIT_SIZE,
     flexDirection: 'row',

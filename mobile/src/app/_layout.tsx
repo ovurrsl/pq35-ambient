@@ -4,6 +4,7 @@ import { Stack, usePathname, useRouter } from 'expo-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { BleProvider } from '@/state/ble-context';
 import { AuthProvider, useAuth } from '@/state/auth-context';
 import { ThemeProvider, useTheme } from '@/theme/theme-provider';
 
@@ -72,7 +73,9 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>
-            <Chrome />
+            <BleProvider>
+              <Chrome />
+            </BleProvider>
           </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>

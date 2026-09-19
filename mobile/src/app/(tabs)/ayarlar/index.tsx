@@ -7,6 +7,7 @@ import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { maskEmail } from '@/lib/session-vault';
 import { useAuth } from '@/state/auth-context';
+import { BleCip } from '@/components/ui/ble-cip';
 import { useTheme } from '@/theme/theme-provider';
 import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS } from '@/theme/tokens';
 
@@ -25,6 +26,8 @@ export default function AyarlarEkrani() {
   const router = useRouter();
 
   const cevrimdisi = durum.ad === 'cevrimdisi';
+  /** Buluta gerçekten bağlıyız: açık bir Supabase oturumu var. Çevrimdışıysa yok. */
+  const bulutBagli = durum.ad === 'acik';
   const eposta = durum.ad === 'acik' ? durum.session.user.email : null;
   const maskeli = eposta ? maskEmail(eposta) : null;
 
@@ -173,8 +176,10 @@ export default function AyarlarEkrani() {
 
       <Card>
         <View style={styles.durumSatir}>
-          <Pill dotColor={colors.ok}>BLE bağlı</Pill>
-          <Pill dotColor={colors.accent}>Bulut senkron</Pill>
+          <BleCip />
+          <Pill dotColor={bulutBagli ? colors.accent : colors.dim}>
+            {bulutBagli ? 'Bulut senkron' : 'Bulut kapalı'}
+          </Pill>
           <View style={styles.esnek} />
           <Text style={[styles.mono, { color: colors.muted }]} maxFontSizeMultiplier={1.6}>
             senkron ··:··

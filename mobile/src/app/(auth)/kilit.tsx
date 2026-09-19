@@ -7,6 +7,7 @@ import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { kilitYetenegi, type KilitYetenegi } from '@/lib/biyometri';
 import { useAuth } from '@/state/auth-context';
+import { BleCip } from '@/components/ui/ble-cip';
 import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
@@ -66,7 +67,9 @@ export default function KilitEkrani() {
     if (sonuc.kind === 'iptal') {
       setHata(`${kilit?.ad ?? 'Kilit'} doğrulanmadı. Tekrar dene veya Apple ile yeniden gir.`);
     } else if (sonuc.kind === 'yeniden-giris') {
-      setHata(`Kayıtlı anahtar geçersiz: ${sonuc.sebep} Yeniden giriş gerekiyor.`);
+      // `sonuc.sebep` Supabase'in ham İNGİLİZCE mesajıdır; ekrana basılmaz.
+      if (__DEV__) console.warn('[kilit] anahtar geçersiz:', sonuc.sebep);
+      setHata('Saklanan anahtar artık geçerli değil. Apple ile yeniden gir.');
     }
   }, [hesapsiz, cevrimdisiKilidiAc, kilidiAc, kilit]);
 
@@ -80,7 +83,7 @@ export default function KilitEkrani() {
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}
       keyboardShouldPersistTaps="handled">
       <View style={styles.durumSatiri}>
-        <Pill dotColor={colors.ok}>Araç BLE menzilinde</Pill>
+        <BleCip />
         <Pill dotColor={colors.warn}>Bulut oturumu kilitli</Pill>
       </View>
 

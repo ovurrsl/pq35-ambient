@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
-import { Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Link, type Href } from 'expo-router';
 
 import { useTheme } from '@/theme/theme-provider';
+
+import { Anahtar } from './anahtar';
 import { FONTS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /** Dokunma hedefi 44 px'in altına inmez — bu değer bağlayıcıdır. */
@@ -104,13 +106,7 @@ export function ToggleRow({
           </Text>
         ) : null}
       </View>
-      <Switch
-        value={deger}
-        onValueChange={onDegisim}
-        disabled={kilitli}
-        trackColor={{ true: colors.ok, false: colors.line }}
-        thumbColor={colors.bg}
-      />
+      <Anahtar deger={deger} onDegisim={onDegisim} kilitli={kilitli} />
     </View>
   );
 }

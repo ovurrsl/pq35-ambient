@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
+import { BleCip } from '@/components/ui/ble-cip';
 import { useTheme } from '@/theme/theme-provider';
 import {
   FONTS,
@@ -46,7 +47,7 @@ export default function SahnelerEkrani() {
       </Text>
 
       <View style={styles.cipler}>
-        <Pill dotColor={colors.ok}>BLE bağlı</Pill>
+        <BleCip />
         <Pill dotColor={colors.warn}>LISTEN-ONLY</Pill>
       </View>
 

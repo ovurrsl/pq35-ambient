@@ -28,9 +28,15 @@ export default function EgzozEkrani() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+      {/*
+        "Kontak açık" bir BLE durumu DEĞİL, Komfort hattından okunacak Kl.15 durumudur ve
+        o hat henüz yok. Yeşil noktayla "açık" yazmak, olmayan bir ölçümü olgu gibi
+        sunmaktı; CLAUDE.md §12'nin kuralı burada da geçerli.
+      */}
       <View style={styles.cipler}>
-        <Pill dotColor={colors.ok}>Kontak açık</Pill>
+        <Pill dotColor={colors.dim}>Kontak ··</Pill>
         <Pill>Kl.15</Pill>
+        <UnverifiedBadge>KL.15 CAN’DAN OKUNACAK</UnverifiedBadge>
       </View>
 
       <Card>

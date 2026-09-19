@@ -5,6 +5,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import type { Session } from '@supabase/supabase-js';
 
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
+import { appleHatasi, authHatasi } from '@/lib/hata-metni';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/state/auth-context';
 import { useTheme } from '@/theme/theme-provider';
@@ -97,7 +98,7 @@ export default function GirisEkrani() {
       });
 
       if (error) {
-        setHata(error.message);
+        setHata(authHatasi(error));
         return;
       }
 
@@ -107,7 +108,7 @@ export default function GirisEkrani() {
       if ((e as { code?: string }).code === 'ERR_REQUEST_CANCELED') {
         return;
       }
-      setHata(e instanceof Error ? e.message : 'Apple ile giriş başarısız.');
+      setHata(appleHatasi(e));
     } finally {
       setCalisiyor(false);
     }

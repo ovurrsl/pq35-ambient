@@ -5,6 +5,7 @@ import { SymbolView } from 'expo-symbols';
 
 import { Card, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
+import { bleCipMetni, useBle } from '@/state/ble-context';
 import { useTheme } from '@/theme/theme-provider';
 import { BUS_COLORS, FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE, ZONE_COLORS, markaMetin } from '@/theme/tokens';
 
@@ -39,6 +40,7 @@ const TELEFONLAR: readonly EslesmisTelefon[] = [
  */
 export default function CihazlarEkrani() {
   const { colors, scheme } = useTheme();
+  const { arac } = useBle();
   const router = useRouter();
 
   // İptal komutları araca BLE üzerinden gidecek; o katman henüz yazılmadı, bu yüzden
@@ -88,9 +90,14 @@ export default function CihazlarEkrani() {
               PQ35-AMBIENT
             </Text>
             <View style={styles.durumSatir}>
-              <View style={[styles.nokta, { backgroundColor: colors.ok }]} />
+              <View
+                style={[
+                  styles.nokta,
+                  { backgroundColor: arac === 'bagli' ? colors.ok : colors.dim },
+                ]}
+              />
               <Text style={[styles.satirAlt, { color: colors.muted }]} maxFontSizeMultiplier={1.8}>
-                Çevrimiçi · BLE bağlı
+                {bleCipMetni(arac)}
               </Text>
             </View>
           </View>
