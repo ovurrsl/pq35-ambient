@@ -116,7 +116,7 @@ export default function GuvenlikEkrani() {
 
       <RuleBox title="FACE ID KİMLİK DOĞRULAMA DEĞİLDİR">
         Face ID, Keychain’deki refresh token’ı açar; sunucuya karşı kimlik Supabase JWT’dir. Yüz
-        seti değişirse (biometryCurrentSet) anahtar geçersiz olur ve e-posta, şifre ve TOTP ile
+        seti değişirse (biometryCurrentSet) anahtar geçersiz olur ve Apple ile
         yeniden giriş gerekir. Face ID yalnızca uygulama açılışındadır, her komutta değil.
       </RuleBox>
     </ScrollView>

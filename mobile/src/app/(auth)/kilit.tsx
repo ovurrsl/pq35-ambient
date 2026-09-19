@@ -49,14 +49,14 @@ export default function KilitEkrani() {
     }
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     if (sonuc.kind === 'iptal') {
-      setHata(`${kilit?.ad ?? 'Kilit'} doğrulanmadı. Tekrar dene veya şifrenle gir.`);
+      setHata(`${kilit?.ad ?? 'Kilit'} doğrulanmadı. Tekrar dene veya Apple ile yeniden gir.`);
     } else if (sonuc.kind === 'yeniden-giris') {
       setHata(`Kayıtlı anahtar geçersiz: ${sonuc.sebep} Yeniden giriş gerekiyor.`);
     }
   }, [kilidiAc, kilit]);
 
-  /** Face ID'yi atlayıp şifreyle girmek, saklanan anahtardan vazgeçmek demektir. */
-  const sifreIleGir = useCallback(async () => {
+  /** Face ID'yi atlayıp Apple ile girmek, saklanan anahtardan vazgeçmek demektir. */
+  const yenidenGir = useCallback(async () => {
     await cikisYap();
   }, [cikisYap]);
 
@@ -112,16 +112,16 @@ export default function KilitEkrani() {
 
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Şifre ile gir"
-          accessibilityHint="Saklanan anahtarı siler ve e-posta ile şifre girişine döner"
+          accessibilityLabel="Apple ile yeniden gir"
+          accessibilityHint="Saklanan anahtarı siler ve Apple ile giriş ekranına döner"
           disabled={calisiyor}
-          onPress={sifreIleGir}
+          onPress={yenidenGir}
           style={({ pressed }) => [
             styles.ikincil,
             { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
           ]}>
           <Text style={[styles.ikincilMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-            Şifre ile gir
+            Apple ile yeniden gir
           </Text>
         </Pressable>
       </View>
@@ -160,7 +160,7 @@ export default function KilitEkrani() {
           <SectionLabel>BU CİHAZDA OTURUM SAKLANAMAZ</SectionLabel>
           <Text style={[styles.govde, { color: colors.text }]} maxFontSizeMultiplier={2}>
             Saklanan anahtar biyometriye bağlanır; bu cihazda kayıtlı biyometri yok. Her
-            açılışta e-posta, şifre ve TOTP ile giriş gerekir. Cihaz parolası uygulamayı
+            açılışta Apple ile yeniden giriş gerekir. Cihaz parolası uygulamayı
             korur ama anahtarı bağlayamaz.
           </Text>
           <UnverifiedBadge>BİYOMETRİ KURULUNCA DEĞİŞİR</UnverifiedBadge>
@@ -170,7 +170,7 @@ export default function KilitEkrani() {
       <RuleBox title={`${(kilit?.ad ?? 'KİLİT').toLocaleUpperCase('tr-TR')} KİMLİK DOĞRULAMA DEĞİLDİR`}>
         Face ID cihazda yereldir ve sunucuya hiçbir şey kanıtlamaz. Sunucuya karşı kimlik
         Supabase JWT’dir. Kayıtlı yüz seti değişirse saklanan anahtar geçersiz olur ve
-        e-posta, şifre ve TOTP ile yeniden giriş gerekir.
+        Apple ile yeniden giriş gerekir.
       </RuleBox>
     </ScrollView>
   );

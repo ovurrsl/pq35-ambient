@@ -1,14 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import type { Session } from '@supabase/supabase-js';
@@ -20,30 +11,41 @@ import { useTheme } from '@/theme/theme-provider';
 import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
 
 /**
- * Giriş — Sign in with Apple (birincil) veya Supabase Auth e-posta + şifre (yedek).
+ * Giriş — yalnızca Sign in with Apple, ya da hesapsız devam.
+ *
+ * E-POSTA + ŞİFRE YOLU KALDIRILDI. Bu araç sahibinin kararıydı ve Apple'ın kuralıyla
+ * birebir örtüşüyor (HIG, Sign in with Apple):
+ *
+ *   "Don't ask people to supply a password. A key benefit of Sign in with Apple is that
+ *    people don't have to create and memorize additional passwords."
+ *
+ * Uygulamayı tek kişi kullanıyor; ikinci bir kimlik yolu yalnızca ikinci bir saldırı
+ * yüzeyi ve bakımı gereken ikinci bir ekran demekti.
  *
  * Apple akışında şifre diye bir şey yoktur: Apple imzalı bir `identityToken` döner,
- * Supabase onu `signInWithIdToken` ile doğrular. Token'ı Apple imzaladığı için
- * istemciye güvenmek gerekmez. Native akışta Supabase tarafında gizli anahtar da
- * gerekmez; sağlayıcıya yalnızca bundle identifier tanıtılır.
+ * Supabase onu `signInWithIdToken` ile doğrular. Token'ı Apple imzaladığı için istemciye
+ * güvenmek gerekmez. Native akışta sağlayıcı tarafında gizli anahtar da gerekmez;
+ * yalnızca bundle identifier tanıtılır.
  *
- * Şifre uygulamada saklanmaz. Uygulamanın tuttuğu tek sır, Keychain'deki refresh token'dır.
- * Oran kısıtlaması ve hatalı deneme sınırı sunucuda uygulanır; istemci tarafı bir sayaç
- * güvenlik sağlamaz.
+ * Hesapsız devam seçeneği de HIG'in kendi tavsiyesi:
+ *
+ *   "Delay sign-in as long as possible. People often abandon apps when they're forced to
+ *    sign in before doing anything useful."
+ *
+ * Uygulamanın tuttuğu tek sır Keychain'deki refresh token'dır. Oran kısıtlaması ve hatalı
+ * deneme sınırı sunucuda uygulanır; istemci tarafı bir sayaç güvenlik sağlamaz.
  */
 export default function GirisEkrani() {
   const { colors, scheme } = useTheme();
   const { girisTamamlandi, cevrimdisiDevamEt } = useAuth();
   const router = useRouter();
 
-  const [eposta, setEposta] = useState('');
-  const [sifre, setSifre] = useState('');
   const [hata, setHata] = useState<string | null>(null);
   const [calisiyor, setCalisiyor] = useState(false);
-  const [appleVar, setAppleVar] = useState(false);
+  const [appleVar, setAppleVar] = useState<boolean | null>(null);
 
-  // Sign in with Apple yalnızca iOS 13+ gerçek cihaz/simülatörde vardır; yoksa düğmeyi
-  // hiç göstermeyiz, çalışmayan bir düğme göstermek yerine e-posta yolu açık kalır.
+  // Sign in with Apple yalnızca iOS 13+ üzerinde vardır. `null` "henüz bilinmiyor"
+  // demektir; düğme yerine boşluk göstermemek için bu ayrım korunuyor.
   useEffect(() => {
     let iptal = false;
     AppleAuthentication.isAvailableAsync()
@@ -54,7 +56,7 @@ export default function GirisEkrani() {
     };
   }, []);
 
-  /** Her iki giriş yolunun ortak sonu: MFA gerekiyor mu, gerekmiyorsa oturumu aç. */
+  /** Girişin ortak sonu: MFA gerekiyor mu, gerekmiyorsa oturumu aç. */
   const oturumuTamamla = useCallback(
     async (session: Session | null) => {
       // MFA açıksa Supabase oturumu "aal1" seviyesinde döner; TOTP doğrulaması gerekir.
@@ -111,185 +113,97 @@ export default function GirisEkrani() {
     }
   }, [oturumuTamamla]);
 
-  const gonder = useCallback(async () => {
-    setCalisiyor(true);
-    setHata(null);
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: eposta.trim(),
-      password: sifre,
-    });
-
-    setCalisiyor(false);
-
-    if (error) {
-      setHata(error.message);
-      return;
-    }
-
-    await oturumuTamamla(data.session);
-  }, [eposta, sifre, oturumuTamamla]);
-
-  const gonderilebilir = eposta.trim().length > 3 && sifre.length > 0 && !calisiyor;
-
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView
-        contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}
-        keyboardShouldPersistTaps="handled">
-        <View style={styles.basliklar}>
-          <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-            Giriş
-          </Text>
-          <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
-            SUPABASE AUTH
-          </Text>
-        </View>
+    <ScrollView
+      contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}
+      keyboardShouldPersistTaps="handled">
+      <View style={styles.basliklar}>
+        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
+          Giriş
+        </Text>
+        <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
+          SIGN IN WITH APPLE
+        </Text>
+      </View>
 
-        {appleVar ? (
-          <View style={styles.appleBolum}>
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={
-                scheme === 'dark'
-                  ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-                  : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-              }
-              cornerRadius={RADIUS.md}
-              style={styles.appleDugme}
-              onPress={appleIleGir}
-            />
-            <View style={styles.ayirac}>
-              <View style={[styles.ayiracCizgi, { backgroundColor: colors.line }]} />
-              <Text
-                style={[styles.ayiracMetin, { color: colors.dim }]}
-                maxFontSizeMultiplier={1.4}>
-                ya da e-posta ile
-              </Text>
-              <View style={[styles.ayiracCizgi, { backgroundColor: colors.line }]} />
-            </View>
-          </View>
-        ) : null}
+      {appleVar === true ? (
+        <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+          buttonStyle={
+            scheme === 'dark'
+              ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+              : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+          }
+          cornerRadius={RADIUS.md}
+          style={[styles.appleDugme, calisiyor && styles.calisiyor]}
+          onPress={appleIleGir}
+        />
+      ) : null}
 
-        <View style={styles.alanlar}>
-          <View style={styles.alan}>
-            <Text
-              nativeID="giris-eposta-etiket"
-              style={[styles.etiket, { color: colors.muted }]}
-              maxFontSizeMultiplier={1.6}>
-              E-posta
-            </Text>
-            <TextInput
-              accessibilityLabelledBy="giris-eposta-etiket"
-              accessibilityLabel="E-posta"
-              value={eposta}
-              onChangeText={setEposta}
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
-              textContentType="username"
-              placeholder="o···@···.com"
-              placeholderTextColor={colors.dim}
-              style={[styles.girdi, { color: colors.text, borderColor: colors.line, backgroundColor: colors.glassFallback }]}
-            />
-          </View>
-
-          <View style={styles.alan}>
-            <Text
-              nativeID="giris-sifre-etiket"
-              style={[styles.etiket, { color: colors.muted }]}
-              maxFontSizeMultiplier={1.6}>
-              Şifre
-            </Text>
-            <TextInput
-              accessibilityLabelledBy="giris-sifre-etiket"
-              accessibilityLabel="Şifre"
-              value={sifre}
-              onChangeText={setSifre}
-              secureTextEntry
-              autoComplete="current-password"
-              textContentType="password"
-              placeholder="············"
-              placeholderTextColor={colors.dim}
-              onSubmitEditing={gonderilebilir ? gonder : undefined}
-              style={[styles.girdi, { color: colors.text, borderColor: colors.line, backgroundColor: colors.glassFallback }]}
-            />
-          </View>
-        </View>
-
-        {hata ? (
-          <Text
-            style={[styles.hata, { color: colors.danger, borderColor: colors.danger }]}
-            accessibilityRole="alert"
-            maxFontSizeMultiplier={2}>
-            {hata}
-          </Text>
-        ) : null}
-
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Devam et"
-          disabled={!gonderilebilir}
-          onPress={gonder}
-          style={({ pressed }) => [
-            styles.birincil,
-            { backgroundColor: colors.accent, opacity: gonderilebilir ? (pressed ? 0.7 : 1) : 0.4 },
-          ]}>
-          <Text style={[styles.birincilMetin, { color: colors.bg }]} maxFontSizeMultiplier={1.4}>
-            {calisiyor ? 'Giriliyor…' : 'Devam et'}
-          </Text>
-        </Pressable>
-
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Hesap açmadan devam et"
-          accessibilityHint="Bulut özellikleri kapalı kalır, araç bağlantısı çalışır"
-          onPress={cevrimdisiDevamEt}
-          style={({ pressed }) => [
-            styles.ikincil,
-            { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
-          ]}>
-          <Text style={[styles.ikincilMetin, { color: colors.text }]} maxFontSizeMultiplier={1.4}>
-            Hesap açmadan devam et
-          </Text>
-        </Pressable>
-
-        <RuleBox title="HESAP NE İÇİN GEREKLİ">
-          Araç bağlantısı hesap istemez: telefon ile denetleyici arasındaki güven BLE
-          eşleşmesine dayanır ve araç yakındayken internet gerekmez. Hesap yalnızca
-          konum geçmişi, sürüş kaydı senkronu ve uzaktan erişim içindir — üçü de 3. faz.
-          Hesapsız devam edersen bu üçü kapalı görünür, geri kalan her şey çalışır.
+      {appleVar === false ? (
+        <RuleBox title="APPLE İLE GİRİŞ YOK">
+          Bu cihazda Sign in with Apple bulunmuyor. Hesap gerektiren özellikler — konum
+          geçmişi, sürüş kaydı senkronu ve uzaktan erişim — kullanılamaz. Geri kalan her
+          şey hesapsız çalışır.
         </RuleBox>
+      ) : null}
 
-        <Card>
-          <SectionLabel>BUNDAN SONRA NE OLUR</SectionLabel>
-          {[
-            'Apple ile girersen şifre hiç oluşmaz; kimliği Apple imzalar.',
-            'İki adımlı doğrulama açıksa TOTP kodu istenir.',
-            'Refresh token Keychain’e biyometrik korumayla yazılır.',
-            'Bir daha bu ekran görünmez; açılışta Face ID yeter.',
-          ].map((satir, i) => (
-            <View key={satir} style={styles.adimSatir}>
-              <Text style={[styles.adimNo, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
-                {i + 1}
-              </Text>
-              <Text style={[styles.adimMetin, { color: colors.text }]} maxFontSizeMultiplier={2}>
-                {satir}
-              </Text>
-            </View>
-          ))}
-        </Card>
+      {hata ? (
+        <Text
+          style={[styles.hata, { color: colors.danger, borderColor: colors.danger }]}
+          accessibilityRole="alert"
+          maxFontSizeMultiplier={2}>
+          {hata}
+        </Text>
+      ) : null}
 
-        <RuleBox title="KURAL">
-          Şifre uygulamada saklanmaz; Apple yolunda hiç oluşmaz. Uygulamanın tuttuğu tek
-          sır Keychain’deki refresh token’dır. Apple’ın döndürdüğü kimlik jetonunu
-          sunucuda Supabase doğrular — istemcinin söylediğine güvenilmez. Hatalı deneme
-          sınırı ve oran kısıtlaması sunucuda uygulanır.
-        </RuleBox>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Hesap açmadan devam et"
+        accessibilityHint="Bulut özellikleri kapalı kalır, araç bağlantısı çalışır"
+        onPress={cevrimdisiDevamEt}
+        style={({ pressed }) => [
+          styles.ikincil,
+          { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
+        ]}>
+        <Text style={[styles.ikincilMetin, { color: colors.text }]} maxFontSizeMultiplier={1.4}>
+          Hesap açmadan devam et
+        </Text>
+      </Pressable>
+
+      <RuleBox title="HESAP NE İÇİN GEREKLİ">
+        Araç bağlantısı hesap istemez: telefon ile denetleyici arasındaki güven BLE
+        eşleşmesine dayanır ve araç yakındayken internet gerekmez. Hesap yalnızca konum
+        geçmişi, sürüş kaydı senkronu ve uzaktan erişim içindir — üçü de 3. faz. Hesapsız
+        devam edersen bu üçü kapalı görünür, geri kalan her şey çalışır.
+      </RuleBox>
+
+      <Card>
+        <SectionLabel>BUNDAN SONRA NE OLUR</SectionLabel>
+        {[
+          'Apple kimliği doğrular; şifre ne oluşturulur ne sorulur.',
+          'İki adımlı doğrulama açıksa TOTP kodu istenir.',
+          'Refresh token Keychain’e biyometrik korumayla yazılır.',
+          'Bir daha bu ekran görünmez; açılışta Face ID yeter.',
+        ].map((satir, i) => (
+          <View key={satir} style={styles.adimSatir}>
+            <Text style={[styles.adimNo, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
+              {i + 1}
+            </Text>
+            <Text style={[styles.adimMetin, { color: colors.text }]} maxFontSizeMultiplier={2}>
+              {satir}
+            </Text>
+          </View>
+        ))}
+      </Card>
+
+      <RuleBox title="KURAL">
+        Bu uygulamada şifre yoktur. Apple’ın döndürdüğü kimlik jetonunu sunucuda Supabase
+        doğrular — istemcinin söylediğine güvenilmez. Uygulamanın tuttuğu tek sır
+        Keychain’deki refresh token’dır. Oran kısıtlaması ve hatalı deneme sınırı sunucuda
+        uygulanır.
+      </RuleBox>
+    </ScrollView>
   );
 }
 
@@ -298,11 +212,8 @@ const styles = StyleSheet.create({
   basliklar: { gap: 2 },
   baslik: { ...FONTS.display, fontSize: 28 },
   altBaslik: { ...FONTS.mono, fontSize: TYPE_SCALE.micro, letterSpacing: 1.4 },
-  appleBolum: { gap: SPACING.lg },
   appleDugme: { height: HIT_SIZE + 6 },
-  ayirac: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
-  ayiracCizgi: { flex: 1, height: StyleSheet.hairlineWidth },
-  ayiracMetin: { ...FONTS.body, fontSize: TYPE_SCALE.label },
+  calisiyor: { opacity: 0.5 },
   ikincil: {
     minHeight: HIT_SIZE,
     borderWidth: StyleSheet.hairlineWidth,
@@ -311,17 +222,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ikincilMetin: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.body },
-  alanlar: { gap: SPACING.md },
-  alan: { gap: 6 },
-  etiket: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.label },
-  girdi: {
-    minHeight: HIT_SIZE + 2,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: RADIUS.md,
-    paddingHorizontal: SPACING.md,
-    ...FONTS.mono,
-    fontSize: TYPE_SCALE.body,
-  },
   hata: {
     ...FONTS.body,
     fontSize: TYPE_SCALE.label,
@@ -330,8 +230,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.md,
     padding: SPACING.md,
   },
-  birincil: { height: 52, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center' },
-  birincilMetin: { ...FONTS.bodySemiBold, fontSize: 16 },
   adimSatir: { flexDirection: 'row', gap: SPACING.sm, alignItems: 'flex-start' },
   adimNo: { ...FONTS.mono, fontSize: TYPE_SCALE.caption, minWidth: 14 },
   adimMetin: { flex: 1, ...FONTS.body, fontSize: TYPE_SCALE.label, lineHeight: 19 },

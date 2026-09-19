@@ -24,14 +24,15 @@ export default function AyarlarEkrani() {
   const { durum, cikisYap } = useAuth();
   const router = useRouter();
 
+  const cevrimdisi = durum.ad === 'cevrimdisi';
   const eposta = durum.ad === 'acik' ? durum.session.user.email : null;
-  const maskeli = eposta ? maskEmail(eposta) : '·····@···.···';
+  const maskeli = eposta ? maskEmail(eposta) : null;
 
   // Çıkış Keychain girdisini de siler; geri alınamaz, bu yüzden önce onay sorulur.
   const oturumuKapat = useCallback(() => {
     Alert.alert(
       'Oturumu kapat',
-      'Keychain’deki saklanan anahtar silinir. Tekrar girmek için e-posta, şifre ve TOTP gerekir.',
+      'Keychain’deki saklanan anahtar silinir. Tekrar girmek için Apple ile giriş gerekir.',
       [
         { text: 'Vazgeç', style: 'cancel' },
         { text: 'Oturumu kapat', style: 'destructive', onPress: () => void cikisYap() },
@@ -61,37 +62,61 @@ export default function AyarlarEkrani() {
           </View>
           <View style={styles.hesapMetin}>
             <Text style={[styles.hesapEposta, { color: colors.text }]} maxFontSizeMultiplier={1.6}>
-              {maskeli}
+              {maskeli ?? 'Hesapsız kullanım'}
             </Text>
             <View style={styles.rozetSatir}>
-              <DoluRozet bg={colors.accent} fg={colors.bg}>
-                Sahip
-              </DoluRozet>
-              <DoluRozet bg={colors.ok} fg={colors.bg}>
-                MFA açık
-              </DoluRozet>
-              <Pill>JWT geçerli</Pill>
+              {cevrimdisi ? (
+                <Pill>Bulut kapalı</Pill>
+              ) : (
+                <>
+                  <DoluRozet bg={colors.accent} fg={colors.bg}>
+                    Sahip
+                  </DoluRozet>
+                  {/* HIG (Sign in with Apple): "Indicate when people are currently signed
+                      in ... by displaying a phrase like 'Using Sign in with Apple'." */}
+                  <Pill>Sign in with Apple</Pill>
+                  <Pill>JWT geçerli</Pill>
+                </>
+              )}
             </View>
           </View>
         </View>
 
         <Ayirac />
 
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Oturumu kapat"
-          accessibilityHint="Keychain’de saklanan anahtar silinir"
-          onPress={oturumuKapat}
-          style={({ pressed }) => [styles.satir, { opacity: pressed ? 0.6 : 1 }]}>
-          <Ikon name="rectangle.portrait.and.arrow.right" color={colors.danger} />
-          <Text style={[styles.satirBaslik, { color: colors.danger }]} maxFontSizeMultiplier={2}>
-            Oturumu kapat
-          </Text>
-          <View style={styles.esnek} />
-          <Text style={[styles.satirNot, { color: colors.muted }]} maxFontSizeMultiplier={1.6}>
-            Keychain anahtarı silinir
-          </Text>
-        </Pressable>
+        {cevrimdisi ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Apple ile giriş yap"
+            accessibilityHint="Konum geçmişi, sürüş kaydı senkronu ve uzaktan erişimi açar"
+            onPress={() => git('/(auth)/giris')}
+            style={({ pressed }) => [styles.satir, { opacity: pressed ? 0.6 : 1 }]}>
+            <Ikon name="person.crop.circle.badge.plus" color={colors.accent} />
+            <Text style={[styles.satirBaslik, { color: colors.accent }]} maxFontSizeMultiplier={2}>
+              Apple ile giriş yap
+            </Text>
+            <View style={styles.esnek} />
+            <Text style={[styles.satirNot, { color: colors.muted }]} maxFontSizeMultiplier={1.6}>
+              Bulut özelliklerini açar
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Oturumu kapat"
+            accessibilityHint="Keychain’de saklanan anahtar silinir"
+            onPress={oturumuKapat}
+            style={({ pressed }) => [styles.satir, { opacity: pressed ? 0.6 : 1 }]}>
+            <Ikon name="rectangle.portrait.and.arrow.right" color={colors.danger} />
+            <Text style={[styles.satirBaslik, { color: colors.danger }]} maxFontSizeMultiplier={2}>
+              Oturumu kapat
+            </Text>
+            <View style={styles.esnek} />
+            <Text style={[styles.satirNot, { color: colors.muted }]} maxFontSizeMultiplier={1.6}>
+              Keychain anahtarı silinir
+            </Text>
+          </Pressable>
+        )}
       </Card>
 
       <SectionLabel>AYARLAR</SectionLabel>
