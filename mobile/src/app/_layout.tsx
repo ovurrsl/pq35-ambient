@@ -18,6 +18,9 @@ const queryClient = new QueryClient({
  * Kimlik durumuna göre yönlendirme.
  * Kilitli veya çıkış yapılmış hâlde (tabs) grubuna girilemez.
  */
+/** Sekme ağacının kökleri. Bunların dışındaki bir yol, oturum açıkken geçerli değildir. */
+const SEKME_YOLLARI = ['/bolgeler', '/olaylar', '/arac', '/sahneler', '/ayarlar'] as const;
+
 function AuthGate() {
   const { durum } = useAuth();
   const pathname = usePathname();
@@ -37,7 +40,18 @@ function AuthGate() {
     if (durum.ad === 'yapilandirma-gerekli') {
       if (!pathname.startsWith('/kurulum')) router.replace('/(auth)/kurulum');
     } else if (durum.ad === 'acik' || durum.ad === 'cevrimdisi') {
-      if (kimlikAkisinda) router.replace('/(tabs)/bolgeler');
+      /**
+       * Sekmelerin DIŞINDAKİ her yoldan sekmelere dön — yalnızca kimlik akışından değil.
+       *
+       * Eskiden koşul `if (kimlikAkisinda)` idi ve bu, `/` kaybolunca uygulamayı
+       * kilitledi: açılışta gelinen `/` ne bir sekme ne de bir kimlik ekranıydı, bu
+       * yüzden hiçbir yönlendirme tetiklenmiyor ve kullanıcı "Unmatched Route"ta
+       * kalıyordu. Artık eşleşmeyen herhangi bir yol da buraya düşüyor.
+       */
+      const sekmelerde = SEKME_YOLLARI.some((y) => pathname.startsWith(y));
+      if (!sekmelerde && !pathname.startsWith('/onay')) {
+        router.replace('/(tabs)/bolgeler');
+      }
     } else if (durum.ad === 'kilitli' || durum.ad === 'cevrimdisi-kilitli') {
       if (!pathname.startsWith('/kilit')) router.replace('/(auth)/kilit');
     } else if (!kimlikAkisinda) {

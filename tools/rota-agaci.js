@@ -63,13 +63,29 @@ if (!tree) {
 }
 yaz(tree);
 
-// Gezinilebilir tam yolları da düz liste olarak çıkar.
+/**
+ * Gezinilebilir tam yolları düz liste olarak çıkar — **expo-router'ın URL kurallarıyla**.
+ *
+ * NEDEN ÖNEMLİ: bu script önce `index` yapraklarını olduğu gibi yazıyordu, yani kökteki
+ * `index.tsx` listede `/index` diye görünüyordu. Gerçek URL ise `/`. Fark masum değil:
+ * sekmeler klasöre dönüştürülünce uygulamanın `/` rotası tamamen kayboldu ve uygulama
+ * açılışta "Unmatched Route"ta kaldı — ama liste `/index` yerine hiçbir şey göstermediği
+ * için eksiklik gözden kaçtı. Artık `index` segmenti üst yola katlanıyor ve kök rota
+ * listede `/` olarak görünüyor; yoksa görünmüyor ve eksikliği anlamak mümkün oluyor.
+ */
 const yollar = [];
 (function topla(node, onek) {
-  const parca = node.route === '' ? '' : node.route;
+  // `index` bir segment üretmez; üst yolun kendisidir (expo-router kuralı).
+  const parca = node.route === '' || node.route === 'index' ? '' : node.route;
   const tam = [onek, parca].filter(Boolean).join('/');
   if (!node.children?.length) yollar.push('/' + tam);
   for (const c of node.children ?? []) topla(c, tam);
 })(tree, '');
-console.log('\n=== yapraklar ===');
-for (const y of yollar.sort()) console.log(y);
+console.log('\n=== yapraklar (gerçek URL) ===');
+for (const y of [...new Set(yollar)].sort()) console.log(y);
+
+// Kök rota kontrolü: bu eksikse uygulama açılışta hiçbir yere düşemez.
+const grupsuz = (y) => y.replace(/\/\([^)]+\)/g, '') || '/';
+if (!yollar.some((y) => grupsuz(y) === '/')) {
+  console.log('\nUYARI: `/` rotası YOK — uygulama açılışta eşleşmeyen bir yola düşer.');
+}
