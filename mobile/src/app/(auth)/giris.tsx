@@ -33,7 +33,7 @@ import { FONTS, HIT_SIZE, RADIUS, SPACING, TYPE_SCALE } from '@/theme/tokens';
  */
 export default function GirisEkrani() {
   const { colors, scheme } = useTheme();
-  const { girisTamamlandi } = useAuth();
+  const { girisTamamlandi, cevrimdisiDevamEt } = useAuth();
   const router = useRouter();
 
   const [eposta, setEposta] = useState('');
@@ -242,6 +242,27 @@ export default function GirisEkrani() {
           </Text>
         </Pressable>
 
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Hesap açmadan devam et"
+          accessibilityHint="Bulut özellikleri kapalı kalır, araç bağlantısı çalışır"
+          onPress={cevrimdisiDevamEt}
+          style={({ pressed }) => [
+            styles.ikincil,
+            { borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
+          ]}>
+          <Text style={[styles.ikincilMetin, { color: colors.text }]} maxFontSizeMultiplier={1.4}>
+            Hesap açmadan devam et
+          </Text>
+        </Pressable>
+
+        <RuleBox title="HESAP NE İÇİN GEREKLİ">
+          Araç bağlantısı hesap istemez: telefon ile denetleyici arasındaki güven BLE
+          eşleşmesine dayanır ve araç yakındayken internet gerekmez. Hesap yalnızca
+          konum geçmişi, sürüş kaydı senkronu ve uzaktan erişim içindir — üçü de 3. faz.
+          Hesapsız devam edersen bu üçü kapalı görünür, geri kalan her şey çalışır.
+        </RuleBox>
+
         <Card>
           <SectionLabel>BUNDAN SONRA NE OLUR</SectionLabel>
           {[
@@ -282,6 +303,14 @@ const styles = StyleSheet.create({
   ayirac: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   ayiracCizgi: { flex: 1, height: StyleSheet.hairlineWidth },
   ayiracMetin: { fontFamily: FONTS.body, fontSize: TYPE_SCALE.label },
+  ikincil: {
+    minHeight: HIT_SIZE,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: RADIUS.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ikincilMetin: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.body },
   alanlar: { gap: SPACING.md },
   alan: { gap: 6 },
   etiket: { fontFamily: FONTS.bodyMedium, fontSize: TYPE_SCALE.label },

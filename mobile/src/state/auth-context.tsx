@@ -36,6 +36,15 @@ export type AuthDurum =
   | { ad: 'yapilandirma-gerekli' }
   | { ad: 'kilitli'; maskeliEposta: string | null }
   | { ad: 'cikis' }
+  /**
+   * Hesapsız kullanım. Uygulama açıktır ama bulut yoktur.
+   *
+   * Gerekçesi mimari: telefon ↔ araç bağlantısı BLE bonding'e dayanır ve araç
+   * yakındayken internet gerekmez (CLAUDE.md §7.1). Supabase yalnızca konum
+   * geçmişi, sürüş kaydı senkronu ve uzaktan erişim içindir — hepsi 3. faz.
+   * Dolayısıyla 1. fazda giriş duvarı, var olmayan bir özelliği korur.
+   */
+  | { ad: 'cevrimdisi' }
   | { ad: 'acik'; session: Session };
 
 interface AuthContextValue {
@@ -44,6 +53,8 @@ interface AuthContextValue {
   kilidiAc: () => Promise<UnlockResult>;
   /** Girişten sonra çağrılır; oturumu korumalı girdiye yazar. */
   girisTamamlandi: (session: Session) => Promise<void>;
+  /** Hesapsız devam. Keychain'e hiçbir şey yazılmaz, sunucuya hiç gidilmez. */
+  cevrimdisiDevamEt: () => void;
   cikisYap: () => Promise<void>;
 }
 
@@ -93,6 +104,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   /**
    * Arka plandan dönüşte kilitleme. Bu davranış KAPATILAMAZ.
    * Face ID yalnızca açılışta sorulduğu için, açık kalan bir uygulama kapısız demektir.
+   *
+   * Çevrimdışı mod bunun dışındadır: Keychain'de oturum yoktur, kilitlenecek bir sır
+   * da yoktur. Geçiş yalnızca 'acik' durumundan yapılır, aşağıdaki koşul bunu sağlar.
    */
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next: AppStateStatus) => {
@@ -127,6 +141,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setDurum({ ad: 'acik', session });
   }, []);
 
+  const cevrimdisiDevamEt = useCallback(() => {
+    setDurum({ ad: 'cevrimdisi' });
+  }, []);
+
   const cikisYap = useCallback(async () => {
     await supabase.auth.signOut();
     await forget();
@@ -134,8 +152,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ durum, kilidiAc, girisTamamlandi, cikisYap }),
-    [durum, kilidiAc, girisTamamlandi, cikisYap]
+    () => ({ durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cikisYap }),
+    [durum, kilidiAc, girisTamamlandi, cevrimdisiDevamEt, cikisYap]
   );
 
   return <AuthContext value={value}>{children}</AuthContext>;
