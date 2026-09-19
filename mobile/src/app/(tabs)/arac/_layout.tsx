@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 
+import { IletisimDugmesi } from '@/components/nav/iletisim-dugmesi';
 import { useTheme } from '@/theme/theme-provider';
 import { stackSecenekleri } from '@/theme/stack-secenekleri';
 
@@ -22,9 +23,15 @@ export default function AracLayout() {
   const { colors } = useTheme();
   return (
     <Stack screenOptions={stackSecenekleri(colors, 'Araç')}>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="konum" options={{ title: 'Konum' }} />
-      <Stack.Screen name="surusler" options={{ title: 'Sürüşler' }} />
+      <Stack.Screen name="index" options={{ title: 'Araç', headerRight: () => <IletisimDugmesi /> }} />
+      <Stack.Screen
+        name="konum"
+        options={{ title: 'Konum', headerRight: () => <IletisimDugmesi /> }}
+      />
+      <Stack.Screen
+        name="surusler"
+        options={{ title: 'Sürüşler', headerRight: () => <IletisimDugmesi /> }}
+      />
       <Stack.Screen name="surus/[id]" options={{ title: 'Sürüş', headerBackTitle: 'Sürüşler' }} />
       <Stack.Screen name="performans" options={{ title: 'Performans' }} />
       <Stack.Screen name="iletisim" options={{ title: 'İletişim' }} />

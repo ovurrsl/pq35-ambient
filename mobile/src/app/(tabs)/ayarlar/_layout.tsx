@@ -14,7 +14,7 @@ export default function AyarlarLayout() {
   const { colors } = useTheme();
   return (
     <Stack screenOptions={stackSecenekleri(colors, 'Ayarlar')}>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="index" options={{ title: 'Ayarlar' }} />
       <Stack.Screen name="guvenlik" options={{ title: 'Güvenlik' }} />
       <Stack.Screen name="cihazlar" options={{ title: 'Cihazlar' }} />
     </Stack>

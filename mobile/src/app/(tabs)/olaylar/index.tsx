@@ -148,14 +148,9 @@ export default function OlaylarEkrani(): ReactElement {
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
-      <View style={styles.baslikBlok}>
-        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-          Olaylar
-        </Text>
-        <Text style={[styles.altBaslik, { color: colors.muted }]} maxFontSizeMultiplier={2}>
-          Komfort-CAN tetikleyicileri → bölgeler
-        </Text>
-      </View>
+      <Text style={[styles.altBaslik, { color: colors.muted }]} maxFontSizeMultiplier={2}>
+        Komfort-CAN tetikleyicileri → bölgeler
+      </Text>
 
       <View style={[styles.bilgi, { backgroundColor: colors.surface, borderColor: colors.line }]}>
         <SymbolView
@@ -365,8 +360,6 @@ function ZonAnahtari({ bolge, acik, olayId, olayAdi, onDegistir }: ZonAnahtariPr
 
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
-  baslikBlok: { gap: 2 },
-  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
   altBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
 
   bilgi: {

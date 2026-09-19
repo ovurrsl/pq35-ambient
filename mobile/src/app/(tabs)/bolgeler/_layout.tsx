@@ -15,14 +15,15 @@ import { stackSecenekleri } from '@/theme/stack-secenekleri';
  * Detay ekranı artık sekmenin içinde; çubuk yerinde kalıyor ve geri kaydırma da
  * sekme bağlamını koruyor.
  *
- * Kök ekranın başlığı kapalı: o ekran kendi büyük "Ambiyans" başlığını çiziyor,
- * üstüne sistem başlığı binerse iki başlık görünür.
+ * Kök ekranın büyük başlığı **sistemin**: "Ambiyans" (kanvas AppZonlar.dc.html; sekme
+ * etiketi "Bölgeler", başlık "Ambiyans" — kanvas böyle istiyor, CLAUDE.md §9.1). Elle
+ * çizilen başlık kaydırınca ekrandan çıkıyordu ve yerini alacak standart başlık yoktu.
  */
 export default function BolgelerLayout() {
   const { colors } = useTheme();
   return (
     <Stack screenOptions={stackSecenekleri(colors, 'Bölgeler')}>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="index" options={{ title: 'Ambiyans' }} />
       <Stack.Screen name="[id]" options={{ title: 'Bölge' }} />
     </Stack>
   );

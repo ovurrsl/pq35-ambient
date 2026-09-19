@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AracSegmentKontrolu } from '@/components/nav/arac-segmenti';
 import { Card, RuleBox, SectionLabel } from '@/components/ui/card';
 import { Pill, UnverifiedBadge } from '@/components/ui/pill';
 import { useTheme } from '@/theme/theme-provider';
@@ -17,6 +18,8 @@ export default function KonumEkrani() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+      <AracSegmentKontrolu aktif="konum" />
+
       <View style={styles.cipler}>
         <Pill dotColor={BUS_COLORS.ble}>3. faz</Pill>
         <Pill dotColor={colors.warn}>GPRS · SMS yedek</Pill>

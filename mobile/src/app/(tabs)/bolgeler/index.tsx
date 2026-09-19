@@ -84,14 +84,9 @@ export default function BolgelerEkrani(): JSX.Element {
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
-      <View style={styles.basliklar}>
-        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-          Ambiyans
-        </Text>
-        <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
-          PQ35-AMBIENT · SCIROCCO
-        </Text>
-      </View>
+      <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.4}>
+        PQ35-AMBIENT · SCIROCCO
+      </Text>
 
       <View style={styles.cipler}>
         <Pill dotColor={BUS_COLORS.ble}>BLE bağlı</Pill>
@@ -302,8 +297,6 @@ const styles = StyleSheet.create({
     paddingBottom: SPACING.xxl,
     gap: SPACING.md,
   },
-  basliklar: { gap: 3 },
-  baslik: { ...FONTS.display, fontSize: 26 },
   altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   cipler: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
 

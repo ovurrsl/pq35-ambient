@@ -41,14 +41,9 @@ export default function SahnelerEkrani() {
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
-      <View style={styles.basliklar}>
-        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-          Sahneler
-        </Text>
-        <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
-          TABAN KATMANI · OLAYLAR ÜSTÜNE BİNER
-        </Text>
-      </View>
+      <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
+        TABAN KATMANI · OLAYLAR ÜSTÜNE BİNER
+      </Text>
 
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>BLE bağlı</Pill>
@@ -107,8 +102,6 @@ export default function SahnelerEkrani() {
 
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, paddingBottom: SPACING.xxl, gap: SPACING.md },
-  basliklar: { gap: 2 },
-  baslik: { ...FONTS.display, fontSize: 28 },
   altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   cipler: { flexDirection: 'row', gap: SPACING.sm, flexWrap: 'wrap' },
   sahne: {

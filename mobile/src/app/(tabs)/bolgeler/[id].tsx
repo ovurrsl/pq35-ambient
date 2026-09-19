@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -95,7 +95,6 @@ export default function BolgeDetayRotasi(): JSX.Element {
 function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const router = useRouter();
 
   const bolgeRengi = ZONE_COLORS[id];
   const sira = ZONE_IDS.indexOf(id) + 1;
@@ -115,42 +114,17 @@ function BolgeDetay({ id }: { id: ZoneId }): JSX.Element {
     setOlayDurumu((onceki) => ({ ...onceki, [anahtar]: acik }));
   }, []);
 
-  const geriDon = useCallback((): void => {
-    if (router.canGoBack()) router.back();
-    else router.replace('/(tabs)/bolgeler');
-  }, [router]);
-
   const secilenRenkAdi =
     HAZIR_RENKLER.find((secenek) => secenek.deger === renk)?.ad ?? RENK_ADLARI[id];
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[
         styles.page,
-        { backgroundColor: colors.bg, paddingTop: insets.top + SPACING.sm, paddingBottom: insets.bottom + 48 },
+        { backgroundColor: colors.bg, paddingBottom: insets.bottom + SPACING.xxl },
       ]}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Bölgeler listesine dön"
-        onPress={geriDon}
-        style={({ pressed }) => [styles.geri, { opacity: pressed ? 0.6 : 1 }]}>
-        <SymbolView
-          name="chevron.left"
-          size={15}
-          tintColor={colors.accent}
-          fallback={
-            <Text
-              style={{ color: colors.accent }}
-              accessibilityElementsHidden
-              maxFontSizeMultiplier={1.4}>
-              ‹
-            </Text>
-          }
-        />
-        <Text style={[styles.geriMetin, { color: colors.accent }]} maxFontSizeMultiplier={1.8}>
-          Bölgeler
-        </Text>
-      </Pressable>
+      <Stack.Screen options={{ title: ZONE_LABELS[id] }} />
 
       <View style={styles.basliklar}>
         <View style={[styles.rozet, { backgroundColor: bolgeRengi }]}>
@@ -330,9 +304,10 @@ function BolgeBulunamadi(): JSX.Element {
 
   return (
     <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[
         styles.bosPage,
-        { backgroundColor: colors.bg, paddingTop: insets.top + SPACING.xxl, paddingBottom: insets.bottom + 48 },
+        { backgroundColor: colors.bg, paddingBottom: insets.bottom + SPACING.xxl },
       ]}>
       <SymbolView
         name="questionmark.circle"
@@ -476,9 +451,6 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, paddingHorizontal: SPACING.lg, gap: SPACING.md },
   bosPage: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md, alignItems: 'center', justifyContent: 'center' },
   bosIkon: { width: 56, height: 56, borderRadius: RADIUS.pill, borderWidth: 2 },
-
-  geri: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, minHeight: HIT_SIZE, alignSelf: 'flex-start' },
-  geriMetin: { ...FONTS.body, fontSize: TYPE_SCALE.body },
 
   basliklar: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   rozet: { width: 26, height: 26, borderRadius: RADIUS.pill, alignItems: 'center', justifyContent: 'center' },

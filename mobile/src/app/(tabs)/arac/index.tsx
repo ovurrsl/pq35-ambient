@@ -1,8 +1,8 @@
-import { useCallback, type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Link, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 
+import { AracSegmentKontrolu } from '@/components/nav/arac-segmenti';
 import { Card, SectionLabel } from '@/components/ui/card';
 import { UnverifiedBadge } from '@/components/ui/pill';
 import { NavRow, RowDivider } from '@/components/ui/row';
@@ -28,21 +28,6 @@ const YOK = '··';
 /** Kanvastan gelen gösterge aralığı; gerçek tavan ve redline eşiği araçta ölçülecek. */
 const DEVIR_TAVANI = 7000;
 const REDLINE_ORANI = 0.87;
-
-type SegmentId = 'canli' | 'surusler' | 'konum';
-
-interface SegmentTanimi {
-  readonly id: SegmentId;
-  readonly ad: string;
-  /** Bu ekranın kendisi olan segmentte null; diğerleri kendi rotasına gider. */
-  readonly rota: '/arac/konum' | '/arac/surusler' | null;
-}
-
-const SEGMENTLER: readonly SegmentTanimi[] = [
-  { id: 'canli', ad: 'Canlı', rota: null },
-  { id: 'surusler', ad: 'Sürüşler', rota: '/arac/surusler' },
-  { id: 'konum', ad: 'Konum', rota: '/arac/konum' },
-];
 
 interface KesifSatiriTanimi {
   readonly ad: string;
@@ -79,45 +64,18 @@ export default function AracEkrani(): ReactElement {
       contentInsetAdjustmentBehavior="automatic"
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
       <View style={styles.baslikSatir}>
-        <View style={styles.baslikBlok}>
-          <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-            Araç
+        <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
+          CANLI VERİ · SCIROCCO
+        </Text>
+        <View style={[styles.bleCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
+          <View style={[styles.nokta, { backgroundColor: colors.dim }]} />
+          <Text style={[styles.bleMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
+            BLE bağlı değil
           </Text>
-          <Text style={[styles.altBaslik, { color: colors.dim }]} maxFontSizeMultiplier={1.6}>
-            CANLI VERİ · SCIROCCO
-          </Text>
-        </View>
-        <View style={styles.baslikSag}>
-          <View style={[styles.bleCip, { backgroundColor: colors.surfaceRaised, borderColor: colors.line }]}>
-            <View style={[styles.nokta, { backgroundColor: colors.dim }]} />
-            <Text style={[styles.bleMetin, { color: colors.muted }]} maxFontSizeMultiplier={1.4}>
-              BLE bağlı değil
-            </Text>
-          </View>
-          <Link href="/arac/iletisim" asChild>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="İletişim: ara ve mesaj"
-              style={({ pressed }) => [
-                styles.telefonDugmesi,
-                { backgroundColor: colors.surfaceRaised, borderColor: colors.line, opacity: pressed ? 0.6 : 1 },
-              ]}>
-              <SymbolView
-                name="phone"
-                size={18}
-                tintColor={colors.text}
-                fallback={
-                  <Text style={{ color: colors.text }} maxFontSizeMultiplier={1.4}>
-                    ☎
-                  </Text>
-                }
-              />
-            </Pressable>
-          </Link>
         </View>
       </View>
 
-      <SegmentKontrolu />
+      <AracSegmentKontrolu aktif="canli" />
 
       <View style={styles.dinlemeSatir}>
         <View style={[styles.listenOnly, { borderColor: colors.ok }]}>
@@ -214,70 +172,6 @@ export default function AracEkrani(): ReactElement {
 
       <HamBusKarti />
     </ScrollView>
-  );
-}
-
-function SegmentKontrolu(): ReactElement {
-  const { colors } = useTheme();
-  const router = useRouter();
-
-  const git = useCallback(
-    (rota: SegmentTanimi['rota']): void => {
-      if (rota === null) return;
-      router.push(rota);
-    },
-    [router]
-  );
-
-  return (
-    <View
-      accessibilityRole="tablist"
-      style={[styles.segmentKap, { backgroundColor: colors.glassFallback, borderColor: colors.line }]}>
-      {SEGMENTLER.map((segment) => {
-        const aktif = segment.rota === null;
-        return (
-          <SegmentDugmesi key={segment.id} segment={segment} aktif={aktif} onGit={git} />
-        );
-      })}
-    </View>
-  );
-}
-
-interface SegmentDugmesiProps {
-  segment: SegmentTanimi;
-  aktif: boolean;
-  onGit: (rota: SegmentTanimi['rota']) => void;
-}
-
-function SegmentDugmesi({ segment, aktif, onGit }: SegmentDugmesiProps): ReactElement {
-  const { colors } = useTheme();
-  const bas = useCallback((): void => {
-    onGit(segment.rota);
-  }, [onGit, segment.rota]);
-
-  return (
-    <Pressable
-      accessibilityRole="tab"
-      accessibilityState={{ selected: aktif }}
-      accessibilityLabel={segment.ad}
-      disabled={aktif}
-      onPress={bas}
-      style={({ pressed }) => [
-        styles.segment,
-        aktif
-          ? { backgroundColor: colors.surfaceRaised, borderColor: colors.line }
-          : { backgroundColor: 'transparent', borderColor: 'transparent' },
-        { opacity: pressed ? 0.6 : 1 },
-      ]}>
-      <Text
-        style={[
-          aktif ? styles.segmentAktifMetin : styles.segmentMetin,
-          { color: aktif ? colors.text : colors.muted },
-        ]}
-        maxFontSizeMultiplier={1.4}>
-        {segment.ad}
-      </Text>
-    </Pressable>
   );
 }
 
@@ -489,18 +383,7 @@ const styles = StyleSheet.create({
   },
   grupNot: { ...FONTS.body, fontSize: TYPE_SCALE.micro },
 
-  baslikSag: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
-  telefonDugmesi: {
-    width: HIT_SIZE,
-    height: HIT_SIZE,
-    borderRadius: RADIUS.pill,
-    borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   baslikSatir: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: SPACING.md },
-  baslikBlok: { flexShrink: 1, gap: 2 },
-  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
   altBaslik: { ...FONTS.bodyMedium, fontSize: TYPE_SCALE.caption },
   bleCip: {
     flexDirection: 'row',
@@ -514,24 +397,6 @@ const styles = StyleSheet.create({
   bleMetin: { ...FONTS.mono, fontSize: TYPE_SCALE.micro },
   nokta: { width: 8, height: 8, borderRadius: RADIUS.pill },
 
-  segmentKap: {
-    flexDirection: 'row',
-    gap: 3,
-    borderRadius: RADIUS.md,
-    borderWidth: StyleSheet.hairlineWidth,
-    padding: 3,
-  },
-  segment: {
-    flex: 1,
-    minHeight: HIT_SIZE,
-    borderRadius: RADIUS.sm + 1,
-    borderWidth: StyleSheet.hairlineWidth,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.xs,
-  },
-  segmentMetin: { ...FONTS.bodyMedium, fontSize: 14 },
-  segmentAktifMetin: { ...FONTS.bodySemiBold, fontSize: 14 },
 
   dinlemeSatir: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, flexWrap: 'wrap' },
   listenOnly: { borderRadius: RADIUS.pill, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 3 },

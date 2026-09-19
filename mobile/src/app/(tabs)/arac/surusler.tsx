@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AracSegmentKontrolu } from '@/components/nav/arac-segmenti';
 import { Card, SectionLabel } from '@/components/ui/card';
 import { NavRow, RowDivider } from '@/components/ui/row';
 import { Pill } from '@/components/ui/pill';
@@ -38,6 +39,8 @@ export default function SuruslerEkrani() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}>
+      <AracSegmentKontrolu aktif="surusler" />
+
       <View style={styles.cipler}>
         <Pill dotColor={colors.ok}>Kayıt açık</Pill>
         <Pill>10 Hz</Pill>

@@ -46,14 +46,9 @@ export default function AyarlarEkrani() {
     <ScrollView
       contentContainerStyle={[styles.page, { backgroundColor: colors.bg }]}
       contentInsetAdjustmentBehavior="automatic">
-      <View style={styles.baslikBlok}>
-        <Text style={[styles.baslik, { color: colors.text }]} maxFontSizeMultiplier={1.8}>
-          Ayarlar
-        </Text>
-        <Text style={[styles.altBaslik, { color: colors.muted }]} maxFontSizeMultiplier={2}>
-          Hesap, güvenlik ve cihazlar
-        </Text>
-      </View>
+      <Text style={[styles.altBaslik, { color: colors.muted }]} maxFontSizeMultiplier={2}>
+        Hesap, güvenlik ve cihazlar
+      </Text>
 
       <Card style={styles.listeKart}>
         <View style={styles.hesapSatir}>
@@ -286,8 +281,6 @@ function ListeSatiri({
 
 const styles = StyleSheet.create({
   page: { flexGrow: 1, padding: SPACING.lg, gap: SPACING.md, paddingBottom: SPACING.xxl },
-  baslikBlok: { gap: SPACING.xs },
-  baslik: { ...FONTS.display, fontSize: TYPE_SCALE.title },
   altBaslik: { ...FONTS.body, fontSize: TYPE_SCALE.caption },
 
   listeKart: { paddingVertical: 0, paddingHorizontal: SPACING.md, gap: 0 },
